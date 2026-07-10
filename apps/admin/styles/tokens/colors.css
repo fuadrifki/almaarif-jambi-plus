@@ -1,0 +1,85 @@
+:root {
+  /* Background */
+
+  --background: #f6f8fb;
+
+  --background-secondary: #eef2f7;
+
+  --background-tertiary: #e7edf5;
+
+  /* Surface */
+
+  --surface: rgba(255, 255, 255, 0.6);
+
+  --surface-secondary: rgba(255, 255, 255, 0.75);
+
+  --surface-solid: #ffffff;
+
+  /* Text */
+
+  --text-primary: #111827;
+
+  --text-secondary: #5b6475;
+
+  --text-muted: #8c95a5;
+
+  --text-inverse: #ffffff;
+
+  /* Border */
+
+  --border: #d9e1ec;
+
+  --border-light: #edf2f7;
+
+  --border-strong: #b8c4d6;
+
+  /* Brand */
+
+  --brand: #2563eb;
+
+  --brand-hover: #1d4ed8;
+
+  --brand-soft: #dbeafe;
+
+  /* Success */
+
+  --success: #16a34a;
+
+  --warning: #f59e0b;
+
+  --danger: #dc2626;
+}
+
+.dark {
+  --background: #09090b;
+
+  --background-secondary: #101114;
+
+  --background-tertiary: #18181b;
+
+  --surface: rgba(20, 20, 22, 0.55);
+
+  --surface-secondary: rgba(30, 30, 35, 0.72);
+
+  --surface-solid: #1b1c20;
+
+  --text-primary: #fafafa;
+
+  --text-secondary: #c3c7d1;
+
+  --text-muted: #8b93a7;
+
+  --text-inverse: #111;
+
+  --border: #30343d;
+
+  --border-light: #252932;
+
+  --border-strong: #4b5563;
+
+  --brand: #5b8cff;
+
+  --brand-hover: #7aa2ff;
+
+  --brand-soft: #1d3f73;
+}
