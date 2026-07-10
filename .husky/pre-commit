@@ -1,7 +1,5 @@
-cat > .husky/pre-commit << 'EOF'
 #!/usr/bin/env sh
 
 echo "🔍 Running pre-commit checks..."
 
 pnpm lint-staged
-EOF
