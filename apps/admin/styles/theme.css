@@ -1,3 +1,4 @@
+@import './tokens/background.css';
 @import './tokens/colors.css';
 @import './tokens/radius.css';
 @import './tokens/shadow.css';
@@ -11,3 +12,22 @@
 @import './components/button.css';
 @import './components/input.css';
 @import './components/dialog.css';
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  color: var(--text-primary);
+
+  background-color: var(--background);
+
+  background-image: var(--background-page);
+
+  background-repeat: no-repeat;
+
+  background-size: cover;
+
+  background-attachment: fixed;
+}

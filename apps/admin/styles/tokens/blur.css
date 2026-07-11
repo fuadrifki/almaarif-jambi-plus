@@ -1,11 +1,11 @@
 :root {
-  --blur-xs: 8px;
+  --blur-xs: 2px;
 
-  --blur-sm: 12px;
+  --blur-sm: 8px;
 
-  --blur-md: 20px;
+  --blur-md: 16px;
 
-  --blur-lg: 28px;
+  --blur-lg: 24px;
 
-  --blur-xl: 40px;
+  --blur-xl: 32px;
 }
