@@ -45,7 +45,7 @@ export function Input({
           className="ads-input__action"
           onClick={() => setShowPassword((value) => !value)}
         >
-          {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+          {showPassword ? <Eye className="size-4" /> : <EyeOff className="size-4" />}
         </button>
       ) : null}
     </div>

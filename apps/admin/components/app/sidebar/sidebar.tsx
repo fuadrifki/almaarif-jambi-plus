@@ -1,5 +1,5 @@
 import { Surface } from '@/components/ui';
 
 export function Sidebar() {
-  return <Surface className="w-64 h-full p-4">Sidebar</Surface>;
+  return <Surface className="h-full p-4 space-y-3">Sidebar</Surface>;
 }

@@ -14,7 +14,8 @@
 @import './components/switch.css';
 @import './components/select.css';
 @import './components/dialog.css';
-@import './components/layout.css';
+@import './components/ads-layout.css';
+@import './components/app-layout.css';
 
 html,
 body {

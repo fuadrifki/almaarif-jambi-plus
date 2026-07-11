@@ -1,18 +1,21 @@
-import type { AppShellProps } from './app-shell.types';
+import { Header } from '@/components/ui';
+import { UserMenu } from '@/features/auth/components/user-menu';
 
 import { Sidebar } from '../sidebar/sidebar';
-import { Header } from '@/components/ui';
+import type { AppShellProps } from './app-shell.types';
 
-export function AppShell({ children }: AppShellProps) {
+export function AppShell({ children, user }: AppShellProps) {
   return (
-    <div className="min-h-screen">
-      <Header title="Almaarif Admin" />
+    <div className="app-layout gap-y-4">
+      <header className="app-layout__header p-4">
+        <Header title="Almaarif Admin" actions={<UserMenu user={user} />} />
+      </header>
 
-      <div className="flex">
+      <aside className="app-layout__sidebar p-4">
         <Sidebar />
+      </aside>
 
-        <main className="flex-1 p-6">{children}</main>
-      </div>
+      <main className="app-layout__content p-4 mt-4">{children}</main>
     </div>
   );
 }
