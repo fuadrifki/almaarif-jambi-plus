@@ -1,13 +1,29 @@
-import { Surface } from '@/components/ui';
+import { Card } from '@/components/ui';
 
 export function DashboardPage() {
   return (
-    <main className="flex min-h-screen items-center justify-center p-10">
-      <Surface className="max-w-md p-8">
-        <h1 className="text-2xl font-semibold">Almaarif Design System</h1>
+    <div className="space-y-6">
+      <section>
+        <h1 className="text-3xl font-semibold">Dashboard</h1>
 
-        <p className="mt-3 text-(--text-secondary)">Surface pertama berhasil dibuat.</p>
-      </Surface>
-    </main>
+        <p className="mt-2 text-(--text-secondary)">
+          Welcome back, manage your Almaarif system here.
+        </p>
+      </section>
+
+      <section className="grid gap-6 md:grid-cols-3">
+        <Card title="Students" description="Total registered students">
+          <p className="text-3xl font-semibold">0</p>
+        </Card>
+
+        <Card title="Teachers" description="Active teachers">
+          <p className="text-3xl font-semibold">0</p>
+        </Card>
+
+        <Card title="Reports" description="Monthly reports">
+          <p className="text-3xl font-semibold">0</p>
+        </Card>
+      </section>
+    </div>
   );
 }

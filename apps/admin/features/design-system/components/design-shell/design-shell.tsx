@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { designNavigation } from './design-shell.navigation';
 import type { DesignShellProps } from './design-shell.types';
-import { ThemeToggle } from '../theme-toggle';
 import { Surface } from '@/components/ui';
 
 export function DesignShell({ children }: DesignShellProps) {
@@ -10,8 +9,6 @@ export function DesignShell({ children }: DesignShellProps) {
       <header className="ads-layout__header p-4">
         <Surface className="flex h-16 items-center justify-between px-6">
           <span className="font-semibold">Almaarif Design System</span>
-
-          <ThemeToggle />
         </Surface>
       </header>
 

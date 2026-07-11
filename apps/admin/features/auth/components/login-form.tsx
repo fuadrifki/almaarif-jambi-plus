@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { login } from '@/features/auth';
 import { createSession } from '@/features/auth/server';
 import { Surface } from '@/components/ui';
+import { Logo } from '@almaarif/brand';
 
 export const LoginForm = () => {
   const router = useRouter();
@@ -42,6 +43,10 @@ export const LoginForm = () => {
     <main className="flex min-h-screen items-center justify-center">
       <Surface className="w-full max-w-md p-8">
         <form onSubmit={handleSubmit} className="w-full space-y-6">
+          <div className="mb-6 flex justify-center">
+            <Logo width={160} height={50} />
+          </div>
+
           <div className="space-y-2 w-full flex flex-col items-center">
             <h1 className="text-2xl font-semibold text-(--text-primary)">Welcome back</h1>
 

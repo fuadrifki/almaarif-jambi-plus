@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { destroySession } from '@/features/auth/server';
 
 import type { User } from '../types';
-import { ThemeToggle } from '@/features/design-system/components/theme-toggle';
 
 export function UserMenu({ user }: { user: User }) {
   const router = useRouter();
@@ -19,8 +18,6 @@ export function UserMenu({ user }: { user: User }) {
 
   return (
     <div className="flex items-center gap-4">
-      <ThemeToggle />
-
       <div className="text-right">
         <p className="text-sm font-medium text-(--text-primary)">{user.name}</p>
 

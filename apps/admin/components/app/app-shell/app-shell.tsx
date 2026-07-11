@@ -1,4 +1,5 @@
 import { Header } from '@/components/ui';
+import { Logo } from '@almaarif/brand';
 import { UserMenu } from '@/features/auth/components/user-menu';
 
 import { Sidebar } from '../sidebar/sidebar';
@@ -8,7 +9,11 @@ export function AppShell({ children, user }: AppShellProps) {
   return (
     <div className="app-layout gap-y-4">
       <header className="app-layout__header p-4">
-        <Header title="Almaarif Admin" actions={<UserMenu user={user} />} />
+        <Header
+          title="Almaarif Admin"
+          logo={<Logo width={50} height={30} />}
+          actions={<UserMenu user={user} />}
+        />
       </header>
 
       <aside className="app-layout__sidebar p-4">
