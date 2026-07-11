@@ -43,6 +43,18 @@ export const designNavigation = [
         label: 'Dialog',
         href: '/design/dialog',
       },
+      {
+        label: 'Checkbox',
+        href: '/design/checkbox',
+      },
+      {
+        label: 'Radio',
+        href: '/design/radio',
+      },
+      {
+        label: 'Switch',
+        href: '/design/switch',
+      },
     ],
   },
 ] as const;
