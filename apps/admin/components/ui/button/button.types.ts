@@ -1,0 +1,15 @@
+import type { ButtonHTMLAttributes, ReactNode } from 'react';
+
+export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
+
+export type ButtonSize = 'sm' | 'md' | 'lg';
+
+export type ButtonStatus = 'idle' | 'loading';
+
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  status?: ButtonStatus;
+  leftIcon?: ReactNode;
+  rightIcon?: ReactNode;
+}

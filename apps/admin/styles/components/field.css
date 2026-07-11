@@ -1,0 +1,37 @@
+.ads-field {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 0.5rem;
+}
+
+.ads-field__label {
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.25rem;
+
+  color: var(--text-primary);
+
+  font-size: 0.875rem;
+
+  font-weight: 500;
+}
+
+.ads-field__required {
+  color: var(--danger);
+}
+
+.ads-field__description {
+  color: var(--text-secondary);
+
+  font-size: 0.75rem;
+}
+
+.ads-field__error {
+  color: var(--danger);
+
+  font-size: 0.75rem;
+}

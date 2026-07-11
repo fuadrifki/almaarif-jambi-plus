@@ -7,47 +7,49 @@
 
   /* Background */
   --background: radial-gradient(circle at top, #ffffff 0%, #f8fbff 35%, #eef5fd 100%);
-
   --background-secondary: linear-gradient(180deg, #ffffff, #f7f9fc);
-
   --background-tertiary: linear-gradient(180deg, #f5f7fb, #edf2f8);
 
   /* Surface */
   --surface: linear-gradient(180deg, rgb(255 255 255 /0.12), rgb(255 255 255 /0.03));
-
   --surface-secondary: linear-gradient(180deg, rgb(255 255 255 /0.24), rgb(255 255 255 /0.1));
-
   --surface-solid: #ffffff;
 
   /* Text */
-  --text-primary: #111827;
-
+  --text-primary: #333333;
   --text-secondary: #5b6475;
-
   --text-muted: #8c95a5;
-
   --text-inverse: #ffffff;
 
   /* Border */
   --border: #d9e1ec;
-
   --border-light: #edf2f7;
-
   --border-strong: #b8c4d6;
 
   /* Brand */
   --brand: #2563eb;
-
   --brand-hover: #1d4ed8;
-
   --brand-soft: #dbeafe;
 
   /* Success */
   --success: #16a34a;
-
   --warning: #f59e0b;
-
   --danger: #dc2626;
+
+  /* Button */
+  --button-primary: linear-gradient(135deg, #8a5bff, #4ecbff);
+  --button-primary-shadow: rgba(138, 91, 255, 0.25);
+  --button-secondary: linear-gradient(135deg, rgb(255 255 255 / 0.26), rgb(208 233 255 / 0.12));
+  --button-secondary-border: rgb(255 255 255 / 0.28);
+  --button-secondary-shadow: 0 8px 18px rgb(89 168 255 /0.08);
+  --button-ghost-hover: rgb(89 168 255 /0.08);
+  --button-danger: linear-gradient(90deg, #ec003f80 10%, #fb2c3680 100%);
+  --button-danger-shadow: rgba(236, 0, 63, 0.25);
+
+  /* Input */
+  --input-bg: linear-gradient(180deg, rgb(255 255 255 / 0.12), rgb(255 255 255 / 0.05));
+  --input-bg-hover: linear-gradient(180deg, rgb(255 255 255 / 0.16), rgb(255 255 255 / 0.08));
+  --input-bg-focus: linear-gradient(180deg, rgb(255 255 255 / 0.18), rgb(255 255 255 / 0.1));
 }
 
 .dark {
@@ -59,38 +61,40 @@
 
   /* Background */
   --background: radial-gradient(circle at top, #1a2433 0%, #0f172a 45%, #020617 100%);
-
   --background-secondary: linear-gradient(180deg, #182233, #0f172a);
-
   --background-tertiary: linear-gradient(180deg, #111827, #020617);
 
   /* Surface */
   --surface: linear-gradient(180deg, rgb(255 255 255 /0.1), rgb(255 255 255 /0.03));
-
   --surface-secondary: linear-gradient(180deg, rgb(255 255 255 /0.14), rgb(255 255 255 /0.05));
-
   --surface-solid: #17181d;
 
   /* Text */
   --text-primary: #fafafa;
-
   --text-secondary: #c3c7d1;
-
   --text-muted: #8b93a7;
-
   --text-inverse: #111;
 
   /* Border */
   --border: #30343d;
-
   --border-light: #252932;
-
   --border-strong: #4b5563;
 
   /* Brand */
   --brand: #5b8cff;
-
   --brand-hover: #7aa2ff;
-
   --brand-soft: #1d3f73;
+
+  /* Button */
+  --button-primary: linear-gradient(90deg, #6b7cff 0%, #4f97ff 55%, #36c2ff 100%);
+  --button-primary-shadow: rgb(79 151 255 /0.38);
+  --button-secondary: linear-gradient(90deg, rgb(255 255 255 /0.1), rgb(255 255 255 /0.05));
+  --button-secondary-border: rgb(255 255 255 /0.1);
+  --button-ghost-hover: rgb(255 255 255 /0.08);
+  --button-danger: linear-gradient(90deg, #ff7b89, #ef4444);
+
+  /* Input */
+  --input-bg: linear-gradient(180deg, rgb(255 255 255 / 0.08), rgb(255 255 255 / 0.03));
+  --input-bg-hover: linear-gradient(180deg, rgb(255 255 255 / 0.11), rgb(255 255 255 / 0.05));
+  --input-bg-focus: linear-gradient(180deg, rgb(255 255 255 / 0.14), rgb(255 255 255 / 0.06));
 }

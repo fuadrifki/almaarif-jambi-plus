@@ -1,5 +1,6 @@
+import type { HTMLAttributes } from 'react';
+
 import { cn } from '@/lib';
-import { HTMLAttributes } from 'react';
 
 export type SurfaceProps = HTMLAttributes<HTMLDivElement>;
 

@@ -1,0 +1,164 @@
+.ads-button {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  overflow: hidden;
+  isolation: isolate;
+
+  cursor: pointer;
+  user-select: none;
+
+  border: none;
+  outline: none;
+
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.ads-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.ads-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 28%, transparent);
+}
+
+.ads-button__content {
+  position: relative;
+  z-index: 1;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ======================
+   PRIMARY
+====================== */
+
+.ads-button--primary {
+  color: white;
+
+  background: var(--button-primary);
+
+  box-shadow: 0 10px 24px var(--button-primary-shadow);
+}
+
+.ads-button--primary:hover {
+  filter: brightness(1.04);
+
+  box-shadow: 0 12px 28px var(--button-primary-shadow);
+}
+
+.ads-button--primary:active {
+  filter: brightness(0.94);
+
+  box-shadow:
+    inset 0 2px 6px rgb(0 0 0 / 0.18),
+    0 6px 14px var(--button-primary-shadow);
+}
+
+/* ======================
+   SECONDARY
+====================== */
+
+.ads-button--secondary {
+  color: var(--text-primary);
+
+  background: var(--button-secondary);
+
+  border: 1px solid var(--button-secondary-border);
+
+  backdrop-filter: blur(var(--blur-lg)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(180%);
+
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.35),
+    var(--button-secondary-shadow);
+}
+
+.ads-button--secondary:hover {
+  background: color-mix(in srgb, var(--button-secondary) 92%, white);
+
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.45),
+    var(--shadow-lg);
+}
+
+.ads-button--secondary:active {
+  background: color-mix(in srgb, var(--button-ghost-hover) 82%, gray);
+}
+
+/* ======================
+   GHOST
+====================== */
+
+.ads-button--ghost {
+  color: var(--text-secondary);
+
+  background: transparent;
+}
+
+.ads-button--ghost:hover {
+  color: var(--text-primary);
+
+  background: var(--button-ghost-hover);
+}
+
+.ads-button--ghost:active {
+  filter: brightness(0.92);
+  background: color-mix(in srgb, var(--button-ghost-hover) 82%, gray);
+}
+
+/* ======================
+   DANGER
+====================== */
+
+.ads-button--danger {
+  color: white;
+
+  background: var(--button-danger);
+
+  box-shadow: var(--shadow-md);
+}
+
+.ads-button--danger:hover {
+  filter: brightness(1.04);
+
+  box-shadow: var(--shadow-lg);
+}
+
+.ads-button--danger:active {
+  filter: brightness(0.92);
+}
+
+/* ======================
+   SIZE
+====================== */
+
+.ads-button--sm {
+  height: 28px;
+  padding-inline: 14px;
+  font-size: 0.75rem;
+}
+
+.ads-button--md {
+  height: 34px;
+  padding-inline: 18px;
+  font-size: 0.875rem;
+}
+
+.ads-button--lg {
+  height: 40px;
+  padding-inline: 22px;
+  font-size: 1rem;
+}

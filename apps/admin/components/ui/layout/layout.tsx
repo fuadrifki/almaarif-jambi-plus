@@ -1,13 +1,11 @@
 import type { LayoutProps } from './layout.types';
 
-import { Header } from '@/components/ui';
+export const Layout = ({ children }: LayoutProps) => (
+  <div className="ads-layout">
+    <div className="ads-layout__header" />
 
-export function Layout({ children }: LayoutProps) {
-  return (
-    <div className="min-h-screen">
-      <Header title="Dashboard" />
+    <div className="ads-layout__sidebar" />
 
-      <main className="p-6">{children}</main>
-    </div>
-  );
-}
+    <main className="ads-layout__content">{children}</main>
+  </div>
+);
