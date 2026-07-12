@@ -41,10 +41,10 @@ export const StudentList = ({ students }: StudentListProps) => {
           leftIcon={<Search size={16} />}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="w-1/3"
+          className="w-full sm:w-1/3"
         />
 
-        <Button className="shrink-0" onClick={() => router.push('/students/new')}>
+        <Button className="w-full sm:w-auto shrink-0" onClick={() => router.push('/students/new')}>
           Tambah Siswa
         </Button>
       </div>

@@ -12,6 +12,8 @@
 @import './components/radio.css';
 @import './components/switch.css';
 @import './components/select.css';
+@import './components/dropdown-menu.css';
+@import './components/nav.css';
 @import './components/layout.css';
 
 html,

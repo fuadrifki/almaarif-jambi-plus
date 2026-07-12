@@ -36,8 +36,6 @@ export const LoginForm = () => {
 
     if (!password) {
       errors.password = 'Password wajib diisi';
-    } else if (password.length < 6) {
-      errors.password = 'Password minimal 6 karakter';
     }
 
     setFieldErrors(errors);
@@ -73,7 +71,7 @@ export const LoginForm = () => {
   const canSubmit = email.trim().length > 0 && password.length > 0;
 
   return (
-    <main className="flex min-h-screen items-center justify-center">
+    <main className="flex min-h-screen items-center justify-center p-4">
       <Surface className="w-full max-w-md p-8">
         <form onSubmit={handleSubmit} className="w-full space-y-6">
           <div className="mb-6 flex justify-center">

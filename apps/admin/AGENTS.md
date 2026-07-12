@@ -94,8 +94,8 @@ Completed:
 - Checkbox
 - Radio
 - Switch
-
-Badge is not finished.
+- Badge
+- DropdownMenu
 
 ---
 
@@ -122,59 +122,18 @@ Create required component only
 
 # Current Feature
 
-Authentication + Dashboard Access Flow
+M1.2 Complete — Navigation & App Shell Foundation
 
-Scope:
+The admin shell is production-ready with:
 
-Login:
+- Centralized navigation config
+- Responsive layout (desktop sidebar + mobile bottom nav + /more page)
+- ADS DropdownMenu for UserMenu
+- Theme toggle in header
+- Auth redirect for authenticated users
+- Login form with per-field validation
 
-/login
-
-Fields:
-
-- email
-- password
-- login button
-
-Authentication state:
-
-User:
-
-{
-id,
-name,
-email,
-role
-}
-
-No need yet:
-
-- OAuth
-- SSO
-- MFA
-- complex permission matrix
-
-Protected route:
-
-Dashboard access:
-
-No session:
-redirect /login
-
-Session exists:
-show dashboard
-
-User menu:
-
-Header:
-
-- avatar/name
-
-Dropdown:
-
-- Profile
-- Settings
-- Logout
+Next: Business features (Student Management is partially done)
 
 ---
 

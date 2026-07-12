@@ -209,7 +209,7 @@ graph TD
     ADS --> ADS_COLOR["components/color-preview/"]
     ADS --> ADS_SECTION["components/section-preview/"]
     ADS --> ADS_TOKEN["components/token-preview/"]
-    ADS --> ADS_THEME["components/theme-toggle/"]
+        ADS --> ADS_THEME["components/theme-toggle/ (now icon-only button)"]
 ```
 
 ### `features/auth`
@@ -220,7 +220,7 @@ graph TD
 | `auth.ts`                   | Login logic (mock)                    | `login`                           |
 | `server.ts`                 | Server actions for session management | `createSession`, `destroySession` |
 | `components/login-form.tsx` | Login page form                       | `LoginForm`                       |
-| `components/user-menu.tsx`  | User info + logout                    | `UserMenu`                        |
+| `components/user-menu.tsx`  | User menu (Radix DropdownMenu)        | `UserMenu`                        |
 | `index.ts`                  | Barrel                                | `login`, `User`                   |
 
 The `User` type is shared with `lib/auth/session.ts` and `components/app/app-shell.types.ts` (a boundary violation — `lib/` and `components/` depend upward on `features/`).
@@ -239,7 +239,7 @@ Design system documentation. Contains 13 page components and 6 utility component
 | Component        | Role                                    | Interactive? |
 | ---------------- | --------------------------------------- | ------------ |
 | `DesignShell`    | Layout shell with sidebar navigation    | No           |
-| `ThemeToggle`    | Floating dark/light toggle              | Yes          |
+| `ThemeToggle`    | Icon-only button (Sun/Moon) in header   | Yes          |
 | `SectionPreview` | Section wrapper with title + code block | No           |
 | `CodePreview`    | Expandable code block with copy         | Yes          |
 | `ColorPreview`   | Color swatch grid display               | No           |
@@ -294,8 +294,8 @@ Provider hierarchy:
 RootLayout
 └── AppProvider
     └── ThemeProvider (next-themes, attribute="class", defaultTheme="light")
-        └── ThemeToggle (floating button)
         └── page content
+    ThemeToggle is now inside AppShell header (not floating)
 ```
 
 ---
@@ -316,8 +316,8 @@ graph TD
     end
 
     subgraph "components/ — Reusable UI"
-        UI["ui/*<br/>ADS Design System<br/>12 components"]
-        APP["app/*<br/>AppShell, Sidebar"]
+        UI["ui/*<br/>ADS Design System<br/>13 components"]
+        APP["app/*<br/>AppShell, Sidebar, MobileNav"]
     end
 
     subgraph "lib/ — Shared Utilities"
@@ -476,20 +476,21 @@ export { DashboardPage as default } from '@/features/dashboard/pages/dashboard-p
 
 ### ADS Component Inventory
 
-| Component | Category | Primitive        | Client?           | Test? | CSS file?       | CSS classes defined?                                                                                                             |
-| --------- | -------- | ---------------- | ----------------- | ----- | --------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| Surface   | Layout   | `<div>`          | No                | No    | ✅ surface.css  | `ads-surface`, `::before`, `::after`                                                                                             |
-| Card      | Layout   | Surface          | No                | No    | ❌              | Uses Tailwind only                                                                                                               |
-| Header    | Layout   | Surface          | No                | No    | ❌              | Uses Tailwind + Surface only                                                                                                     |
-| Field     | Layout   | `<div>/<label>`  | No                | No    | ❌              | Uses Tailwind only                                                                                                               |
-| Button    | Input    | `<button>`       | No                | No    | ✅ button.css   | `ads-button`, `ads-button--{variant}`, `ads-button--{size}`, `ads-button__content`                                               |
-| Input     | Input    | `<input>`        | Yes               | No    | ✅ input.css    | `ads-input`, `ads-input-wrapper`, `ads-input--{size}`, `ads-input--{status}`, `ads-input__loader`, `ads-input__action`           |
-| Textarea  | Input    | `<textarea>`     | Yes (unnecessary) | No    | ✅ textarea.css | `ads-textarea`, `ads-textarea--{size}`, `ads-textarea--{status}`, `ads-textarea--resize-{resize}`                                |
-| Select    | Input    | Radix Select     | Yes               | Yes   | ✅ select.css   | `ads-select__trigger`, `ads-select__trigger--{size}`, `ads-select__trigger--{status}`, `ads-select__content`, `ads-select__item` |
-| Checkbox  | Input    | Radix Checkbox   | Yes               | No    | ✅ checkbox.css | `ads-checkbox`, `ads-checkbox__indicator`                                                                                        |
-| Radio     | Input    | Radix RadioGroup | Yes               | No    | ✅ radio.css    | `ads-radio-group`, `ads-radio-item`, `ads-radio-item__label`, `ads-radio`, `ads-radio__indicator`, `ads-radio__dot`              |
-| Switch    | Input    | Radix Switch     | Yes               | No    | ✅ switch.css   | `ads-switch`, `ads-switch__thumb`                                                                                                |
-| Badge     | Display  | `<span>`         | No                | No    | ❌ **CRITICAL** | `ads-badge`, `ads-badge--{variant}` — no CSS exists                                                                              |
+| Component    | Category | Primitive          | Client?           | Test? | CSS file?            | CSS classes defined?                                                                                                                   |
+| ------------ | -------- | ------------------ | ----------------- | ----- | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Surface      | Layout   | `<div>`            | No                | No    | ✅ surface.css       | `ads-surface`, `::before`, `::after`                                                                                                   |
+| Card         | Layout   | Surface            | No                | No    | ❌                   | Uses Tailwind only                                                                                                                     |
+| Header       | Layout   | Surface            | No                | No    | ❌                   | Uses Tailwind + Surface only                                                                                                           |
+| Field        | Layout   | `<div>/<label>`    | No                | No    | ❌                   | Uses Tailwind only                                                                                                                     |
+| Button       | Input    | `<button>`         | No                | No    | ✅ button.css        | `ads-button`, `ads-button--{variant}`, `ads-button--{size}`, `ads-button__content`                                                     |
+| Input        | Input    | `<input>`          | Yes               | No    | ✅ input.css         | `ads-input`, `ads-input-wrapper`, `ads-input--{size}`, `ads-input--{status}`, `ads-input__loader`, `ads-input__action`                 |
+| Textarea     | Input    | `<textarea>`       | Yes (unnecessary) | No    | ✅ textarea.css      | `ads-textarea`, `ads-textarea--{size}`, `ads-textarea--{status}`, `ads-textarea--resize-{resize}`                                      |
+| Select       | Input    | Radix Select       | Yes               | Yes   | ✅ select.css        | `ads-select__trigger`, `ads-select__trigger--{size}`, `ads-select__trigger--{status}`, `ads-select__content`, `ads-select__item`       |
+| Checkbox     | Input    | Radix Checkbox     | Yes               | No    | ✅ checkbox.css      | `ads-checkbox`, `ads-checkbox__indicator`                                                                                              |
+| Radio        | Input    | Radix RadioGroup   | Yes               | No    | ✅ radio.css         | `ads-radio-group`, `ads-radio-item`, `ads-radio-item__label`, `ads-radio`, `ads-radio__indicator`, `ads-radio__dot`                    |
+| Switch       | Input    | Radix Switch       | Yes               | No    | ✅ switch.css        | `ads-switch`, `ads-switch__thumb`                                                                                                      |
+| Badge        | Display  | `<span>`           | No                | No    | ✅ badge.css         | `ads-badge`, `ads-badge--{variant}`                                                                                                    |
+| DropdownMenu | Overlay  | Radix DropdownMenu | Yes               | No    | ✅ dropdown-menu.css | `ads-dropdown-menu`, `ads-dropdown-menu__item`, `ads-dropdown-menu__separator`, `ads-dropdown-menu__label`, `ads-dropdown-menu__arrow` |
 
 ### Component patterns
 
@@ -498,7 +499,7 @@ graph TD
     subgraph "Wrapping strategies"
         NATIVE["Native HTML<br/>Surface, Button, Input, Textarea, Field, Badge"]
         SURFACE_WRAP["Wraps Surface component<br/>Card, Header"]
-        RADIX["Wraps Radix UI primitive<br/>Checkbox, Radio, Select, Switch"]
+        RADIX["Wraps Radix UI primitive<br/>Checkbox, Radio, Select, Switch, DropdownMenu"]
     end
 
     NATIVE --> CN["cn() class merging"]
@@ -552,6 +553,8 @@ graph TD
     COMPONENTS --> CHECKBOX_CSS["checkbox.css"]
     COMPONENTS --> RADIO_CSS["radio.css"]
     COMPONENTS --> SWITCH_CSS["switch.css"]
+    COMPONENTS --> DROPDOWN_CSS["dropdown-menu.css"]
+    COMPONENTS --> NAV_CSS["nav.css"]
     COMPONENTS --> LAYOUT_CSS["layout.css"]
 ```
 
@@ -813,14 +816,6 @@ Tests should cover:
 ---
 
 ## 18. Known Technical Debt
-
-### Critical
-
-| #   | Issue                                              | File(s)                                  |
-| --- | -------------------------------------------------- | ---------------------------------------- |
-| 1   | Badge has no CSS file — classes compile to nothing | `badge.tsx` references undefined classes |
-| 2   | Badge not exported from UI barrel                  | `components/ui/index.ts`                 |
-| 3   | Badge docs page is empty stub                      | `badge-page.tsx`                         |
 
 ### High
 

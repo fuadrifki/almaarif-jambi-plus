@@ -64,6 +64,10 @@ export const designNavigation = [
         label: 'Badge',
         href: '/design/badge',
       },
+      {
+        label: 'Dropdown Menu',
+        href: '/design/dropdown-menu',
+      },
     ],
   },
 ] as const;

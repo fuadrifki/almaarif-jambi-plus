@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 
 import { Badge, Surface } from '@/components/ui';
 import { getNavigationForRole } from '@/config/navigation';
+import { cn } from '@/lib';
 
 import type { UserRole } from '@/lib/types/user';
 
@@ -26,13 +27,11 @@ export const Sidebar = ({ role }: SidebarProps) => {
             key={href}
             href={disabled ? '#' : href}
             aria-disabled={disabled}
-            className={`flex items-center gap-3 rounded-xl px-3 py-2 text-sm transition ${
-              disabled
-                ? 'pointer-events-none cursor-default opacity-40'
-                : isActive
-                  ? 'bg-white/15 font-medium text-(--text-primary)'
-                  : 'text-(--text-secondary) hover:bg-white/10 hover:text-(--text-primary)'
-            }`}
+            className={cn(
+              'ads-nav-item',
+              disabled && 'ads-nav-item--disabled',
+              isActive && !disabled && 'ads-nav-item--active',
+            )}
           >
             <Icon size={18} />
 

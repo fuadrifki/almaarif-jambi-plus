@@ -1211,3 +1211,122 @@ The type import violation is resolved. Only the component import remains.
 - `(auth)/layout.tsx` is a server component — no client-side JS overhead
 - Redirect is server-side via `redirect('/')` — no flash of login form
 - If no session, renders children normally (login page)
+
+---
+
+## 81. ADS DropdownMenu Component
+
+**Status:** Implemented (M1.2)
+
+**Context:** UserMenu and future menus need a reusable dropdown. The M1.1 UserMenu used a manual `useState`/`useRef`/`useEffect` dropdown implementation. This pattern would be duplicated across the codebase.
+
+**Decision:** Create an ADS DropdownMenu component wrapping `@radix-ui/react-dropdown-menu` with ADS liquid glass styling.
+
+**Reason:**
+
+- Radix handles keyboard navigation, focus management, and outside click — all things manual implementations get wrong
+- ADS styling (blur, gradient borders, rounded corners) applied via CSS class `ads-dropdown-menu`
+- Replaces manual dropdown in UserMenu — single source of truth for all dropdown menus
+- Follows existing ADS architecture: `components/ui/dropdown-menu/` + `styles/components/dropdown-menu.css`
+- Design system documentation page + route created at `/design/dropdown-menu`
+
+**Consequences:**
+
+- New dependency: `@radix-ui/react-dropdown-menu` added to package.json
+- CSS uses `@keyframes` for open animation (scale + opacity)
+- `UserMenu` simplified from 112 lines (manual) to 75 lines (Radix-based)
+- All future dropdown menus reuse this component
+
+---
+
+## 82. Mobile Navigation: Dedicated "More" Page
+
+**Status:** Implemented (M1.2)
+
+**Context:** M1.1 implemented overflow navigation items via a popover menu in the bottom nav. Popovers on mobile are fragile (positioning, scroll behavior, touch targets) and don't scale.
+
+**Decision:** Replace the mobile "More" popover with a dedicated `/more` route. The bottom nav's 5th item is a Link to `/more`.
+
+**Reason:**
+
+- Dedicated pages are more reliable than popovers on mobile (no positioning issues, proper scroll, native navigation)
+- The `/more` page serves as a mobile navigation hub: user summary, all navigation groups, logout
+- Bottom nav stays simple — max 4 primary items + "Lainnya" Link
+- No `useState`, `useRef`, or `useEffect` needed in MobileNav — pure Link components
+- MobileNav simplified from 149 lines to 76 lines
+
+**Consequences:**
+
+- `/more` page is a server component with a client `LogoutButton` sub-component
+- MobileNav no longer has any popover logic — all overflow goes through `/more`
+- The `/more` page is reusable for future mobile-only features (settings, profile, etc.)
+
+---
+
+## 83. ThemeToggle in Header
+
+**Status:** Implemented (M1.2)
+
+**Context:** The ThemeToggle was a floating fixed button at `bottom-right`. It overlapped content on mobile, had inconsistent styling, and wasn't discoverable.
+
+**Decision:** Move ThemeToggle to the header actions area (right side, next to UserMenu). Rewrite as an icon-only button.
+
+**Reason:**
+
+- Header is the standard location for theme controls in admin dashboards
+- Icon-only (Sun/Moon) saves space, tooltip via `aria-label` for accessibility
+- Removes the floating overlay that blocked content on small screens
+- `app/layout.tsx` no longer renders `<ThemeToggle />` — it's part of AppShell
+
+**Consequences:**
+
+- ThemeToggle is now rendered inside `AppShell` header actions
+- Root layout simplified — no more floating ThemeToggle
+- Theme toggle accessible from both desktop and mobile header
+
+---
+
+## 84. Sidebar Active State: ADS Pill Indicator
+
+**Status:** Implemented (M1.2)
+
+**Context:** The M1.1 sidebar active state used `bg-white/15` — a simple background color change. The spec requires the active state to "visually match the ADS design language" and "do NOT simply change text color."
+
+**Decision:** Create `ads-nav-item` CSS classes with a left brand-color pill indicator, subtle glow, and inset highlight for the active state.
+
+**Reason:**
+
+- Left pill indicator (`width: 3px`, brand color) is a standard admin navigation pattern
+- Subtle `box-shadow` glow adds depth without being distracting
+- `inset 0 1px 0` highlight adds the liquid glass feel to the active item
+- Dark mode has slightly different opacity/glow for proper contrast
+- CSS class approach (`ads-nav-item`, `ads-nav-item--active`, `ads-nav-item--disabled`) is reusable for any navigation component
+
+**Consequences:**
+
+- `styles/components/nav.css` created with ADS nav styles
+- Sidebar component uses `cn()` to apply classes instead of inline Tailwind
+- MobileNav uses its own simpler styling (bottom nav doesn't need the pill indicator)
+
+---
+
+## 85. Header Brand Alignment with Sidebar
+
+**Status:** Implemented (M1.2)
+
+**Context:** The header spans both grid columns. Without alignment, the logo/title appeared offset from the sidebar below it.
+
+**Decision:** Use `pl-8` on the header Surface to visually align the logo area with the sidebar content.
+
+**Reason:**
+
+- Sidebar: `aside` has `p-4` (16px) + Surface has `p-4` (16px) = 32px total inset
+- Header: `Surface` uses `pl-8` (32px) to match
+- Right side uses `pr-6` (24px) for breathing room on the actions side
+- Simple, no structural CSS changes needed
+
+**Consequences:**
+
+- Header Surface uses asymmetric padding (`pl-8 pr-6`) for alignment
+- Logo visually aligns with sidebar navigation items below
+- AppShell no longer uses the `Header` ADS component — builds header directly with Surface for layout control

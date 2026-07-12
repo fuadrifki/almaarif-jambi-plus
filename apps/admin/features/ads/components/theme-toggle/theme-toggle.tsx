@@ -1,13 +1,18 @@
 'use client';
 
-import { Surface } from '@/components/ui';
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useSyncExternalStore } from 'react';
 
+import { cn } from '@/lib';
+
 const emptySubscribe = () => () => {};
 
-export const ThemeToggle = () => {
+type ThemeToggleProps = {
+  className?: string;
+};
+
+export const ThemeToggle = ({ className }: ThemeToggleProps) => {
   const { theme, setTheme } = useTheme();
 
   const mounted = useSyncExternalStore(
@@ -23,18 +28,16 @@ export const ThemeToggle = () => {
   const isDark = theme === 'dark';
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
-      <Surface>
-        <button
-          type="button"
-          onClick={() => setTheme(isDark ? 'light' : 'dark')}
-          className="flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm text-(--text-secondary) transition hover:bg-black/5 hover:text-(--text-primary)"
-        >
-          {isDark ? <Sun size={16} /> : <Moon size={16} />}
-
-          {isDark ? 'Light' : 'Dark'}
-        </button>
-      </Surface>
-    </div>
+    <button
+      type="button"
+      onClick={() => setTheme(isDark ? 'light' : 'dark')}
+      className={cn(
+        'flex items-center justify-center rounded-xl border border-white/10 p-2 text-(--text-secondary) transition hover:bg-white/10 hover:text-(--text-primary)',
+        className,
+      )}
+      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+    >
+      {isDark ? <Sun size={16} /> : <Moon size={16} />}
+    </button>
   );
 };
