@@ -49,10 +49,6 @@ export const designNavigation = [
         href: '/design/card',
       },
       {
-        label: 'Dialog',
-        href: '/design/dialog',
-      },
-      {
         label: 'Checkbox',
         href: '/design/checkbox',
       },

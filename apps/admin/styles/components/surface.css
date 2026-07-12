@@ -10,10 +10,6 @@
   transition: box-shadow var(--motion-normal) var(--motion-ease);
 }
 
-.ads-surface:hover {
-  box-shadow: var(--shadow-lg);
-}
-
 .ads-surface::before {
   content: '';
   position: absolute;

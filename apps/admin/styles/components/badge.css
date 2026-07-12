@@ -1,0 +1,86 @@
+.ads-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding-block: 0.125rem;
+  padding-inline: 0.5rem;
+
+  font-size: 0.75rem;
+  font-weight: 500;
+
+  border-radius: 9999px;
+
+  white-space: nowrap;
+  user-select: none;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.ads-badge:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 28%, transparent);
+}
+
+.ads-badge[disabled],
+.ads-badge[aria-disabled='true'] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* ======================
+   DEFAULT
+====================== */
+
+.ads-badge--default {
+  color: var(--text-secondary);
+
+  background: rgb(255 255 255 / 0.08);
+
+  -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(180%);
+  backdrop-filter: blur(var(--blur-lg)) saturate(180%);
+
+  border: 1px solid rgb(255 255 255 / 0.1);
+}
+
+/* ======================
+   SUCCESS
+====================== */
+
+.ads-badge--success {
+  color: var(--success);
+
+  background: color-mix(in srgb, var(--success) 15%, transparent);
+}
+
+/* ======================
+   WARNING
+====================== */
+
+.ads-badge--warning {
+  color: var(--warning);
+
+  background: color-mix(in srgb, var(--warning) 15%, transparent);
+}
+
+/* ======================
+   DANGER
+====================== */
+
+.ads-badge--danger {
+  color: var(--danger);
+
+  background: color-mix(in srgb, var(--danger) 15%, transparent);
+}
+
+/* ======================
+   INFO
+====================== */
+
+.ads-badge--info {
+  color: var(--brand);
+
+  background: color-mix(in srgb, var(--brand) 15%, transparent);
+}

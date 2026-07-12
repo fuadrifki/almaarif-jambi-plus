@@ -1,11 +1,10 @@
 @import './tokens/background.css';
 @import './tokens/colors.css';
-@import './tokens/shadow.css';
 @import './tokens/motion.css';
 @import './tokens/typography.css';
-@import './tokens/glass.css';
 
 @import './components/surface.css';
+@import './components/badge.css';
 @import './components/button.css';
 @import './components/input.css';
 @import './components/textarea.css';
@@ -13,9 +12,7 @@
 @import './components/radio.css';
 @import './components/switch.css';
 @import './components/select.css';
-@import './components/dialog.css';
-@import './components/ads-layout.css';
-@import './components/app-layout.css';
+@import './components/layout.css';
 
 html,
 body {

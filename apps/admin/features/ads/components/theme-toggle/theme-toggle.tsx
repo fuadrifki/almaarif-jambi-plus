@@ -7,7 +7,7 @@ import { useSyncExternalStore } from 'react';
 
 const emptySubscribe = () => () => {};
 
-export function ThemeToggle() {
+export const ThemeToggle = () => {
   const { theme, setTheme } = useTheme();
 
   const mounted = useSyncExternalStore(
@@ -37,4 +37,4 @@ export function ThemeToggle() {
       </Surface>
     </div>
   );
-}
+};

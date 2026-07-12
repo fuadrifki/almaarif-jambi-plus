@@ -4,7 +4,7 @@ import type { User } from '@/features/auth/types';
 
 const SESSION_KEY = 'ads_session';
 
-export async function getSession(): Promise<User | null> {
+export const getSession = async (): Promise<User | null> => {
   const cookieStore = await cookies();
   const session = cookieStore.get(SESSION_KEY);
 
@@ -13,9 +13,9 @@ export async function getSession(): Promise<User | null> {
   }
 
   return JSON.parse(session.value) as User;
-}
+};
 
-export async function setSession(user: User) {
+export const setSession = async (user: User) => {
   const cookieStore = await cookies();
 
   cookieStore.set(SESSION_KEY, JSON.stringify(user), {
@@ -24,10 +24,10 @@ export async function setSession(user: User) {
     secure: process.env.NODE_ENV === 'production',
     path: '/',
   });
-}
+};
 
-export async function clearSession() {
+export const clearSession = async () => {
   const cookieStore = await cookies();
 
   cookieStore.delete(SESSION_KEY);
-}
+};

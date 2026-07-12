@@ -1,3 +1,1 @@
-export function BadgePage() {
-  return <></>;
-}
+export const BadgePage = () => <></>;

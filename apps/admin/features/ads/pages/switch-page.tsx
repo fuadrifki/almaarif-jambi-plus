@@ -6,7 +6,7 @@ import { Field } from '@/components/ui/field';
 import { Switch } from '@/components/ui/switch';
 import { SectionPreview } from '../components/section-preview';
 
-export function SwitchPage() {
+export const SwitchPage = () => {
   const [enabled, setEnabled] = useState(false);
 
   return (
@@ -44,4 +44,4 @@ export function SwitchPage() {
       </SectionPreview>
     </div>
   );
-}
+};

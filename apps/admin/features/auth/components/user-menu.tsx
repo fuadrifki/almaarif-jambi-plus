@@ -6,7 +6,7 @@ import { destroySession } from '@/features/auth/server';
 
 import type { User } from '../types';
 
-export function UserMenu({ user }: { user: User }) {
+export const UserMenu = ({ user }: { user: User }) => {
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -33,4 +33,4 @@ export function UserMenu({ user }: { user: User }) {
       </button>
     </div>
   );
-}
+};

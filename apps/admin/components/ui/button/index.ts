@@ -1,2 +1,2 @@
 export * from './button';
-export * from './button.types';
+export type * from './button.types';

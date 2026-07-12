@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
 
-export interface DesignShellProps {
+export type DesignShellProps = {
   children: ReactNode;
-}
+};

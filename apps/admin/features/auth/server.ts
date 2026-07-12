@@ -4,10 +4,10 @@ import type { User } from './types';
 
 import { setSession, clearSession } from '@/lib/auth';
 
-export async function createSession(user: User) {
+export const createSession = async (user: User) => {
   await setSession(user);
-}
+};
 
-export async function destroySession() {
+export const destroySession = async () => {
   await clearSession();
-}
+};

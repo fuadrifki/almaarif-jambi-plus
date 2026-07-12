@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 
-export interface HeaderProps {
+export type HeaderProps = {
   title?: ReactNode;
   logo?: ReactNode;
   actions?: ReactNode;
-}
+};

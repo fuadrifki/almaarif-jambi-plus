@@ -4,7 +4,7 @@ import { cn } from '@/lib';
 
 import type { ButtonProps } from './button.types';
 
-export function Button({
+export const Button = ({
   children,
   className,
   variant = 'primary',
@@ -14,7 +14,7 @@ export function Button({
   rightIcon,
   disabled,
   ...props
-}: ButtonProps) {
+}: ButtonProps) => {
   const isLoading = status === 'loading';
 
   return (
@@ -38,4 +38,4 @@ export function Button({
       </span>
     </button>
   );
-}
+};

@@ -6,7 +6,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Field } from '@/components/ui/field';
 import { SectionPreview } from '../components/section-preview';
 
-export function CheckboxPage() {
+export const CheckboxPage = () => {
   const [checked, setChecked] = useState(false);
 
   return (
@@ -62,4 +62,4 @@ export function CheckboxPage() {
       </SectionPreview>
     </div>
   );
-}
+};

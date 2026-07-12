@@ -7,7 +7,7 @@ import { cn } from '@/lib';
 
 import type { SelectProps } from './select.types';
 
-export function Select({
+export const Select = ({
   options,
   value,
   defaultValue,
@@ -17,7 +17,7 @@ export function Select({
   disabled,
   className,
   onChange,
-}: SelectProps) {
+}: SelectProps) => {
   const isLoading = status === 'loading';
 
   return (
@@ -68,4 +68,4 @@ export function Select({
       </SelectPrimitive.Portal>
     </SelectPrimitive.Root>
   );
-}
+};

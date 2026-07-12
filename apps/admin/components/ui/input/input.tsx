@@ -6,14 +6,14 @@ import { cn } from '@/lib';
 
 import type { InputProps } from './input.types';
 
-export function Input({
+export const Input = ({
   className,
   size = 'md',
   status = 'idle',
   type = 'text',
   disabled,
   ...props
-}: InputProps) {
+}: InputProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const isPassword = type === 'password';
@@ -50,4 +50,4 @@ export function Input({
       ) : null}
     </div>
   );
-}
+};

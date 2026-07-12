@@ -7,14 +7,10 @@ const mockUser: User = {
   role: 'admin',
 };
 
-export async function login(email: string, password: string) {
+export const login = async (email: string, password: string) => {
   if (!email || !password) {
     throw new Error('Email and password are required');
   }
 
   return mockUser;
-}
-
-export async function logout() {
-  return true;
-}
+};

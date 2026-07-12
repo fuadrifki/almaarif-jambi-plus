@@ -1,4 +1,4 @@
-export async function http<T>(input: RequestInfo | URL, init?: RequestInit): Promise<T> {
+export const http = async <T>(input: RequestInfo | URL, init?: RequestInit): Promise<T> => {
   const response = await fetch(input, init);
 
   if (!response.ok) {
@@ -6,4 +6,4 @@ export async function http<T>(input: RequestInfo | URL, init?: RequestInit): Pro
   }
 
   return response.json();
-}
+};

@@ -1,9 +1,7 @@
-import type { HTMLAttributes } from 'react';
-
 import { cn } from '@/lib';
 
-export type SurfaceProps = HTMLAttributes<HTMLDivElement>;
+import type { SurfaceProps } from './surface.types';
 
-export function Surface({ className, ...props }: SurfaceProps) {
-  return <div className={cn('ads-surface', className)} {...props} />;
-}
+export const Surface = ({ className, ...props }: SurfaceProps) => (
+  <div className={cn('ads-surface', className)} {...props} />
+);

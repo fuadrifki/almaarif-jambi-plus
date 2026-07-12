@@ -6,10 +6,10 @@ export type ButtonSize = 'sm' | 'md' | 'lg';
 
 export type ButtonStatus = 'idle' | 'loading';
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
   size?: ButtonSize;
   status?: ButtonStatus;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
-}
+};

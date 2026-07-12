@@ -6,10 +6,8 @@ import { cn } from '@/lib';
 
 import type { SwitchProps } from './switch.types';
 
-export function Switch({ className, ...props }: SwitchProps) {
-  return (
-    <SwitchPrimitive.Root className={cn('ads-switch', className)} {...props}>
-      <SwitchPrimitive.Thumb className="ads-switch__thumb" />
-    </SwitchPrimitive.Root>
-  );
-}
+export const Switch = ({ className, ...props }: SwitchProps) => (
+  <SwitchPrimitive.Root className={cn('ads-switch', className)} {...props}>
+    <SwitchPrimitive.Thumb className="ads-switch__thumb" />
+  </SwitchPrimitive.Root>
+);

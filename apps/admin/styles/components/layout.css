@@ -1,3 +1,4 @@
+.ads-layout,
 .app-layout {
   display: grid;
 
@@ -10,10 +11,12 @@
   overflow: hidden;
 }
 
+.ads-layout__header,
 .app-layout__header {
   grid-area: header;
 }
 
+.ads-layout__sidebar,
 .app-layout__sidebar {
   grid-area: sidebar;
 
@@ -21,6 +24,7 @@
   overflow-y: auto;
 }
 
+.ads-layout__content,
 .app-layout__content {
   grid-area: content;
 

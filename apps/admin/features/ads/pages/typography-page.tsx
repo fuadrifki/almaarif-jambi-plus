@@ -49,56 +49,54 @@ const typographyExamples = [
   },
 ];
 
-export function TypographyPage() {
-  return (
-    <div className="space-y-10">
-      <header className="space-y-2">
-        <p className="text-sm font-medium text-(--text-secondary)">Foundations</p>
+export const TypographyPage = () => (
+  <div className="space-y-10">
+    <header className="space-y-2">
+      <p className="text-sm font-medium text-(--text-secondary)">Foundations</p>
 
-        <h1 className="text-4xl font-bold tracking-tight">Typography</h1>
+      <h1 className="text-4xl font-bold tracking-tight">Typography</h1>
 
-        <p className="text-(--text-secondary)">
-          Sistem tipografi yang digunakan pada aplikasi Almaarif.
-        </p>
-      </header>
+      <p className="text-(--text-secondary)">
+        Sistem tipografi yang digunakan pada aplikasi Almaarif.
+      </p>
+    </header>
 
-      {typographyExamples.map((item) => (
-        <SectionPreview
-          key={item.title}
-          title={item.title}
-          description={item.description}
-          code={item.code}
-        >
-          <p className={item.className}>{item.text}</p>
-        </SectionPreview>
-      ))}
-
-      <SectionPreview title="Tokens" description="Token typography yang digunakan ADS.">
-        <TokenPreview
-          items={[
-            {
-              name: 'Font Family',
-              value: 'Montserrat',
-            },
-            {
-              name: 'Display',
-              value: 'text-5xl font-bold',
-            },
-            {
-              name: 'Heading',
-              value: 'text-4xl font-bold',
-            },
-            {
-              name: 'Body',
-              value: 'text-base',
-            },
-            {
-              name: 'Caption',
-              value: 'text-sm',
-            },
-          ]}
-        />
+    {typographyExamples.map((item) => (
+      <SectionPreview
+        key={item.title}
+        title={item.title}
+        description={item.description}
+        code={item.code}
+      >
+        <p className={item.className}>{item.text}</p>
       </SectionPreview>
-    </div>
-  );
-}
+    ))}
+
+    <SectionPreview title="Tokens" description="Token typography yang digunakan ADS.">
+      <TokenPreview
+        items={[
+          {
+            name: 'Font Family',
+            value: 'Montserrat',
+          },
+          {
+            name: 'Display',
+            value: 'text-5xl font-bold',
+          },
+          {
+            name: 'Heading',
+            value: 'text-4xl font-bold',
+          },
+          {
+            name: 'Body',
+            value: 'text-base',
+          },
+          {
+            name: 'Caption',
+            value: 'text-sm',
+          },
+        ]}
+      />
+    </SectionPreview>
+  </div>
+);

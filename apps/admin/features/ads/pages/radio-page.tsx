@@ -6,7 +6,7 @@ import { Field } from '@/components/ui/field';
 import { RadioGroup, RadioItem } from '@/components/ui/radio';
 import { SectionPreview } from '../components/section-preview';
 
-export function RadioPage() {
+export const RadioPage = () => {
   const [value, setValue] = useState('male');
 
   return (
@@ -63,4 +63,4 @@ export function RadioPage() {
       </SectionPreview>
     </div>
   );
-}
+};

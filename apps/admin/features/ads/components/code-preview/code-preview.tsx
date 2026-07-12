@@ -1,17 +1,18 @@
 'use client';
 
+import { cn } from '@/lib';
 import { Check, ChevronDown, ChevronUp, Copy } from 'lucide-react';
 import { useState } from 'react';
 
-interface CodePreviewProps {
+type CodePreviewProps = {
   code: string;
-}
+};
 
-export function CodePreview({ code }: CodePreviewProps) {
+export const CodePreview = ({ code }: CodePreviewProps) => {
   const [expanded, setExpanded] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  async function handleCopy() {
+  const handleCopy = async () => {
     await navigator.clipboard.writeText(code);
 
     setCopied(true);
@@ -19,7 +20,7 @@ export function CodePreview({ code }: CodePreviewProps) {
     setTimeout(() => {
       setCopied(false);
     }, 1500);
-  }
+  };
 
   return (
     <div className="overflow-hidden rounded-xl border border-(--border)">
@@ -55,10 +56,10 @@ export function CodePreview({ code }: CodePreviewProps) {
       </div>
 
       <div
-        className={[
+        className={cn(
           'grid transition-all duration-300 ease-out',
           expanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]',
-        ].join(' ')}
+        )}
       >
         <div className="overflow-hidden">
           <pre className="overflow-x-auto bg-black/5 p-4 text-sm">
@@ -68,4 +69,4 @@ export function CodePreview({ code }: CodePreviewProps) {
       </div>
     </div>
   );
-}
+};
