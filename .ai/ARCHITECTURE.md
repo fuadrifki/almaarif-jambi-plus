@@ -203,7 +203,7 @@ graph TD
 
     DASHBOARD --> DASHBOARD_PAGE["pages/dashboard-page.tsx"]
 
-    ADS --> ADS_PAGES["pages/ (13 page components)"]
+    ADS --> ADS_PAGES["pages/ (18 page components)"]
     ADS --> ADS_SHELL["components/ads-shell/"]
     ADS --> ADS_CODE["components/code-preview/"]
     ADS --> ADS_COLOR["components/color-preview/"]
@@ -234,7 +234,7 @@ The `User` type is shared with `lib/auth/session.ts` and `components/app/app-she
 
 ### `features/ads`
 
-Design system documentation. Contains 13 page components and 6 utility components for the playground.
+Design system documentation. Contains 18 page components and 6 utility components for the playground.
 
 | Component        | Role                                    | Interactive? |
 | ---------------- | --------------------------------------- | ------------ |
@@ -306,7 +306,7 @@ RootLayout
 graph TD
     subgraph "app/ — Next.js Routes"
         LAYOUTS["Layouts<br/>(root, dashboard, design)"]
-        PAGES["Pages<br/>(login, dashboard, 13 design pages)"]
+        PAGES["Pages<br/>(login, dashboard, 18 design pages)"]
     end
 
     subgraph "features/ — Domain Modules"
@@ -316,7 +316,7 @@ graph TD
     end
 
     subgraph "components/ — Reusable UI"
-        UI["ui/*<br/>ADS Design System<br/>13 components"]
+        UI["ui/*<br/>ADS Design System<br/>16 components"]
         APP["app/*<br/>AppShell, Sidebar, MobileNav"]
     end
 
@@ -436,7 +436,7 @@ components/ui/component-name/
 └── index.ts                  # Barrel (export * + export type *)
 ```
 
-All 12 ADS components follow this convention exactly.
+All 16 ADS components follow this convention exactly.
 
 ### Feature Convention
 
@@ -497,14 +497,16 @@ export { DashboardPage as default } from '@/features/dashboard/pages/dashboard-p
 ```mermaid
 graph TD
     subgraph "Wrapping strategies"
-        NATIVE["Native HTML<br/>Surface, Button, Input, Textarea, Field, Badge"]
+        NATIVE["Native HTML<br/>Surface, Button, Input, Textarea, Field, Badge, EmptyState, Skeleton"]
         SURFACE_WRAP["Wraps Surface component<br/>Card, Header"]
-        RADIX["Wraps Radix UI primitive<br/>Checkbox, Radio, Select, Switch, DropdownMenu"]
+        RADIX["Wraps Radix UI primitive<br/>Checkbox, Radio, Select, Switch, DropdownMenu, AlertDialog"]
+        SONNER_WRAP["Wraps Sonner library<br/>Toast"]
     end
 
     NATIVE --> CN["cn() class merging"]
     SURFACE_WRAP --> CN
     RADIX --> CN
+    SONNER_WRAP --> CN
 
     CN --> LU["lucide-react icons<br/>(optional)"]
 ```
@@ -556,6 +558,8 @@ graph TD
     COMPONENTS --> DROPDOWN_CSS["dropdown-menu.css"]
     COMPONENTS --> NAV_CSS["nav.css"]
     COMPONENTS --> LAYOUT_CSS["layout.css"]
+    COMPONENTS --> TOAST_CSS["toast.css"]
+    COMPONENTS --> ALERT_DIALOG_CSS["alert-dialog.css"]
 ```
 
 **Tokens (20 remaining CSS custom properties):**
@@ -868,7 +872,7 @@ graph TD
         APP["app/ — Routes & Layouts"]
         CONFIG["config/ — appConfig"]
         PROVIDERS["providers/ — AppProvider, ThemeProvider"]
-        COMP_UI["components/ui/ — 12 ADS components"]
+        COMP_UI["components/ui/ — 16 ADS components"]
         COMP_APP["components/app/ — AppShell, Sidebar"]
         FEAT_AUTH["features/auth/ — Login, User"]
         FEAT_DASH["features/dashboard/ — Dashboard page"]

@@ -1330,3 +1330,118 @@ The type import violation is resolved. Only the component import remains.
 - Header Surface uses asymmetric padding (`pl-8 pr-6`) for alignment
 - Logo visually aligns with sidebar navigation items below
 - AppShell no longer uses the `Header` ADS component — builds header directly with Surface for layout control
+
+---
+
+## 86. Toast via Sonner + ADS Wrapper
+
+**Status:** Implemented (M1.3)
+
+**Context:** Every important action needs user feedback. The project needs a consistent toast/notification system. Multiple toast libraries exist (react-hot-toast, react-toastify, sonner).
+
+**Decision:** Use `sonner` as the toast library, wrapped in an ADS `toast` function and `<Toaster />` component.
+
+**Reason:**
+
+- Sonner is lightweight, has good defaults, and supports all toast variants (success, error, warning, info, loading)
+- ADS wrapper (`toast.success()`, `toast.error()`, etc.) provides a consistent API without exposing Sonner internals
+- `<Toaster />` renders in `AppProvider` (not AppShell) — available on all routes including `/login`
+- CSS styling via `styles/components/toast.css` applies liquid glass visual identity
+
+**Consequences:**
+
+- New dependency: `sonner` added to root `package.json`
+- All action feedback uses `toast.success()` / `toast.error()` — no more `alert()` or inline error messages
+- Toast is globally available via `import { toast } from '@/components/ui'`
+
+---
+
+## 87. AlertDialog for Destructive Confirmations
+
+**Status:** Implemented (M1.3)
+
+**Context:** Destructive actions (delete, logout) need explicit confirmation. The codebase used `window.confirm()` which is non-customizable and visually inconsistent.
+
+**Decision:** Use `@radix-ui/react-alert-dialog` for all destructive action confirmations.
+
+**Reason:**
+
+- Radix AlertDialog handles focus trapping, keyboard navigation, and accessibility (ARIA roles)
+- ADS styling via `styles/components/alert-dialog.css` applies liquid glass visual identity
+- Replaces `window.confirm()` — consistent look and feel with the rest of the design system
+- Replaces `alert()` for error messages — toast is used instead
+
+**Consequences:**
+
+- New dependency: `@radix-ui/react-alert-dialog` added to root `package.json`
+- `student-list.tsx` delete button now shows AlertDialog before calling `deleteStudent`
+- `window.confirm()` and `alert()` are eliminated from the codebase
+
+---
+
+## 88. EmptyState and Skeleton ADS Components
+
+**Status:** Implemented (M1.3)
+
+**Context:** Features need consistent empty state messaging and loading placeholders. These patterns would be duplicated across features without a shared component.
+
+**Decision:** Create ADS EmptyState and Skeleton components with design system documentation.
+
+**Reason:**
+
+- EmptyState provides icon, title, description, and action — used in lists with no data
+- Skeleton provides loading placeholders (Skeleton, SkeletonText, SkeletonAvatar, SkeletonCard)
+- Both follow ADS architecture: `components/ui/` + `styles/components/` + design system page + route
+- Prevents feature-specific loading/empty state implementations that diverge visually
+
+**Consequences:**
+
+- EmptyState is a server component (no interactivity needed)
+- Skeleton components use `animate-pulse` for the loading animation
+- StudentList uses both EmptyState and Skeleton for empty/loading states
+
+---
+
+## 89. Global Toaster in AppProvider
+
+**Status:** Implemented (M1.3)
+
+**Context:** Toasts need to be available on all routes, including `/login` (which is outside the dashboard layout). Placing `<Toaster />` in `AppShell` means login page has no toast support.
+
+**Decision:** Place `<Toaster />` in `AppProvider` (root-level client component wrapper) instead of `AppShell`.
+
+**Reason:**
+
+- `AppProvider` wraps the entire app — all routes get toast support
+- Login form can now show `toast.success()` / `toast.error()` feedback
+- Logout can show `toast.success()` before redirect
+- Single `<Toaster />` instance — no duplicates
+
+**Consequences:**
+
+- `AppProvider` now renders `<Toaster />` after `{children}`
+- `AppShell` no longer renders `<Toaster />`
+- All routes (dashboard, auth, design system) have toast support
+
+---
+
+## 90. Field Accessibility: htmlFor Association
+
+**Status:** Implemented (M1.3)
+
+**Context:** Form fields had `<label>` elements without `htmlFor` attribute, breaking the label-input association for screen readers and click-to-focus.
+
+**Decision:** Add optional `id` prop to Field component. When provided, `<label htmlFor={id}>` associates with the corresponding input.
+
+**Reason:**
+
+- `htmlFor` + `id` is the standard HTML pattern for label-input association
+- Screen readers announce the label when the input is focused
+- Clicking the label focuses the associated input
+- `id` is optional — existing Field usage without `id` continues to work
+
+**Consequences:**
+
+- `field.types.ts` updated with `id?: string` prop
+- `field.tsx` passes `id` to `<label htmlFor={id}>`
+- Login form and other forms should pass matching `id` values for new fields
