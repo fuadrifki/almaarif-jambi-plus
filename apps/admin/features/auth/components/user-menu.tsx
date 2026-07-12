@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import { destroySession } from '@/features/auth/server';
 
-import type { User } from '../types';
+import type { User } from '@/lib/types/user';
 
 export const UserMenu = ({ user }: { user: User }) => {
   const router = useRouter();
@@ -21,7 +21,7 @@ export const UserMenu = ({ user }: { user: User }) => {
       <div className="text-right">
         <p className="text-sm font-medium text-(--text-primary)">{user.name}</p>
 
-        <p className="text-xs text-(--text-secondary)">{user.email}</p>
+        <p className="text-xs capitalize text-(--text-secondary)">{user.role}</p>
       </div>
 
       <button

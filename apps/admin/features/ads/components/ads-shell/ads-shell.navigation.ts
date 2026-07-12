@@ -60,6 +60,10 @@ export const designNavigation = [
         label: 'Switch',
         href: '/design/switch',
       },
+      {
+        label: 'Badge',
+        href: '/design/badge',
+      },
     ],
   },
 ] as const;

@@ -16,7 +16,7 @@ export const AppShell = ({ children, user }: AppShellProps) => (
     </header>
 
     <aside className="app-layout__sidebar p-4">
-      <Sidebar />
+      <Sidebar role={user.role} />
     </aside>
 
     <main className="app-layout__content p-4 mt-4">{children}</main>

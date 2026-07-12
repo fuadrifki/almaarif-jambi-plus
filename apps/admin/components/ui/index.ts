@@ -1,5 +1,6 @@
 export * from './surface';
 export * from './card';
+export * from './badge';
 export * from './button';
 export * from './header';
 export * from './input';

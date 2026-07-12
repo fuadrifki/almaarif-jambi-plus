@@ -1,6 +1,6 @@
 'use server';
 
-import type { User } from './types';
+import type { User } from '@/lib/types/user';
 
 import { setSession, clearSession } from '@/lib/auth';
 

@@ -1091,3 +1091,52 @@ grid-template:
 **Reason:** Users choose their theme explicitly via the toggle. No automatic switching based on OS preference.
 
 **Consequences:** Theme is always what the user last set. No "auto" mode. The toggle cycles between light and dark only.
+
+---
+
+## 76. Remaining Boundary Violation: components/app → features/auth
+
+**Status:** Tracked as technical debt (M0)
+
+**Context:** `components/app/app-shell/app-shell.tsx` imports `UserMenu` from `features/auth/components/user-menu`. This violates the intended layering `app/ → features/ → components/ → lib/` because a `components/` module depends upward on a `features/` module.
+
+**Decision:** Do not fix this independently. Track as technical debt.
+
+**Reason:** The `UserMenu` component is tightly coupled to the auth feature's logout logic (`destroySession` server action, `router.push`, `router.refresh`). Moving it out of `features/auth/` requires also extracting the logout server action or duplicating it. The cleanest resolution is extracting `UserMenu` into `components/app/user-menu/` with its own logout logic — but this is a sidebar/navigation refactor concern, not a standalone cleanup.
+
+The dependency is:
+
+- `app-shell.tsx` → imports `UserMenu` component from `features/auth/components`
+- `app-shell.types.ts` → imports `User` type from `lib/types/user` (already fixed in M0)
+
+The type import violation is resolved. Only the component import remains.
+
+**Consequences:**
+
+- `components/app/` depends on `features/auth/` for `UserMenu`
+- Adding new features does not worsen this violation (it is isolated to `app-shell.tsx`)
+- Will be resolved as part of sidebar/navigation refactor when role-based navigation is introduced (M1)
+- The refactor moves `UserMenu` to `components/app/user-menu/` and passes logout action as a prop or extracts to `lib/`
+
+---
+
+## 77. Architectural Fixes Independent from Feature Milestones
+
+**Status:** Established (M0 review)
+
+**Context:** M0 resolved 2 of 3 boundary violations as part of infrastructure work. The remaining violation was left tracked as debt.
+
+**Decision:** Architectural cleanup and technical debt resolution should be independent from feature implementation. Do not bundle architectural fixes into feature milestones unless they are genuinely blocking.
+
+**Reason:**
+
+- Feature milestones should deliver user-visible functionality, not refactoring
+- Bundling architecture work into features creates reviewable-but-mixed PRs that are harder to review
+- Architectural debt has its own lifecycle and priority; it should be tracked and addressed on its own terms
+- Exception: if an architectural issue genuinely blocks a feature (e.g., a type definition needed by the feature), it may be resolved as a prerequisite — but this should be explicit, not assumed
+
+**Consequences:**
+
+- Technical debt items are tracked in DECISIONS.md with clear rationale for why they exist
+- Feature milestones reference debt items only when blocked by them
+- Architecture improvements are separate work items with their own acceptance criteria

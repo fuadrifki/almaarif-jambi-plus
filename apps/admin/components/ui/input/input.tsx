@@ -1,4 +1,5 @@
 'use client';
+
 import { Eye, EyeOff, LoaderCircle } from 'lucide-react';
 import { useState } from 'react';
 
@@ -12,6 +13,8 @@ export const Input = ({
   status = 'idle',
   type = 'text',
   disabled,
+  leftIcon,
+  rightIcon,
   ...props
 }: InputProps) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,7 +25,13 @@ export const Input = ({
   const inputType = isPassword && showPassword ? 'text' : type;
 
   return (
-    <div className="ads-input-wrapper">
+    <div className={cn('ads-input-wrapper relative', className)}>
+      {leftIcon && (
+        <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-(--text-secondary)">
+          {leftIcon}
+        </span>
+      )}
+
       <input
         type={inputType}
         disabled={disabled || isLoading}
@@ -31,13 +40,14 @@ export const Input = ({
           `ads-input--${size}`,
           `ads-input--${status}`,
           isPassword && 'ads-input--password',
-          className,
+          leftIcon && 'ads-input--has-left-icon',
+          rightIcon && 'ads-input--has-right-icon',
         )}
         {...props}
       />
 
       {isLoading ? (
-        <LoaderCircle className="ads-input__loader size-4 animate-spin" />
+        <LoaderCircle className="ads-input__loader size-4" />
       ) : isPassword ? (
         <button
           type="button"
@@ -47,6 +57,8 @@ export const Input = ({
         >
           {showPassword ? <Eye className="size-4" /> : <EyeOff className="size-4" />}
         </button>
+      ) : rightIcon ? (
+        <span className="ads-input__icon ads-input__icon--right">{rightIcon}</span>
       ) : null}
     </div>
   );

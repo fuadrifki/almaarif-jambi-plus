@@ -1,18 +1,22 @@
 import { cookies } from 'next/headers';
 
-import type { User } from '@/features/auth/types';
+import type { User } from '@/lib/types/user';
 
 const SESSION_KEY = 'ads_session';
 
-export const getSession = async (): Promise<User | null> => {
+export const getSession = async () => {
   const cookieStore = await cookies();
   const session = cookieStore.get(SESSION_KEY);
 
-  if (!session) {
+  if (!session?.value) {
     return null;
   }
 
-  return JSON.parse(session.value) as User;
+  try {
+    return JSON.parse(session.value) as User;
+  } catch {
+    return null;
+  }
 };
 
 export const setSession = async (user: User) => {
