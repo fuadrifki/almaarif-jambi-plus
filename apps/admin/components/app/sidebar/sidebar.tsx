@@ -8,6 +8,10 @@ const navigation = [
     href: '/',
   },
   {
+    label: 'Design System',
+    href: '/design',
+  },
+  {
     label: 'Users',
     href: '/users',
   },

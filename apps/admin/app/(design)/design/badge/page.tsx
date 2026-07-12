@@ -1,1 +1,1 @@
-export { BadgePage as default } from '@/features/design-system/pages/badge-page';
+export { BadgePage as default } from '@/features/ads/pages/badge-page';

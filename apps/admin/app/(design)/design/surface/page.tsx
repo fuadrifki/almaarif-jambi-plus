@@ -1,1 +1,1 @@
-export { SurfacePage as default } from '@/features/design-system/pages/surface-page';
+export { SurfacePage as default } from '@/features/ads/pages/surface-page';

@@ -5,6 +5,7 @@ import './globals.css';
 
 import { appConfig } from '@/config/app';
 import { AppProvider } from '@/providers';
+import { ThemeToggle } from '@/features/ads/components/theme-toggle';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -31,7 +32,10 @@ export default function RootLayout({
   return (
     <html lang="id" suppressHydrationWarning className={montserrat.variable}>
       <body className="font-sans antialiased min-h-full flex flex-col">
-        <AppProvider>{children}</AppProvider>
+        <AppProvider>
+          <ThemeToggle />
+          {children}
+        </AppProvider>
       </body>
     </html>
   );

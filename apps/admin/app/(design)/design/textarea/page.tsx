@@ -1,1 +1,1 @@
-export { TextareaPage as default } from '@/features/design-system/pages/textarea-page';
+export { TextareaPage as default } from '@/features/ads/pages/textarea-page';

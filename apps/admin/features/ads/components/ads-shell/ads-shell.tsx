@@ -1,15 +1,14 @@
 import Link from 'next/link';
-import { designNavigation } from './design-shell.navigation';
-import type { DesignShellProps } from './design-shell.types';
-import { Surface } from '@/components/ui';
+import { designNavigation } from './ads-shell.navigation';
+import type { DesignShellProps } from './ads-shell.types';
+import { Header, Surface } from '@/components/ui';
+import { Logo } from '@almaarif/brand';
 
 export function DesignShell({ children }: DesignShellProps) {
   return (
     <div className="ads-layout gap-y-4">
-      <header className="ads-layout__header p-4">
-        <Surface className="flex h-16 items-center justify-between px-6">
-          <span className="font-semibold">Almaarif Design System</span>
-        </Surface>
+      <header className="app-layout__header p-4">
+        <Header title="Almaarif Design System" logo={<Logo width={50} height={30} />} />
       </header>
 
       <aside className="ads-layout__sidebar p-4">

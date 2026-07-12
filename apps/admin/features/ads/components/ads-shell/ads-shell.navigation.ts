@@ -1,5 +1,14 @@
 export const designNavigation = [
   {
+    title: 'Dashboard',
+    items: [
+      {
+        label: 'Admin',
+        href: '/',
+      },
+    ],
+  },
+  {
     title: 'Foundations',
     items: [
       {

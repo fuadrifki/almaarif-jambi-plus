@@ -1,4 +1,4 @@
-import { SwitchPage } from '@/features/design-system/pages/switch-page';
+import { SwitchPage } from '@/features/ads/pages/switch-page';
 
 export default function Page() {
   return <SwitchPage />;

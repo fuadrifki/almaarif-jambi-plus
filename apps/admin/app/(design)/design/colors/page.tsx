@@ -1,1 +1,1 @@
-export { ColorsPage as default } from '@/features/design-system/pages/colors-page';
+export { ColorsPage as default } from '@/features/ads/pages/colors-page';

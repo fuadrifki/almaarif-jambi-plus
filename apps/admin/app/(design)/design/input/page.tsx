@@ -1,1 +1,1 @@
-export { InputPage as default } from '@/features/design-system/pages/input-page';
+export { InputPage as default } from '@/features/ads/pages/input-page';

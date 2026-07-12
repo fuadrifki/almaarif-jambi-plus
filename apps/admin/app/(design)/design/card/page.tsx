@@ -1,1 +1,1 @@
-export { CardPage as default } from '@/features/design-system/pages/card-page';
+export { CardPage as default } from '@/features/ads/pages/card-page';
