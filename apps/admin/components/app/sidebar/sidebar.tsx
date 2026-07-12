@@ -1,55 +1,47 @@
-import Link from 'next/link';
+'use client';
 
-import { Surface } from '@/components/ui';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+import { Badge, Surface } from '@/components/ui';
+import { getNavigationForRole } from '@/config/navigation';
 
 import type { UserRole } from '@/lib/types/user';
-
-type NavItem = {
-  label: string;
-  href: string;
-};
-
-const adminNav: NavItem[] = [
-  { label: 'Dashboard', href: '/' },
-  { label: 'Siswa', href: '/students' },
-  { label: 'Design System', href: '/design' },
-];
-
-const teacherNav: NavItem[] = [
-  { label: 'Dashboard', href: '/' },
-  { label: 'Absensi', href: '/attendance' },
-  { label: 'Riwayat', href: '/attendance/history' },
-];
-
-const getNavigation = (role: UserRole): NavItem[] => {
-  switch (role) {
-    case 'admin':
-      return adminNav;
-    case 'teacher':
-      return teacherNav;
-    default:
-      return [];
-  }
-};
 
 type SidebarProps = {
   role: UserRole;
 };
 
 export const Sidebar = ({ role }: SidebarProps) => {
-  const navigation = getNavigation(role);
+  const pathname = usePathname();
+  const items = getNavigationForRole(role);
 
   return (
     <Surface className="h-full space-y-3 p-4">
-      {navigation.map(({ label, href }) => (
-        <Link
-          key={href}
-          href={href}
-          className="block rounded-xl px-3 py-2 text-sm text-(--text-secondary) transition hover:bg-white/10 hover:text-(--text-primary)"
-        >
-          {label}
-        </Link>
-      ))}
+      {items.map(({ label, href, icon: Icon, disabled, badge }) => {
+        const isActive = href === '/' ? pathname === '/' : pathname.startsWith(href);
+
+        return (
+          <Link
+            key={href}
+            href={disabled ? '#' : href}
+            aria-disabled={disabled}
+            className={`flex items-center gap-3 rounded-xl px-3 py-2 text-sm transition ${
+              disabled
+                ? 'pointer-events-none cursor-default opacity-40'
+                : isActive
+                  ? 'bg-white/15 font-medium text-(--text-primary)'
+                  : 'text-(--text-secondary) hover:bg-white/10 hover:text-(--text-primary)'
+            }`}
+          >
+            <Icon size={18} />
+
+            <span className="flex-1">{label}</span>
+
+            {badge && <Badge variant={disabled ? 'default' : 'info'}>{badge}</Badge>}
+          </Link>
+        );
+      })}
     </Surface>
   );
 };

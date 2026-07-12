@@ -1140,3 +1140,74 @@ The type import violation is resolved. Only the component import remains.
 - Technical debt items are tracked in DECISIONS.md with clear rationale for why they exist
 - Feature milestones reference debt items only when blocked by them
 - Architecture improvements are separate work items with their own acceptance criteria
+
+---
+
+## 78. Centralized Navigation Config
+
+**Status:** Implemented (M1.1)
+
+**Context:** Navigation items (label, href, icon, roles, disabled state, badge) were scattered across sidebar and mobile-nav components. Adding a new nav item required editing multiple files.
+
+**Decision:** Create a single source of truth at `config/navigation.ts` that defines all navigation items with their roles, icons, disabled states, and badges. Both Sidebar and MobileNav consume this config.
+
+**Reason:**
+
+- Adding/removing navigation items requires editing only one file
+- Role filtering logic (`getNavigationForRole`) is centralized
+- Future features can add their nav entry without touching components
+- Disabled state and badges (e.g., "Soon") are config-driven
+
+**Consequences:**
+
+- `config/navigation.ts` imports Lucide icons — acceptable for config
+- Both Sidebar and MobileNav are client components that call `getNavigationForRole(role)`
+- New features add their nav entry to `config/navigation.ts` as part of their milestone
+
+---
+
+## 79. Mobile-First Responsive Shell with Bottom Navigation
+
+**Status:** Implemented (M1.1)
+
+**Context:** The admin shell was desktop-only. On mobile (< 768px), the sidebar was visible but cramped. No mobile navigation pattern existed.
+
+**Decision:** Implement a responsive shell: desktop keeps the existing sidebar; mobile hides the sidebar and shows a fixed bottom navigation bar with max 5 items + a "More" overflow menu.
+
+**Reason:**
+
+- Mobile bottom navigation is the standard pattern for admin apps on phones
+- Max 5 items keeps the bar uncluttered; overflow goes to "More"
+- Desktop layout unchanged — no regression for existing users
+- CSS Grid media query (`@media max-width: 767px`) controls layout switching
+- Mobile nav is a fixed overlay (`position: fixed; bottom: 0`) — does not affect content flow
+
+**Consequences:**
+
+- `layout.css` uses media query to hide sidebar and add `padding-bottom: 64px` on mobile
+- `MobileNav` component is rendered inside `AppShell` but only visible on mobile via CSS
+- "More" menu shows overflow nav items + profile + logout
+- `UserMenu` in header is hidden on small screens via `hidden sm:inline` on the name text
+
+---
+
+## 80. Auth Redirect for Authenticated Users on /login
+
+**Status:** Implemented (M1.1)
+
+**Context:** Authenticated users could still visit `/login` and see the login form. This is a poor UX — they should be redirected to the dashboard.
+
+**Decision:** Create an `(auth)/layout.tsx` route group that checks for an existing session. If a session exists, redirect to `/`.
+
+**Reason:**
+
+- Prevents authenticated users from seeing the login page
+- Uses the same `getSession()` server-side check as the dashboard layout
+- Layout-level check means it applies to all auth routes (not just `/login`)
+- If future auth routes are added (register, forgot password), they get the redirect for free
+
+**Consequences:**
+
+- `(auth)/layout.tsx` is a server component — no client-side JS overhead
+- Redirect is server-side via `redirect('/')` — no flash of login form
+- If no session, renders children normally (login page)

@@ -11,18 +11,49 @@ import { createSession } from '@/features/auth/server';
 import { Surface } from '@/components/ui';
 import { Logo } from '@almaarif/brand';
 
+type FieldErrors = {
+  email?: string;
+  password?: string;
+};
+
 export const LoginForm = () => {
   const router = useRouter();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const validate = (): boolean => {
+    const errors: FieldErrors = {};
+
+    if (!email.trim()) {
+      errors.email = 'Email wajib diisi';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.email = 'Format email tidak valid';
+    }
+
+    if (!password) {
+      errors.password = 'Password wajib diisi';
+    } else if (password.length < 6) {
+      errors.password = 'Password minimal 6 karakter';
+    }
+
+    setFieldErrors(errors);
+
+    return Object.keys(errors).length === 0;
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     setError('');
+
+    if (!validate()) {
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -39,6 +70,8 @@ export const LoginForm = () => {
     }
   };
 
+  const canSubmit = email.trim().length > 0 && password.length > 0;
+
   return (
     <main className="flex min-h-screen items-center justify-center">
       <Surface className="w-full max-w-md p-8">
@@ -53,26 +86,34 @@ export const LoginForm = () => {
             <p className="text-sm text-(--text-secondary)">Login to access dashboard</p>
           </div>
 
-          <Field label="Email" required error={error}>
+          <Field label="Email" required error={fieldErrors.email}>
             <Input
               type="email"
               placeholder="admin@almaarif.id"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              status={error ? 'error' : 'idle'}
+              status={fieldErrors.email ? 'error' : 'idle'}
             />
           </Field>
 
-          <Field label="Password" required>
+          <Field label="Password" required error={fieldErrors.password}>
             <Input
               type="password"
               placeholder="••••••••"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
+              status={fieldErrors.password ? 'error' : 'idle'}
             />
           </Field>
 
-          <Button type="submit" className="w-full" status={loading ? 'loading' : 'idle'}>
+          {error && <p className="text-sm text-center text-red-400">{error}</p>}
+
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={!canSubmit}
+            status={loading ? 'loading' : 'idle'}
+          >
             Login
           </Button>
         </form>

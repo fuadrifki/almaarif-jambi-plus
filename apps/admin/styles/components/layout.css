@@ -32,3 +32,18 @@
   min-height: 0;
   overflow-y: auto;
 }
+
+@media (max-width: 767px) {
+  .app-layout {
+    grid-template:
+      'header' 64px
+      'content' 1fr
+      / 1fr;
+
+    padding-bottom: 64px;
+  }
+
+  .app-layout__sidebar {
+    display: none;
+  }
+}
