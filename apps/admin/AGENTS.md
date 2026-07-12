@@ -96,6 +96,10 @@ Completed:
 - Switch
 - Badge
 - DropdownMenu
+- Toast
+- AlertDialog
+- EmptyState
+- Skeleton
 
 ---
 
@@ -122,18 +126,20 @@ Create required component only
 
 # Current Feature
 
-M1.2 Complete — Navigation & App Shell Foundation
+M1.3 Complete — UX Foundation
 
-The admin shell is production-ready with:
+Consistent UX patterns established:
 
-- Centralized navigation config
-- Responsive layout (desktop sidebar + mobile bottom nav + /more page)
-- ADS DropdownMenu for UserMenu
-- Theme toggle in header
-- Auth redirect for authenticated users
-- Login form with per-field validation
+- ADS Toast (Sonner wrapper) for action feedback
+- ADS AlertDialog (Radix wrapper) for destructive confirmations
+- ADS EmptyState for empty data messaging
+- ADS Skeleton for loading placeholders
+- Global Toaster in AppProvider (all routes)
+- All actions use toast feedback (no more alert() or window.confirm())
+- Error boundary with friendly messaging
+- Field accessibility (htmlFor + id association)
 
-Next: Business features (Student Management is partially done)
+Next: Business features (Teacher Management, Attendance Input)
 
 ---
 

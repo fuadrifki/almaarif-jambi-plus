@@ -1,0 +1,71 @@
+/* ==============================
+   ADS Toast (Sonner)
+============================== */
+
+/* Override Sonner defaults with ADS styling */
+
+.ads-toast {
+  border-radius: var(--radius-xl) !important;
+  background: var(--surface) !important;
+  border: 1px solid rgb(255 255 255 / 0.22) !important;
+  -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(190%) brightness(1.08) !important;
+  backdrop-filter: blur(var(--blur-lg)) saturate(190%) brightness(1.08) !important;
+  box-shadow:
+    0 8px 32px rgb(0 0 0 / 0.12),
+    0 2px 8px rgb(0 0 0 / 0.06) !important;
+  color: var(--text-primary) !important;
+}
+
+.dark .ads-toast {
+  border-color: rgb(255 255 255 / 0.1) !important;
+  box-shadow:
+    0 8px 32px rgb(0 0 0 / 0.28),
+    0 2px 8px rgb(0 0 0 / 0.12) !important;
+}
+
+.ads-toast[data-type='success'] {
+  border-left: 3px solid var(--success) !important;
+}
+
+.ads-toast[data-type='error'] {
+  border-left: 3px solid var(--danger) !important;
+}
+
+.ads-toast[data-type='warning'] {
+  border-left: 3px solid var(--warning) !important;
+}
+
+.ads-toast[data-type='info'] {
+  border-left: 3px solid var(--brand) !important;
+}
+
+.ads-toast__title {
+  font-weight: 600 !important;
+  font-size: 0.875rem !important;
+  color: var(--text-primary) !important;
+}
+
+.ads-toast__description {
+  font-size: 0.8125rem !important;
+  color: var(--text-secondary) !important;
+}
+
+.ads-toast__action {
+  border-radius: var(--radius-full) !important;
+  background: var(--button-primary) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  font-size: 0.75rem !important;
+}
+
+.ads-toast__cancel {
+  border-radius: var(--radius-full) !important;
+  background: transparent !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-secondary) !important;
+  font-size: 0.75rem !important;
+}
+
+.ads-toast__close {
+  color: var(--text-secondary) !important;
+}

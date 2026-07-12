@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect } from 'react';
+import { AlertTriangle, RefreshCw } from 'lucide-react';
 
-import { Button } from '@/components/ui';
-import { Surface } from '@/components/ui';
+import { Button, Surface } from '@/components/ui';
 
 export default function DashboardError({
   error,
@@ -18,13 +18,21 @@ export default function DashboardError({
 
   return (
     <Surface className="mx-auto mt-12 max-w-md p-8 text-center">
+      <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-500/10">
+        <AlertTriangle size={32} className="text-red-400" />
+      </div>
+
       <h2 className="text-xl font-semibold text-(--text-primary)">Terjadi Kesalahan</h2>
 
       <p className="mt-2 text-sm text-(--text-secondary)">
-        {error.message || 'Terjadi kesalahan yang tidak terduga.'}
+        {error.message || 'Terjadi kesalahan yang tidak terduga. Silakan coba lagi.'}
       </p>
 
-      <Button className="mt-6" onClick={reset}>
+      {error.digest && (
+        <p className="mt-1 text-xs text-(--text-secondary)">Error ID: {error.digest}</p>
+      )}
+
+      <Button className="mt-6" leftIcon={<RefreshCw size={16} />} onClick={reset}>
         Coba Lagi
       </Button>
     </Surface>

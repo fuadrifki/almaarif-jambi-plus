@@ -2,8 +2,14 @@
 
 import type { PropsWithChildren } from 'react';
 
+import { Toaster } from '@/components/ui';
+
 import { ThemeProvider } from './theme-provider';
 
 export const AppProvider = ({ children }: PropsWithChildren) => (
-  <ThemeProvider>{children}</ThemeProvider>
+  <ThemeProvider>
+    {children}
+
+    <Toaster />
+  </ThemeProvider>
 );

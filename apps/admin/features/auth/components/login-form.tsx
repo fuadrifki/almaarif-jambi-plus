@@ -3,12 +3,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import { Button } from '@/components/ui/button';
-import { Field } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
+import { Button, Field, Input, Surface, toast } from '@/components/ui';
 import { login } from '@/features/auth';
 import { createSession } from '@/features/auth/server';
-import { Surface } from '@/components/ui';
 import { Logo } from '@almaarif/brand';
 
 type FieldErrors = {
@@ -22,7 +19,6 @@ export const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const validate = (): boolean => {
@@ -46,8 +42,6 @@ export const LoginForm = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    setError('');
-
     if (!validate()) {
       return;
     }
@@ -59,10 +53,12 @@ export const LoginForm = () => {
 
       await createSession(user);
 
+      toast.success('Login berhasil');
+
       router.push('/');
       router.refresh();
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'Login failed');
+      toast.error(error instanceof Error ? error.message : 'Login gagal. Silakan coba lagi.');
     } finally {
       setLoading(false);
     }
@@ -103,8 +99,6 @@ export const LoginForm = () => {
               status={fieldErrors.password ? 'error' : 'idle'}
             />
           </Field>
-
-          {error && <p className="text-sm text-center text-red-400">{error}</p>}
 
           <Button
             type="submit"

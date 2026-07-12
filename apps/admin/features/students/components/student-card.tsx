@@ -8,7 +8,7 @@ import type { Student } from '../types';
 
 type StudentCardProps = {
   student: Student;
-  onDelete: (id: string) => void;
+  onDelete: (student: Student) => void;
 };
 
 export const StudentCard = ({ student, onDelete }: StudentCardProps) => {
@@ -38,10 +38,10 @@ export const StudentCard = ({ student, onDelete }: StudentCardProps) => {
         </Link>
 
         <Button
-          variant="ghost"
+          variant="danger"
           size="sm"
           leftIcon={<Trash2 size={14} />}
-          onClick={() => onDelete(student.id)}
+          onClick={() => onDelete(student)}
         >
           Hapus
         </Button>

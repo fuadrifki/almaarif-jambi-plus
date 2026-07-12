@@ -10,6 +10,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  toast,
 } from '@/components/ui';
 import { destroySession } from '@/features/auth/server';
 
@@ -19,10 +20,16 @@ export const UserMenu = ({ user }: { user: User }) => {
   const router = useRouter();
 
   const handleLogout = async () => {
-    await destroySession();
+    try {
+      await destroySession();
 
-    router.push('/login');
-    router.refresh();
+      toast.success('Berhasil logout');
+
+      router.push('/login');
+      router.refresh();
+    } catch {
+      toast.error('Gagal logout. Silakan coba lagi.');
+    }
   };
 
   return (

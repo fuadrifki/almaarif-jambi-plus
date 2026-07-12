@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { Resolver } from 'react-hook-form';
 
-import { Button, Field, Input, Select, Surface } from '@/components/ui';
+import { Button, Field, Input, Select, Surface, toast } from '@/components/ui';
 import { CLASSES } from '@/config/lookups';
 
 import { createStudent, updateStudent } from '../server';
@@ -51,11 +51,17 @@ export const StudentForm = ({ student }: StudentFormProps) => {
     try {
       if (isEdit) {
         await updateStudent(student.id, data);
+
+        toast.success('Data siswa berhasil diperbarui');
       } else {
         await createStudent(data);
+
+        toast.success('Siswa baru berhasil ditambahkan');
       }
+
+      router.push('/students');
     } catch (error) {
-      alert(error instanceof Error ? error.message : 'Terjadi kesalahan');
+      toast.error(error instanceof Error ? error.message : 'Terjadi kesalahan. Silakan coba lagi.');
     }
   };
 

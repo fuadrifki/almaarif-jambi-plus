@@ -68,6 +68,26 @@ export const designNavigation = [
         label: 'Dropdown Menu',
         href: '/design/dropdown-menu',
       },
+      {
+        label: 'Toast',
+        href: '/design/toast',
+      },
+      {
+        label: 'Alert Dialog',
+        href: '/design/alert-dialog',
+      },
+      {
+        label: 'Empty State',
+        href: '/design/empty-state',
+      },
+      {
+        label: 'Skeleton',
+        href: '/design/skeleton',
+      },
+      {
+        label: 'Field',
+        href: '/design/field',
+      },
     ],
   },
 ] as const;

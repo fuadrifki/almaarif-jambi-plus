@@ -1,6 +1,6 @@
 'use server';
 
-import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 
 import { studentRepository } from '@/lib/data';
 
@@ -15,7 +15,9 @@ export const createStudent = async (data: StudentFormData) => {
 
   studentRepository.create(data);
 
-  redirect('/students');
+  revalidatePath('/students');
+
+  return { success: true };
 };
 
 export const updateStudent = async (id: string, data: StudentFormData) => {
@@ -33,7 +35,7 @@ export const updateStudent = async (id: string, data: StudentFormData) => {
 
   studentRepository.update(id, data);
 
-  redirect('/students');
+  revalidatePath('/students');
 };
 
 export const deleteStudent = async (id: string) => {
@@ -42,4 +44,6 @@ export const deleteStudent = async (id: string) => {
   if (!deleted) {
     throw new Error('Siswa tidak ditemukan');
   }
+
+  revalidatePath('/students');
 };

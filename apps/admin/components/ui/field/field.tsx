@@ -1,9 +1,16 @@
 import type { FieldProps } from './field.types';
 
-export const Field = ({ label, required = false, description, error, children }: FieldProps) => (
+export const Field = ({
+  label,
+  required = false,
+  description,
+  error,
+  id,
+  children,
+}: FieldProps) => (
   <div className="space-y-2">
     {label && (
-      <label className="block text-sm font-medium text-(--text-primary)">
+      <label htmlFor={id} className="block text-sm font-medium text-(--text-primary)">
         {label}
 
         {required && <span className="ml-1 text-red-400">*</span>}
@@ -13,7 +20,9 @@ export const Field = ({ label, required = false, description, error, children }:
     {children}
 
     {error ? (
-      <p className="text-xs text-red-400">{error}</p>
+      <p className="text-xs text-red-400" role="alert">
+        {error}
+      </p>
     ) : description ? (
       <p className="text-xs text-(--text-secondary)">{description}</p>
     ) : null}
