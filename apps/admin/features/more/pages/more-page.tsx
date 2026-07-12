@@ -14,7 +14,7 @@ export const MorePage = async () => {
   const items = getNavigationForRole(role);
 
   return (
-    <div className="mx-auto max-w-lg space-y-6 py-4">
+    <div className="mx-auto max-w-lg space-y-6">
       <section>
         <h1 className="text-3xl font-semibold">Menu</h1>
 
