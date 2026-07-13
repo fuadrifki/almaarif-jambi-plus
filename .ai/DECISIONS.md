@@ -1445,3 +1445,33 @@ The type import violation is resolved. Only the component import remains.
 - `field.types.ts` updated with `id?: string` prop
 - `field.tsx` passes `id` to `<label htmlFor={id}>`
 - Login form and other forms should pass matching `id` values for new fields
+
+---
+
+## 91. Environment Variable Strategy
+
+**Status:** Established (M1.5.2)
+
+**Context:** The project uses Next.js (which reads `.env.local`) and Drizzle Kit (which reads `.env`). Both need `DATABASE_URL`, but they have different file conventions.
+
+**Decision:** Use a layered environment strategy:
+
+- `.env.example` — canonical template, always committed to git, contains all required variables with empty or placeholder values
+- `.env` — Drizzle Kit reads this (used by `drizzle-kit generate`, `drizzle-kit push`, `drizzle-kit migrate`)
+- `.env.local` — Next.js reads this (used by `next dev`, `next build`), takes precedence over `.env`
+- Production — environment variables set in the deployment platform (e.g., Vercel), never committed `.env` files
+
+**Reason:**
+
+- Next.js and Drizzle Kit have different env file conventions — `.env.local` for Next.js, `.env` for Drizzle Kit
+- Keeping both `.env` and `.env.local` in sync during development avoids confusion
+- `.env.example` serves as the single source of truth for what variables are needed
+- Production never uses committed `.env` files — variables are injected by the platform
+- `.gitignore` excludes `.env`, `.env.local`, and variant files but NOT `.env.example`
+
+**Consequences:**
+
+- Developers copy `.env.example` to both `.env` and `.env.local` during setup
+- Both files should contain the same `DATABASE_URL` value
+- Adding a new environment variable requires updating `.env.example`, `.env`, and `.env.local`
+- The README documents this convention for onboarding
