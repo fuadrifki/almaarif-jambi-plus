@@ -56,4 +56,15 @@
   .app-layout__sidebar {
     display: none;
   }
+
+  .ads-layout {
+    grid-template:
+      'header' 64px
+      'content' 1fr
+      / 1fr;
+  }
+
+  .ads-layout__sidebar {
+    display: none;
+  }
 }

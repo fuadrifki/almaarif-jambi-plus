@@ -125,3 +125,39 @@
   cursor: default;
   opacity: 0.4;
 }
+
+/* ==============================
+   ADS Mobile Drawer
+============================== */
+
+.ads-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+}
+
+.ads-drawer__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / 0.5);
+  animation: ads-drawer-fade-in 0.24s ease;
+}
+
+.ads-drawer__panel {
+  position: relative;
+  width: 280px;
+  max-width: 85vw;
+  height: 100%;
+  animation: ads-drawer-slide-in 0.24s ease;
+}
+
+@keyframes ads-drawer-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes ads-drawer-slide-in {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
