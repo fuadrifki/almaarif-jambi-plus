@@ -6,10 +6,7 @@ export type SkeletonProps = {
 };
 
 export const Skeleton = ({ className, style }: SkeletonProps) => (
-  <div
-    className={cn('animate-pulse rounded-lg bg-white/8 dark:bg-white/5', className)}
-    style={style}
-  />
+  <div className={cn('animate-pulse rounded-lg bg-(--skeleton)', className)} style={style} />
 );
 
 export const SkeletonText = ({ lines = 3, className }: { lines?: number; className?: string }) => (

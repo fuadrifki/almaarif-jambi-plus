@@ -22,6 +22,8 @@
   --button-secondary-shadow: 0 8px 18px rgb(89 168 255 /0.08);
   --button-ghost-hover: rgb(89 168 255 /0.08);
   --button-danger: linear-gradient(90deg, #ec003f80 10%, #fb2c3680 100%);
+
+  --skeleton: #8383832e;
 }
 
 .dark {
@@ -43,4 +45,6 @@
   --button-secondary-border: rgb(255 255 255 /0.1);
   --button-ghost-hover: rgb(255 255 255 /0.08);
   --button-danger: linear-gradient(90deg, #ff7b89, #ef4444);
+
+  --skeleton: #d6e5f640;
 }

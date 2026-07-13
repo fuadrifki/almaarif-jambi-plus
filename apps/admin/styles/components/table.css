@@ -1,0 +1,114 @@
+/* ======================
+   TABLE
+====================== */
+
+.ads-table {
+  padding: 0;
+}
+
+.ads-table__scroll {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ads-table__table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+/* ======================
+   HEADER
+====================== */
+
+.ads-table__header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  /* Liquid Glass */
+  /* From https://css.glass */
+  background: var(--background);
+  box-shadow: 0 2px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.39);
+}
+
+.ads-table__head {
+  padding: 0.75rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* ======================
+   BODY
+====================== */
+
+.ads-table__body {
+  /* Intentionally empty — base styles only */
+}
+
+/* ======================
+   FOOTER
+====================== */
+
+.ads-table__footer {
+  border-top: 1px solid var(--border);
+}
+
+/* ======================
+   ROW
+====================== */
+
+.ads-table__row {
+  transition: background-color 0.15s ease;
+}
+
+/* ======================
+   CELL
+====================== */
+
+.ads-table__cell {
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+/* ======================
+   MODIFIERS
+====================== */
+
+/* Hoverable (default — applied via base row style) */
+.ads-table__row:hover {
+  background: var(--button-ghost-hover);
+}
+
+/* Compact */
+.ads-table--compact .ads-table__head,
+.ads-table--compact .ads-table__cell {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8125rem;
+}
+
+/* Striped */
+.ads-table--striped .ads-table__row:nth-child(even) {
+  background: rgb(255 255 255 / 0.03);
+}
+
+.ads-table--striped .ads-table__row:nth-child(even):hover {
+  background: var(--button-ghost-hover);
+}
+
+/* Focus visible for keyboard navigation */
+.ads-table__row:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--brand) 28%, transparent);
+}

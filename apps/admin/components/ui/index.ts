@@ -15,3 +15,4 @@ export * from './toast';
 export * from './alert-dialog';
 export * from './empty-state';
 export * from './skeleton';
+export * from './table';

@@ -203,7 +203,7 @@ graph TD
 
     DASHBOARD --> DASHBOARD_PAGE["pages/dashboard-page.tsx"]
 
-    ADS --> ADS_PAGES["pages/ (18 page components)"]
+    ADS --> ADS_PAGES["pages/ (19 page components)"]
     ADS --> ADS_SHELL["components/ads-shell/"]
     ADS --> ADS_CODE["components/code-preview/"]
     ADS --> ADS_COLOR["components/color-preview/"]
@@ -234,7 +234,7 @@ The `User` type is shared with `lib/auth/session.ts` and `components/app/app-she
 
 ### `features/ads`
 
-Design system documentation. Contains 18 page components and 6 utility components for the playground.
+Design system documentation. Contains 19 page components and 6 utility components for the playground.
 
 | Component        | Role                                    | Interactive? |
 | ---------------- | --------------------------------------- | ------------ |
@@ -316,7 +316,7 @@ graph TD
     end
 
     subgraph "components/ — Reusable UI"
-        UI["ui/*<br/>ADS Design System<br/>16 components"]
+        UI["ui/*<br/>ADS Design System<br/>17 components"]
         APP["app/*<br/>AppShell, Sidebar, MobileNav"]
     end
 
@@ -436,7 +436,7 @@ components/ui/component-name/
 └── index.ts                  # Barrel (export * + export type *)
 ```
 
-All 16 ADS components follow this convention exactly.
+All 17 ADS components follow this convention exactly.
 
 ### Feature Convention
 
@@ -476,21 +476,22 @@ export { DashboardPage as default } from '@/features/dashboard/pages/dashboard-p
 
 ### ADS Component Inventory
 
-| Component    | Category | Primitive          | Client?           | Test? | CSS file?            | CSS classes defined?                                                                                                                   |
-| ------------ | -------- | ------------------ | ----------------- | ----- | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| Surface      | Layout   | `<div>`            | No                | No    | ✅ surface.css       | `ads-surface`, `::before`, `::after`                                                                                                   |
-| Card         | Layout   | Surface            | No                | No    | ❌                   | Uses Tailwind only                                                                                                                     |
-| Header       | Layout   | Surface            | No                | No    | ❌                   | Uses Tailwind + Surface only                                                                                                           |
-| Field        | Layout   | `<div>/<label>`    | No                | No    | ❌                   | Uses Tailwind only                                                                                                                     |
-| Button       | Input    | `<button>`         | No                | No    | ✅ button.css        | `ads-button`, `ads-button--{variant}`, `ads-button--{size}`, `ads-button__content`                                                     |
-| Input        | Input    | `<input>`          | Yes               | No    | ✅ input.css         | `ads-input`, `ads-input-wrapper`, `ads-input--{size}`, `ads-input--{status}`, `ads-input__loader`, `ads-input__action`                 |
-| Textarea     | Input    | `<textarea>`       | Yes (unnecessary) | No    | ✅ textarea.css      | `ads-textarea`, `ads-textarea--{size}`, `ads-textarea--{status}`, `ads-textarea--resize-{resize}`                                      |
-| Select       | Input    | Radix Select       | Yes               | Yes   | ✅ select.css        | `ads-select__trigger`, `ads-select__trigger--{size}`, `ads-select__trigger--{status}`, `ads-select__content`, `ads-select__item`       |
-| Checkbox     | Input    | Radix Checkbox     | Yes               | No    | ✅ checkbox.css      | `ads-checkbox`, `ads-checkbox__indicator`                                                                                              |
-| Radio        | Input    | Radix RadioGroup   | Yes               | No    | ✅ radio.css         | `ads-radio-group`, `ads-radio-item`, `ads-radio-item__label`, `ads-radio`, `ads-radio__indicator`, `ads-radio__dot`                    |
-| Switch       | Input    | Radix Switch       | Yes               | No    | ✅ switch.css        | `ads-switch`, `ads-switch__thumb`                                                                                                      |
-| Badge        | Display  | `<span>`           | No                | No    | ✅ badge.css         | `ads-badge`, `ads-badge--{variant}`                                                                                                    |
-| DropdownMenu | Overlay  | Radix DropdownMenu | Yes               | No    | ✅ dropdown-menu.css | `ads-dropdown-menu`, `ads-dropdown-menu__item`, `ads-dropdown-menu__separator`, `ads-dropdown-menu__label`, `ads-dropdown-menu__arrow` |
+| Component    | Category | Primitive           | Client?           | Test? | CSS file?            | CSS classes defined?                                                                                                                                                                                                  |
+| ------------ | -------- | ------------------- | ----------------- | ----- | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Surface      | Layout   | `<div>`             | No                | No    | ✅ surface.css       | `ads-surface`, `::before`, `::after`                                                                                                                                                                                  |
+| Card         | Layout   | Surface             | No                | No    | ❌                   | Uses Tailwind only                                                                                                                                                                                                    |
+| Header       | Layout   | Surface             | No                | No    | ❌                   | Uses Tailwind + Surface only                                                                                                                                                                                          |
+| Field        | Layout   | `<div>/<label>`     | No                | No    | ❌                   | Uses Tailwind only                                                                                                                                                                                                    |
+| Table        | Data     | Surface + `<table>` | No                | No    | ✅ table.css         | `ads-table`, `ads-table__scroll`, `ads-table__table`, `ads-table__header`, `ads-table__body`, `ads-table__footer`, `ads-table__row`, `ads-table__head`, `ads-table__cell`, `ads-table--compact`, `ads-table--striped` |
+| Button       | Input    | `<button>`          | No                | No    | ✅ button.css        | `ads-button`, `ads-button--{variant}`, `ads-button--{size}`, `ads-button__content`                                                                                                                                    |
+| Input        | Input    | `<input>`           | Yes               | No    | ✅ input.css         | `ads-input`, `ads-input-wrapper`, `ads-input--{size}`, `ads-input--{status}`, `ads-input__loader`, `ads-input__action`                                                                                                |
+| Textarea     | Input    | `<textarea>`        | Yes (unnecessary) | No    | ✅ textarea.css      | `ads-textarea`, `ads-textarea--{size}`, `ads-textarea--{status}`, `ads-textarea--resize-{resize}`                                                                                                                     |
+| Select       | Input    | Radix Select        | Yes               | Yes   | ✅ select.css        | `ads-select__trigger`, `ads-select__trigger--{size}`, `ads-select__trigger--{status}`, `ads-select__content`, `ads-select__item`                                                                                      |
+| Checkbox     | Input    | Radix Checkbox      | Yes               | No    | ✅ checkbox.css      | `ads-checkbox`, `ads-checkbox__indicator`                                                                                                                                                                             |
+| Radio        | Input    | Radix RadioGroup    | Yes               | No    | ✅ radio.css         | `ads-radio-group`, `ads-radio-item`, `ads-radio-item__label`, `ads-radio`, `ads-radio__indicator`, `ads-radio__dot`                                                                                                   |
+| Switch       | Input    | Radix Switch        | Yes               | No    | ✅ switch.css        | `ads-switch`, `ads-switch__thumb`                                                                                                                                                                                     |
+| Badge        | Display  | `<span>`            | No                | No    | ✅ badge.css         | `ads-badge`, `ads-badge--{variant}`                                                                                                                                                                                   |
+| DropdownMenu | Overlay  | Radix DropdownMenu  | Yes               | No    | ✅ dropdown-menu.css | `ads-dropdown-menu`, `ads-dropdown-menu__item`, `ads-dropdown-menu__separator`, `ads-dropdown-menu__label`, `ads-dropdown-menu__arrow`                                                                                |
 
 ### Component patterns
 
@@ -498,7 +499,7 @@ export { DashboardPage as default } from '@/features/dashboard/pages/dashboard-p
 graph TD
     subgraph "Wrapping strategies"
         NATIVE["Native HTML<br/>Surface, Button, Input, Textarea, Field, Badge, EmptyState, Skeleton"]
-        SURFACE_WRAP["Wraps Surface component<br/>Card, Header"]
+        SURFACE_WRAP["Wraps Surface component<br/>Card, Header, Table"]
         RADIX["Wraps Radix UI primitive<br/>Checkbox, Radio, Select, Switch, DropdownMenu, AlertDialog"]
         SONNER_WRAP["Wraps Sonner library<br/>Toast"]
     end
@@ -560,6 +561,7 @@ graph TD
     COMPONENTS --> LAYOUT_CSS["layout.css"]
     COMPONENTS --> TOAST_CSS["toast.css"]
     COMPONENTS --> ALERT_DIALOG_CSS["alert-dialog.css"]
+    COMPONENTS --> TABLE_CSS["table.css"]
 ```
 
 **Tokens (20 remaining CSS custom properties):**
@@ -872,7 +874,7 @@ graph TD
         APP["app/ — Routes & Layouts"]
         CONFIG["config/ — appConfig"]
         PROVIDERS["providers/ — AppProvider, ThemeProvider"]
-        COMP_UI["components/ui/ — 16 ADS components"]
+        COMP_UI["components/ui/ — 17 ADS components"]
         COMP_APP["components/app/ — AppShell, Sidebar"]
         FEAT_AUTH["features/auth/ — Login, User"]
         FEAT_DASH["features/dashboard/ — Dashboard page"]

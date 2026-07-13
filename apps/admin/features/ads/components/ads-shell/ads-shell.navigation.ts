@@ -85,6 +85,10 @@ export const designNavigation = [
         href: '/design/skeleton',
       },
       {
+        label: 'Table',
+        href: '/design/table',
+      },
+      {
         label: 'Field',
         href: '/design/field',
       },
