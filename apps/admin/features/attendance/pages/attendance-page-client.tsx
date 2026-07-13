@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 
-import { Button, EmptyState, PageLayout, Select, Surface, toast } from '@/components/ui';
+import { Button, EmptyState, Field, PageLayout, Select, Surface, toast } from '@/components/ui';
 import { ClipboardCheck } from 'lucide-react';
 
 import { CLASSES, SUBJECTS, TEACHERS } from '@/config/lookups';
@@ -127,44 +127,31 @@ export const AttendancePageClient = ({
       <PageLayout.Header>
         <h1 className="text-2xl font-semibold sm:text-3xl">Absensi</h1>
 
-        <Surface className="flex flex-wrap gap-x-6 gap-y-2 p-4 text-sm text-secondary">
-          <span>{displayDate}</span>
-
-          <span>{time}</span>
-
+        <Surface className="flex flex-wrap justify-between gap-x-2 gap-y-2 p-4 text-sm text-secondary">
           <span className="font-medium text-primary">{teacherLabel}</span>
+
+          <span>
+            {displayDate} {time} WIB
+          </span>
         </Surface>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-primary">
-              Kelas <span className="ml-1 text-red-400">*</span>
-            </label>
+        <div className="grid gap-4 grid-cols-2">
+          <Field label="Kelas" required>
+            <Select options={CLASSES} value={classId} placeholder="Pilih" onChange={setClassId} />
+          </Field>
 
-            <Select
-              options={CLASSES}
-              value={classId}
-              placeholder="Pilih kelas"
-              onChange={setClassId}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-primary">
-              Mata Pelajaran <span className="ml-1 text-red-400">*</span>
-            </label>
-
+          <Field label="Mata Pelajaran" required>
             <Select
               options={SUBJECTS}
               value={subjectId}
-              placeholder="Pilih mata pelajaran"
+              placeholder="Pilih"
               onChange={setSubjectId}
             />
-          </div>
+          </Field>
         </div>
       </PageLayout.Header>
 
-      <PageLayout.Content>
+      <PageLayout.Content className="flex-1 min-h-0 flex flex-col gap-y-4 justify-between w-full">
         {!classId ? (
           <EmptyState
             icon={<ClipboardCheck size={32} />}
@@ -178,7 +165,7 @@ export const AttendancePageClient = ({
             description="Tidak ada siswa yang terdaftar di kelas ini."
           />
         ) : (
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
             {filteredStudents.map((student) => (
               <AttendanceStudentRow
                 key={student.id}
@@ -191,9 +178,7 @@ export const AttendancePageClient = ({
             ))}
           </div>
         )}
-      </PageLayout.Content>
 
-      <PageLayout.Footer>
         <div className="flex justify-end">
           <Button
             onClick={handleSubmit}
@@ -203,7 +188,7 @@ export const AttendancePageClient = ({
             Simpan Absensi
           </Button>
         </div>
-      </PageLayout.Footer>
+      </PageLayout.Content>
     </PageLayout>
   );
 };

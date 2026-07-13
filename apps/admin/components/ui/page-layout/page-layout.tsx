@@ -9,7 +9,7 @@ import type {
 
 const PageLayoutRoot = ({ className, ...props }: PageLayoutProps) => (
   <div
-    className={cn('flex flex-1 min-h-0 flex-col overflow-hidden gap-y-6', className)}
+    className={cn('flex flex-1 min-h-0 flex-col overflow-hidden gap-y-4', className)}
     {...props}
   />
 );
@@ -23,7 +23,7 @@ const PageLayoutContent = ({ className, ...props }: PageLayoutContentProps) => (
 );
 
 const PageLayoutFooter = ({ className, ...props }: PageLayoutFooterProps) => (
-  <div className={cn('shrink-0 p-4', className)} {...props} />
+  <div className={cn('shrink-0 px-4', className)} {...props} />
 );
 
 export const PageLayout = Object.assign(PageLayoutRoot, {

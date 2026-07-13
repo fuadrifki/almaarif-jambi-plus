@@ -80,7 +80,7 @@ export const StudentListPageClient = ({ students }: StudentListPageClientProps) 
             </div>
           }
           end={
-            <p className="py-4 text-center text-sm text-secondary">
+            <p className="pt-4 text-center text-sm text-secondary">
               Semua {filtered.length} siswa sudah dimuat
             </p>
           }

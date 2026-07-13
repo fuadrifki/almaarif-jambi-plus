@@ -1,6 +1,6 @@
 'use client';
 
-import { RadioGroup, RadioItem, Textarea } from '@/components/ui';
+import { Badge, RadioGroup, RadioItem, Surface, Textarea } from '@/components/ui';
 
 import type { AttendanceStatus } from '../types';
 import type { Student } from '@/features/students/types';
@@ -20,11 +20,11 @@ export const AttendanceStudentRow = ({
   onStatusChange,
   onNotesChange,
 }: AttendanceStudentRowProps) => (
-  <div className="space-y-3 rounded-xl border border-white/10 p-4">
+  <Surface className="p-4 flex flex-col gap-y-2 max-h-max">
     <div className="flex items-center gap-3">
-      <span className="shrink-0 rounded-full bg-white/10 px-2 py-0.5 text-[10px] text-secondary">
+      <Badge variant="info" className="text-xs text-secondary px-2">
         {student.nis}
-      </span>
+      </Badge>
 
       <span className="truncate text-sm font-medium text-primary">{student.name}</span>
     </div>
@@ -32,24 +32,26 @@ export const AttendanceStudentRow = ({
     <RadioGroup
       value={status}
       onValueChange={(value) => onStatusChange(student.id, value as AttendanceStatus)}
-      className="flex flex-wrap gap-3"
+      className="flex flex-wrap gap-1"
     >
       <RadioItem value="PRESENT">Hadir</RadioItem>
 
       <RadioItem value="SICK">Sakit</RadioItem>
 
-      <RadioItem value="PERMISSION">Izin</RadioItem>
-
       <RadioItem value="ABSENT">Alpha</RadioItem>
+
+      <RadioItem value="PERMISSION">Izin</RadioItem>
     </RadioGroup>
 
-    <Textarea
-      placeholder="Catatan (opsional)"
-      value={notes}
-      onChange={(e) => onNotesChange(student.id, e.target.value)}
-      size="sm"
-      resize="none"
-      rows={1}
-    />
-  </div>
+    {status === 'PERMISSION' && (
+      <Textarea
+        placeholder="Catatan izin"
+        value={notes}
+        onChange={(e) => onNotesChange(student.id, e.target.value)}
+        size="sm"
+        resize="none"
+        rows={1}
+      />
+    )}
+  </Surface>
 );
