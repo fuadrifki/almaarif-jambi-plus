@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useCallback, useContext, useLayoutEffect, useRef, useState } from 'react';
+import { createContext, useCallback, useContext } from 'react';
 
 import { cn } from '@/lib';
 
@@ -36,10 +36,9 @@ const SegmentedControlItem = ({
   return (
     <button
       type="button"
-      role="radio"
-      aria-checked={isActive}
+      role="tab"
+      aria-selected={isActive}
       disabled={isDisabled}
-      data-active={isActive}
       className={cn(
         'ads-segmented-control__item',
         isActive && 'ads-segmented-control__item--active',
@@ -63,26 +62,6 @@ const SegmentedControlRoot = ({
   className,
   ...props
 }: SegmentedControlProps) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
-
-  useLayoutEffect(() => {
-    const container = containerRef.current;
-
-    if (!container) return;
-
-    const activeItem = container.querySelector<HTMLElement>(
-      '.ads-segmented-control__item[data-active="true"]',
-    );
-
-    if (!activeItem) return;
-
-    setIndicatorStyle({
-      left: activeItem.offsetLeft,
-      width: activeItem.offsetWidth,
-    });
-  }, [value, children]);
-
   const items = useCallback(() => {
     const collected: string[] = [];
 
@@ -157,21 +136,11 @@ const SegmentedControlRoot = ({
   return (
     <SegmentedControlContext.Provider value={{ value, onValueChange, disabled }}>
       <div
-        ref={containerRef}
-        role="radiogroup"
+        role="tablist"
         className={cn('ads-segmented-control', className)}
         onKeyDown={handleKeyDown}
         {...props}
       >
-        <div
-          className="ads-segmented-control__indicator"
-          style={{
-            transform: `translateX(${indicatorStyle.left}px)`,
-            width: indicatorStyle.width,
-          }}
-          aria-hidden="true"
-        />
-
         {children}
       </div>
     </SegmentedControlContext.Provider>

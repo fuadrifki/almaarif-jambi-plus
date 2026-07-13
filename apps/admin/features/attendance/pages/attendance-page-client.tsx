@@ -12,7 +12,7 @@ import {
   Surface,
   toast,
 } from '@/components/ui';
-import { ClipboardCheck, History } from 'lucide-react';
+import { ClipboardCheck, History, Plus } from 'lucide-react';
 import { CLASSES, SUBJECTS, TEACHERS } from '@/config/lookups';
 
 import { AttendanceSessionCard } from '../components/attendance-session-card';
@@ -185,7 +185,7 @@ export const AttendancePageClient = ({
         </Surface>
 
         <SegmentedControl value={activeTab} onValueChange={(v) => setActiveTab(v as Tab)}>
-          <SegmentedControl.Item value="input" icon={<ClipboardCheck size={16} />}>
+          <SegmentedControl.Item value="input" icon={<Plus size={16} />}>
             Isi Absensi
           </SegmentedControl.Item>
 
@@ -196,18 +196,14 @@ export const AttendancePageClient = ({
 
         {activeTab === 'input' && (
           <div className="grid gap-4 grid-cols-2">
-            <Field label="Kelas" required>
-              <Select options={CLASSES} value={classId} placeholder="Pilih" onChange={setClassId} />
-            </Field>
+            <Select options={CLASSES} value={classId} placeholder="Kelas" onChange={setClassId} />
 
-            <Field label="Mata Pelajaran" required>
-              <Select
-                options={SUBJECTS}
-                value={subjectId}
-                placeholder="Pilih"
-                onChange={setSubjectId}
-              />
-            </Field>
+            <Select
+              options={SUBJECTS}
+              value={subjectId}
+              placeholder="Mata Pelajaran"
+              onChange={setSubjectId}
+            />
           </div>
         )}
 

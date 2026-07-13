@@ -120,8 +120,10 @@ export const DesignShell = ({ children }: DesignShellProps) => {
 
       {/* Desktop sidebar */}
       <aside className="ads-layout__sidebar p-4">
-        <Surface className="h-full p-4 space-y-3">
-          <NavContent />
+        <Surface className="flex h-full flex-col">
+          <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-3">
+            <NavContent />
+          </div>
         </Surface>
       </aside>
 
@@ -153,7 +155,7 @@ export const DesignShell = ({ children }: DesignShellProps) => {
                 </button>
               </div>
 
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-4">
                 <NavContent onNavigate={closeDrawer} />
               </div>
             </Surface>

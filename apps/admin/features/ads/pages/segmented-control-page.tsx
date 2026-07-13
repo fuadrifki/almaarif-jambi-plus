@@ -3,19 +3,23 @@
 import { useState } from 'react';
 
 import { SegmentedControl } from '@/components/ui';
-import { Settings, User } from 'lucide-react';
+import { Plus, Settings, User } from 'lucide-react';
 
 import { SectionPreview } from '../components/section-preview';
 
-const codeBasic = `const [value, setValue] = useState('input');
+const codeBasic = `const [value, setValue] = useState('overview');
 
 <SegmentedControl value={value} onValueChange={setValue}>
-  <SegmentedControl.Item value="input">
-    Isi
+  <SegmentedControl.Item value="overview">
+    Overview
   </SegmentedControl.Item>
 
-  <SegmentedControl.Item value="history">
-    Riwayat
+  <SegmentedControl.Item value="analytics">
+    Analytics
+  </SegmentedControl.Item>
+
+  <SegmentedControl.Item value="reports">
+    Reports
   </SegmentedControl.Item>
 </SegmentedControl>`;
 
@@ -23,11 +27,11 @@ const codeIcon = `const [value, setValue] = useState('profile');
 
 <SegmentedControl value={value} onValueChange={setValue}>
   <SegmentedControl.Item value="profile" icon={<User size={16} />}>
-    Profil
+    Profile
   </SegmentedControl.Item>
 
   <SegmentedControl.Item value="settings" icon={<Settings size={16} />}>
-    Pengaturan
+    Settings
   </SegmentedControl.Item>
 </SegmentedControl>`;
 
@@ -35,37 +39,31 @@ const codeDisabled = `const [value, setValue] = useState('active');
 
 <SegmentedControl value={value} onValueChange={setValue}>
   <SegmentedControl.Item value="active">
-    Aktif
+    Active
   </SegmentedControl.Item>
 
   <SegmentedControl.Item value="disabled" disabled>
-    Nonaktif
+    Disabled
   </SegmentedControl.Item>
 </SegmentedControl>`;
 
-const codeControlled = `const [tab, setTab] = useState('overview');
+const codeToolbar = `const [view, setView] = useState('data');
 
-<SegmentedControl value={tab} onValueChange={setTab}>
-  <SegmentedControl.Item value="overview">
-    Ringkasan
+<SegmentedControl value={view} onValueChange={setView}>
+  <SegmentedControl.Item value="action" icon={<Plus size={16} />}>
+    Add Item
   </SegmentedControl.Item>
 
-  <SegmentedControl.Item value="details">
-    Detail
+  <SegmentedControl.Item value="data">
+    View Data
   </SegmentedControl.Item>
-
-  <SegmentedControl.Item value="reviews">
-    Ulasan
-  </SegmentedControl.Item>
-</SegmentedControl>
-
-<p>Tab aktif: {tab}</p>`;
+</SegmentedControl>`;
 
 export const SegmentedControlPage = () => {
-  const [basicValue, setBasicValue] = useState('input');
+  const [basicValue, setBasicValue] = useState('overview');
   const [iconValue, setIconValue] = useState('profile');
   const [disabledValue, setDisabledValue] = useState('active');
-  const [controlledValue, setControlledValue] = useState('overview');
+  const [toolbarValue, setToolbarValue] = useState('data');
 
   return (
     <div className="space-y-10">
@@ -75,8 +73,8 @@ export const SegmentedControlPage = () => {
         <h1 className="text-4xl font-bold tracking-tight">Segmented Control</h1>
 
         <p className="text-secondary">
-          Segmented Control digunakan untuk beralih antar opsi dalam satu grup. Gunakan icon dan
-          label untuk mengkomunikasikan makna secara visual.
+          Segmented Control digunakan untuk beralih antar opsi dalam satu grup. Setiap item
+          berperilaku seperti Ghost Button — tidak ada animasi sliding indicator.
         </p>
       </header>
 
@@ -86,9 +84,11 @@ export const SegmentedControlPage = () => {
         code={codeBasic}
       >
         <SegmentedControl value={basicValue} onValueChange={setBasicValue}>
-          <SegmentedControl.Item value="input">Isi</SegmentedControl.Item>
+          <SegmentedControl.Item value="overview">Overview</SegmentedControl.Item>
 
-          <SegmentedControl.Item value="history">Riwayat</SegmentedControl.Item>
+          <SegmentedControl.Item value="analytics">Analytics</SegmentedControl.Item>
+
+          <SegmentedControl.Item value="reports">Reports</SegmentedControl.Item>
         </SegmentedControl>
       </SectionPreview>
 
@@ -99,11 +99,11 @@ export const SegmentedControlPage = () => {
       >
         <SegmentedControl value={iconValue} onValueChange={setIconValue}>
           <SegmentedControl.Item value="profile" icon={<User size={16} />}>
-            Profil
+            Profile
           </SegmentedControl.Item>
 
           <SegmentedControl.Item value="settings" icon={<Settings size={16} />}>
-            Pengaturan
+            Settings
           </SegmentedControl.Item>
         </SegmentedControl>
       </SectionPreview>
@@ -115,36 +115,36 @@ export const SegmentedControlPage = () => {
       >
         <div className="space-y-4">
           <SegmentedControl value={disabledValue} onValueChange={setDisabledValue}>
-            <SegmentedControl.Item value="active">Aktif</SegmentedControl.Item>
+            <SegmentedControl.Item value="active">Active</SegmentedControl.Item>
 
             <SegmentedControl.Item value="disabled" disabled>
-              Nonaktif
+              Disabled
             </SegmentedControl.Item>
           </SegmentedControl>
 
           <SegmentedControl value="a" onValueChange={() => {}} disabled>
-            <SegmentedControl.Item value="a">Semua</SegmentedControl.Item>
+            <SegmentedControl.Item value="a">All</SegmentedControl.Item>
 
-            <SegmentedControl.Item value="b">Nonaktif</SegmentedControl.Item>
+            <SegmentedControl.Item value="b">Disabled</SegmentedControl.Item>
           </SegmentedControl>
         </div>
       </SectionPreview>
 
       <SectionPreview
-        title="Controlled State"
-        description="Segmented control adalah komponen controlled. Gunakan state untuk mengelola nilai aktif."
-        code={codeControlled}
+        title="Toolbar Pattern"
+        description="Digunakan untuk action toolbar — misalnya beralih antara aksi dan tampilan data."
+        code={codeToolbar}
       >
         <div className="space-y-4">
-          <SegmentedControl value={controlledValue} onValueChange={setControlledValue}>
-            <SegmentedControl.Item value="overview">Ringkasan</SegmentedControl.Item>
+          <SegmentedControl value={toolbarValue} onValueChange={setToolbarValue}>
+            <SegmentedControl.Item value="action" icon={<Plus size={16} />}>
+              Add Item
+            </SegmentedControl.Item>
 
-            <SegmentedControl.Item value="details">Detail</SegmentedControl.Item>
-
-            <SegmentedControl.Item value="reviews">Ulasan</SegmentedControl.Item>
+            <SegmentedControl.Item value="data">View Data</SegmentedControl.Item>
           </SegmentedControl>
 
-          <p className="text-sm text-secondary">Tab aktif: {controlledValue}</p>
+          <p className="text-sm text-secondary">Active: {toolbarValue}</p>
         </div>
       </SectionPreview>
     </div>

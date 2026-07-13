@@ -21,7 +21,7 @@
   grid-area: sidebar;
 
   min-height: 0;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 .ads-layout__content {
