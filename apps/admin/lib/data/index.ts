@@ -1,3 +1,8 @@
 export { studentRepository } from './student-repository';
-export { attendanceRepository } from './attendance-repository';
-export type { StudentRepository, AttendanceRepository } from './types';
+export { attendanceSessionRepository } from './attendance-session-repository';
+export { attendanceRecordRepository } from './attendance-record-repository';
+export type {
+  StudentRepository,
+  AttendanceSessionRepository,
+  AttendanceRecordRepository,
+} from './types';

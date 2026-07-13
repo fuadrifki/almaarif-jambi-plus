@@ -24,8 +24,8 @@ export const TEACHERS: LookupItem[] = [
 ];
 
 export const ATTENDANCE_STATUSES = [
-  { value: 'present', label: 'Hadir' },
-  { value: 'sick', label: 'Sakit' },
-  { value: 'permission', label: 'Izin' },
-  { value: 'absent', label: 'Alpha' },
+  { value: 'PRESENT', label: 'Hadir' },
+  { value: 'SICK', label: 'Sakit' },
+  { value: 'PERMISSION', label: 'Izin' },
+  { value: 'ABSENT', label: 'Alpha' },
 ] as const;
