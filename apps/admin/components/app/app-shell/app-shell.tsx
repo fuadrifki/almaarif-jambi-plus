@@ -27,7 +27,7 @@ export const AppShell = ({ children, user }: AppShellProps) => (
       <Sidebar role={user.role} />
     </aside>
 
-    <main className="app-layout__content pb-4 px-4 mt-4">{children}</main>
+    <main className="app-layout__content mt-4 pb-0 md:pb-4">{children}</main>
 
     <MobileNav role={user.role} />
   </div>
