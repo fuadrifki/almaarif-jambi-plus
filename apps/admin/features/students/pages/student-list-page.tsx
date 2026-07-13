@@ -3,7 +3,7 @@ import { studentRepository } from '@/lib/data';
 import { StudentList } from '../components/student-list';
 
 export const StudentListPage = async () => {
-  const students = studentRepository.findAll();
+  const students = await studentRepository.findAll();
 
   return (
     <div className="space-y-6">

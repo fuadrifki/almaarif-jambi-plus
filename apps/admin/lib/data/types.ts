@@ -2,13 +2,16 @@ import type { Student } from '@/features/students/types';
 import type { Attendance } from '@/features/attendance/types';
 
 export type StudentRepository = {
-  findAll(): Student[];
-  findById(id: string): Student | null;
-  findByNis(nis: string): Student | null;
-  create(student: Omit<Student, 'id'>): Student;
-  update(id: string, data: Partial<Student>): Student | null;
-  delete(id: string): boolean;
-  search(query: string): Student[];
+  findAll(): Promise<Student[]>;
+  findById(id: string): Promise<Student | null>;
+  findByNis(nis: string): Promise<Student | null>;
+  create(student: Omit<Student, 'id' | 'createdAt' | 'updatedAt'>): Promise<Student>;
+  update(
+    id: string,
+    data: Partial<Omit<Student, 'id' | 'createdAt' | 'updatedAt'>>,
+  ): Promise<Student | null>;
+  delete(id: string): Promise<boolean>;
+  search(query: string): Promise<Student[]>;
 };
 
 export type AttendanceRepository = {

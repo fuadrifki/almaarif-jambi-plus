@@ -7,13 +7,13 @@ import { studentRepository } from '@/lib/data';
 import type { StudentFormData } from './schemas';
 
 export const createStudent = async (data: StudentFormData) => {
-  const existing = studentRepository.findByNis(data.nis);
+  const existing = await studentRepository.findByNis(data.nis);
 
   if (existing) {
     throw new Error('NIS sudah terdaftar');
   }
 
-  studentRepository.create(data);
+  await studentRepository.create(data);
 
   revalidatePath('/students');
 
@@ -21,25 +21,25 @@ export const createStudent = async (data: StudentFormData) => {
 };
 
 export const updateStudent = async (id: string, data: StudentFormData) => {
-  const existing = studentRepository.findById(id);
+  const existing = await studentRepository.findById(id);
 
   if (!existing) {
     throw new Error('Siswa tidak ditemukan');
   }
 
-  const duplicate = studentRepository.findByNis(data.nis);
+  const duplicate = await studentRepository.findByNis(data.nis);
 
   if (duplicate && duplicate.id !== id) {
     throw new Error('NIS sudah terdaftar');
   }
 
-  studentRepository.update(id, data);
+  await studentRepository.update(id, data);
 
   revalidatePath('/students');
 };
 
 export const deleteStudent = async (id: string) => {
-  const deleted = studentRepository.delete(id);
+  const deleted = await studentRepository.delete(id);
 
   if (!deleted) {
     throw new Error('Siswa tidak ditemukan');

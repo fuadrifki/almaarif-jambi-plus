@@ -10,7 +10,7 @@ type StudentEditPageProps = {
 
 export const StudentEditPage = async ({ params }: StudentEditPageProps) => {
   const { id } = await params;
-  const student = studentRepository.findById(id);
+  const student = await studentRepository.findById(id);
 
   if (!student) {
     notFound();

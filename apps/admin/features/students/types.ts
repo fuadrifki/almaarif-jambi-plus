@@ -7,4 +7,6 @@ export type Student = {
   guardianName: string;
   guardianPhone: string;
   address: string;
+  createdAt: Date;
+  updatedAt: Date;
 };

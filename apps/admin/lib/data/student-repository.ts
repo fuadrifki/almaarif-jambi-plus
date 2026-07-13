@@ -1,63 +1,91 @@
+import { eq, like, or } from 'drizzle-orm';
+
+import { getDb } from '@/lib/db/client';
+import { students } from '@/lib/db/schema';
+
 import type { Student } from '@/features/students/types';
 import type { StudentRepository } from './types';
 
-import { getStore, generateStudentId } from './store';
+const toStudent = (row: typeof students.$inferSelect): Student => ({
+  id: String(row.id),
+  nis: row.nis,
+  name: row.name,
+  classId: row.classId,
+  room: row.room,
+  guardianName: row.guardianName,
+  guardianPhone: row.guardianPhone,
+  address: row.address,
+  createdAt: row.createdAt,
+  updatedAt: row.updatedAt,
+});
 
 export const studentRepository: StudentRepository = {
-  findAll() {
-    return getStore().students;
+  async findAll() {
+    const rows = await getDb().select().from(students);
+
+    return rows.map(toStudent);
   },
 
-  findById(id) {
-    return getStore().students.find((s) => s.id === id) ?? null;
-  },
+  async findById(id) {
+    const numericId = Number(id);
 
-  findByNis(nis) {
-    return getStore().students.find((s) => s.nis === nis) ?? null;
-  },
-
-  create(data) {
-    const student: Student = {
-      ...data,
-      id: generateStudentId(),
-    };
-
-    getStore().students.push(student);
-
-    return student;
-  },
-
-  update(id, data) {
-    const store = getStore();
-    const index = store.students.findIndex((s) => s.id === id);
-
-    if (index === -1) {
+    if (Number.isNaN(numericId)) {
       return null;
     }
 
-    store.students[index] = { ...store.students[index], ...data };
+    const [row] = await getDb().select().from(students).where(eq(students.id, numericId));
 
-    return store.students[index];
+    return row ? toStudent(row) : null;
   },
 
-  delete(id) {
-    const store = getStore();
-    const index = store.students.findIndex((s) => s.id === id);
+  async findByNis(nis) {
+    const [row] = await getDb().select().from(students).where(eq(students.nis, nis));
 
-    if (index === -1) {
+    return row ? toStudent(row) : null;
+  },
+
+  async create(data) {
+    const [row] = await getDb().insert(students).values(data).returning();
+
+    return toStudent(row);
+  },
+
+  async update(id, data) {
+    const numericId = Number(id);
+
+    if (Number.isNaN(numericId)) {
+      return null;
+    }
+
+    const [row] = await getDb()
+      .update(students)
+      .set({ ...data, updatedAt: new Date() })
+      .where(eq(students.id, numericId))
+      .returning();
+
+    return row ? toStudent(row) : null;
+  },
+
+  async delete(id) {
+    const numericId = Number(id);
+
+    if (Number.isNaN(numericId)) {
       return false;
     }
 
-    store.students.splice(index, 1);
+    const result = await getDb().delete(students).where(eq(students.id, numericId));
 
-    return true;
+    return result.rowCount > 0;
   },
 
-  search(query) {
-    const lower = query.toLowerCase();
+  async search(query) {
+    const lower = `%${query.toLowerCase()}%`;
 
-    return getStore().students.filter(
-      (s) => s.name.toLowerCase().includes(lower) || s.nis.includes(query),
-    );
+    const rows = await getDb()
+      .select()
+      .from(students)
+      .where(or(like(students.name, lower), like(students.nis, `%${query}%`)));
+
+    return rows.map(toStudent);
   },
 };
