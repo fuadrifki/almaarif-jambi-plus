@@ -44,7 +44,7 @@ export const AttendanceSessionCard = ({ session, records }: AttendanceSessionCar
   });
 
   return (
-    <Link href={`/attendance/history/${session.id}`} className="block">
+    <Link href={`/attendance/${session.id}`} className="block">
       <Surface className="space-y-3 p-4 transition hover:border-white/20">
         <div className="flex items-start justify-between gap-3">
           <div className="space-y-1">

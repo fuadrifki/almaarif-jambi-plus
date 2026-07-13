@@ -1,7 +1,11 @@
 import { redirect } from 'next/navigation';
 
 import { getSession } from '@/lib/auth';
-import { studentRepository } from '@/lib/data';
+import {
+  attendanceSessionRepository,
+  attendanceRecordRepository,
+  studentRepository,
+} from '@/lib/data';
 
 import { AttendancePageClient } from '@/features/attendance/pages/attendance-page-client';
 
@@ -12,9 +16,24 @@ export default async function AttendancePage() {
     redirect('/login');
   }
 
-  const students = await studentRepository.findAll();
+  const [students, sessions] = await Promise.all([
+    studentRepository.findAll(),
+    attendanceSessionRepository.findByTeacherId(session.id),
+  ]);
+
+  const sessionsWithRecords = await Promise.all(
+    sessions.map(async (s) => {
+      const records = await attendanceRecordRepository.findBySessionId(s.id);
+      return { ...s, records };
+    }),
+  );
 
   return (
-    <AttendancePageClient teacherId={session.id} teacherName={session.name} students={students} />
+    <AttendancePageClient
+      teacherId={session.id}
+      teacherName={session.name}
+      students={students}
+      sessions={sessionsWithRecords}
+    />
   );
 }

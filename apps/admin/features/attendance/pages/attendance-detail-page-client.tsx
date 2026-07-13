@@ -59,7 +59,7 @@ export const AttendanceDetailPageClient = ({
           variant="ghost"
           size="sm"
           leftIcon={<ArrowLeft size={16} />}
-          onClick={() => router.push('/attendance/history')}
+          onClick={() => router.push('/attendance?tab=history')}
         >
           Kembali
         </Button>

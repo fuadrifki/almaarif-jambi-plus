@@ -1,29 +1,52 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { Button, EmptyState, Field, PageLayout, Select, Surface, toast } from '@/components/ui';
 import { ClipboardCheck } from 'lucide-react';
 
+import { cn } from '@/lib';
 import { CLASSES, SUBJECTS, TEACHERS } from '@/config/lookups';
 
+import { AttendanceSessionCard } from '../components/attendance-session-card';
 import { AttendanceStudentRow } from '../components/attendance-student-row';
 import { submitAttendance } from '../server';
 
-import type { AttendanceStatus } from '../types';
+import type { AttendanceRecord, AttendanceSession, AttendanceStatus } from '../types';
 import type { Student } from '@/features/students/types';
+
+type SessionWithRecords = AttendanceSession & { records: AttendanceRecord[] };
 
 type AttendancePageClientProps = {
   teacherId: string;
   teacherName: string;
   students: Student[];
+  sessions: SessionWithRecords[];
 };
+
+const VALID_TABS = ['input', 'history'] as const;
+type Tab = (typeof VALID_TABS)[number];
 
 export const AttendancePageClient = ({
   teacherId,
   teacherName,
   students,
+  sessions,
 }: AttendancePageClientProps) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const rawTab = searchParams.get('tab');
+  const activeTab: Tab = VALID_TABS.includes(rawTab as Tab) ? (rawTab as Tab) : 'input';
+
+  const setActiveTab = (tab: Tab) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('tab', tab);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
+
   const now = useMemo(() => new Date(), []);
 
   const date = useMemo(
@@ -59,10 +82,42 @@ export const AttendancePageClient = ({
   const [notes, setNotes] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const [dateFilter, setDateFilter] = useState('');
+  const [classFilter, setClassFilter] = useState('');
+  const [subjectFilter, setSubjectFilter] = useState('');
+
   const filteredStudents = useMemo(
     () => (classId ? students.filter((s) => s.classId === classId) : []),
     [students, classId],
   );
+
+  const dateOptions = useMemo(() => {
+    const uniqueDates = [...new Set(sessions.map((s) => s.date))].sort().reverse();
+    return [
+      { value: '', label: 'Semua Tanggal' },
+      ...uniqueDates.map((d) => ({
+        value: d,
+        label: new Date(d + 'T00:00:00').toLocaleDateString('id-ID', {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric',
+        }),
+      })),
+    ];
+  }, [sessions]);
+
+  const classOptions = useMemo(() => [{ value: '', label: 'Semua Kelas' }, ...CLASSES], []);
+
+  const subjectOptions = useMemo(() => [{ value: '', label: 'Semua Mapel' }, ...SUBJECTS], []);
+
+  const filteredSessions = useMemo(() => {
+    return sessions.filter((s) => {
+      if (dateFilter && s.date !== dateFilter) return false;
+      if (classFilter && s.classId !== classFilter) return false;
+      if (subjectFilter && s.subjectId !== subjectFilter) return false;
+      return true;
+    });
+  }, [sessions, dateFilter, classFilter, subjectFilter]);
 
   const handleStatusChange = (studentId: string, status: AttendanceStatus) => {
     setStatuses((prev) => ({ ...prev, [studentId]: status }));
@@ -135,59 +190,146 @@ export const AttendancePageClient = ({
           </span>
         </Surface>
 
-        <div className="grid gap-4 grid-cols-2">
-          <Field label="Kelas" required>
-            <Select options={CLASSES} value={classId} placeholder="Pilih" onChange={setClassId} />
-          </Field>
+        <div className="flex rounded-lg border border-white/10 p-1">
+          <button
+            type="button"
+            className={cn(
+              'flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition',
+              activeTab === 'input'
+                ? 'bg-white/10 text-primary'
+                : 'text-secondary hover:text-primary',
+            )}
+            onClick={() => setActiveTab('input')}
+          >
+            Isi
+          </button>
 
-          <Field label="Mata Pelajaran" required>
-            <Select
-              options={SUBJECTS}
-              value={subjectId}
-              placeholder="Pilih"
-              onChange={setSubjectId}
-            />
-          </Field>
+          <button
+            type="button"
+            className={cn(
+              'flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition',
+              activeTab === 'history'
+                ? 'bg-white/10 text-primary'
+                : 'text-secondary hover:text-primary',
+            )}
+            onClick={() => setActiveTab('history')}
+          >
+            Riwayat
+          </button>
         </div>
-      </PageLayout.Header>
 
-      <PageLayout.Content className="flex-1 min-h-0 flex flex-col gap-y-4 justify-between w-full">
-        {!classId ? (
-          <EmptyState
-            icon={<ClipboardCheck size={32} />}
-            title="Pilih kelas untuk memulai"
-            description="Pilih kelas dan mata pelajaran terlebih dahulu untuk mengisi absensi."
-          />
-        ) : filteredStudents.length === 0 ? (
-          <EmptyState
-            icon={<ClipboardCheck size={32} />}
-            title="Tidak ada siswa"
-            description="Tidak ada siswa yang terdaftar di kelas ini."
-          />
-        ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
-            {filteredStudents.map((student) => (
-              <AttendanceStudentRow
-                key={student.id}
-                student={student}
-                status={statuses[student.id]}
-                notes={notes[student.id] ?? ''}
-                onStatusChange={handleStatusChange}
-                onNotesChange={handleNotesChange}
+        {activeTab === 'input' && (
+          <div className="grid gap-4 grid-cols-2">
+            <Field label="Kelas" required>
+              <Select options={CLASSES} value={classId} placeholder="Pilih" onChange={setClassId} />
+            </Field>
+
+            <Field label="Mata Pelajaran" required>
+              <Select
+                options={SUBJECTS}
+                value={subjectId}
+                placeholder="Pilih"
+                onChange={setSubjectId}
               />
-            ))}
+            </Field>
           </div>
         )}
 
-        <div className="flex justify-end">
-          <Button
-            onClick={handleSubmit}
-            disabled={!classId || !subjectId || filteredStudents.length === 0}
-            status={isSubmitting ? 'loading' : 'idle'}
-          >
-            Simpan Absensi
-          </Button>
-        </div>
+        {activeTab === 'history' && (
+          <div className="grid gap-3 grid-cols-1 sm:grid-cols-3">
+            <Select
+              options={dateOptions}
+              value={dateFilter}
+              placeholder="Tanggal"
+              onChange={setDateFilter}
+            />
+
+            <Select
+              options={classOptions}
+              value={classFilter}
+              placeholder="Kelas"
+              onChange={setClassFilter}
+            />
+
+            <Select
+              options={subjectOptions}
+              value={subjectFilter}
+              placeholder="Mapel"
+              onChange={setSubjectFilter}
+            />
+          </div>
+        )}
+      </PageLayout.Header>
+
+      <PageLayout.Content className="flex flex-col gap-y-4 justify-between w-full">
+        {activeTab === 'input' && (
+          <>
+            {!classId ? (
+              <EmptyState
+                icon={<ClipboardCheck size={32} />}
+                title="Pilih kelas untuk memulai"
+                description="Pilih kelas dan mata pelajaran terlebih dahulu untuk mengisi absensi."
+              />
+            ) : filteredStudents.length === 0 ? (
+              <EmptyState
+                icon={<ClipboardCheck size={32} />}
+                title="Tidak ada siswa"
+                description="Tidak ada siswa yang terdaftar di kelas ini."
+              />
+            ) : (
+              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
+                {filteredStudents.map((student) => (
+                  <AttendanceStudentRow
+                    key={student.id}
+                    student={student}
+                    status={statuses[student.id]}
+                    notes={notes[student.id] ?? ''}
+                    onStatusChange={handleStatusChange}
+                    onNotesChange={handleNotesChange}
+                  />
+                ))}
+              </div>
+            )}
+
+            <div className="flex justify-end">
+              <Button
+                onClick={handleSubmit}
+                disabled={!classId || !subjectId || filteredStudents.length === 0}
+                status={isSubmitting ? 'loading' : 'idle'}
+              >
+                Simpan Absensi
+              </Button>
+            </div>
+          </>
+        )}
+
+        {activeTab === 'history' && (
+          <>
+            {sessions.length === 0 ? (
+              <EmptyState
+                icon={<ClipboardCheck size={32} />}
+                title="Belum ada riwayat"
+                description="Riwayat absensi akan muncul setelah Anda menyimpan absensi."
+              />
+            ) : filteredSessions.length === 0 ? (
+              <EmptyState
+                icon={<ClipboardCheck size={32} />}
+                title="Tidak ada hasil"
+                description="Tidak ada riwayat yang cocok dengan filter yang dipilih."
+              />
+            ) : (
+              <div className="space-y-3">
+                {filteredSessions.map((session) => (
+                  <AttendanceSessionCard
+                    key={session.id}
+                    session={session}
+                    records={session.records}
+                  />
+                ))}
+              </div>
+            )}
+          </>
+        )}
       </PageLayout.Content>
     </PageLayout>
   );
