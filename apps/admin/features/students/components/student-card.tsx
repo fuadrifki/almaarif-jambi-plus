@@ -57,7 +57,7 @@ export const StudentCard = ({ student, onDelete }: StudentCardProps) => {
           </Link>
 
           <Button
-            variant="danger"
+            variant="ghost"
             size="sm"
             leftIcon={<Trash2 size={14} />}
             onClick={() => onDelete(student)}
