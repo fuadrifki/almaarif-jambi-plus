@@ -52,11 +52,11 @@ const colors = [
 export const ColorsPage = () => (
   <div className="space-y-10">
     <header className="space-y-2">
-      <p className="text-sm font-medium text-(--text-secondary)">Foundations</p>
+      <p className="text-sm font-medium text-secondary">Foundations</p>
 
       <h1 className="text-4xl font-bold tracking-tight">Colors</h1>
 
-      <p className="text-(--text-secondary)">Semantic color tokens yang digunakan ADS.</p>
+      <p className="text-secondary">Semantic color tokens yang digunakan ADS.</p>
     </header>
 
     <SectionPreview title="Color Tokens" description="Preview warna berdasarkan CSS variables.">

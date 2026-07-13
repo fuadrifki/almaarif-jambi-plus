@@ -27,7 +27,7 @@ export const Input = ({
   return (
     <div className={cn('ads-input-wrapper relative', className)}>
       {leftIcon && (
-        <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-(--text-secondary)">
+        <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-secondary">
           {leftIcon}
         </span>
       )}

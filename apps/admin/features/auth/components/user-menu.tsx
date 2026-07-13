@@ -43,20 +43,18 @@ export const UserMenu = ({ user }: { user: User }) => {
           >
             <UserCircle size={24} />
 
-            <span className="hidden text-sm font-medium text-(--text-primary) sm:inline">
-              {user.name}
-            </span>
+            <span className="hidden text-sm font-medium text-primary sm:inline">{user.name}</span>
           </button>
         </Surface>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" sideOffset={8}>
         <DropdownMenuLabel>
-          <p className="text-base font-semibold text-(--text-primary)">{user.name}</p>
+          <p className="text-base font-semibold text-primary">{user.name}</p>
 
-          <p className="text-xs text-(--text-secondary)">{user.email}</p>
+          <p className="text-xs text-secondary">{user.email}</p>
 
-          <p className="text-xs capitalize text-(--text-secondary)">{user.role}</p>
+          <p className="text-xs capitalize text-secondary">{user.role}</p>
         </DropdownMenuLabel>
 
         <DropdownMenuSeparator />

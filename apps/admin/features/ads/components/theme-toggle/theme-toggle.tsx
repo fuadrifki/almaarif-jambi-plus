@@ -32,7 +32,7 @@ export const ThemeToggle = ({ className }: ThemeToggleProps) => {
       type="button"
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
       className={cn(
-        'flex items-center justify-center rounded-xl border border-white/10 p-2 text-(--text-secondary) transition hover:bg-white/10 hover:text-(--text-primary)',
+        'flex items-center justify-center rounded-xl border border-white/10 p-2 text-secondary transition hover:bg-white/10 hover:text-primary',
         className,
       )}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}

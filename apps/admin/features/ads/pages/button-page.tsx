@@ -6,11 +6,11 @@ import { SectionPreview } from '../components/section-preview';
 export const ButtonPage = () => (
   <div className="space-y-10">
     <header className="space-y-2">
-      <p className="text-sm font-medium text-(--text-secondary)">Components</p>
+      <p className="text-sm font-medium text-secondary">Components</p>
 
       <h1 className="text-4xl font-bold tracking-tight">Button</h1>
 
-      <p className="text-(--text-secondary)">
+      <p className="text-secondary">
         Button digunakan untuk menjalankan aksi pengguna. Selalu gunakan variant yang sesuai dengan
         tingkat prioritas aksi.
       </p>

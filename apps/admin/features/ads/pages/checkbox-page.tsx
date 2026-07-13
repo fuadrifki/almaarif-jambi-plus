@@ -14,7 +14,7 @@ export const CheckboxPage = () => {
       <header className="space-y-2">
         <h1 className="text-3xl font-bold">Checkbox</h1>
 
-        <p className="text-(--text-secondary)">
+        <p className="text-secondary">
           Checkbox digunakan untuk memilih satu atau lebih opsi dalam sebuah form.
         </p>
       </header>

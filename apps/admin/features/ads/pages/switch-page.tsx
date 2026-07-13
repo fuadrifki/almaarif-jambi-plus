@@ -14,7 +14,7 @@ export const SwitchPage = () => {
       <header className="space-y-2">
         <h1 className="text-3xl font-bold">Switch</h1>
 
-        <p className="text-(--text-secondary)">
+        <p className="text-secondary">
           Switch digunakan untuk mengubah nilai antara aktif dan tidak aktif.
         </p>
       </header>

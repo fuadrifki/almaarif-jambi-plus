@@ -21,7 +21,7 @@ export const DesignShell = ({ children }: DesignShellProps) => (
                 <Link
                   key={href}
                   href={href}
-                  className="block text-sm text-(--text-secondary) transition hover:text-(--text-primary)"
+                  className="block text-sm text-secondary transition hover:text-primary"
                 >
                   {label}
                 </Link>

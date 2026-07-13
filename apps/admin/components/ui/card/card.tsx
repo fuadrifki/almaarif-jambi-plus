@@ -16,7 +16,7 @@ export const Card = ({
       <header className="space-y-1">
         {heading && <h3 className="text-lg font-semibold">{heading}</h3>}
 
-        {description && <p className="text-sm text-(--text-secondary)">{description}</p>}
+        {description && <p className="text-sm text-secondary">{description}</p>}
       </header>
     )}
 

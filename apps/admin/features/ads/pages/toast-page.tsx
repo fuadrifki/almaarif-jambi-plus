@@ -9,7 +9,7 @@ export const ToastPage = () => (
     <section>
       <h1 className="text-3xl font-semibold">Toast</h1>
 
-      <p className="mt-2 text-(--text-secondary)">
+      <p className="mt-2 text-secondary">
         A lightweight notification component built on Sonner. Used for transient feedback — success
         messages, error alerts, loading states, and confirmations.
       </p>
@@ -98,9 +98,9 @@ toast.dismiss(toastId);`}
     </SectionPreview>
 
     <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
-      <h3 className="text-sm font-semibold text-(--text-primary)">Usage</h3>
+      <h3 className="text-sm font-semibold text-primary">Usage</h3>
 
-      <pre className="mt-3 overflow-x-auto rounded-xl bg-black/20 p-4 text-xs text-(--text-secondary)">
+      <pre className="mt-3 overflow-x-auto rounded-xl bg-black/20 p-4 text-xs text-secondary">
         {`import { toast } from '@/components/ui';
 
 // Simple message

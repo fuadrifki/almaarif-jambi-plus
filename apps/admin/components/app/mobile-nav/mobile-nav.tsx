@@ -5,13 +5,11 @@ import { usePathname } from 'next/navigation';
 import { CircleEllipsis } from 'lucide-react';
 
 import { Surface } from '@/components/ui';
-import { getNavigationForRole } from '@/config/navigation';
+import { getNavigationForRole, MOBILE_MAX_PRIMARY_ITEMS } from '@/config/navigation';
 import { cn } from '@/lib';
 
 import type { NavigationItem } from '@/config/navigation';
 import type { UserRole } from '@/lib/types/user';
-
-const MAX_PRIMARY_ITEMS = 4;
 
 type MobileNavProps = {
   role: UserRole;
@@ -20,8 +18,8 @@ type MobileNavProps = {
 export const MobileNav = ({ role }: MobileNavProps) => {
   const pathname = usePathname();
   const items = getNavigationForRole(role);
-  const primary = items.slice(0, MAX_PRIMARY_ITEMS);
-  const hasOverflow = items.length > MAX_PRIMARY_ITEMS;
+  const primary = items.slice(0, MOBILE_MAX_PRIMARY_ITEMS);
+  const hasOverflow = items.length > MOBILE_MAX_PRIMARY_ITEMS;
 
   const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname.startsWith(href));
 
@@ -34,12 +32,9 @@ export const MobileNav = ({ role }: MobileNavProps) => {
         href={item.disabled ? '#' : item.href}
         aria-disabled={item.disabled}
         className={cn(
-          'flex flex-1 flex-col items-center gap-1 py-2 text-[10px] transition',
-          item.disabled
-            ? 'pointer-events-none cursor-default opacity-40'
-            : active
-              ? 'text-(--text-primary)'
-              : 'text-(--text-secondary)',
+          'ads-mobile-nav-item',
+          item.disabled && 'ads-nav-item--disabled',
+          active && 'ads-mobile-nav-item--active',
         )}
       >
         <item.icon size={20} />
@@ -58,8 +53,8 @@ export const MobileNav = ({ role }: MobileNavProps) => {
           <Link
             href="/more"
             className={cn(
-              'flex flex-1 flex-col items-center gap-1 py-2 text-[10px] transition',
-              isActive('/more') ? 'text-(--text-primary)' : 'text-(--text-secondary)',
+              'ads-mobile-nav-item',
+              isActive('/more') && 'ads-mobile-nav-item--active',
             )}
           >
             <CircleEllipsis size={20} />

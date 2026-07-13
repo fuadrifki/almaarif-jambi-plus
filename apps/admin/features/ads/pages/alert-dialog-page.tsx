@@ -18,7 +18,7 @@ export const AlertDialogPage = () => (
     <section>
       <h1 className="text-3xl font-semibold">Alert Dialog</h1>
 
-      <p className="mt-2 text-(--text-secondary)">
+      <p className="mt-2 text-secondary">
         A modal confirmation dialog built on Radix primitives. Used for destructive actions —
         delete, logout, data reset — where the user must explicitly confirm or cancel.
       </p>
@@ -109,9 +109,9 @@ export const AlertDialogPage = () => (
     </SectionPreview>
 
     <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
-      <h3 className="text-sm font-semibold text-(--text-primary)">When to Use</h3>
+      <h3 className="text-sm font-semibold text-primary">When to Use</h3>
 
-      <ul className="mt-3 space-y-1 text-xs text-(--text-secondary)">
+      <ul className="mt-3 space-y-1 text-xs text-secondary">
         <li>- Deleting records permanently</li>
         <li>- Logging out from the system</li>
         <li>- Resetting data or settings</li>

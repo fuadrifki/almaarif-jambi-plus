@@ -5,9 +5,7 @@ export const DashboardPage = () => (
     <section>
       <h1 className="text-3xl font-semibold">Dashboard</h1>
 
-      <p className="mt-2 text-(--text-secondary)">
-        Welcome back, manage your Almaarif system here.
-      </p>
+      <p className="mt-2 text-secondary">Welcome back, manage your Almaarif system here.</p>
     </section>
 
     <section className="grid gap-6 md:grid-cols-3">

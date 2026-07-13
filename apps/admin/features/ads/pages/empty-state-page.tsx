@@ -8,7 +8,7 @@ export const EmptyStatePage = () => (
     <section>
       <h1 className="text-3xl font-semibold">Empty State</h1>
 
-      <p className="mt-2 text-(--text-secondary)">
+      <p className="mt-2 text-secondary">
         A placeholder for areas with no data yet. Provides clear messaging and an optional action to
         guide the user toward their next step.
       </p>
@@ -79,23 +79,23 @@ export const EmptyStatePage = () => (
     </SectionPreview>
 
     <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
-      <h3 className="text-sm font-semibold text-(--text-primary)">Props</h3>
+      <h3 className="text-sm font-semibold text-primary">Props</h3>
 
-      <div className="mt-3 space-y-2 text-xs text-(--text-secondary)">
+      <div className="mt-3 space-y-2 text-xs text-secondary">
         <div>
-          <code className="text-(--text-primary)">icon</code> — ReactNode, optional. Icon displayed
-          in the circle above the title.
+          <code className="text-primary">icon</code> — ReactNode, optional. Icon displayed in the
+          circle above the title.
         </div>
         <div>
-          <code className="text-(--text-primary)">title</code> — string, required. Primary message.
+          <code className="text-primary">title</code> — string, required. Primary message.
         </div>
         <div>
-          <code className="text-(--text-primary)">description</code> — string, optional.
-          Supplementary explanation below the title.
+          <code className="text-primary">description</code> — string, optional. Supplementary
+          explanation below the title.
         </div>
         <div>
-          <code className="text-(--text-primary)">action</code> — ReactNode, optional. Button or
-          link for the user&apos;s next action.
+          <code className="text-primary">action</code> — ReactNode, optional. Button or link for the
+          user&apos;s next action.
         </div>
       </div>
     </section>

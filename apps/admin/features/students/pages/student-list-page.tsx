@@ -8,9 +8,9 @@ export const StudentListPage = async () => {
   return (
     <div className="space-y-6">
       <section>
-        <h1 className="text-3xl font-semibold">Siswa</h1>
+        <h1 className="text-2xl font-semibold sm:text-3xl">Siswa</h1>
 
-        <p className="mt-2 text-(--text-secondary)">Kelola data siswa pesantren.</p>
+        <p className="mt-2 text-secondary">Kelola data siswa pesantren.</p>
       </section>
 
       <StudentList students={students} />

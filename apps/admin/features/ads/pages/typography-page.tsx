@@ -41,9 +41,9 @@ const typographyExamples = [
   {
     title: 'Caption',
     description: 'Informasi tambahan dan metadata.',
-    className: 'text-sm text-(--text-secondary)',
+    className: 'text-sm text-secondary',
     text: 'Updated 2 minutes ago',
-    code: `<span className="text-sm text-(--text-secondary)">
+    code: `<span className="text-sm text-secondary">
   Updated 2 minutes ago
 </span>`,
   },
@@ -52,13 +52,11 @@ const typographyExamples = [
 export const TypographyPage = () => (
   <div className="space-y-10">
     <header className="space-y-2">
-      <p className="text-sm font-medium text-(--text-secondary)">Foundations</p>
+      <p className="text-sm font-medium text-secondary">Foundations</p>
 
       <h1 className="text-4xl font-bold tracking-tight">Typography</h1>
 
-      <p className="text-(--text-secondary)">
-        Sistem tipografi yang digunakan pada aplikasi Almaarif.
-      </p>
+      <p className="text-secondary">Sistem tipografi yang digunakan pada aplikasi Almaarif.</p>
     </header>
 
     {typographyExamples.map((item) => (

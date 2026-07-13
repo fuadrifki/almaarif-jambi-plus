@@ -23,12 +23,12 @@ export const CodePreview = ({ code }: CodePreviewProps) => {
   };
 
   return (
-    <div className="overflow-hidden rounded-xl border border-(--border)">
-      <div className="flex items-center justify-between border-b border-(--border) px-4 py-2">
+    <div className="overflow-hidden rounded-xl border border-border">
+      <div className="flex items-center justify-between border-b border-border px-4 py-2">
         <button
           type="button"
           onClick={() => setExpanded((value) => !value)}
-          className="flex cursor-pointer items-center gap-2 rounded-full px-2 py-1 text-xs text-(--text-secondary) transition hover:bg-black/5 hover:text-(--text-primary)"
+          className="flex cursor-pointer items-center gap-2 rounded-full px-2 py-1 text-xs text-secondary transition hover:bg-black/5 hover:text-primary"
         >
           {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
 
@@ -39,7 +39,7 @@ export const CodePreview = ({ code }: CodePreviewProps) => {
           type="button"
           onClick={handleCopy}
           disabled={!expanded}
-          className="flex cursor-pointer items-center gap-2 rounded-full px-2 py-1 text-xs text-(--text-secondary) transition hover:bg-black/5 hover:text-(--text-primary) disabled:pointer-events-none disabled:opacity-40"
+          className="flex cursor-pointer items-center gap-2 rounded-full px-2 py-1 text-xs text-secondary transition hover:bg-black/5 hover:text-primary disabled:pointer-events-none disabled:opacity-40"
         >
           {copied ? (
             <>

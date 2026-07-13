@@ -14,7 +14,7 @@ export const RadioPage = () => {
       <header className="space-y-2">
         <h1 className="text-3xl font-bold">Radio</h1>
 
-        <p className="text-(--text-secondary)">
+        <p className="text-secondary">
           Radio digunakan ketika pengguna hanya dapat memilih satu pilihan.
         </p>
       </header>

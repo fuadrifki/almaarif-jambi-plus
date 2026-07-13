@@ -22,15 +22,13 @@ export default function DashboardError({
         <AlertTriangle size={32} className="text-red-400" />
       </div>
 
-      <h2 className="text-xl font-semibold text-(--text-primary)">Terjadi Kesalahan</h2>
+      <h2 className="text-xl font-semibold text-primary">Terjadi Kesalahan</h2>
 
-      <p className="mt-2 text-sm text-(--text-secondary)">
+      <p className="mt-2 text-sm text-secondary">
         {error.message || 'Terjadi kesalahan yang tidak terduga. Silakan coba lagi.'}
       </p>
 
-      {error.digest && (
-        <p className="mt-1 text-xs text-(--text-secondary)">Error ID: {error.digest}</p>
-      )}
+      {error.digest && <p className="mt-1 text-xs text-secondary">Error ID: {error.digest}</p>}
 
       <Button className="mt-6" leftIcon={<RefreshCw size={16} />} onClick={reset}>
         Coba Lagi

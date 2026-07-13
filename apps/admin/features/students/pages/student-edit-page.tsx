@@ -19,9 +19,9 @@ export const StudentEditPage = async ({ params }: StudentEditPageProps) => {
   return (
     <div className="space-y-6">
       <section>
-        <h1 className="text-3xl font-semibold">Edit Siswa</h1>
+        <h1 className="text-2xl font-semibold sm:text-3xl">Edit Siswa</h1>
 
-        <p className="mt-2 text-(--text-secondary)">Ubah data siswa {student.name}.</p>
+        <p className="mt-2 text-secondary">Ubah data siswa {student.name}.</p>
       </section>
 
       <StudentForm student={student} />

@@ -19,7 +19,7 @@ export const DropdownMenuPage = () => (
     <section>
       <h1 className="text-3xl font-semibold">Dropdown Menu</h1>
 
-      <p className="mt-2 text-(--text-secondary)">
+      <p className="mt-2 text-secondary">
         A liquid glass dropdown menu built on Radix primitives. Supports items, checkboxes, radio
         groups, labels, separators, and keyboard navigation.
       </p>

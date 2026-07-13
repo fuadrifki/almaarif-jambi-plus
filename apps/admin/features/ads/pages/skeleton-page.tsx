@@ -7,7 +7,7 @@ export const SkeletonPage = () => (
     <section>
       <h1 className="text-3xl font-semibold">Skeleton</h1>
 
-      <p className="mt-2 text-(--text-secondary)">
+      <p className="mt-2 text-secondary">
         Placeholder loading indicators that approximate the shape of content. Used while data is
         being fetched to reduce perceived wait time.
       </p>
@@ -84,24 +84,24 @@ export const SkeletonPage = () => (
     </SectionPreview>
 
     <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
-      <h3 className="text-sm font-semibold text-(--text-primary)">Components</h3>
+      <h3 className="text-sm font-semibold text-primary">Components</h3>
 
-      <div className="mt-3 space-y-2 text-xs text-(--text-secondary)">
+      <div className="mt-3 space-y-2 text-xs text-secondary">
         <div>
-          <code className="text-(--text-primary)">Skeleton</code> — Base block. Accepts{' '}
+          <code className="text-primary">Skeleton</code> — Base block. Accepts{' '}
           <code>className</code> for custom sizing.
         </div>
         <div>
-          <code className="text-(--text-primary)">SkeletonText</code> — Multi-line text placeholder.
+          <code className="text-primary">SkeletonText</code> — Multi-line text placeholder.
           <code> lines</code> prop defaults to 3.
         </div>
         <div>
-          <code className="text-(--text-primary)">SkeletonAvatar</code> — Circular avatar
-          placeholder. <code>size</code> prop defaults to 40px.
+          <code className="text-primary">SkeletonAvatar</code> — Circular avatar placeholder.{' '}
+          <code>size</code> prop defaults to 40px.
         </div>
         <div>
-          <code className="text-(--text-primary)">SkeletonCard</code> — Composite card skeleton with
-          avatar + text lines.
+          <code className="text-primary">SkeletonCard</code> — Composite card skeleton with avatar +
+          text lines.
         </div>
       </div>
     </section>

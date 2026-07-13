@@ -13,10 +13,10 @@ export const SectionPreview = ({ title, description, code, children }: SectionPr
     <div className="space-y-1">
       <h2 className="text-2xl font-semibold">{title}</h2>
 
-      {description && <p className="text-(--text-secondary)">{description}</p>}
+      {description && <p className="text-secondary">{description}</p>}
     </div>
 
-    <div className="p-6 border border-(--border) rounded-xl">{children}</div>
+    <div className="p-6 border border-border rounded-xl">{children}</div>
 
     {code && <CodePreview code={code} />}
   </section>

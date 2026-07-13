@@ -75,9 +75,9 @@ export const LoginForm = () => {
           </div>
 
           <div className="space-y-2 w-full flex flex-col items-center">
-            <h1 className="text-2xl font-semibold text-(--text-primary)">Welcome back</h1>
+            <h1 className="text-2xl font-semibold text-primary">Welcome back</h1>
 
-            <p className="text-sm text-(--text-secondary)">Login to access dashboard</p>
+            <p className="text-sm text-secondary">Login to access dashboard</p>
           </div>
 
           <Field label="Email" required error={fieldErrors.email}>

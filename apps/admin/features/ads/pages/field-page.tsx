@@ -20,7 +20,7 @@ export const FieldPage = () => {
       <section>
         <h1 className="text-3xl font-semibold">Field</h1>
 
-        <p className="mt-2 text-(--text-secondary)">
+        <p className="mt-2 text-secondary">
           A layout wrapper for form controls. Provides consistent label, required indicator,
           description text, and error messages.
         </p>
@@ -71,28 +71,28 @@ export const FieldPage = () => {
       </SectionPreview>
 
       <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
-        <h3 className="text-sm font-semibold text-(--text-primary)">Props</h3>
+        <h3 className="text-sm font-semibold text-primary">Props</h3>
 
-        <div className="mt-3 space-y-2 text-xs text-(--text-secondary)">
+        <div className="mt-3 space-y-2 text-xs text-secondary">
           <div>
-            <code className="text-(--text-primary)">label</code> — string, optional. Renders a
+            <code className="text-primary">label</code> — string, optional. Renders a
             <code> &lt;label&gt;</code> element above the input.
           </div>
           <div>
-            <code className="text-(--text-primary)">id</code> — string, optional. Associates the
-            label with the input via <code>htmlFor</code>.
+            <code className="text-primary">id</code> — string, optional. Associates the label with
+            the input via <code>htmlFor</code>.
           </div>
           <div>
-            <code className="text-(--text-primary)">required</code> — boolean, default false. Shows
-            a red asterisk next to the label.
+            <code className="text-primary">required</code> — boolean, default false. Shows a red
+            asterisk next to the label.
           </div>
           <div>
-            <code className="text-(--text-primary)">description</code> — string, optional. Helper
-            text below the input (hidden when error is present).
+            <code className="text-primary">description</code> — string, optional. Helper text below
+            the input (hidden when error is present).
           </div>
           <div>
-            <code className="text-(--text-primary)">error</code> — string, optional. Error message
-            below the input with <code>role=&quot;alert&quot;</code>.
+            <code className="text-primary">error</code> — string, optional. Error message below the
+            input with <code>role=&quot;alert&quot;</code>.
           </div>
         </div>
       </section>

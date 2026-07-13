@@ -5,11 +5,11 @@ import { SectionPreview } from '../components/section-preview';
 export const BadgePage = () => (
   <div className="space-y-10">
     <header className="space-y-2">
-      <p className="text-sm font-medium text-(--text-secondary)">Components</p>
+      <p className="text-sm font-medium text-secondary">Components</p>
 
       <h1 className="text-4xl font-bold tracking-tight">Badge</h1>
 
-      <p className="text-(--text-secondary)">
+      <p className="text-secondary">
         Badge digunakan untuk menampilkan status atau label singkat. Gunakan variant yang sesuai
         untuk mengkomunikasikan makna secara visual.
       </p>

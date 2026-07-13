@@ -13,6 +13,8 @@ import {
 
 import type { UserRole } from '@/lib/types/user';
 
+export const MOBILE_MAX_PRIMARY_ITEMS = 4;
+
 export type NavigationItem = {
   label: string;
   href: string;

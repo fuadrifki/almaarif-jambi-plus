@@ -41,11 +41,11 @@ const disabledOptions = [
 export const SelectPage = () => (
   <div className="space-y-10">
     <header className="space-y-2">
-      <p className="text-sm font-medium text-(--text-secondary)">Components</p>
+      <p className="text-sm font-medium text-secondary">Components</p>
 
       <h1 className="text-4xl font-bold tracking-tight">Select</h1>
 
-      <p className="text-(--text-secondary)">
+      <p className="text-secondary">
         Select digunakan untuk memilih satu nilai dari beberapa pilihan dengan dukungan keyboard
         navigation, collision detection, dan liquid glass styling.
       </p>
