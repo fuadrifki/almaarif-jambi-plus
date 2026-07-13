@@ -9,6 +9,7 @@ import {
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
+  AlertDialogFooter,
   AlertDialogTitle,
   Button,
   EmptyState,
@@ -78,13 +79,13 @@ export const StudentList = ({ students }: StudentListProps) => {
             tidak dapat dibatalkan.
           </AlertDialogDescription>
 
-          <div className="flex justify-end gap-3">
+          <AlertDialogFooter>
             <AlertDialogCancel disabled={deleting}>Batal</AlertDialogCancel>
 
             <AlertDialogAction onClick={handleDelete} disabled={deleting}>
               {deleting ? 'Menghapus...' : 'Hapus'}
             </AlertDialogAction>
-          </div>
+          </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
     </>

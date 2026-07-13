@@ -15,5 +15,6 @@ export * from './toast';
 export * from './alert-dialog';
 export * from './empty-state';
 export * from './skeleton';
+export * from './infinite-scroll';
 export * from './page-layout';
 export * from './table';

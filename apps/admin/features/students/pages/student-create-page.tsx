@@ -1,15 +1,22 @@
+import { PageLayout } from '@/components/ui';
 import { StudentForm } from '../components/student-form';
 
 export const StudentCreatePage = () => {
   return (
-    <div className="flex-1 overflow-y-auto space-y-6">
-      <section>
-        <h1 className="text-2xl font-semibold sm:text-3xl">Tambah Siswa</h1>
+    <PageLayout>
+      <PageLayout.Header>
+        <div className="flex flex-col w-full gap-y-6">
+          <section>
+            <h1 className="text-2xl font-semibold sm:text-3xl">Tambah Siswa</h1>
 
-        <p className="mt-2 text-secondary">Masukkan data siswa baru.</p>
-      </section>
+            <p className="mt-2 text-secondary">Masukkan data siswa baru.</p>
+          </section>
+        </div>
+      </PageLayout.Header>
 
-      <StudentForm />
-    </div>
+      <PageLayout.Content>
+        <StudentForm />
+      </PageLayout.Content>
+    </PageLayout>
   );
 };

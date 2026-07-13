@@ -3,6 +3,7 @@
 import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog';
 
 import { cn } from '@/lib';
+import { Button } from '@/components/ui/button';
 
 import type { ComponentPropsWithoutRef } from 'react';
 
@@ -56,20 +57,36 @@ const AlertDialogDescription = ({
 
 AlertDialogDescription.displayName = AlertDialogPrimitive.Description.displayName;
 
+const AlertDialogFooter = ({ className, ...props }: ComponentPropsWithoutRef<'div'>) => (
+  <div className={cn('ads-alert-dialog__footer', className)} {...props} />
+);
+
+AlertDialogFooter.displayName = 'AlertDialogFooter';
+
 const AlertDialogAction = ({
   className,
+  children,
   ...props
 }: ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Action>) => (
-  <AlertDialogPrimitive.Action className={cn('ads-alert-dialog__action', className)} {...props} />
+  <AlertDialogPrimitive.Action asChild>
+    <Button variant="danger" size="md" className={className} {...props}>
+      {children}
+    </Button>
+  </AlertDialogPrimitive.Action>
 );
 
 AlertDialogAction.displayName = AlertDialogPrimitive.Action.displayName;
 
 const AlertDialogCancel = ({
   className,
+  children,
   ...props
 }: ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Cancel>) => (
-  <AlertDialogPrimitive.Cancel className={cn('ads-alert-dialog__cancel', className)} {...props} />
+  <AlertDialogPrimitive.Cancel asChild>
+    <Button variant="secondary" size="md" className={className} {...props}>
+      {children}
+    </Button>
+  </AlertDialogPrimitive.Cancel>
 );
 
 AlertDialogCancel.displayName = AlertDialogPrimitive.Cancel.displayName;
@@ -80,6 +97,7 @@ export {
   AlertDialogContent,
   AlertDialogTitle,
   AlertDialogDescription,
+  AlertDialogFooter,
   AlertDialogAction,
   AlertDialogCancel,
 };

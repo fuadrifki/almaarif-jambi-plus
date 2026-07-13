@@ -6,6 +6,7 @@ import {
   AlertDialogContent,
   AlertDialogTitle,
   AlertDialogDescription,
+  AlertDialogFooter,
   AlertDialogAction,
   AlertDialogCancel,
   Button,
@@ -37,10 +38,10 @@ export const AlertDialogPage = () => (
       Apakah Anda yakin ingin menghapus data ini? Tindakan ini tidak dapat dibatalkan.
     </AlertDialogDescription>
 
-    <div className="flex justify-end gap-2">
+    <AlertDialogFooter>
       <AlertDialogCancel>Batal</AlertDialogCancel>
       <AlertDialogAction>Hapus</AlertDialogAction>
-    </div>
+    </AlertDialogFooter>
   </AlertDialogContent>
 </AlertDialog>`}
     >
@@ -56,11 +57,11 @@ export const AlertDialogPage = () => (
             Apakah Anda yakin ingin menghapus data ini? Tindakan ini tidak dapat dibatalkan.
           </AlertDialogDescription>
 
-          <div className="flex justify-end gap-2">
+          <AlertDialogFooter>
             <AlertDialogCancel>Batal</AlertDialogCancel>
 
             <AlertDialogAction>Hapus</AlertDialogAction>
-          </div>
+          </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
     </SectionPreview>
@@ -78,12 +79,12 @@ export const AlertDialogPage = () => (
       Siswa "Ahmad Fauzi" akan dihapus permanen dari sistem.
     </AlertDialogDescription>
 
-    <div className="flex justify-end gap-2">
+    <AlertDialogFooter>
       <AlertDialogCancel>Batal</AlertDialogCancel>
       <AlertDialogAction onClick={() => toast.success('Data berhasil dihapus')}>
         Ya, Hapus
       </AlertDialogAction>
-    </div>
+    </AlertDialogFooter>
   </AlertDialogContent>
 </AlertDialog>`}
     >
@@ -99,11 +100,11 @@ export const AlertDialogPage = () => (
             Siswa &quot;Ahmad Fauzi&quot; akan dihapus permanen dari sistem.
           </AlertDialogDescription>
 
-          <div className="flex justify-end gap-2">
+          <AlertDialogFooter>
             <AlertDialogCancel>Batal</AlertDialogCancel>
 
             <AlertDialogAction onClick={() => {}}>Ya, Hapus</AlertDialogAction>
-          </div>
+          </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
     </SectionPreview>

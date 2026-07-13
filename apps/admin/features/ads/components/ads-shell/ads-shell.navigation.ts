@@ -92,6 +92,10 @@ export const designNavigation = [
         label: 'Field',
         href: '/design/field',
       },
+      {
+        label: 'Infinite Scroll',
+        href: '/design/infinite-scroll',
+      },
     ],
   },
 ] as const;
