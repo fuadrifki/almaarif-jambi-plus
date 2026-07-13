@@ -96,6 +96,10 @@ export const designNavigation = [
         label: 'Infinite Scroll',
         href: '/design/infinite-scroll',
       },
+      {
+        label: 'Segmented Control',
+        href: '/design/segmented-control',
+      },
     ],
   },
 ] as const;

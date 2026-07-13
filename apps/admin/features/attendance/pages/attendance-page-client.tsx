@@ -3,10 +3,17 @@
 import { useMemo, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-import { Button, EmptyState, Field, PageLayout, Select, Surface, toast } from '@/components/ui';
-import { ClipboardCheck } from 'lucide-react';
-
-import { cn } from '@/lib';
+import {
+  Button,
+  EmptyState,
+  Field,
+  PageLayout,
+  SegmentedControl,
+  Select,
+  Surface,
+  toast,
+} from '@/components/ui';
+import { ClipboardCheck, History } from 'lucide-react';
 import { CLASSES, SUBJECTS, TEACHERS } from '@/config/lookups';
 
 import { AttendanceSessionCard } from '../components/attendance-session-card';
@@ -41,7 +48,7 @@ export const AttendancePageClient = ({
   const rawTab = searchParams.get('tab');
   const activeTab: Tab = VALID_TABS.includes(rawTab as Tab) ? (rawTab as Tab) : 'input';
 
-  const setActiveTab = (tab: Tab) => {
+  const setActiveTab = (tab: string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('tab', tab);
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
@@ -190,33 +197,15 @@ export const AttendancePageClient = ({
           </span>
         </Surface>
 
-        <div className="flex rounded-lg border border-white/10 p-1">
-          <button
-            type="button"
-            className={cn(
-              'flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition',
-              activeTab === 'input'
-                ? 'bg-white/10 text-primary'
-                : 'text-secondary hover:text-primary',
-            )}
-            onClick={() => setActiveTab('input')}
-          >
+        <SegmentedControl value={activeTab} onValueChange={setActiveTab}>
+          <SegmentedControl.Item value="input" icon={<ClipboardCheck size={16} />}>
             Isi
-          </button>
+          </SegmentedControl.Item>
 
-          <button
-            type="button"
-            className={cn(
-              'flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition',
-              activeTab === 'history'
-                ? 'bg-white/10 text-primary'
-                : 'text-secondary hover:text-primary',
-            )}
-            onClick={() => setActiveTab('history')}
-          >
+          <SegmentedControl.Item value="history" icon={<History size={16} />}>
             Riwayat
-          </button>
-        </div>
+          </SegmentedControl.Item>
+        </SegmentedControl>
 
         {activeTab === 'input' && (
           <div className="grid gap-4 grid-cols-2">
