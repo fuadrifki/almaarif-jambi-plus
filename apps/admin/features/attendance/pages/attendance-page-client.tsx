@@ -1,7 +1,6 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import {
   Button,
@@ -32,8 +31,7 @@ type AttendancePageClientProps = {
   sessions: SessionWithRecords[];
 };
 
-const VALID_TABS = ['input', 'history'] as const;
-type Tab = (typeof VALID_TABS)[number];
+type Tab = 'input' | 'history';
 
 export const AttendancePageClient = ({
   teacherId,
@@ -41,18 +39,7 @@ export const AttendancePageClient = ({
   students,
   sessions,
 }: AttendancePageClientProps) => {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  const rawTab = searchParams.get('tab');
-  const activeTab: Tab = VALID_TABS.includes(rawTab as Tab) ? (rawTab as Tab) : 'input';
-
-  const setActiveTab = (tab: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('tab', tab);
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  };
+  const [activeTab, setActiveTab] = useState<Tab>('input');
 
   const now = useMemo(() => new Date(), []);
 
@@ -197,9 +184,9 @@ export const AttendancePageClient = ({
           </span>
         </Surface>
 
-        <SegmentedControl value={activeTab} onValueChange={setActiveTab}>
+        <SegmentedControl value={activeTab} onValueChange={(v) => setActiveTab(v as Tab)}>
           <SegmentedControl.Item value="input" icon={<ClipboardCheck size={16} />}>
-            Isi
+            Isi Absensi
           </SegmentedControl.Item>
 
           <SegmentedControl.Item value="history" icon={<History size={16} />}>
