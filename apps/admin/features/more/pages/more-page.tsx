@@ -7,6 +7,7 @@ import { getSession } from '@/lib/auth';
 import { LogoutButton } from '../components/logout-button';
 
 import type { UserRole } from '@/lib/types/user';
+import { UserCircle } from 'lucide-react';
 
 export const MorePage = async () => {
   const session = await getSession();
@@ -24,17 +25,10 @@ export const MorePage = async () => {
       {session && (
         <Surface className="p-6">
           <div className="flex items-center gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/15 text-sm font-medium text-(--text-primary)">
-              {session.name
-                .split(' ')
-                .map((n: string) => n[0])
-                .join('')
-                .slice(0, 2)
-                .toUpperCase()}
-            </div>
+            <UserCircle size={24} />
 
             <div>
-              <p className="text-sm font-medium text-(--text-primary)">{session.name}</p>
+              <p className="text-base font-semibold text-(--text-primary)">{session.name}</p>
 
               <p className="text-xs text-(--text-secondary)">{session.email}</p>
 

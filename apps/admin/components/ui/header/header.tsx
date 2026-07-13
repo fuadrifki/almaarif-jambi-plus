@@ -8,7 +8,7 @@ export const Header = ({ title, logo, actions }: HeaderProps) => (
       <div className="flex items-center gap-4">
         {logo}
 
-        <div className="font-semibold">{title}</div>
+        <div className="font-semibold leading-5">{title}</div>
       </div>
 
       <div className="flex items-center gap-3">{actions}</div>

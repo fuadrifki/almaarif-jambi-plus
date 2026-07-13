@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { LogOut, Settings, UserIcon } from 'lucide-react';
+import { LogOut, Settings, UserIcon, UserCircle } from 'lucide-react';
 
 import {
   DropdownMenu,
@@ -10,6 +10,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  Surface,
   toast,
 } from '@/components/ui';
 import { destroySession } from '@/features/auth/server';
@@ -35,32 +36,27 @@ export const UserMenu = ({ user }: { user: User }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button
-          type="button"
-          className="flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-sm transition hover:bg-white/10"
-        >
-          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white/15 text-[10px] font-medium text-(--text-primary)">
-            {user.name
-              .split(' ')
-              .map((n: string) => n[0])
-              .join('')
-              .slice(0, 2)
-              .toUpperCase()}
-          </div>
+        <Surface>
+          <button
+            type="button"
+            className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm cursor-pointer"
+          >
+            <UserCircle size={24} />
 
-          <span className="hidden text-sm font-medium text-(--text-primary) sm:inline">
-            {user.name}
-          </span>
-        </button>
+            <span className="hidden text-sm font-medium text-(--text-primary) sm:inline">
+              {user.name}
+            </span>
+          </button>
+        </Surface>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" sideOffset={8}>
         <DropdownMenuLabel>
-          <p className="text-sm font-medium text-(--text-primary)">{user.name}</p>
+          <p className="text-base font-semibold text-(--text-primary)">{user.name}</p>
 
           <p className="text-xs text-(--text-secondary)">{user.email}</p>
 
-          <p className="mt-1 text-xs capitalize text-(--text-secondary)">{user.role}</p>
+          <p className="text-xs capitalize text-(--text-secondary)">{user.role}</p>
         </DropdownMenuLabel>
 
         <DropdownMenuSeparator />
