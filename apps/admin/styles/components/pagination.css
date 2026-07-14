@@ -1,0 +1,142 @@
+.ads-pagination {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.ads-pagination__nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 34px;
+  min-width: 34px;
+  padding-inline: 10px;
+
+  font-size: 0.875rem;
+  font-weight: 500;
+
+  color: var(--text-secondary);
+
+  background: transparent;
+  border: none;
+  border-radius: 9999px;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.ads-pagination__nav:hover:not(:disabled) {
+  color: var(--text-primary);
+
+  background: var(--button-ghost-hover);
+}
+
+.ads-pagination__nav:active:not(:disabled) {
+  filter: brightness(0.92);
+}
+
+.ads-pagination__nav:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.ads-pagination__nav:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 28%, transparent);
+}
+
+.ads-pagination__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 34px;
+  min-width: 34px;
+  padding-inline: 6px;
+
+  font-size: 0.875rem;
+  font-weight: 500;
+
+  color: var(--text-secondary);
+
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 9999px;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.ads-pagination__item:hover:not(.ads-pagination__item--active) {
+  color: var(--text-primary);
+
+  background: var(--button-ghost-hover);
+}
+
+.ads-pagination__item:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 28%, transparent);
+}
+
+.ads-pagination__item--active {
+  color: white;
+
+  background: var(--button-primary);
+
+  box-shadow: 0 4px 12px var(--button-primary-shadow);
+
+  cursor: default;
+}
+
+.ads-pagination__ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 34px;
+  min-width: 34px;
+
+  font-size: 0.875rem;
+  font-weight: 500;
+
+  color: var(--text-secondary);
+
+  user-select: none;
+}
+
+/* Responsive: mobile compact */
+@media (max-width: 640px) {
+  .ads-pagination {
+    gap: 0.125rem;
+  }
+
+  .ads-pagination__nav {
+    height: 30px;
+    min-width: 30px;
+    padding-inline: 8px;
+
+    font-size: 0.8125rem;
+  }
+
+  .ads-pagination__item {
+    height: 30px;
+    min-width: 30px;
+    padding-inline: 4px;
+
+    font-size: 0.8125rem;
+  }
+
+  .ads-pagination__ellipsis {
+    height: 30px;
+    min-width: 24px;
+  }
+}

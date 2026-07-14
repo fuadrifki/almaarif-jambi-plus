@@ -100,6 +100,10 @@ export const designNavigation = [
         label: 'Segmented Control',
         href: '/design/segmented-control',
       },
+      {
+        label: 'Pagination',
+        href: '/design/pagination',
+      },
     ],
   },
 ] as const;

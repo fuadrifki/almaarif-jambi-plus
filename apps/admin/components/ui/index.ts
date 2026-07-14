@@ -19,3 +19,4 @@ export * from './infinite-scroll';
 export * from './page-layout';
 export * from './table';
 export * from './segmented-control';
+export * from './pagination';
