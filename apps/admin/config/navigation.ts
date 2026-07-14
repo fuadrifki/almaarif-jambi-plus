@@ -60,6 +60,12 @@ export const navigation: NavigationItem[] = [
     roles: ['teacher'],
   },
   {
+    label: 'Laporan Absensi',
+    href: '/attendance/reports',
+    icon: BarChart3,
+    roles: ['teacher'],
+  },
+  {
     label: 'Laporan',
     href: '/reports',
     icon: BarChart3,
