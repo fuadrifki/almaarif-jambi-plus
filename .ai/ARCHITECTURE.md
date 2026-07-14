@@ -97,26 +97,49 @@ app/
 ├── layout.tsx               # Root layout: font, AppProvider, ThemeToggle
 ├── globals.css              # Tailwind + theme imports
 ├── (auth)/
-│   └── login/
-│       └── page.tsx         # LoginPage → LoginForm component
+│   ├── layout.tsx           # Auth layout guard
+│   └── login/page.tsx       # LoginPage → LoginForm component
 ├── (dashboard)/
 │   ├── layout.tsx           # Session guard, AppShell wrapper
-│   └── page.tsx             # DashboardPage → stat cards
+│   ├── error.tsx            # Error boundary with friendly UI
+│   ├── page.tsx             # DashboardPage → stat cards
+│   ├── students/
+│   │   ├── page.tsx         # StudentListPage
+│   │   ├── new/page.tsx     # StudentCreatePage
+│   │   └── [id]/page.tsx    # StudentEditPage
+│   ├── attendance/
+│   │   ├── page.tsx         # AttendancePage (input + history tabs)
+│   │   ├── [id]/page.tsx    # AttendanceDetailPage
+│   │   └── history/
+│   │       ├── page.tsx     # Redirects to /attendance
+│   │       └── [id]/page.tsx # AttendanceDetailPage (alias)
+│   └── more/
+│       └── page.tsx         # MorePage (navigation + logout)
 └── (design)/
     └── design/
         ├── layout.tsx       # DesignShell wrapper
         ├── page.tsx         # DesignSystemPage (overview)
-        ├── badge/page.tsx   # (stub — empty)
+        ├── alert-dialog/page.tsx
+        ├── badge/page.tsx
         ├── button/page.tsx
         ├── card/page.tsx
         ├── checkbox/page.tsx
         ├── colors/page.tsx
+        ├── dropdown-menu/page.tsx
+        ├── empty-state/page.tsx
+        ├── field/page.tsx
+        ├── infinite-scroll/page.tsx
         ├── input/page.tsx
+        ├── pagination/page.tsx
         ├── radio/page.tsx
+        ├── segmented-control/page.tsx
         ├── select/page.tsx
+        ├── skeleton/page.tsx
         ├── surface/page.tsx
         ├── switch/page.tsx
+        ├── table/page.tsx
         ├── textarea/page.tsx
+        ├── toast/page.tsx
         └── typography/page.tsx
 ```
 
@@ -151,11 +174,11 @@ sequenceDiagram
 
 **Pages by route group:**
 
-| Group         | Pages | Purpose                                             |
-| ------------- | ----- | --------------------------------------------------- |
-| `(auth)`      | 1     | Login                                               |
-| `(dashboard)` | 10    | Dashboard, Students (4), Attendance (4), More       |
-| `(design)`    | 22    | Design system documentation (21 components + index) |
+| Group         | Pages | Purpose                                                       |
+| ------------- | ----- | ------------------------------------------------------------- |
+| `(auth)`      | 1     | Login (with layout guard)                                     |
+| `(dashboard)` | 9     | Dashboard, Students (3), Attendance (3), More, Error boundary |
+| `(design)`    | 23    | Design system documentation (22 components + index)           |
 
 ---
 
@@ -241,7 +264,7 @@ graph TD
 | `components/user-menu.tsx`  | User menu (Radix DropdownMenu)        | `UserMenu`                        |
 | `index.ts`                  | Barrel                                | `login`, `User`                   |
 
-The `User` type is shared with `lib/auth/session.ts` and `components/app/app-shell.types.ts` (a boundary violation — `lib/` and `components/` depend upward on `features/`).
+The `User` type is defined in `lib/types/user.ts` (shared location). `features/auth/types.ts` re-exports it. `lib/auth/session.ts` and `components/app/app-shell.types.ts` import from `lib/types/user` — no boundary violations.
 
 ### `features/dashboard`
 
@@ -250,9 +273,44 @@ The `User` type is shared with `lib/auth/session.ts` and `components/app/app-she
 | `pages/dashboard-page.tsx` | Dashboard home with stat cards          | `DashboardPage` |
 | `index.ts`                 | Barrel (unused — page imports directly) | `DashboardPage` |
 
+### `features/students`
+
+Student management with real Server Actions backed by Drizzle ORM.
+
+| File                                 | Role                                | Export                           |
+| ------------------------------------ | ----------------------------------- | -------------------------------- |
+| `types.ts`                           | Student type definition             | `Student`                        |
+| `schemas.ts`                         | Zod validation schemas              | `studentSchema`                  |
+| `server.ts`                          | Server actions (CRUD via DB)        | `createStudent`, `updateStudent` |
+| `components/student-form.tsx`        | Create/edit form                    | `StudentForm`                    |
+| `components/student-card.tsx`        | Student display card                | `StudentCard`                    |
+| `components/student-empty-state.tsx` | Empty state                         | `StudentEmptyState`              |
+| `pages/student-list-page.tsx`        | Server component (fetches all)      | `StudentListPage`                |
+| `pages/student-create-page.tsx`      | Create page                         | `StudentCreatePage`              |
+| `pages/student-edit-page.tsx`        | Edit page (fetches by ID)           | `StudentEditPage`                |
+| `pages/*-client.tsx`                 | Client components for interactivity | Various                          |
+| `index.ts`                           | Barrel                              | Re-exports                       |
+
+### `features/attendance`
+
+Attendance system with real Server Actions backed by Drizzle ORM.
+
+| File                                     | Role                                      | Export                                                      |
+| ---------------------------------------- | ----------------------------------------- | ----------------------------------------------------------- |
+| `types.ts`                               | AttendanceSession, AttendanceRecord types | `AttendanceSession`, `AttendanceRecord`, `AttendanceStatus` |
+| `schemas.ts`                             | Zod validation schemas                    | `attendanceSchema`                                          |
+| `server.ts`                              | Server actions (via DB repositories)      | `submitAttendance`                                          |
+| `components/attendance-student-row.tsx`  | Student row for input                     | `AttendanceStudentRow`                                      |
+| `components/attendance-session-card.tsx` | Session card for history                  | `AttendanceSessionCard`                                     |
+| `components/attendance-record-row.tsx`   | Record row for detail                     | `AttendanceRecordRow`                                       |
+| `pages/attendance-page.tsx`              | Server component (fetches sessions)       | `AttendancePage`                                            |
+| `pages/attendance-detail-page.tsx`       | Detail page (fetches by ID)               | `AttendanceDetailPage`                                      |
+| `pages/*-client.tsx`                     | Client components for interactivity       | Various                                                     |
+| `index.ts`                               | Barrel                                    | Re-exports                                                  |
+
 ### `features/ads`
 
-Design system documentation. Contains 19 page components and 6 utility components for the playground.
+Design system documentation. Contains 22 page components and 6 utility components for the playground.
 
 | Component        | Role                                    | Interactive? |
 | ---------------- | --------------------------------------- | ------------ |
@@ -276,8 +334,25 @@ lib/
 ├── auth/
 │   ├── index.ts      # Barrel: re-exports ./session
 │   └── session.ts    # Cookie-based session (getSession, setSession, clearSession)
+├── types/
+│   ├── index.ts      # Barrel: re-exports ./user
+│   └── user.ts       # User, UserRole types (shared across features/lib/components)
+├── db/
+│   ├── client.ts     # Neon PostgreSQL connection via @neondatabase/serverless
+│   ├── schema/
+│   │   ├── index.ts  # Barrel: re-exports all schemas
+│   │   ├── students.ts
+│   │   ├── attendance-sessions.ts
+│   │   └── attendance-records.ts
+│   └── seed.ts       # Seed script: 8 sample students
+├── data/
+│   ├── index.ts      # Barrel: re-exports repositories
+│   ├── types.ts      # Shared data types
+│   ├── student-repository.ts
+│   ├── attendance-session-repository.ts
+│   └── attendance-record-repository.ts
 └── http/
-    └── client.ts     # Dead code — generic fetch wrapper, never imported
+    └── client.ts     # Dead code — generic fetch wrapper, never imported (TODO: remove)
 ```
 
 | Function           | Purpose                        | Used by             |
@@ -291,11 +366,13 @@ lib/
 
 ```
 config/
-├── index.ts      # Barrel
-└── app.ts        # appConfig — name, description, company, url, version
+├── index.ts          # Barrel
+├── app.ts            # appConfig — name, description, company, url, version
+├── navigation.ts     # Role-based navigation items (9 items, 4 disabled)
+└── lookups.ts        # Static lookups: CLASSES, SUBJECTS, TEACHERS, ATTENDANCE_STATUSES
 ```
 
-Used by root layout for metadata.
+Used by root layout for metadata, navigation for sidebar, and lookups for static data.
 
 ### `providers/` — React Context Providers
 
@@ -324,15 +401,15 @@ RootLayout
 graph TD
     subgraph "app/ — Next.js Routes"
         LAYOUTS["Layouts<br/>(root, dashboard, design)"]
-        PAGES["Pages<br/>(login, dashboard, students, attendance, 21 design pages)"]
+        PAGES["Pages<br/>(login, dashboard, students, attendance, 22 design pages)"]
     end
 
     subgraph "features/ — Domain Modules"
-        AUTH["auth<br/>login, User, session management"]
+        AUTH["auth<br/>login, session management"]
         DASHBOARD["dashboard<br/>dashboard page"]
         ADS["ads<br/>design system playground"]
-        STUDENTS["students<br/>student management"]
-        ATTENDANCE["attendance<br/>attendance system"]
+        STUDENTS["students<br/>student CRUD (DB)"]
+        ATTENDANCE["attendance<br/>attendance system (DB)"]
         MORE["more<br/>additional features"]
     end
 
@@ -344,6 +421,9 @@ graph TD
     subgraph "lib/ — Shared Utilities"
         UTILS["utils.ts - cn()"]
         AUTH_LIB["auth/session.ts"]
+        TYPES["types/user.ts"]
+        DB["db/<br/>Drizzle schemas, Neon client"]
+        DATA["data/<br/>Repositories"]
         HTTP["http/client.ts<br/>(dead code)"]
     end
 
@@ -369,18 +449,30 @@ graph TD
     AUTH --> UI
 
     APP --> UI
-    APP --> AUTH  {{⚠ "boundary violation"}}
+    APP --> AUTH  {{✅ uses lib/types/user for types}}
 
     UI --> UTILS
 
-    AUTH_LIB --> AUTH {{⚠ "boundary violation"}}
+    AUTH_LIB --> AUTH {{✅ imports User from lib/types/user (not features/)}}
 
     DASHBOARD --> UI
 
     ADS --> UI
 
-    style AUTH_LIB fill:#f9d71c,stroke:#333
-    style APP fill:#f9d71c,stroke:#333
+    STUDENTS --> UI
+    STUDENTS --> DB_LAYER
+
+    ATTENDANCE --> UI
+    ATTENDANCE --> DB_LAYER
+
+    DB_LAYER --> DB_CLIENT["lib/db/client.ts"]
+    DB_LAYER --> DB_SCHEMA["lib/db/schema/"]
+    DB_LAYER --> DATA_REPO["lib/data/"]
+
+    style DB_LAYER fill:#90EE90,stroke:#333
+    style DB_CLIENT fill:#90EE90,stroke:#333
+    style DB_SCHEMA fill:#90EE90,stroke:#333
+    style DATA_REPO fill:#90EE90,stroke:#333
 ```
 
 ### Dependency direction
@@ -391,12 +483,14 @@ The intended layering is:
 app/ → features/ → components/ → lib/
 ```
 
-But there are two boundary violations:
+Boundary violations have been resolved:
 
-1. `components/app/` imports from `features/auth/` (UserMenu, User type)
-2. `lib/auth/` imports from `features/auth/types` (User type)
+- `User` type lives in `lib/types/user.ts` (shared location)
+- `components/app/` imports User type from `lib/types/user` (not `features/auth/`)
+- `lib/auth/session.ts` imports User type from `lib/types/user` (not `features/auth/`)
+- `features/auth/types.ts` re-exports from `lib/types/user` (for backward compatibility)
 
-These mean `lib/` and `components/` are not pure leaf layers.
+Feature-to-feature imports remain clean — auth, dashboard, ads, students, attendance are isolated.
 
 ---
 
@@ -407,15 +501,17 @@ These mean `lib/` and `components/` are not pure leaf layers.
 - Features should be self-contained
 - `lib/` should be a leaf dependency (no upward imports)
 - `components/` should depend only on `lib/` and other `components/`
-- No feature-to-feature imports (currently clean — auth, dashboard, ads are isolated)
+- No feature-to-feature imports (currently clean — auth, dashboard, ads, students, attendance are isolated)
 
 ### Current violations
 
-| Violation                            | Source                                 | Target                               | Impact                         |
-| ------------------------------------ | -------------------------------------- | ------------------------------------ | ------------------------------ |
-| `components/app/` → `features/auth/` | `app-shell.tsx` imports UserMenu       | `features/auth/components/user-menu` | Breaks leaf purity             |
-| `components/app/` → `features/auth/` | `app-shell.types.ts` imports User type | `features/auth/types`                | Breaks leaf purity             |
-| `lib/auth/` → `features/auth/`       | `session.ts` imports User type         | `features/auth/types`                | Breaks leaf purity; cycle risk |
+| Violation                            | Source                                 | Target                               | Status      |
+| ------------------------------------ | -------------------------------------- | ------------------------------------ | ----------- |
+| `components/app/` → `features/auth/` | `app-shell.tsx` imports UserMenu       | `features/auth/components/user-menu` | ✅ Resolved |
+| `components/app/` → `features/auth/` | `app-shell.types.ts` imports User type | `features/auth/types`                | ✅ Resolved |
+| `lib/auth/` → `features/auth/`       | `session.ts` imports User type         | `features/auth/types`                | ✅ Resolved |
+
+All boundary violations resolved. `User` type now lives in `lib/types/user.ts`.
 
 ---
 
@@ -457,7 +553,7 @@ components/ui/component-name/
 └── index.ts                  # Barrel (export * + export type *)
 ```
 
-All 17 ADS components follow this convention exactly.
+All 23 ADS components follow this convention exactly.
 
 ### Feature Convention
 
@@ -500,10 +596,10 @@ export { DashboardPage as default } from '@/features/dashboard/pages/dashboard-p
 | Component        | Category   | Primitive           | Client? | Test? | CSS file?                | CSS classes defined?                                                                                                                                                                                                  |
 | ---------------- | ---------- | ------------------- | ------- | ----- | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Surface          | Layout     | `<div>`             | No      | No    | ✅ surface.css           | `ads-surface`, `::before`, `::after`                                                                                                                                                                                  |
-| Card             | Layout     | Surface             | No      | No    | ✅ card.css              | `ads-card`, `ads-card__header`, `ads-card__title`, `ads-card__description`, `ads-card__content`, `ads-card__footer`                                                                                                   |
-| Header           | Layout     | Surface             | No      | No    | ✅ header.css            | `ads-header`, `ads-header__title`, `ads-header__logo`, `ads-header__actions`                                                                                                                                          |
-| Field            | Layout     | `<div>/<label>`     | No      | No    | ✅ field.css             | `ads-field`, `ads-field__label`, `ads-field__description`, `ads-field__error`                                                                                                                                         |
-| PageLayout       | Layout     | `<div>`             | No      | No    | ✅ page-layout.css       | `ads-page-layout`, `ads-page-layout__header`, `ads-page-layout__content`                                                                                                                                              |
+| Card             | Layout     | Surface             | No      | No    | ❌ Tailwind              | Uses Tailwind utility classes directly                                                                                                                                                                                |
+| Header           | Layout     | Surface             | No      | No    | ❌ Tailwind              | Uses Tailwind utility classes directly                                                                                                                                                                                |
+| Field            | Layout     | `<div>/<label>`     | No      | No    | ❌ Tailwind              | Uses Tailwind utility classes directly                                                                                                                                                                                |
+| PageLayout       | Layout     | `<div>`             | No      | No    | ❌ Tailwind              | Uses Tailwind utility classes directly                                                                                                                                                                                |
 | Table            | Data       | Surface + `<table>` | No      | No    | ✅ table.css             | `ads-table`, `ads-table__scroll`, `ads-table__table`, `ads-table__header`, `ads-table__body`, `ads-table__footer`, `ads-table__row`, `ads-table__head`, `ads-table__cell`, `ads-table--compact`, `ads-table--striped` |
 | Button           | Input      | `<button>`          | No      | No    | ✅ button.css            | `ads-button`, `ads-button--{variant}`, `ads-button--{size}`, `ads-button__content`                                                                                                                                    |
 | Input            | Input      | `<input>`           | Yes     | No    | ✅ input.css             | `ads-input`, `ads-input-wrapper`, `ads-input--{size}`, `ads-input--{status}`, `ads-input__loader`, `ads-input__action`                                                                                                |
@@ -516,11 +612,11 @@ export { DashboardPage as default } from '@/features/dashboard/pages/dashboard-p
 | DropdownMenu     | Overlay    | Radix DropdownMenu  | Yes     | No    | ✅ dropdown-menu.css     | `ads-dropdown-menu`, `ads-dropdown-menu__item`, `ads-dropdown-menu__separator`, `ads-dropdown-menu__label`, `ads-dropdown-menu__arrow`                                                                                |
 | AlertDialog      | Overlay    | Radix Dialog        | Yes     | No    | ✅ alert-dialog.css      | `ads-alert-dialog`, `ads-alert-dialog__content`, `ads-alert-dialog__title`, `ads-alert-dialog__description`, `ads-alert-dialog__actions`                                                                              |
 | Toast            | Feedback   | Sonner              | Yes     | No    | ✅ toast.css             | `ads-toast`, `ads-toast__title`, `ads-toast__description`                                                                                                                                                             |
-| Skeleton         | Feedback   | `<div>`             | No      | No    | ✅ skeleton.css          | `ads-skeleton`, `ads-skeleton__circle`, `ads-skeleton__line`                                                                                                                                                          |
-| EmptyState       | Feedback   | `<div>`             | No      | No    | ✅ empty-state.css       | `ads-empty-state`, `ads-empty-state__icon`, `ads-empty-state__title`, `ads-empty-state__description`                                                                                                                  |
+| Skeleton         | Feedback   | `<div>`             | No      | No    | ❌ Tailwind              | Uses Tailwind utility classes directly                                                                                                                                                                                |
+| EmptyState       | Feedback   | `<div>`             | No      | No    | ❌ Tailwind              | Uses Tailwind utility classes directly                                                                                                                                                                                |
 | Pagination       | Navigation | Button (ADS)        | No      | No    | ✅ pagination.css        | `ads-pagination`, `ads-pagination__item`, `ads-pagination__ellipsis`                                                                                                                                                  |
 | SegmentedControl | Navigation | `<div>`             | Yes     | No    | ✅ segmented-control.css | `ads-segmented-control`, `ads-segmented-control__item`, `ads-segmented-control__indicator`                                                                                                                            |
-| InfiniteScroll   | Navigation | `<div>`             | Yes     | No    | ✅ infinite-scroll.css   | `ads-infinite-scroll`, `ads-infinite-scroll__loader`                                                                                                                                                                  |
+| InfiniteScroll   | Navigation | `<div>`             | Yes     | No    | ❌ Tailwind              | Uses Tailwind utility classes directly                                                                                                                                                                                |
 | ThemeToggle      | Utility    | Button (ADS)        | Yes     | No    | ✅ theme-toggle.css      | `ads-theme-toggle`                                                                                                                                                                                                    |
 
 ### Component patterns
@@ -657,9 +753,12 @@ sequenceDiagram
 
 ### Data flow rules
 
+- **Database**: Drizzle ORM + Neon PostgreSQL serverless (3 schemas, 3 repositories)
 - **No state management library** — React state only (useState, useSyncExternalStore)
-- **No API routes** — authentication uses Next.js Server Actions (`'use server'`)
-- **No database** — auth is currently mock-only
+- **No API routes** — uses Next.js Server Actions (`'use server'`)
+- **Auth** — Currently mock-only (hardcoded users in `features/auth/auth.ts`)
+- **Student CRUD** — Real database via `studentRepository` (findAll, findById, create, update)
+- **Attendance** — Real database via `attendanceSessionRepository` + `attendanceRecordRepository`
 - **Session** — Cookie-based, httpOnly, server-side only (getSession is async server function)
 - **Theme** — next-themes, persisted to localStorage via `class` attribute
 
@@ -850,16 +949,14 @@ Tests should cover:
 
 ### What needs attention for scale
 
-| Issue                     | Impact                                                       |
-| ------------------------- | ------------------------------------------------------------ |
-| No `src/` directory       | Can cause confusion as codebase grows                        |
-| Boundary violations       | Will create circular deps as more features are added         |
-| No testing infrastructure | Cannot safely refactor                                       |
-| Mock authentication       | No real auth for production                                  |
-| Dead code (http client)   | Maintains confusion about what's usable                      |
-| Unused dependencies       | Wasted install time and disk space                           |
-| No API layer              | All data is mock — real endpoints will require restructuring |
-| No error boundaries       | Any runtime error crashes the full app                       |
+| Issue                     | Impact                                         |
+| ------------------------- | ---------------------------------------------- |
+| No `src/` directory       | Can cause confusion as codebase grows          |
+| No testing infrastructure | Cannot safely refactor                         |
+| Mock authentication       | No real auth for production                    |
+| Dead code (http client)   | Maintains confusion about what's usable        |
+| Unused dependencies       | Wasted install time and disk space             |
+| No delete endpoint        | Students can be created/edited but not deleted |
 
 ---
 
@@ -867,14 +964,14 @@ Tests should cover:
 
 ### High
 
-| #   | Issue                                   | File(s)                                             | Status  |
-| --- | --------------------------------------- | --------------------------------------------------- | ------- |
-| 4   | 6 unused admin dependencies installed   | `apps/admin/package.json`                           | Pending |
-| 5   | 7 unused root dependencies installed    | Root `package.json`                                 | Pending |
-| 6   | `lib/http/client.ts` is completely dead | `lib/http/client.ts`                                | Pending |
-| 7   | No test runner configured               | No test files exist                                 | Pending |
-| 8   | Package boundary violations             | `app-shell.tsx`, `app-shell.types.ts`, `session.ts` | Pending |
-| 9   | Header missing docs page                | `features/ads/pages/`                               | Pending |
+| #   | Issue                                   | File(s)                                             | Status      |
+| --- | --------------------------------------- | --------------------------------------------------- | ----------- |
+| 4   | 6 unused admin dependencies installed   | `apps/admin/package.json`                           | Pending     |
+| 5   | 7 unused root dependencies installed    | Root `package.json`                                 | Pending     |
+| 6   | `lib/http/client.ts` is completely dead | `lib/http/client.ts`                                | Pending     |
+| 7   | No test runner configured               | No test files exist                                 | Pending     |
+| 8   | Package boundary violations             | `app-shell.tsx`, `app-shell.types.ts`, `session.ts` | ✅ Resolved |
+| 9   | Header missing docs page                | `features/ads/pages/`                               | Pending     |
 
 ### Medium
 
@@ -888,11 +985,11 @@ Tests should cover:
 
 ### Low
 
-| #   | Issue                                                          | File(s)                              |
-| --- | -------------------------------------------------------------- | ------------------------------------ |
-| 15  | Textarea has unnecessary `'use client'`                        | `textarea.tsx`                       |
-| 16  | Logo component uses function declaration                       | `packages/brand/components/logo.tsx` |
-| 17  | Navigation links to `/users` and `/settings` — no routes exist | `sidebar.tsx`                        |
+| #   | Issue                                        | File(s)                              |
+| --- | -------------------------------------------- | ------------------------------------ |
+| 15  | Textarea has unnecessary `'use client'`      | `textarea.tsx`                       |
+| 16  | Logo component uses function declaration     | `packages/brand/components/logo.tsx` |
+| 17  | Navigation has disabled items with no routes | `config/navigation.ts`               |
 
 ### Already resolved
 
@@ -901,6 +998,8 @@ Tests should cover:
 - Badge barrel export — added to `components/ui/index.ts`
 - Badge docs page — completed `features/ads/pages/badge-page.tsx`
 - Field docs page — completed `features/ads/pages/field-page.tsx`
+- Boundary violations — User type extracted to `lib/types/user.ts`, all imports updated
+- Error boundary — created `app/(dashboard)/error.tsx` with friendly UI
 - Header route — exists at `app/(design)/design/header/page.tsx`
 
 ---
@@ -922,14 +1021,14 @@ graph TD
         CONFIG["config/ — appConfig"]
         PROVIDERS["providers/ — AppProvider, ThemeProvider"]
         COMP_UI["components/ui/ — 23 ADS components"]
-        COMP_APP["components/app/ — AppShell, Sidebar"]
-        FEAT_AUTH["features/auth/ — Login, User"]
+        COMP_APP["components/app/ — AppShell, Sidebar, MobileNav"]
+        FEAT_AUTH["features/auth/ — Login, session"]
         FEAT_DASH["features/dashboard/ — Dashboard page"]
         FEAT_ADS["features/ads/ — Design playground"]
-        FEAT_STUDENTS["features/students/ — Student management"]
-        FEAT_ATTENDANCE["features/attendance/ — Attendance system"]
+        FEAT_STUDENTS["features/students/ — Student CRUD (DB)"]
+        FEAT_ATTENDANCE["features/attendance/ — Attendance system (DB)"]
         FEAT_MORE["features/more/ — Additional features"]
-        LIB["lib/ — cn(), session"]
+        LIB["lib/ — cn(), session, types, db, data"]
         STYLES["styles/ — Tokens + Component CSS"]
         PUBLIC["public/ — logo.png"]
     end
@@ -948,13 +1047,15 @@ graph TD
     APP --> LIB
 
     COMP_APP --> COMP_UI
-    COMP_APP --> FEAT_AUTH
+    COMP_APP --> LIB
 
     FEAT_AUTH --> LIB
     FEAT_AUTH --> COMP_UI
 
     FEAT_DASH --> COMP_UI
     FEAT_ADS --> COMP_UI
+    FEAT_STUDENTS --> COMP_UI
+    FEAT_ATTENDANCE --> COMP_UI
 
     LIB --> BRAND_PKG
     APP --> BRAND_PKG

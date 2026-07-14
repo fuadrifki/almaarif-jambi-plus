@@ -2,33 +2,37 @@
 title: Project Status Report
 date: 2026-07-14
 branch: main
-health_score: 6.5/10
+health_score: 7.5/10
 ---
 
 # Project Status Report
 
 ## 1. Roadmap
 
-### Current Phase: Foundation (M1)
+### Current Phase: Business Features (M2)
 
-| Milestone                  | Status         | Description                                                    |
-| -------------------------- | -------------- | -------------------------------------------------------------- |
-| M1.1 - Monorepo setup      | ✅ Complete    | pnpm + Turborepo, apps/admin, packages/brand                   |
-| M1.2 - ADS foundation      | ✅ Complete    | Surface, Button, Input, Typography, Colors                     |
-| M1.3 - Form components     | ✅ Complete    | Checkbox, Radio, Switch, Select, Textarea, Field               |
-| M1.4 - Layout components   | ✅ Complete    | Card, Header, Table, DropdownMenu, Badge, EmptyState, Skeleton |
-| M1.5 - Authentication      | ✅ Complete    | Login flow, session management, user menu                      |
-| M1.6 - Advanced components | 🔄 In Progress | Pagination (M1.6.2 complete), Toast (existing)                 |
-| M1.7 - Design system docs  | 🔄 In Progress | 20+ component pages, navigation                                |
+| Milestone                  | Status      | Description                                                    |
+| -------------------------- | ----------- | -------------------------------------------------------------- |
+| M1.1 - Monorepo setup      | ✅ Complete | pnpm + Turborepo, apps/admin, packages/brand                   |
+| M1.2 - ADS foundation      | ✅ Complete | Surface, Button, Input, Typography, Colors                     |
+| M1.3 - Form components     | ✅ Complete | Checkbox, Radio, Switch, Select, Textarea, Field               |
+| M1.4 - Layout components   | ✅ Complete | Card, Header, Table, DropdownMenu, Badge, EmptyState, Skeleton |
+| M1.5 - Authentication      | ✅ Complete | Login flow, session management, user menu                      |
+| M1.6 - Advanced components | ✅ Complete | Pagination, SegmentedControl, InfiniteScroll, Toast            |
+| M1.7 - Design system docs  | ✅ Complete | 20+ component pages, navigation                                |
+| M1.8 - Database layer      | ✅ Complete | Drizzle ORM, Neon PostgreSQL, 3 schemas, 3 repositories        |
+| M1.9 - Boundary violations | ✅ Complete | User type extracted to lib/types/, all imports updated         |
+| M2.0 - Student CRUD        | ✅ Complete | List, create, edit pages with real Server Actions              |
+| M2.1 - Attendance system   | ✅ Complete | Input, history, detail pages with real Server Actions          |
+| M2.2 - Error boundary      | ✅ Complete | Dashboard error boundary with friendly UI                      |
 
 ### Planned Phases
 
 | Phase                  | Focus                         | Dependencies         |
 | ---------------------- | ----------------------------- | -------------------- |
-| M2 - Business Features | Attendance, Students CRUD     | M1 complete          |
-| M3 - Data Integration  | Real API, database, auth      | M2 business logic    |
-| M4 - Advanced Features | Reports, notifications, roles | M3 data layer        |
-| M5 - Production        | Testing, CI/CD, deployment    | All prior milestones |
+| M3 - Code Hygiene      | Test infra, dep cleanup, T24+ | M2 complete          |
+| M4 - Advanced Features | Reports, notifications, roles | M3 code hygiene      |
+| M5 - Production        | CI/CD, deployment, monitoring | M4 advanced features |
 
 ---
 
@@ -44,26 +48,35 @@ health_score: 6.5/10
 - ✅ **Icons**: lucide-react
 - ✅ **Font**: Montserrat (next/font/google)
 
+### Database Layer
+
+- ✅ **ORM**: Drizzle ORM with Neon PostgreSQL serverless driver
+- ✅ **Schemas**: students, attendance_sessions, attendance_records
+- ✅ **Repositories**: studentRepository, attendanceSessionRepository, attendanceRecordRepository
+- ✅ **Seed**: lib/db/seed.ts with 8 sample students
+- ✅ **Config**: drizzle.config.ts with push/generate/migrate scripts
+
 ### Authentication
 
 - ✅ **Login flow**: Mock authentication with cookie-based sessions
 - ✅ **Session management**: httpOnly cookies via Server Actions
 - ✅ **Route protection**: Dashboard layout guards
 - ✅ **User menu**: Dropdown with logout functionality
+- ✅ **Error boundary**: Dashboard error boundary with friendly UI
 
 ### Design System (ADS)
 
-- ✅ **20 components** implemented with "Liquid Glass" identity
+- ✅ **23 components** implemented with "Liquid Glass" identity
 - ✅ **20+ documentation pages** with interactive examples
 - ✅ **CSS architecture**: Token-based BEM with 20 custom properties
 - ✅ **Component conventions**: Arrow functions, named exports, `type` over `interface`
 
-### Business Features (Partial)
+### Business Features
 
-- ✅ **Dashboard**: Stat cards and overview (mock data)
-- ✅ **Students**: List, create, edit pages (UI only)
-- ✅ **Attendance**: Basic input and history pages (UI only)
-- ✅ **Navigation**: Sidebar with route groups
+- ✅ **Dashboard**: Stat cards and overview
+- ✅ **Students**: List, create, edit pages with real Server Actions
+- ✅ **Attendance**: Input, history, detail pages with real Server Actions
+- ✅ **Navigation**: Role-based sidebar with 4 disabled items
 
 ---
 
@@ -87,9 +100,9 @@ health_score: 6.5/10
 | ---------------- | --- | ----- | ---- | ----- | ---------- |
 | Surface          | ✅  | ✅    | ✅   | ❌    | Complete   |
 | Button           | ✅  | ✅    | ✅   | ❌    | Complete   |
-| Card             | ✅  | ✅    | ✅   | ❌    | Complete   |
-| Header           | ✅  | ✅    | ❌   | ❌    | Needs docs |
-| Field            | ✅  | ✅    | ✅   | ❌    | Complete   |
+| Card             | ❌  | ✅    | ✅   | ❌    | Needs CSS  |
+| Header           | ❌  | ✅    | ❌   | ❌    | Needs docs |
+| Field            | ❌  | ✅    | ✅   | ❌    | Needs CSS  |
 | Input            | ✅  | ✅    | ✅   | ❌    | Complete   |
 | Textarea         | ✅  | ✅    | ✅   | ❌    | Complete   |
 | Select           | ✅  | ✅    | ✅   | ❌    | Complete   |
@@ -101,18 +114,18 @@ health_score: 6.5/10
 | DropdownMenu     | ✅  | ✅    | ✅   | ❌    | Complete   |
 | AlertDialog      | ✅  | ✅    | ✅   | ❌    | Complete   |
 | Toast            | ✅  | ✅    | ✅   | ❌    | Complete   |
-| Skeleton         | ✅  | ✅    | ✅   | ❌    | Complete   |
-| EmptyState       | ✅  | ✅    | ✅   | ❌    | Complete   |
+| Skeleton         | ❌  | ✅    | ✅   | ❌    | Needs CSS  |
+| EmptyState       | ❌  | ✅    | ✅   | ❌    | Needs CSS  |
 | Pagination       | ✅  | ✅    | ✅   | ❌    | Complete   |
 | SegmentedControl | ✅  | ✅    | ✅   | ❌    | Complete   |
-| InfiniteScroll   | ✅  | ✅    | ✅   | ❌    | Complete   |
-| PageLayout       | ✅  | ✅    | ✅   | ❌    | Complete   |
+| InfiniteScroll   | ❌  | ✅    | ✅   | ❌    | Needs CSS  |
+| PageLayout       | ❌  | ✅    | ✅   | ❌    | Needs CSS  |
 | ThemeToggle      | ✅  | ✅    | ✅   | ❌    | Complete   |
 
 ### CSS Coverage
 
-- **Components with CSS**: 23/23 (100%)
-- **Components needing CSS**: None
+- **Components with CSS**: 17/23 (74%)
+- **Components needing CSS**: Card, Header, Field, Skeleton, EmptyState, InfiniteScroll, PageLayout
 - **Token system**: 20 CSS custom properties in `styles/tokens/`
 - **BEM naming**: All components use `ads-` prefix convention
 
@@ -120,30 +133,27 @@ health_score: 6.5/10
 
 ## 4. Business Features
 
-### Implemented (UI Only)
+### Implemented (With Server Actions)
 
-| Feature        | Pages | Components             | Status      |
-| -------------- | ----- | ---------------------- | ----------- |
-| **Dashboard**  | 1     | Stat cards             | Mock data   |
-| **Students**   | 4     | List, form, card       | UI complete |
-| **Attendance** | 3     | Input, history, detail | UI complete |
-| **Auth**       | 1     | Login form             | Mock auth   |
+| Feature        | Pages | Components             | Status           |
+| -------------- | ----- | ---------------------- | ---------------- |
+| **Dashboard**  | 1     | Stat cards             | UI complete      |
+| **Students**   | 3     | List, form, card       | CRUD (no delete) |
+| **Attendance** | 3     | Input, history, detail | Full flow        |
+| **Auth**       | 1     | Login form             | Mock auth        |
 
-### Planned (From attendance-flow.md)
+### Database-Backed Features
 
-| Feature                | Roles   | Priority |
-| ---------------------- | ------- | -------- |
-| **Student CRUD**       | Admin   | High     |
-| **Attendance Input**   | Teacher | High     |
-| **Attendance History** | Teacher | Medium   |
-| **Attendance Reports** | Admin   | Medium   |
-| **Parent Search**      | Public  | Low      |
-| **Role-based Access**  | All     | High     |
+| Feature      | Schema              | Repository                  | Server Actions            |
+| ------------ | ------------------- | --------------------------- | ------------------------- |
+| **Students** | students            | studentRepository           | CRUD (no delete)          |
+| **Sessions** | attendance_sessions | attendanceSessionRepository | create, findAll, findById |
+| **Records**  | attendance_records  | attendanceRecordRepository  | create, findBySession     |
 
 ### MVP Constraints
 
 - Only Student is a managed master entity
-- Class, Teacher, Subject are static lookups (hardcoded)
+- Class, Teacher, Subject are static lookups (hardcoded in `config/lookups.ts`)
 - Architecture allows future CRUD expansion
 
 ---
@@ -161,11 +171,14 @@ almaarif-jambi-plus/
 ├── pnpm-workspace.yaml
 ├── turbo.json
 ├── AGENTS.md                     # Project rules
-└── .ai/                          # Documentation & reports
+└── .ai/                          # Documentation
     ├── ARCHITECTURE.md
+    ├── CLEANUP_ROADMAP.md
     ├── DECISIONS.md
-    ├── REPORTS/
-    └── docs/
+    ├── PROJECT_STATUS.md
+    ├── HISTORY/                  # Archived reports
+    ├── docs/                     # Feature specs
+    └── prompts/                  # Prompt templates
 ```
 
 ### Admin App Structure
@@ -173,32 +186,55 @@ almaarif-jambi-plus/
 ```
 apps/admin/
 ├── app/                          # Next.js App Router
-│   ├── (auth)/                   # Login route group
-│   ├── (dashboard)/              # Protected dashboard routes
-│   └── (design)/                 # Design system routes
+│   ├── layout.tsx               # Root layout: font, AppProvider, ThemeToggle
+│   ├── globals.css              # Tailwind + theme imports
+│   ├── (auth)/                  # Login route group
+│   │   ├── layout.tsx           # Auth layout guard
+│   │   └── login/page.tsx       # LoginPage → LoginForm component
+│   ├── (dashboard)/             # Protected dashboard routes
+│   │   ├── layout.tsx           # Session guard, AppShell wrapper
+│   │   ├── error.tsx            # Error boundary with friendly UI
+│   │   ├── page.tsx             # DashboardPage → stat cards
+│   │   ├── students/            # Student CRUD
+│   │   ├── attendance/          # Attendance system
+│   │   └── more/                # More page
+│   └── (design)/               # Design system routes
+│       └── design/              # 22 component pages + index
 ├── components/
-│   ├── ui/                       # ADS components (20)
-│   └── app/                      # App shell, sidebar
+│   ├── ui/                      # ADS components (23)
+│   └── app/                     # App shell, sidebar, mobile nav
 ├── features/
-│   ├── auth/                     # Authentication logic
-│   ├── dashboard/                # Dashboard page
-│   ├── ads/                      # Design system pages
-│   ├── students/                 # Student management
-│   ├── attendance/               # Attendance system
-│   └── more/                     # Additional features
+│   ├── auth/                    # Authentication logic
+│   ├── dashboard/               # Dashboard page
+│   ├── ads/                     # Design system pages
+│   ├── students/                # Student management (Server Actions)
+│   ├── attendance/              # Attendance system (Server Actions)
+│   └── more/                    # Additional features
 ├── lib/
-│   ├── utils.ts                  # cn() utility
-│   └── auth/                     # Session management
+│   ├── utils.ts                 # cn() utility
+│   ├── auth/                    # Session management
+│   ├── types/                   # Shared types (User, UserRole)
+│   ├── db/                      # Database layer (Drizzle + Neon)
+│   │   ├── client.ts            # Database connection
+│   │   ├── schema/              # Table schemas (3)
+│   │   └── seed.ts              # Seed data
+│   ├── data/                    # Repository pattern
+│   │   ├── student-repository.ts
+│   │   ├── attendance-session-repository.ts
+│   │   └── attendance-record-repository.ts
+│   └── http/                    # Dead code (TODO: remove)
 ├── config/
-│   └── app.ts                    # App configuration
+│   ├── app.ts                   # App configuration
+│   ├── navigation.ts            # Role-based navigation
+│   └── lookups.ts               # Static lookups (classes, subjects, etc.)
 ├── providers/
-│   └── theme-provider.tsx        # Theme context
+│   └── theme-provider.tsx       # Theme context
 ├── styles/
-│   ├── tokens/                   # CSS custom properties
-│   ├── components/               # Component BEM CSS
-│   └── theme.css                 # Token/component imports
+│   ├── tokens/                  # CSS custom properties
+│   ├── components/              # Component BEM CSS (17 files)
+│   └── theme.css                # Token/component imports
 └── public/
-    └── brand/                    # Static assets
+    └── brand/                   # Static assets (logo.png)
 ```
 
 ### Component Convention
@@ -216,6 +252,7 @@ components/ui/{name}/
 features/{name}/
 ├── index.ts                      # Barrel
 ├── types.ts                      # Feature types
+├── schemas.ts                    # Zod validation schemas
 ├── {logic}.ts                    # Business logic
 ├── server.ts                     # Server actions
 ├── components/                   # Feature components
@@ -234,16 +271,16 @@ features/{name}/
 | T2  | Badge not in UI barrel | ✅ Resolved | `components/ui/index.ts` includes badge                 |
 | T3  | Badge docs page empty  | ✅ Resolved | `features/ads/pages/badge-page.tsx` complete (78 lines) |
 
-### High (7 tasks - 1 Resolved)
+### High (7 tasks - 4 Resolved)
 
 | ID  | Issue                        | Impact                   | Effort  | Status      |
 | --- | ---------------------------- | ------------------------ | ------- | ----------- |
 | T4  | 13 unused dependencies       | Bundle bloat, security   | Small   | Pending     |
 | T5  | Dead `lib/http/client.ts`    | Code confusion           | Trivial | Pending     |
 | T6  | No test runner configured    | Can't write tests        | Medium  | Pending     |
-| T7  | User type boundary violation | Circular dependency risk | Small   | Pending     |
-| T8  | app-shell.types.ts violation | Breaks layer purity      | Trivial | Pending     |
-| T9  | session.ts violation         | Cycle risk               | Trivial | Pending     |
+| T7  | User type boundary violation | Circular dependency risk | Small   | ✅ Resolved |
+| T8  | app-shell.types.ts violation | Breaks layer purity      | Trivial | ✅ Resolved |
+| T9  | session.ts violation         | Cycle risk               | Trivial | ✅ Resolved |
 | T10 | Header missing docs          | Incomplete design system | Small   | Pending     |
 | T11 | Field missing docs           | Incomplete design system | Small   | ✅ Resolved |
 
@@ -275,10 +312,10 @@ features/{name}/
 | Priority  | Tasks  | Resolved | Pending | Estimated LOC | Risk       |
 | --------- | ------ | -------- | ------- | ------------- | ---------- |
 | Critical  | 3      | 3        | 0       | ~137          | Low        |
-| High      | 8      | 1        | 7       | ~155          | Low-Medium |
+| High      | 8      | 4        | 4       | ~155          | Low-Medium |
 | Medium    | 6      | 0        | 6       | ~28           | Low        |
 | Low       | 7      | 0        | 7       | ~12           | Low        |
-| **Total** | **24** | **4**    | **20**  | **~332**      | Mostly low |
+| **Total** | **24** | **7**    | **17**  | **~332**      | Mostly low |
 
 ---
 
@@ -289,25 +326,22 @@ features/{name}/
 | Milestone                      | Tasks  | Priority |
 | ------------------------------ | ------ | -------- |
 | **M1.6.3 - Header docs**       | T10    | High     |
-| **M1.7 - Test infrastructure** | T6     | High     |
-| **M2.0 - Dependency cleanup**  | T4, T5 | High     |
+| **M3.0 - Test infrastructure** | T6     | High     |
+| **M3.1 - Dependency cleanup**  | T4, T5 | High     |
 
 ### Short-term (1 Month)
 
 | Milestone                         | Tasks              | Priority |
 | --------------------------------- | ------------------ | -------- |
-| **M2.0 - Dependency cleanup**     | T4, T5             | High     |
-| **M2.1 - Boundary violations**    | T7, T8, T9         | High     |
-| **M2.2 - Import standardization** | T12, T13, T14, T15 | Medium   |
-| **M2.3 - Code style fixes**       | T16-T24            | Low      |
+| **M3.2 - Import standardization** | T12, T13, T14, T15 | Medium   |
+| **M3.3 - Code style fixes**       | T16-T24            | Low      |
 
 ### Medium-term (2 Months)
 
-| Milestone                    | Focus                          | Dependencies |
-| ---------------------------- | ------------------------------ | ------------ |
-| **M3.0 - Student CRUD**      | Real database, API integration | M2 complete  |
-| **M3.1 - Attendance system** | Teacher input, admin reports   | M3.0         |
-| **M3.2 - Role-based access** | Admin, Teacher, Parent roles   | M3.1         |
+| Milestone                    | Focus                         | Dependencies |
+| ---------------------------- | ----------------------------- | ------------ |
+| **M4.0 - Advanced features** | Reports, notifications, roles | M3 complete  |
+| **M5.0 - Production**        | CI/CD, deployment, monitoring | M4 complete  |
 
 ---
 
@@ -329,33 +363,33 @@ features/{name}/
 
 ### Phase 2: Code Quality (2 Weeks)
 
-**Goal**: Fix boundary violations and standardize code patterns.
+**Goal**: Standardize code patterns and fix remaining issues.
 
-| Week   | Tasks      | Deliverables                               |
-| ------ | ---------- | ------------------------------------------ |
-| Week 2 | T7, T8, T9 | Extract User type, fix boundary violations |
-| Week 3 | T12-T24    | Standardize imports, fix code style issues |
+| Week   | Tasks   | Deliverables                               |
+| ------ | ------- | ------------------------------------------ |
+| Week 2 | T12-T17 | Standardize imports, fix code style issues |
+| Week 3 | T18-T24 | Low-priority fixes and cleanup             |
 
 **Success Criteria**:
 
-- No circular dependencies
 - Consistent import patterns across codebase
 - All AGENTS.md rules followed
+- Zero duplicate CSS classes
 
 ### Phase 3: Business Features (4 Weeks)
 
-**Goal**: Implement core business logic for attendance system.
+**Goal**: Implement advanced features for the attendance system.
 
-| Week     | Focus             | Deliverables                            |
-| -------- | ----------------- | --------------------------------------- |
-| Week 4-5 | Student CRUD      | Real database, API endpoints, full CRUD |
-| Week 6-7 | Attendance system | Teacher input, history, admin reports   |
+| Week     | Focus              | Deliverables                     |
+| -------- | ------------------ | -------------------------------- |
+| Week 4-5 | Student delete     | Soft delete, confirmation dialog |
+| Week 6-7 | Attendance reports | Admin reports, filtering, export |
 
 **Success Criteria**:
 
-- Students can be created/updated/deleted in database
-- Teachers can record attendance
+- Students can be deleted (soft delete)
 - Admins can view attendance reports
+- Reports support date/class filtering
 
 ### Phase 4: Production Readiness (4 Weeks)
 
@@ -378,22 +412,22 @@ features/{name}/
 
 ### Total Files by Type
 
-| Type           | Count   | Location                           |
-| -------------- | ------- | ---------------------------------- |
-| TypeScript/TSX | 65      | features/, components/, app/       |
-| CSS            | 21      | styles/tokens/, styles/components/ |
-| Config         | 8       | Root, apps/admin                   |
-| Documentation  | 12      | .ai/, AGENTS.md                    |
-| **Total**      | **106** |                                    |
+| Type           | Count    | Location                           |
+| -------------- | -------- | ---------------------------------- |
+| TypeScript/TSX | 80+      | features/, components/, app/       |
+| CSS            | 21       | styles/tokens/, styles/components/ |
+| Config         | 10+      | Root, apps/admin                   |
+| Documentation  | 15+      | .ai/, AGENTS.md                    |
+| **Total**      | **130+** |                                    |
 
 ### Components by Category
 
 | Category       | Components | Files Each            |
 | -------------- | ---------- | --------------------- |
 | UI Components  | 23         | 3 (tsx, types, index) |
-| App Components | 3          | 2-3 each              |
-| Feature Pages  | 30+        | 1 each                |
-| Route Pages    | 35+        | 1 each                |
+| App Components | 4          | 2-3 each              |
+| Feature Pages  | 35+        | 1 each                |
+| Route Pages    | 40+        | 1 each                |
 
 ---
 
@@ -406,6 +440,7 @@ features/{name}/
 | **UI**            | React               | 19         |
 | **Language**      | TypeScript          | 5 (strict) |
 | **Styling**       | Tailwind CSS        | v4         |
+| **Database**      | Drizzle ORM + Neon  | Latest     |
 | **UI Primitives** | Radix UI            | Latest     |
 | **Icons**         | lucide-react        | Latest     |
 | **Theme**         | next-themes         | Latest     |
@@ -416,9 +451,9 @@ features/{name}/
 
 ---
 
-**Report Generated**: 2026-07-14  
-**Next Review**: 2026-07-28  
-**Health Score**: 7.0/10  
-**Active Tasks**: 20  
-**Completed Milestones**: 5/8 (M1.1-M1.5)  
-**Resolved Technical Debt**: 4 tasks (T1, T2, T3, T11)
+**Report Generated**: 2026-07-14
+**Next Review**: 2026-07-28
+**Health Score**: 7.5/10
+**Active Tasks**: 17
+**Completed Milestones**: 10/12 (M1.1-M1.9, M2.0-M2.2)
+**Resolved Technical Debt**: 7 tasks (T1, T2, T3, T7, T8, T9, T11)

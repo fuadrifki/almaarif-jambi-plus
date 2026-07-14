@@ -109,11 +109,11 @@ Dependencies are noted — tasks with no dependencies can be parallelised.
 
 ---
 
-### T7 — Extract User type to shared lib location
+### T7 — Extract User type to shared lib location ✅ RESOLVED
 
 | Field               | Value                                                                                                                                                                                                                                                                  |
 | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Issue**           | HI-5 (part 1/3) — `lib/auth/session.ts` and `components/app/app-shell.types.ts` both import `User` from `features/auth/types`, violating dependency direction                                                                                                          |
+| **Issue**           | HI-5 (part 1/3) — `lib/auth/session.ts` and `components/app/app-shell.types.ts` both imported `User` from `features/auth/types`, violating dependency direction                                                                                                        |
 | **Priority**        | High                                                                                                                                                                                                                                                                   |
 | **Complexity**      | Small                                                                                                                                                                                                                                                                  |
 | **Estimated files** | 4 (create `lib/auth/types.ts`, update `features/auth/types.ts`, update `lib/auth/index.ts`, update `lib/auth/session.ts`)                                                                                                                                              |
@@ -121,14 +121,15 @@ Dependencies are noted — tasks with no dependencies can be parallelised.
 | **Risk**            | Low — type-only extraction, no runtime impact                                                                                                                                                                                                                          |
 | **Dependencies**    | None                                                                                                                                                                                                                                                                   |
 | **Description**     | Move `User` type from `features/auth/types.ts` to `lib/auth/types.ts`. Update `features/auth/types.ts` to re-export `User` from `lib/auth/types`. Update `lib/auth/session.ts` to import `User` from `./types` (relative). Update `lib/auth/index.ts` to export types. |
+| **Resolution**      | ✅ User type extracted to `lib/types/user.ts`. All imports updated — 2026-07-14                                                                                                                                                                                        |
 
 ---
 
-### T8 — Update app-shell.types.ts import
+### T8 — Update app-shell.types.ts import ✅ RESOLVED
 
 | Field               | Value                                                                                                         |
 | ------------------- | ------------------------------------------------------------------------------------------------------------- |
-| **Issue**           | HI-5 (part 2/3) — `app-shell.types.ts` imports `User` from `features/auth/types`                              |
+| **Issue**           | HI-5 (part 2/3) — `app-shell.types.ts` imported `User` from `features/auth/types`                             |
 | **Priority**        | High                                                                                                          |
 | **Complexity**      | Trivial                                                                                                       |
 | **Estimated files** | 1 (`components/app/app-shell/app-shell.types.ts`)                                                             |
@@ -136,14 +137,15 @@ Dependencies are noted — tasks with no dependencies can be parallelised.
 | **Risk**            | Low — type-only import path change                                                                            |
 | **Dependencies**    | T7 (must exist first)                                                                                         |
 | **Description**     | Change `import type { User } from '@/features/auth/types'` to `import type { User } from '@/lib/auth/types'`. |
+| **Resolution**      | ✅ Updated to `import type { User } from '@/lib/types/user'` — 2026-07-14                                     |
 
 ---
 
-### T9 — Update session.ts import
+### T9 — Update session.ts import ✅ RESOLVED
 
 | Field               | Value                                                                                                                                 |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| **Issue**           | HI-5 (part 3/3) — `lib/auth/session.ts` imports `User` from `features/auth/types`                                                     |
+| **Issue**           | HI-5 (part 3/3) — `lib/auth/session.ts` imported `User` from `features/auth/types`                                                    |
 | **Priority**        | High                                                                                                                                  |
 | **Complexity**      | Trivial                                                                                                                               |
 | **Estimated files** | 1 (`lib/auth/session.ts`)                                                                                                             |
@@ -151,6 +153,7 @@ Dependencies are noted — tasks with no dependencies can be parallelised.
 | **Risk**            | Low — type-only import path change                                                                                                    |
 | **Dependencies**    | T7 (must exist first)                                                                                                                 |
 | **Description**     | Change `import type { User } from '@/features/auth/types'` to `import type { User } from '@/lib/auth/types'` (or relative `./types`). |
+| **Resolution**      | ✅ Updated to `import type { User } from '@/lib/types/user'` — 2026-07-14                                                             |
 
 ---
 
@@ -263,18 +266,19 @@ Dependencies are noted — tasks with no dependencies can be parallelised.
 
 ---
 
-### T17 — Remove unused public asset
+### T17 — Remove unused public asset ⚠️ NOT UNUSED
 
-| Field               | Value                                                                                                                        |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| **Issue**           | ME-5 — `public/brand/logo.png` is never referenced                                                                           |
-| **Priority**        | Medium                                                                                                                       |
-| **Complexity**      | Trivial                                                                                                                      |
-| **Estimated files** | 2 (delete `public/brand/logo.png`, delete `public/brand/` if empty)                                                          |
-| **Estimated LOC**   | −0 (asset deletion)                                                                                                          |
-| **Risk**            | Low — confirmed unused                                                                                                       |
-| **Dependencies**    | None                                                                                                                         |
-| **Description**     | Delete the PNG file. Remove the directory if nothing remains. Verify no file references `/brand/logo.png` or `public/brand`. |
+| Field               | Value                                                                                                                           |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **Issue**           | ME-5 — `public/brand/logo.png` — reported as unused                                                                             |
+| **Priority**        | Medium                                                                                                                          |
+| **Complexity**      | Trivial                                                                                                                         |
+| **Estimated files** | 0 — **NOT ACTUALLY UNUSED**                                                                                                     |
+| **Estimated LOC**   | 0                                                                                                                               |
+| **Risk**            | N/A — do not delete                                                                                                             |
+| **Dependencies**    | None                                                                                                                            |
+| **Description**     | `public/brand/logo.png` is referenced by `@almaarif/brand` Logo component as its default src. Deleting it would break the logo. |
+| **Status**          | ⚠️ False positive — keep the file                                                                                               |
 
 ---
 
@@ -310,18 +314,19 @@ Dependencies are noted — tasks with no dependencies can be parallelised.
 
 ---
 
-### T20 — Remove or redirect dead navigation links
+### T20 — Remove or redirect dead navigation links ⚠️ UPDATED
 
-| Field               | Value                                                                                                                                           |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Issue**           | LO-4 — Sidebar links to `/users` and `/settings` which have no routes                                                                           |
-| **Priority**        | Low                                                                                                                                             |
-| **Complexity**      | Trivial                                                                                                                                         |
-| **Estimated files** | 1 (`components/app/sidebar/sidebar.tsx`)                                                                                                        |
-| **Estimated LOC**   | ~2 (remove 2 items from navigation array)                                                                                                       |
-| **Risk**            | Low — removing links to 404 pages improves UX. Can be restored when routes exist.                                                               |
-| **Dependencies**    | None                                                                                                                                            |
-| **Description**     | Remove `{ label: 'Users', href: '/users' }` and `{ label: 'Settings', href: '/settings' }` from the navigation array. Or keep them with a note. |
+| Field               | Value                                                                                                                                                          |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Issue**           | LO-4 — Sidebar links to `/users` and `/settings` which have no routes                                                                                          |
+| **Priority**        | Low                                                                                                                                                            |
+| **Complexity**      | Trivial                                                                                                                                                        |
+| **Estimated files** | 1 (`config/navigation.ts`)                                                                                                                                     |
+| **Estimated LOC**   | ~2 (remove 2 items from navigation array)                                                                                                                      |
+| **Risk**            | Low — removing links to 404 pages improves UX. Can be restored when routes exist.                                                                              |
+| **Dependencies**    | None                                                                                                                                                           |
+| **Description**     | Navigation is now role-based via `config/navigation.ts`. `/users` was renamed to `/students` (Siswa) and is active. `/settings` is disabled with "Soon" badge. |
+| **Status**          | ⚠️ Updated — navigation system changed. `/users` no longer exists. `/settings` is disabled with "Soon" badge. Review if still relevant.                        |
 
 ---
 
@@ -340,18 +345,19 @@ Dependencies are noted — tasks with no dependencies can be parallelised.
 
 ---
 
-### T22 — Resolve orphaned `docs/` directory
+### T22 — Resolve orphaned `docs/` directory ⚠️ NOT ORPHANED
 
-| Field               | Value                                                                                                                   |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| **Issue**           | LO-6 — `docs/ads-development-rules.md` is unreferenced                                                                  |
-| **Priority**        | Low                                                                                                                     |
-| **Complexity**      | Trivial                                                                                                                 |
-| **Estimated files** | 2 (delete `docs/ads-development-rules.md`, delete `docs/` if empty)                                                     |
-| **Estimated LOC**   | −0 (file deletion)                                                                                                      |
-| **Risk**            | Low — confirmed unreferenced                                                                                            |
-| **Dependencies**    | None                                                                                                                    |
-| **Description**     | Delete `docs/ads-development-rules.md`. Remove `docs/` if nothing remains. Verify with `rg` that nothing references it. |
+| Field               | Value                                                                                                 |
+| ------------------- | ----------------------------------------------------------------------------------------------------- |
+| **Issue**           | LO-6 — `docs/ads-development-rules.md` — reported as unreferenced                                     |
+| **Priority**        | Low                                                                                                   |
+| **Complexity**      | Trivial                                                                                               |
+| **Estimated files** | 0 — **NOT ACTUALLY ORPHANED**                                                                         |
+| **Estimated LOC**   | 0                                                                                                     |
+| **Risk**            | N/A — do not delete                                                                                   |
+| **Dependencies**    | None                                                                                                  |
+| **Description**     | `docs/ads-development-rules.md` contains ADS development rules referenced by AGENTS.md. Not orphaned. |
+| **Status**          | ⚠️ False positive — keep the file and directory                                                       |
 
 ---
 
@@ -388,34 +394,35 @@ Dependencies are noted — tasks with no dependencies can be parallelised.
 ## Dependency Graph
 
 ```
-T1 (badge.css)
-  └── T2 (badge barrel)
-        └── T3 (badge docs)
+T1 (badge.css) ✅
+  └── T2 (badge barrel) ✅
+        └── T3 (badge docs) ✅
 
-T7 (extract User type to lib/auth/types)
-  ├── T8 (update app-shell.types.ts)
-  └── T9 (update session.ts)
+T7 (extract User type) ✅
+  ├── T8 (update app-shell.types.ts) ✅
+  └── T9 (update session.ts) ✅
 
 T4 (remove unused deps)         │
 T5 (delete dead http client)    │
 T6 (configure test runner)      ├── All independent, can parallelise
 T10 (header docs page)          │
-T11 (field docs page)           │
+T11 (field docs page) ✅        │
 T12–T17 (medium issues)         │
 T18–T24 (low issues)            │
                                 │
-T10 and T11 can be parallelised
+T10 can be done now
 T12–T17 are all independent of each other
 T18–T24 are all independent of each other
-T8/T9 depend on T7 but are independent of each other
 ```
 
 ## Summary
 
-| Priority  | Tasks  | Resolved | Pending | Estimated files | Estimated LOC | Risk profile            |
-| --------- | ------ | -------- | ------- | --------------- | ------------- | ----------------------- |
-| Critical  | 3      | 3        | 0       | 5               | ~137          | Low                     |
-| High      | 8      | 1        | 7       | 18              | ~155          | Low–Medium (T6: medium) |
-| Medium    | 6      | 0        | 6       | 9               | ~28           | Low                     |
-| Low       | 7      | 0        | 7       | 9               | ~12           | Low                     |
-| **Total** | **24** | **4**    | **20**  | **41**          | **~332**      | Mostly low risk         |
+| Priority  | Tasks  | Resolved | Pending | False Pos | Estimated files | Estimated LOC | Risk profile            |
+| --------- | ------ | -------- | ------- | --------- | --------------- | ------------- | ----------------------- |
+| Critical  | 3      | 3        | 0       | 0         | 5               | ~137          | Low                     |
+| High      | 8      | 4        | 4       | 0         | 18              | ~155          | Low–Medium (T6: medium) |
+| Medium    | 6      | 0        | 4       | 2         | 9               | ~28           | Low                     |
+| Low       | 7      | 0        | 5       | 2         | 9               | ~12           | Low                     |
+| **Total** | **24** | **7**    | **13**  | **4**     | **41**          | **~332**      | Mostly low risk         |
+
+**False positives:** T17 (logo.png IS used by @almaarif/brand), T20 (navigation updated to role-based), T22 (docs/ NOT orphaned), plus T8/T9 (already resolved)
