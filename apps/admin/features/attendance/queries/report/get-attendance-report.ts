@@ -5,54 +5,61 @@ import { attendanceRecords } from '@/lib/db/schema';
 import { attendanceSessions } from '@/lib/db/schema';
 import { students } from '@/lib/db/schema';
 
+import type { AttendanceStatus } from '@/features/attendance/types';
 import type { AttendanceReportResult, ReportFilter } from './types';
 
 const PAGE_SIZE = 10;
+
+type SessionRow = typeof attendanceSessions.$inferSelect;
+type RecordRow = typeof attendanceRecords.$inferSelect;
+type StudentRow = typeof students.$inferSelect;
 
 export const getAttendanceReport = async (
   filter: ReportFilter = {},
 ): Promise<AttendanceReportResult> => {
   const db = getDb();
 
-  let baseStudentsQuery = db.select().from(students);
-  let baseSessionsQuery = db.select().from(attendanceSessions);
-  let baseRecordsQuery = db.select().from(attendanceRecords);
+  const studentConditions = [];
+  const sessionConditions = [];
 
   if (filter.classId) {
-    baseStudentsQuery = baseStudentsQuery.where(eq(students.classId, filter.classId));
-    baseSessionsQuery = baseSessionsQuery.where(eq(attendanceSessions.classId, filter.classId));
-    const sessions = await baseSessionsQuery;
-    baseRecordsQuery = baseRecordsQuery.where(
-      inArray(
-        attendanceRecords.sessionId,
-        sessions.map((s) => s.id),
-      ),
-    );
+    studentConditions.push(eq(students.classId, filter.classId));
+    sessionConditions.push(eq(attendanceSessions.classId, filter.classId));
   }
 
   if (filter.date) {
-    baseSessionsQuery = baseSessionsQuery.where(eq(attendanceSessions.date, filter.date));
-    const sessions = await baseSessionsQuery;
-    baseRecordsQuery = baseRecordsQuery.where(
-      inArray(
-        attendanceRecords.sessionId,
-        sessions.map((s) => s.id),
-      ),
-    );
+    sessionConditions.push(eq(attendanceSessions.date, filter.date));
   }
 
-  const [allStudents, allSessions, allRecords] = await Promise.all([
-    baseStudentsQuery,
-    baseSessionsQuery,
-    baseRecordsQuery,
-  ]);
+  const allStudents: StudentRow[] = studentConditions.length
+    ? await db
+        .select()
+        .from(students)
+        .where(and(...studentConditions))
+    : await db.select().from(students);
+
+  const sessions: SessionRow[] = sessionConditions.length
+    ? await db
+        .select()
+        .from(attendanceSessions)
+        .where(and(...sessionConditions))
+    : await db.select().from(attendanceSessions);
+
+  const sessionIds = sessions.map((s) => s.id);
+
+  const allRecords: RecordRow[] = sessionIds.length
+    ? await db
+        .select()
+        .from(attendanceRecords)
+        .where(inArray(attendanceRecords.sessionId, sessionIds))
+    : [];
 
   const studentsWithStatus = allStudents.map((student) => {
     const studentRecords = allRecords.filter((r) => r.studentId === student.id);
 
     if (studentRecords.length === 0) {
       return {
-        student,
+        student: toStudent(student),
         attendanceStatus: null,
         time: null,
         session: null,
@@ -63,11 +70,11 @@ export const getAttendanceReport = async (
       (a, b) => b.createdAt.getTime() - a.createdAt.getTime(),
     )[0];
 
-    const session = allSessions.find((s) => s.id === latestRecord.sessionId);
+    const session = sessions.find((s) => s.id === latestRecord.sessionId);
 
     return {
-      student,
-      attendanceStatus: latestRecord.status,
+      student: toStudent(student),
+      attendanceStatus: latestRecord.status as AttendanceStatus,
       time: formatTime(latestRecord.createdAt),
       session: session
         ? `${session.date} ${session.time} (${formatTime(latestRecord.createdAt)})`
@@ -110,6 +117,19 @@ export const getAttendanceReport = async (
     },
   };
 };
+
+const toStudent = (row: StudentRow) => ({
+  id: String(row.id),
+  nis: row.nis,
+  name: row.name,
+  classId: row.classId,
+  room: row.room,
+  guardianName: row.guardianName,
+  guardianPhone: row.guardianPhone,
+  address: row.address,
+  createdAt: row.createdAt,
+  updatedAt: row.updatedAt,
+});
 
 const formatTime = (date: Date): string => {
   return date.toLocaleTimeString('id-ID', {
