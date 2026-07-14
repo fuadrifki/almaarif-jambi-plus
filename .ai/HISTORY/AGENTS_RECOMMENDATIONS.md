@@ -30,7 +30,7 @@ components/
         index.ts
 ```
 
-**Why it's outdated:** The actual convention (12/12 components follow it) is:
+**Why it's outdated:** The actual convention (23/23 components follow it) is:
 
 ```
 components/ui/{name}/
@@ -42,7 +42,7 @@ components/ui/{name}/
 Two discrepancies:
 
 - Missing `ui/` intermediate directory (all ADS components live under `components/ui/`)
-- Shows `button.test.tsx` as standard but no test files exist (0/12 components have a working test)
+- Shows `button.test.tsx` as standard but no test files exist (0/23 components have a working test)
 - Missing `{name}.types.ts` which exists for every component
 
 ---
@@ -91,7 +91,7 @@ Two discrepancies:
 
 ### 2.2 `cn()` Utility for Class Merging
 
-**Evidence:** All 12 ADS components import `{ cn }` from `@/lib` and use `cn('ads-class', className)` for class merging. `clsx` + `tailwind-merge` are installed specifically for this.
+**Evidence:** All 23 ADS components import `{ cn }` from `@/lib` and use `cn('ads-class', className)` for class merging. `clsx` + `tailwind-merge` are installed specifically for this.
 
 **Recommendation:** Add to root `AGENTS.md` > Coding Style: "Use `cn()` from `@/lib` for all class merging. Never concatenate className strings manually."
 
@@ -291,7 +291,7 @@ components/ui/{name}/
 └── index.ts           — barrel: `export * from './{name}'` + `export type * from './{name}.types'`
 ```
 
-**Supported by:** 12/12 components follow this exactly.
+**Supported by:** 23/23 components follow this exactly.
 
 ---
 
@@ -314,7 +314,7 @@ styles/
 └── theme.css          — Imports tokens → components → body styling
 ```
 
-**Supported by:** `styles/theme.css` imports 4 token files + 9 component CSS files + body styling. Tokens import before components.
+**Supported by:** `styles/theme.css` imports 4 token files + 17 component CSS files + body styling. Tokens import before components.
 
 ---
 
@@ -326,9 +326,9 @@ styles/
 | ------------------- | ---------------------------------------------------- | -------------------------------------- |
 | Native HTML wrapper | Extends `HTMLAttributes<HTMLElement>` + custom props | Surface, Button, Card, Input, Textarea |
 | Radix wrapper       | `ComponentPropsWithoutRef<typeof Root>` or similar   | Checkbox, Radio, Select, Switch        |
-| Compound wrapper    | Standalone `type` with custom props                  | Field, Header                          |
+| Compound wrapper    | Standalone `type` with custom props                  | Field, Header, PageLayout              |
 
-**Supported by:** All 12 components follow one of these three patterns.
+**Supported by:** All 23 components follow one of these three patterns.
 
 ---
 
@@ -336,7 +336,7 @@ styles/
 
 **Convention:** `features/{name}/server.ts` files use `'use server'` to create RPC boundaries. Actual logic lives in `features/{name}/{logic}.ts` (no directive) or `lib/`.
 
-**Supported by:** `features/auth/server.ts` — `createSession` / `destroySession` are server actions; actual cookie logic is in `lib/auth/session.ts`.
+**Supported by:** `features/auth/server.ts` — `createSession` / `destroySession` are server actions; actual cookie logic is in `lib/auth/session.ts`. `features/students/server.ts` and `features/attendance/server.ts` also follow this pattern.
 
 ---
 
@@ -386,9 +386,9 @@ styles/
 
 **Convention:**
 
-- No state management library
+- No state management library (component-local state only)
 - No API routes (Server Actions instead)
-- No database (mock auth)
+- No database (mock auth, UI-only business features)
 - Cookie-based sessions (httpOnly, no encryption)
 - Theme via next-themes (attribute="class", defaultTheme="light", enableSystem=false)
 

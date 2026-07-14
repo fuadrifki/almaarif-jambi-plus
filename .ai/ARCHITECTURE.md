@@ -154,8 +154,8 @@ sequenceDiagram
 | Group         | Pages | Purpose                                             |
 | ------------- | ----- | --------------------------------------------------- |
 | `(auth)`      | 1     | Login                                               |
-| `(dashboard)` | 1     | Dashboard home                                      |
-| `(design)`    | 13    | Design system documentation (12 components + index) |
+| `(dashboard)` | 10    | Dashboard, Students (4), Attendance (4), More       |
+| `(design)`    | 22    | Design system documentation (21 components + index) |
 
 ---
 
@@ -193,6 +193,9 @@ graph TD
         AUTH["auth/"]
         DASHBOARD["dashboard/"]
         ADS["ads/"]
+        STUDENTS["students/"]
+        ATTENDANCE["attendance/"]
+        MORE["more/"]
     end
 
     AUTH --> AUTH_TYPES["types.ts - User type"]
@@ -203,13 +206,28 @@ graph TD
 
     DASHBOARD --> DASHBOARD_PAGE["pages/dashboard-page.tsx"]
 
-    ADS --> ADS_PAGES["pages/ (19 page components)"]
+    ADS --> ADS_PAGES["pages/ (21 page components)"]
     ADS --> ADS_SHELL["components/ads-shell/"]
     ADS --> ADS_CODE["components/code-preview/"]
     ADS --> ADS_COLOR["components/color-preview/"]
     ADS --> ADS_SECTION["components/section-preview/"]
     ADS --> ADS_TOKEN["components/token-preview/"]
-        ADS --> ADS_THEME["components/theme-toggle/ (now icon-only button)"]
+    ADS --> ADS_THEME["components/theme-toggle/"]
+
+    STUDENTS --> STUDENTS_TYPES["types.ts"]
+    STUDENTS --> STUDENTS_SCHEMAS["schemas.ts"]
+    STUDENTS --> STUDENTS_SERVER["server.ts"]
+    STUDENTS --> STUDENTS_COMPONENTS["components/ (3)"]
+    STUDENTS --> STUDENTS_PAGES["pages/ (4)"]
+
+    ATTENDANCE --> ATTENDANCE_TYPES["types.ts"]
+    ATTENDANCE --> ATTENDANCE_SCHEMAS["schemas.ts"]
+    ATTENDANCE --> ATTENDANCE_SERVER["server.ts"]
+    ATTENDANCE --> ATTENDANCE_COMPONENTS["components/ (3)"]
+    ATTENDANCE --> ATTENDANCE_PAGES["pages/ (3)"]
+
+    MORE --> MORE_COMPONENTS["components/ (1)"]
+    MORE --> MORE_PAGES["pages/ (1)"]
 ```
 
 ### `features/auth`
@@ -306,17 +324,20 @@ RootLayout
 graph TD
     subgraph "app/ — Next.js Routes"
         LAYOUTS["Layouts<br/>(root, dashboard, design)"]
-        PAGES["Pages<br/>(login, dashboard, 18 design pages)"]
+        PAGES["Pages<br/>(login, dashboard, students, attendance, 21 design pages)"]
     end
 
     subgraph "features/ — Domain Modules"
         AUTH["auth<br/>login, User, session management"]
         DASHBOARD["dashboard<br/>dashboard page"]
         ADS["ads<br/>design system playground"]
+        STUDENTS["students<br/>student management"]
+        ATTENDANCE["attendance<br/>attendance system"]
+        MORE["more<br/>additional features"]
     end
 
     subgraph "components/ — Reusable UI"
-        UI["ui/*<br/>ADS Design System<br/>17 components"]
+        UI["ui/*<br/>ADS Design System<br/>23 components"]
         APP["app/*<br/>AppShell, Sidebar, MobileNav"]
     end
 
@@ -476,38 +497,49 @@ export { DashboardPage as default } from '@/features/dashboard/pages/dashboard-p
 
 ### ADS Component Inventory
 
-| Component    | Category | Primitive           | Client?           | Test? | CSS file?            | CSS classes defined?                                                                                                                                                                                                  |
-| ------------ | -------- | ------------------- | ----------------- | ----- | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Surface      | Layout   | `<div>`             | No                | No    | ✅ surface.css       | `ads-surface`, `::before`, `::after`                                                                                                                                                                                  |
-| Card         | Layout   | Surface             | No                | No    | ❌                   | Uses Tailwind only                                                                                                                                                                                                    |
-| Header       | Layout   | Surface             | No                | No    | ❌                   | Uses Tailwind + Surface only                                                                                                                                                                                          |
-| Field        | Layout   | `<div>/<label>`     | No                | No    | ❌                   | Uses Tailwind only                                                                                                                                                                                                    |
-| Table        | Data     | Surface + `<table>` | No                | No    | ✅ table.css         | `ads-table`, `ads-table__scroll`, `ads-table__table`, `ads-table__header`, `ads-table__body`, `ads-table__footer`, `ads-table__row`, `ads-table__head`, `ads-table__cell`, `ads-table--compact`, `ads-table--striped` |
-| Button       | Input    | `<button>`          | No                | No    | ✅ button.css        | `ads-button`, `ads-button--{variant}`, `ads-button--{size}`, `ads-button__content`                                                                                                                                    |
-| Input        | Input    | `<input>`           | Yes               | No    | ✅ input.css         | `ads-input`, `ads-input-wrapper`, `ads-input--{size}`, `ads-input--{status}`, `ads-input__loader`, `ads-input__action`                                                                                                |
-| Textarea     | Input    | `<textarea>`        | Yes (unnecessary) | No    | ✅ textarea.css      | `ads-textarea`, `ads-textarea--{size}`, `ads-textarea--{status}`, `ads-textarea--resize-{resize}`                                                                                                                     |
-| Select       | Input    | Radix Select        | Yes               | Yes   | ✅ select.css        | `ads-select__trigger`, `ads-select__trigger--{size}`, `ads-select__trigger--{status}`, `ads-select__content`, `ads-select__item`                                                                                      |
-| Checkbox     | Input    | Radix Checkbox      | Yes               | No    | ✅ checkbox.css      | `ads-checkbox`, `ads-checkbox__indicator`                                                                                                                                                                             |
-| Radio        | Input    | Radix RadioGroup    | Yes               | No    | ✅ radio.css         | `ads-radio-group`, `ads-radio-item`, `ads-radio-item__label`, `ads-radio`, `ads-radio__indicator`, `ads-radio__dot`                                                                                                   |
-| Switch       | Input    | Radix Switch        | Yes               | No    | ✅ switch.css        | `ads-switch`, `ads-switch__thumb`                                                                                                                                                                                     |
-| Badge        | Display  | `<span>`            | No                | No    | ✅ badge.css         | `ads-badge`, `ads-badge--{variant}`                                                                                                                                                                                   |
-| DropdownMenu | Overlay  | Radix DropdownMenu  | Yes               | No    | ✅ dropdown-menu.css | `ads-dropdown-menu`, `ads-dropdown-menu__item`, `ads-dropdown-menu__separator`, `ads-dropdown-menu__label`, `ads-dropdown-menu__arrow`                                                                                |
+| Component        | Category   | Primitive           | Client? | Test? | CSS file?                | CSS classes defined?                                                                                                                                                                                                  |
+| ---------------- | ---------- | ------------------- | ------- | ----- | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Surface          | Layout     | `<div>`             | No      | No    | ✅ surface.css           | `ads-surface`, `::before`, `::after`                                                                                                                                                                                  |
+| Card             | Layout     | Surface             | No      | No    | ✅ card.css              | `ads-card`, `ads-card__header`, `ads-card__title`, `ads-card__description`, `ads-card__content`, `ads-card__footer`                                                                                                   |
+| Header           | Layout     | Surface             | No      | No    | ✅ header.css            | `ads-header`, `ads-header__title`, `ads-header__logo`, `ads-header__actions`                                                                                                                                          |
+| Field            | Layout     | `<div>/<label>`     | No      | No    | ✅ field.css             | `ads-field`, `ads-field__label`, `ads-field__description`, `ads-field__error`                                                                                                                                         |
+| PageLayout       | Layout     | `<div>`             | No      | No    | ✅ page-layout.css       | `ads-page-layout`, `ads-page-layout__header`, `ads-page-layout__content`                                                                                                                                              |
+| Table            | Data       | Surface + `<table>` | No      | No    | ✅ table.css             | `ads-table`, `ads-table__scroll`, `ads-table__table`, `ads-table__header`, `ads-table__body`, `ads-table__footer`, `ads-table__row`, `ads-table__head`, `ads-table__cell`, `ads-table--compact`, `ads-table--striped` |
+| Button           | Input      | `<button>`          | No      | No    | ✅ button.css            | `ads-button`, `ads-button--{variant}`, `ads-button--{size}`, `ads-button__content`                                                                                                                                    |
+| Input            | Input      | `<input>`           | Yes     | No    | ✅ input.css             | `ads-input`, `ads-input-wrapper`, `ads-input--{size}`, `ads-input--{status}`, `ads-input__loader`, `ads-input__action`                                                                                                |
+| Textarea         | Input      | `<textarea>`        | Yes     | No    | ✅ textarea.css          | `ads-textarea`, `ads-textarea--{size}`, `ads-textarea--{status}`, `ads-textarea--resize-{resize}`                                                                                                                     |
+| Select           | Input      | Radix Select        | Yes     | No    | ✅ select.css            | `ads-select__trigger`, `ads-select__trigger--{size}`, `ads-select__trigger--{status}`, `ads-select__content`, `ads-select__item`                                                                                      |
+| Checkbox         | Input      | Radix Checkbox      | Yes     | No    | ✅ checkbox.css          | `ads-checkbox`, `ads-checkbox__indicator`                                                                                                                                                                             |
+| Radio            | Input      | Radix RadioGroup    | Yes     | No    | ✅ radio.css             | `ads-radio-group`, `ads-radio-item`, `ads-radio-item__label`, `ads-radio`, `ads-radio__indicator`, `ads-radio__dot`                                                                                                   |
+| Switch           | Input      | Radix Switch        | Yes     | No    | ✅ switch.css            | `ads-switch`, `ads-switch__thumb`                                                                                                                                                                                     |
+| Badge            | Display    | `<span>`            | No      | No    | ✅ badge.css             | `ads-badge`, `ads-badge--{variant}`                                                                                                                                                                                   |
+| DropdownMenu     | Overlay    | Radix DropdownMenu  | Yes     | No    | ✅ dropdown-menu.css     | `ads-dropdown-menu`, `ads-dropdown-menu__item`, `ads-dropdown-menu__separator`, `ads-dropdown-menu__label`, `ads-dropdown-menu__arrow`                                                                                |
+| AlertDialog      | Overlay    | Radix Dialog        | Yes     | No    | ✅ alert-dialog.css      | `ads-alert-dialog`, `ads-alert-dialog__content`, `ads-alert-dialog__title`, `ads-alert-dialog__description`, `ads-alert-dialog__actions`                                                                              |
+| Toast            | Feedback   | Sonner              | Yes     | No    | ✅ toast.css             | `ads-toast`, `ads-toast__title`, `ads-toast__description`                                                                                                                                                             |
+| Skeleton         | Feedback   | `<div>`             | No      | No    | ✅ skeleton.css          | `ads-skeleton`, `ads-skeleton__circle`, `ads-skeleton__line`                                                                                                                                                          |
+| EmptyState       | Feedback   | `<div>`             | No      | No    | ✅ empty-state.css       | `ads-empty-state`, `ads-empty-state__icon`, `ads-empty-state__title`, `ads-empty-state__description`                                                                                                                  |
+| Pagination       | Navigation | Button (ADS)        | No      | No    | ✅ pagination.css        | `ads-pagination`, `ads-pagination__item`, `ads-pagination__ellipsis`                                                                                                                                                  |
+| SegmentedControl | Navigation | `<div>`             | Yes     | No    | ✅ segmented-control.css | `ads-segmented-control`, `ads-segmented-control__item`, `ads-segmented-control__indicator`                                                                                                                            |
+| InfiniteScroll   | Navigation | `<div>`             | Yes     | No    | ✅ infinite-scroll.css   | `ads-infinite-scroll`, `ads-infinite-scroll__loader`                                                                                                                                                                  |
+| ThemeToggle      | Utility    | Button (ADS)        | Yes     | No    | ✅ theme-toggle.css      | `ads-theme-toggle`                                                                                                                                                                                                    |
 
 ### Component patterns
 
 ```mermaid
 graph TD
     subgraph "Wrapping strategies"
-        NATIVE["Native HTML<br/>Surface, Button, Input, Textarea, Field, Badge, EmptyState, Skeleton"]
+        NATIVE["Native HTML<br/>Surface, Button, Input, Textarea, Field, Badge, EmptyState, Skeleton, PageLayout, SegmentedControl, InfiniteScroll"]
         SURFACE_WRAP["Wraps Surface component<br/>Card, Header, Table"]
         RADIX["Wraps Radix UI primitive<br/>Checkbox, Radio, Select, Switch, DropdownMenu, AlertDialog"]
         SONNER_WRAP["Wraps Sonner library<br/>Toast"]
+        ADS_WRAP["Wraps ADS Button<br/>Pagination, ThemeToggle"]
     end
 
     NATIVE --> CN["cn() class merging"]
     SURFACE_WRAP --> CN
     RADIX --> CN
     SONNER_WRAP --> CN
+    ADS_WRAP --> CN
 
     CN --> LU["lucide-react icons<br/>(optional)"]
 ```
@@ -562,6 +594,9 @@ graph TD
     COMPONENTS --> TOAST_CSS["toast.css"]
     COMPONENTS --> ALERT_DIALOG_CSS["alert-dialog.css"]
     COMPONENTS --> TABLE_CSS["table.css"]
+    COMPONENTS --> BADGE_CSS["badge.css"]
+    COMPONENTS --> PAGINATION_CSS["pagination.css"]
+    COMPONENTS --> SEGMENTED_CSS["segmented-control.css"]
 ```
 
 **Tokens (20 remaining CSS custom properties):**
@@ -761,10 +796,9 @@ Components prefer Tailwind utility classes. Dedicated CSS files are only used fo
 
 ### Current state
 
-- **1 test file** exists: `select.test.tsx`
+- **0 test files** exist
 - **No test runner** configured — `@testing-library/react` and test runner types not installed
 - **No `test` script** in `package.json`
-- **9 TypeScript errors** from the test file due to missing type declarations
 
 ### AGENTS.md test requirements
 
@@ -777,20 +811,29 @@ Tests should cover:
 
 ### Status by component
 
-| Component | Test exists?     | Expected tests                                                                    |
-| --------- | ---------------- | --------------------------------------------------------------------------------- |
-| Surface   | No               | Render test                                                                       |
-| Button    | No               | Render, variants (primary/secondary/ghost/danger), sizes, loading/disabled states |
-| Card      | No               | Render with heading/description/footer                                            |
-| Header    | No               | Render with title/logo/actions                                                    |
-| Input     | No               | Render, password toggle, loading/error/disabled states                            |
-| Textarea  | No               | Render, sizes, resize variants, error state                                       |
-| Select    | Yes (unrunnable) | Render, open/close, option selection                                              |
-| Checkbox  | No               | Render, checked/unchecked, disabled                                               |
-| Radio     | No               | Render, group selection, disabled                                                 |
-| Switch    | No               | Render, toggled/untoggled, disabled                                               |
-| Field     | No               | Render with label/error/description                                               |
-| Badge     | No               | Render with variants                                                              |
+| Component        | Test exists? | Expected tests                                                                    |
+| ---------------- | ------------ | --------------------------------------------------------------------------------- |
+| Surface          | No           | Render test                                                                       |
+| Button           | No           | Render, variants (primary/secondary/ghost/danger), sizes, loading/disabled states |
+| Card             | No           | Render with heading/description/footer                                            |
+| Header           | No           | Render with title/logo/actions                                                    |
+| Input            | No           | Render, password toggle, loading/error/disabled states                            |
+| Textarea         | No           | Render, sizes, resize variants, error state                                       |
+| Select           | No           | Render, open/close, option selection                                              |
+| Checkbox         | No           | Render, checked/unchecked, disabled                                               |
+| Radio            | No           | Render, group selection, disabled                                                 |
+| Switch           | No           | Render, toggled/untoggled, disabled                                               |
+| Field            | No           | Render with label/error/description                                               |
+| Badge            | No           | Render with variants                                                              |
+| Table            | No           | Render with data, variants                                                        |
+| DropdownMenu     | No           | Render, open/close, item selection                                                |
+| AlertDialog      | No           | Render, confirm/cancel actions                                                    |
+| Toast            | No           | Render, show/hide                                                                 |
+| Skeleton         | No           | Render, loading state                                                             |
+| EmptyState       | No           | Render with icon/title/description                                                |
+| Pagination       | No           | Render, page navigation                                                           |
+| SegmentedControl | No           | Render, tab switching                                                             |
+| InfiniteScroll   | No           | Render, scroll detection                                                          |
 
 ---
 
@@ -807,17 +850,16 @@ Tests should cover:
 
 ### What needs attention for scale
 
-| Issue                          | Impact                                                       |
-| ------------------------------ | ------------------------------------------------------------ |
-| No `src/` directory            | Can cause confusion as codebase grows                        |
-| Boundary violations            | Will create circular deps as more features are added         |
-| No testing infrastructure      | Cannot safely refactor                                       |
-| Mock authentication            | No real auth for production                                  |
-| Dead code (badge, http client) | Maintains confusion about what's usable                      |
-| Unused dependencies            | Wasted install time and disk space                           |
-| No API layer                   | All data is mock — real endpoints will require restructuring |
-| No error boundaries            | Any runtime error crashes the full app                       |
-| No loading skeletons           | Dashboard content shows nothing while data loads             |
+| Issue                     | Impact                                                       |
+| ------------------------- | ------------------------------------------------------------ |
+| No `src/` directory       | Can cause confusion as codebase grows                        |
+| Boundary violations       | Will create circular deps as more features are added         |
+| No testing infrastructure | Cannot safely refactor                                       |
+| Mock authentication       | No real auth for production                                  |
+| Dead code (http client)   | Maintains confusion about what's usable                      |
+| Unused dependencies       | Wasted install time and disk space                           |
+| No API layer              | All data is mock — real endpoints will require restructuring |
+| No error boundaries       | Any runtime error crashes the full app                       |
 
 ---
 
@@ -825,14 +867,14 @@ Tests should cover:
 
 ### High
 
-| #   | Issue                                   | File(s)                                             |
-| --- | --------------------------------------- | --------------------------------------------------- |
-| 4   | 6 unused admin dependencies installed   | `apps/admin/package.json`                           |
-| 5   | 7 unused root dependencies installed    | Root `package.json`                                 |
-| 6   | `lib/http/client.ts` is completely dead | `lib/http/client.ts`                                |
-| 7   | No test runner configured               | `select.test.tsx` has 9 TS errors                   |
-| 8   | Package boundary violations             | `app-shell.tsx`, `app-shell.types.ts`, `session.ts` |
-| 9   | Header and Field have no docs/route     | Missing from design system navigation               |
+| #   | Issue                                   | File(s)                                             | Status  |
+| --- | --------------------------------------- | --------------------------------------------------- | ------- |
+| 4   | 6 unused admin dependencies installed   | `apps/admin/package.json`                           | Pending |
+| 5   | 7 unused root dependencies installed    | Root `package.json`                                 | Pending |
+| 6   | `lib/http/client.ts` is completely dead | `lib/http/client.ts`                                | Pending |
+| 7   | No test runner configured               | No test files exist                                 | Pending |
+| 8   | Package boundary violations             | `app-shell.tsx`, `app-shell.types.ts`, `session.ts` | Pending |
+| 9   | Header missing docs page                | `features/ads/pages/`                               | Pending |
 
 ### Medium
 
@@ -855,6 +897,11 @@ Tests should cover:
 ### Already resolved
 
 - Empty CSS files and unused theme tokens — cleaned in prior sessions
+- Badge CSS file — created `styles/components/badge.css`
+- Badge barrel export — added to `components/ui/index.ts`
+- Badge docs page — completed `features/ads/pages/badge-page.tsx`
+- Field docs page — completed `features/ads/pages/field-page.tsx`
+- Header route — exists at `app/(design)/design/header/page.tsx`
 
 ---
 
@@ -874,11 +921,14 @@ graph TD
         APP["app/ — Routes & Layouts"]
         CONFIG["config/ — appConfig"]
         PROVIDERS["providers/ — AppProvider, ThemeProvider"]
-        COMP_UI["components/ui/ — 17 ADS components"]
+        COMP_UI["components/ui/ — 23 ADS components"]
         COMP_APP["components/app/ — AppShell, Sidebar"]
         FEAT_AUTH["features/auth/ — Login, User"]
         FEAT_DASH["features/dashboard/ — Dashboard page"]
         FEAT_ADS["features/ads/ — Design playground"]
+        FEAT_STUDENTS["features/students/ — Student management"]
+        FEAT_ATTENDANCE["features/attendance/ — Attendance system"]
+        FEAT_MORE["features/more/ — Additional features"]
         LIB["lib/ — cn(), session"]
         STYLES["styles/ — Tokens + Component CSS"]
         PUBLIC["public/ — logo.png"]

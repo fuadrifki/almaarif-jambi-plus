@@ -1,7 +1,7 @@
 ---
 title: Cleanup Roadmap
 date: 2026-07-12
-source: .ai/REPORTS/2026-07-12-monorepo-health-report.md
+source: .ai/HISTORY/2026-07-12-monorepo-health-report.md
 ---
 
 # Cleanup Roadmap
@@ -14,7 +14,7 @@ Dependencies are noted — tasks with no dependencies can be parallelised.
 
 ## Critical
 
-### T1 — Create badge.css
+### T1 — Create badge.css ✅ RESOLVED
 
 | Field               | Value                                                                                                                                                                                                                                                                                                 |
 | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -26,10 +26,11 @@ Dependencies are noted — tasks with no dependencies can be parallelised.
 | **Risk**            | Low — new file, no existing behavior affected                                                                                                                                                                                                                                                         |
 | **Dependencies**    | None                                                                                                                                                                                                                                                                                                  |
 | **Description**     | Create `styles/components/badge.css` with `.ads-badge`, `.ads-badge--default`, `.ads-badge--success`, `.ads-badge--warning`, `.ads-badge--danger`, `.ads-badge--info`. Follow existing CSS conventions: BEM naming, `var(--token)` colors, `:root`/`.dark` classes. Add import to `styles/theme.css`. |
+| **Resolution**      | ✅ File exists: `styles/components/badge.css` (1587 bytes) — 2026-07-14                                                                                                                                                                                                                               |
 
 ---
 
-### T2 — Add badge to UI barrel
+### T2 — Add badge to UI barrel ✅ RESOLVED
 
 | Field               | Value                                                      |
 | ------------------- | ---------------------------------------------------------- |
@@ -41,10 +42,11 @@ Dependencies are noted — tasks with no dependencies can be parallelised.
 | **Risk**            | Low — one-line addition                                    |
 | **Dependencies**    | T1 (badge should have working CSS before public export)    |
 | **Description**     | Add `export * from './badge'` to `components/ui/index.ts`. |
+| **Resolution**      | ✅ Badge is in barrel export — 2026-07-14                  |
 
 ---
 
-### T3 — Complete badge docs page
+### T3 — Complete badge docs page ✅ RESOLVED
 
 | Field               | Value                                                                                                                                                                                                                                                      |
 | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -56,6 +58,7 @@ Dependencies are noted — tasks with no dependencies can be parallelised.
 | **Risk**            | Low — new page content, no side effects                                                                                                                                                                                                                    |
 | **Dependencies**    | T1, T2 (badge must be styled and importable)                                                                                                                                                                                                               |
 | **Description**     | Replace empty stub in `features/ads/pages/badge-page.tsx` with full docs: variants, sections for each variant, sizes if applicable. Add navigation entry to design system sidebar. Follow existing patterns from `button-page.tsx` or `checkbox-page.tsx`. |
+| **Resolution**      | ✅ Docs complete: `features/ads/pages/badge-page.tsx` (78 lines) — 2026-07-14                                                                                                                                                                              |
 
 ---
 
@@ -153,20 +156,21 @@ Dependencies are noted — tasks with no dependencies can be parallelised.
 
 ### T10 — Create header docs page
 
-| Field               | Value                                                                                                                                                                                               |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Issue**           | HI-6 (part 1/2) — Header component has no docs, route, or navigation                                                                                                                                |
-| **Priority**        | High                                                                                                                                                                                                |
-| **Complexity**      | Small                                                                                                                                                                                               |
-| **Estimated files** | 3 (create `features/ads/pages/header-page.tsx`, create `app/(design)/design/header/page.tsx`, update navigation)                                                                                    |
-| **Estimated LOC**   | ~60 (docs page) + ~2 (route) + ~5 (navigation)                                                                                                                                                      |
-| **Risk**            | Low — new files, no existing behavior affected                                                                                                                                                      |
-| **Dependencies**    | None                                                                                                                                                                                                |
-| **Description**     | Create docs page using existing patterns (SectionPreview, variant demos). Show Header with different configurations (title, logo, actions). Create thin re-export route page. Add navigation entry. |
+| Field               | Value                                                                                                                                       |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Issue**           | HI-6 (part 1/2) — Header component has no docs page                                                                                         |
+| **Priority**        | High                                                                                                                                        |
+| **Complexity**      | Small                                                                                                                                       |
+| **Estimated files** | 1 (create `features/ads/pages/header-page.tsx`)                                                                                             |
+| **Estimated LOC**   | ~60 (docs page)                                                                                                                             |
+| **Risk**            | Low — new files, no existing behavior affected                                                                                              |
+| **Dependencies**    | None                                                                                                                                        |
+| **Description**     | Create docs page using existing patterns (SectionPreview, variant demos). Show Header with different configurations (title, logo, actions). |
+| **Note**            | Route exists: `app/(design)/design/header/page.tsx` — only docs page needed                                                                 |
 
 ---
 
-### T11 — Create field docs page
+### T11 — Create field docs page ✅ RESOLVED
 
 | Field               | Value                                                                                                                                                                                 |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -178,6 +182,7 @@ Dependencies are noted — tasks with no dependencies can be parallelised.
 | **Risk**            | Low — new files, no existing behavior affected                                                                                                                                        |
 | **Dependencies**    | None (can parallelise with T10)                                                                                                                                                       |
 | **Description**     | Create docs page showing Field with Input, Select, Checkbox, Radio inside. Show error state, description, required indicator. Create thin re-export route page. Add navigation entry. |
+| **Resolution**      | ✅ Docs complete: `features/ads/pages/field-page.tsx` (101 lines), route exists — 2026-07-14                                                                                          |
 
 ---
 
@@ -407,10 +412,10 @@ T8/T9 depend on T7 but are independent of each other
 
 ## Summary
 
-| Priority  | Tasks  | Estimated files | Estimated LOC | Risk profile            |
-| --------- | ------ | --------------- | ------------- | ----------------------- |
-| Critical  | 3      | 5               | ~137          | Low                     |
-| High      | 8      | 18              | ~155          | Low–Medium (T6: medium) |
-| Medium    | 6      | 9               | ~28           | Low                     |
-| Low       | 7      | 9               | ~12           | Low                     |
-| **Total** | **24** | **41**          | **~332**      | Mostly low risk         |
+| Priority  | Tasks  | Resolved | Pending | Estimated files | Estimated LOC | Risk profile            |
+| --------- | ------ | -------- | ------- | --------------- | ------------- | ----------------------- |
+| Critical  | 3      | 3        | 0       | 5               | ~137          | Low                     |
+| High      | 8      | 1        | 7       | 18              | ~155          | Low–Medium (T6: medium) |
+| Medium    | 6      | 0        | 6       | 9               | ~28           | Low                     |
+| Low       | 7      | 0        | 7       | 9               | ~12           | Low                     |
+| **Total** | **24** | **4**    | **20**  | **41**          | **~332**      | Mostly low risk         |
