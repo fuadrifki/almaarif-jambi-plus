@@ -6,7 +6,7 @@ export const classes = pgTable(
     id: serial('id').primaryKey(),
     code: varchar('code', { length: 50 }).notNull().unique(),
     name: varchar('name', { length: 255 }).notNull(),
-    description: text('description'),
+    description: text('description').notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
   },
