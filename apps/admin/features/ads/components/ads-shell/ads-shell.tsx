@@ -17,7 +17,7 @@ const HamburgerButton = ({ onClick }: { onClick: () => void }) => (
   <button
     type="button"
     onClick={onClick}
-    className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-secondary transition-colors hover:bg-white/10 hover:text-primary md:hidden"
+    className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-secondary transition-colors hover:bg-white/10 hover:text-secondary md:hidden"
     aria-label="Open navigation"
   >
     <Menu size={20} />
@@ -31,7 +31,7 @@ const NavContent = ({ onNavigate }: { onNavigate?: () => void }) => {
     <>
       {designNavigation.map((group) => (
         <div key={group.title} className="space-y-3">
-          <p className="px-3 text-xs font-semibold uppercase tracking-wider text-white">
+          <p className="px-3 text-xs font-bold uppercase tracking-wider text-primary">
             {group.title}
           </p>
 
@@ -44,7 +44,7 @@ const NavContent = ({ onNavigate }: { onNavigate?: () => void }) => {
                   key={href}
                   href={href}
                   onClick={onNavigate}
-                  className={cn('ads-nav-item', isActive && 'ads-nav-item--active')}
+                  className={cn('ads-nav-item text-primary', isActive && 'ads-nav-item--active')}
                 >
                   {label}
                 </Link>
