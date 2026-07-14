@@ -1,0 +1,36 @@
+import { notFound } from 'next/navigation';
+
+import { PageLayout } from '@/components/ui';
+import { classRepository } from '@/lib/data/class-repository';
+import { ClassForm } from '../components/class-form';
+
+type ClassEditPageProps = {
+  params: Promise<{ id: string }>;
+};
+
+export const ClassEditPage = async ({ params }: ClassEditPageProps) => {
+  const { id } = await params;
+  const classDetail = await classRepository.findById(id);
+
+  if (!classDetail) {
+    notFound();
+  }
+
+  return (
+    <PageLayout>
+      <PageLayout.Header>
+        <div className="flex flex-col w-full gap-y-6">
+          <section>
+            <h1 className="text-2xl font-semibold sm:text-3xl">Edit Kelas</h1>
+
+            <p className="mt-2 text-secondary">Ubah data kelas {classDetail.name}.</p>
+          </section>
+        </div>
+      </PageLayout.Header>
+
+      <PageLayout.Content>
+        <ClassForm class={classDetail} />
+      </PageLayout.Content>
+    </PageLayout>
+  );
+};

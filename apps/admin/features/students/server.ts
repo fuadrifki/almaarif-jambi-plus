@@ -1,9 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-
 import { studentRepository } from '@/lib/data';
-
 import type { StudentFormData } from './schemas';
 
 export const createStudent = async (data: StudentFormData) => {

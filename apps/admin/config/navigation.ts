@@ -38,6 +38,18 @@ export const navigation: NavigationItem[] = [
     roles: ['admin'],
   },
   {
+    label: 'Kelas',
+    href: '/classes',
+    icon: BookOpen,
+    roles: ['admin'],
+  },
+  {
+    label: 'Laporan Absensi',
+    href: '/attendance/reports',
+    icon: BarChart3,
+    roles: ['admin'],
+  },
+  {
     label: 'Guru',
     href: '/teachers',
     icon: GraduationCap,
@@ -46,23 +58,9 @@ export const navigation: NavigationItem[] = [
     badge: 'Soon',
   },
   {
-    label: 'Kelas',
-    href: '/classes',
-    icon: BookOpen,
-    roles: ['admin'],
-    disabled: true,
-    badge: 'Soon',
-  },
-  {
     label: 'Absensi',
     href: '/attendance',
     icon: ClipboardCheck,
-    roles: ['teacher'],
-  },
-  {
-    label: 'Laporan Absensi',
-    href: '/attendance/reports',
-    icon: BarChart3,
     roles: ['teacher'],
   },
   {

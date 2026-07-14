@@ -5,8 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { Resolver } from 'react-hook-form';
 
-import { Button, Field, Input, Select, Surface, toast } from '@/components/ui';
-import { CLASSES } from '@/config/lookups';
+import { Button, Field, Input, Select, SelectOption, Surface, toast } from '@/components/ui';
 
 import { createStudent, updateStudent } from '../server';
 import { studentSchema } from '../schemas';
@@ -16,9 +15,10 @@ import type { Student } from '../types';
 
 type StudentFormProps = {
   student?: Student;
+  classes: SelectOption[];
 };
 
-export const StudentForm = ({ student }: StudentFormProps) => {
+export const StudentForm = ({ student, classes }: StudentFormProps) => {
   const router = useRouter();
   const isEdit = !!student;
 
@@ -89,7 +89,7 @@ export const StudentForm = ({ student }: StudentFormProps) => {
         <div className="grid gap-4 md:grid-cols-2">
           <Field label="Kelas" required error={errors.classId?.message}>
             <Select
-              options={CLASSES}
+              options={classes}
               value={selectedClassId}
               placeholder="Pilih kelas"
               onChange={(value) => setValue('classId', value)}

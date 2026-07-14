@@ -8,9 +8,13 @@ import {
 } from '@/lib/data';
 
 import { AttendancePageClient } from '@/features/attendance/pages/attendance-page-client';
+import { classRepository } from '@/lib/data/class-repository';
 
 export default async function AttendancePage() {
   const session = await getSession();
+
+  const classes = await classRepository.findAll();
+  const classesOptions = classes.map((c) => ({ label: c.name, value: c.id }));
 
   if (!session) {
     redirect('/login');
@@ -34,6 +38,7 @@ export default async function AttendancePage() {
       teacherName={session.name}
       students={students}
       sessions={sessionsWithRecords}
+      classes={classesOptions}
     />
   );
 }

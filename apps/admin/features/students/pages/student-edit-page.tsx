@@ -4,6 +4,7 @@ import { studentRepository } from '@/lib/data';
 
 import { StudentForm } from '../components/student-form';
 import { PageLayout } from '@/components/ui';
+import { classRepository } from '@/lib/data/class-repository';
 
 type StudentEditPageProps = {
   params: Promise<{ id: string }>;
@@ -12,6 +13,7 @@ type StudentEditPageProps = {
 export const StudentEditPage = async ({ params }: StudentEditPageProps) => {
   const { id } = await params;
   const student = await studentRepository.findById(id);
+  const classes = await classRepository.findAll();
 
   if (!student) {
     notFound();
@@ -30,7 +32,7 @@ export const StudentEditPage = async ({ params }: StudentEditPageProps) => {
       </PageLayout.Header>
 
       <PageLayout.Content>
-        <StudentForm student={student} />
+        <StudentForm student={student} classes={classes} />
       </PageLayout.Content>
     </PageLayout>
   );

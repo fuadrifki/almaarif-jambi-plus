@@ -12,15 +12,15 @@ export const DashboardPage = () => (
 
     <PageLayout.Content>
       <section className="grid gap-6 md:grid-cols-3">
-        <Card title="Students" description="Total registered students">
+        <Card heading="Students" description="Total registered students">
           <p className="text-3xl font-semibold">0</p>
         </Card>
 
-        <Card title="Teachers" description="Active teachers">
+        <Card heading="Teachers" description="Active teachers">
           <p className="text-3xl font-semibold">0</p>
         </Card>
 
-        <Card title="Reports" description="Monthly reports">
+        <Card heading="Reports" description="Monthly reports">
           <p className="text-3xl font-semibold">0</p>
         </Card>
       </section>

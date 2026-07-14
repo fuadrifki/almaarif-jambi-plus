@@ -5,15 +5,15 @@ import { useMemo, useState } from 'react';
 import {
   Button,
   EmptyState,
-  Field,
   PageLayout,
   SegmentedControl,
   Select,
+  SelectOption,
   Surface,
   toast,
 } from '@/components/ui';
 import { ClipboardCheck, History, Plus } from 'lucide-react';
-import { CLASSES, SUBJECTS, TEACHERS } from '@/config/lookups';
+import { SUBJECTS, TEACHERS } from '@/config/lookups';
 
 import { AttendanceSessionCard } from '../components/attendance-session-card';
 import { AttendanceStudentRow } from '../components/attendance-student-row';
@@ -29,6 +29,7 @@ type AttendancePageClientProps = {
   teacherName: string;
   students: Student[];
   sessions: SessionWithRecords[];
+  classes: SelectOption[];
 };
 
 type Tab = 'input' | 'history';
@@ -38,6 +39,7 @@ export const AttendancePageClient = ({
   teacherName,
   students,
   sessions,
+  classes,
 }: AttendancePageClientProps) => {
   const [activeTab, setActiveTab] = useState<Tab>('input');
 
@@ -99,8 +101,6 @@ export const AttendancePageClient = ({
       })),
     ];
   }, [sessions]);
-
-  const classOptions = useMemo(() => [{ value: '', label: 'Semua Kelas' }, ...CLASSES], []);
 
   const subjectOptions = useMemo(() => [{ value: '', label: 'Semua Mapel' }, ...SUBJECTS], []);
 
@@ -196,7 +196,7 @@ export const AttendancePageClient = ({
 
         {activeTab === 'input' && (
           <div className="grid gap-4 grid-cols-2">
-            <Select options={CLASSES} value={classId} placeholder="Kelas" onChange={setClassId} />
+            <Select options={classes} value={classId} placeholder="Kelas" onChange={setClassId} />
 
             <Select
               options={SUBJECTS}
@@ -217,7 +217,7 @@ export const AttendancePageClient = ({
             />
 
             <Select
-              options={classOptions}
+              options={[{ value: '', label: 'Semua Kelas' }, ...classes]}
               value={classFilter}
               placeholder="Kelas"
               onChange={setClassFilter}
@@ -296,6 +296,7 @@ export const AttendancePageClient = ({
                     key={session.id}
                     session={session}
                     records={session.records}
+                    classes={classes}
                   />
                 ))}
               </div>

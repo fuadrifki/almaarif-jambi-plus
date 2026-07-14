@@ -11,7 +11,8 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
-    "db:seed": "tsx lib/db/seed.ts"
+    "db:seed-students": "tsx lib/db/seed-students.ts",
+    "db:seed-classes": "tsx lib/db/seed-classes.ts"
   },
   "dependencies": {
     "@almaarif/brand": "workspace:^",

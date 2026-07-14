@@ -32,14 +32,14 @@ export const MobileNav = ({ role }: MobileNavProps) => {
         href={item.disabled ? '#' : item.href}
         aria-disabled={item.disabled}
         className={cn(
-          'ads-mobile-nav-item',
+          'ads-mobile-nav-item flex flex-col items-center justify-center',
           item.disabled && 'ads-nav-item--disabled',
           active && 'ads-mobile-nav-item--active',
         )}
       >
         <item.icon size={20} />
 
-        <span>{item.label}</span>
+        <span className="text-center">{item.label}</span>
       </Link>
     );
   };
@@ -53,13 +53,13 @@ export const MobileNav = ({ role }: MobileNavProps) => {
           <Link
             href="/more"
             className={cn(
-              'ads-mobile-nav-item',
+              'ads-mobile-nav-item flex flex-col items-center justify-center',
               isActive('/more') && 'ads-mobile-nav-item--active',
             )}
           >
             <CircleEllipsis size={20} />
 
-            <span>Lainnya</span>
+            <span className="text-center">Lainnya</span>
           </Link>
         )}
       </Surface>

@@ -31,7 +31,7 @@ const NavContent = ({ onNavigate }: { onNavigate?: () => void }) => {
     <>
       {designNavigation.map((group) => (
         <div key={group.title} className="space-y-3">
-          <p className="px-3 text-xs font-semibold uppercase tracking-wider text-secondary">
+          <p className="px-3 text-xs font-semibold uppercase tracking-wider text-white">
             {group.title}
           </p>
 

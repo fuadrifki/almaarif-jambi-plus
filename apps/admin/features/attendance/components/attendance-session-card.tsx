@@ -1,14 +1,15 @@
 import Link from 'next/link';
 
-import { Badge, Surface } from '@/components/ui';
+import { Badge, SelectOption, Surface } from '@/components/ui';
 import { ATTENDANCE_STATUS } from '@/features/attendance/types';
-import { CLASSES, SUBJECTS } from '@/config/lookups';
+import { SUBJECTS } from '@/config/lookups';
 
 import type { AttendanceRecord, AttendanceSession } from '@/features/attendance/types';
 
 type AttendanceSessionCardProps = {
   session: AttendanceSession;
   records: AttendanceRecord[];
+  classes: SelectOption[];
 };
 
 const STATUS_BADGE: Record<string, 'success' | 'warning' | 'info' | 'danger'> = {
@@ -25,8 +26,13 @@ const STATUS_LABEL: Record<string, string> = {
   [ATTENDANCE_STATUS.ABSENT]: 'Alpha',
 };
 
-export const AttendanceSessionCard = ({ session, records }: AttendanceSessionCardProps) => {
-  const className = CLASSES.find((c) => c.value === session.classId)?.label ?? session.classId;
+export const AttendanceSessionCard = ({
+  session,
+  records,
+  classes,
+}: AttendanceSessionCardProps) => {
+  const className = classes.find((c) => c.value === session.classId)?.label ?? '-';
+
   const subjectName =
     SUBJECTS.find((s) => s.value === session.subjectId)?.label ?? session.subjectId;
 
@@ -37,7 +43,7 @@ export const AttendanceSessionCard = ({ session, records }: AttendanceSessionCar
   const absent = records.filter((r) => r.status === ATTENDANCE_STATUS.ABSENT).length;
 
   const displayDate = new Date(session.date + 'T00:00:00').toLocaleDateString('id-ID', {
-    weekday: 'short',
+    weekday: 'long',
     day: 'numeric',
     month: 'short',
     year: 'numeric',
@@ -48,8 +54,9 @@ export const AttendanceSessionCard = ({ session, records }: AttendanceSessionCar
       <Surface className="space-y-3 p-4 transition hover:border-white/20">
         <div className="flex items-start justify-between gap-3">
           <div className="space-y-1">
-            <p className="text-sm font-medium text-primary">
-              {className} &middot; {subjectName}
+            <p className="text-sm text-primary font-bold">
+              <span>{className}</span> &middot;{' '}
+              <span className="font-medium text-secondary">{subjectName}</span>
             </p>
 
             <p className="text-xs text-secondary">

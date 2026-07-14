@@ -2,7 +2,7 @@
 import { useCallback } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
-import { Button, Select, Surface } from '@/components/ui';
+import { Button, Field, Select, Surface } from '@/components/ui';
 import { CLASSES } from '@/config/lookups';
 import { ReportFilter } from '../../queries/report/types';
 
@@ -50,19 +50,17 @@ export const ReportFilters = ({ className }: ReportFiltersProps) => {
 
   return (
     <Surface className="p-4">
-      <div className="flex flex-wrap gap-4 items-end">
-        <div className="flex-1 min-w-0">
-          <label className="block text-sm font-medium text-secondary mb-1">Kelas</label>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+        <Field label="Kelas">
           <Select
             options={CLASSES}
             value={classId}
             placeholder="Pilih Kelas"
             onChange={handleClassChange}
           />
-        </div>
+        </Field>
 
-        <div className="flex-1 min-w-0">
-          <label className="block text-sm font-medium text-secondary mb-1">Tanggal</label>
+        <Field label="Tanggal">
           <input
             type="date"
             value={date}
@@ -70,9 +68,9 @@ export const ReportFilters = ({ className }: ReportFiltersProps) => {
             className="w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20"
             placeholder="Pilih Tanggal"
           />
-        </div>
+        </Field>
 
-        <Button variant="secondary" onClick={handleReset} className="h-10">
+        <Button variant="ghost" onClick={handleReset}>
           Reset
         </Button>
       </div>

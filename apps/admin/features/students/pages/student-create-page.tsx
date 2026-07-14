@@ -1,7 +1,11 @@
 import { PageLayout } from '@/components/ui';
 import { StudentForm } from '../components/student-form';
+import { classRepository } from '@/lib/data/class-repository';
 
-export const StudentCreatePage = () => {
+export const StudentCreatePage = async () => {
+  const classes = await classRepository.findAll();
+  const classesOptions = classes.map((c) => ({ label: c.name, value: c.id }));
+
   return (
     <PageLayout>
       <PageLayout.Header>
@@ -15,7 +19,7 @@ export const StudentCreatePage = () => {
       </PageLayout.Header>
 
       <PageLayout.Content>
-        <StudentForm />
+        <StudentForm classes={classesOptions} />
       </PageLayout.Content>
     </PageLayout>
   );

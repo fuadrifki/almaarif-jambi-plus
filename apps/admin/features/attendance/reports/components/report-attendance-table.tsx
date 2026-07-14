@@ -9,13 +9,15 @@ import {
 } from '@/components/ui';
 import { cn } from '@/lib';
 import { ReportRow } from '../../queries/report/types';
+import { Class } from '@/features/classes';
 
 type ReportAttendanceTableProps = {
   rows: ReportRow[];
+  classes: Class[];
   className?: string;
 };
 
-export const ReportAttendanceTable = ({ rows, className }: ReportAttendanceTableProps) => {
+export const ReportAttendanceTable = ({ rows, className, classes }: ReportAttendanceTableProps) => {
   const getStatusBadge = (status: string | null) => {
     if (!status) {
       return <Badge>-</Badge>;
@@ -57,10 +59,12 @@ export const ReportAttendanceTable = ({ rows, className }: ReportAttendanceTable
               <div className="font-medium text-primary">{row.student.name}</div>
             </TableCell>
             <TableCell>
-              <span className="text-sm text-secondary">NIS: {row.student.nis}</span>
+              <span className="text-sm text-secondary">{row.student.nis}</span>
             </TableCell>
             <TableCell>
-              <div className="text-sm text-secondary">{row.student.classId}</div>
+              <div className="text-sm text-secondary">
+                {classes.find((c) => c.id === row.student.classId)?.name || row.student.classId}
+              </div>
             </TableCell>
             <TableCell>{getStatusBadge(row.attendanceStatus)}</TableCell>
             <TableCell>

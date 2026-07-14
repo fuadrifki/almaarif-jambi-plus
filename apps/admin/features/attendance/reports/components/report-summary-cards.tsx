@@ -1,6 +1,6 @@
 import { cn } from '@/lib';
 import { ReportSummary } from '../../queries/report/types';
-import { Badge } from '@/components/ui';
+import { Badge, Card } from '@/components/ui';
 
 type ReportSummaryCardsProps = {
   summary: ReportSummary | null;
@@ -10,7 +10,7 @@ type ReportSummaryCardsProps = {
 export const ReportSummaryCards = ({ summary, className }: ReportSummaryCardsProps) => {
   if (!summary) {
     return (
-      <div className={cn('grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4', className)}>
+      <div className={cn('grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4', className)}>
         {Array.from({ length: 5 }).map((_, i) => (
           <div key={i} className="h-24 bg-surface animate-pulse rounded-lg" />
         ))}
@@ -20,31 +20,31 @@ export const ReportSummaryCards = ({ summary, className }: ReportSummaryCardsPro
 
   const cards = [
     {
-      label: 'Total Students',
-      value: summary.totalStudents,
+      label: 'Total',
+      value: `${summary.totalStudents} Siswa`,
       variant: 'info' as const,
       className: 'text-blue-600',
     },
     {
-      label: 'Present',
+      label: 'Hadir',
       value: summary.present,
       variant: 'success' as const,
       className: 'text-green-600',
     },
     {
-      label: 'Sick',
+      label: 'Sakit',
       value: summary.sick,
       variant: 'warning' as const,
       className: 'text-yellow-600',
     },
     {
-      label: 'Permission',
+      label: 'Izin',
       value: summary.permission,
       variant: 'info' as const,
       className: 'text-blue-600',
     },
     {
-      label: 'Absent',
+      label: 'Alpha',
       value: summary.absent,
       variant: 'danger' as const,
       className: 'text-red-600',
@@ -52,22 +52,18 @@ export const ReportSummaryCards = ({ summary, className }: ReportSummaryCardsPro
   ];
 
   return (
-    <div className={cn('grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4', className)}>
+    <div className={cn('grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4', className)}>
       {cards.map((card) => (
-        <div
-          key={card.label}
-          className="bg-surface rounded-lg p-4 border border-border shadow-sm hover:shadow-md transition-shadow"
-        >
+        <Card key={card.label} heading={card.label}>
           <div className="flex flex-col gap-2">
-            <p className="text-sm font-medium text-secondary">{card.label}</p>
             <p className={cn('text-2xl font-bold', card.className)}>{card.value}</p>
             <div className="flex items-center gap-2">
               <Badge variant={card.variant} className="text-xs">
-                {card.value > 0 ? '✓' : '—'}
+                {card.value ? '✓' : '—'}
               </Badge>
             </div>
           </div>
-        </div>
+        </Card>
       ))}
     </div>
   );

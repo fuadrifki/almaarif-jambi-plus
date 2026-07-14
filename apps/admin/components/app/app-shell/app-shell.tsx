@@ -29,6 +29,8 @@ export const AppShell = ({ children, user }: AppShellProps) => (
 
     <main className="app-layout__content mt-4 pb-0 md:pb-4">{children}</main>
 
-    <MobileNav role={user.role} />
+    <div className="flex-1 min-w-0 min-h-0">
+      <MobileNav role={user.role} />
+    </div>
   </div>
 );
