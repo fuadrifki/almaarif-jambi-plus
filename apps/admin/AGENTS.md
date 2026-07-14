@@ -83,23 +83,15 @@ backdrop-filter: blur(var(--blur-lg)) saturate(180%);
 
 # Current ADS Status
 
-Completed:
+Completed (23 components):
 
-- Surface
-- Button
-- Field
-- Input
-- Select
-- Textarea
-- Checkbox
-- Radio
-- Switch
-- Badge
-- DropdownMenu
-- Toast
-- AlertDialog
-- EmptyState
-- Skeleton
+- Surface, Card, Header, Field, PageLayout
+- Button, Input, Textarea, Select, Checkbox, Radio, Switch
+- Table, Badge
+- DropdownMenu, AlertDialog, Toast
+- Skeleton, EmptyState
+- Pagination, SegmentedControl, InfiniteScroll
+- ThemeToggle
 
 ---
 
@@ -126,20 +118,17 @@ Create required component only
 
 # Current Feature
 
-M1.3 Complete — UX Foundation
+M2 Complete — Business Features
 
-Consistent UX patterns established:
+Core features implemented:
 
-- ADS Toast (Sonner wrapper) for action feedback
-- ADS AlertDialog (Radix wrapper) for destructive confirmations
-- ADS EmptyState for empty data messaging
-- ADS Skeleton for loading placeholders
-- Global Toaster in AppProvider (all routes)
-- All actions use toast feedback (no more alert() or window.confirm())
-- Error boundary with friendly messaging
-- Field accessibility (htmlFor + id association)
+- Student CRUD (list, create, edit) with real Server Actions
+- Attendance system (input, history, detail) with real Server Actions
+- Database: Drizzle ORM + Neon PostgreSQL (3 schemas, 3 repositories)
+- Role-based navigation (admin/teacher) with disabled items
+- Error boundary with friendly UI
 
-Next: Business features (Teacher Management, Attendance Input)
+Next: Code hygiene (test infrastructure, dependency cleanup)
 
 ---
 
