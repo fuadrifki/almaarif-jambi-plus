@@ -14,6 +14,7 @@ export const StudentEditPage = async ({ params }: StudentEditPageProps) => {
   const { id } = await params;
   const student = await studentRepository.findById(id);
   const classes = await classRepository.findAll();
+  const classesOptions = classes.map((c) => ({ label: c.name, value: c.id }));
 
   if (!student) {
     notFound();
@@ -32,7 +33,7 @@ export const StudentEditPage = async ({ params }: StudentEditPageProps) => {
       </PageLayout.Header>
 
       <PageLayout.Content>
-        <StudentForm student={student} classes={classes} />
+        <StudentForm student={student} classes={classesOptions} />
       </PageLayout.Content>
     </PageLayout>
   );
