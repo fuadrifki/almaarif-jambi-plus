@@ -119,8 +119,8 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
             classNames={{
               today: 'bg-primary/20 text-primary',
               selected:
-                'bg-brand text-white hover:bg-brand hover:text-white focus:bg-brand focus:text-white',
-              day_disabled: 'text-muted-foreground opacity-50 cursor-not-allowed',
+                'bg-brand text-red-500 hover:bg-brand hover:text-red-500 focus:bg-brand focus:text-red-500',
+              disabled: 'text-muted-foreground opacity-50 cursor-not-allowed',
             }}
           />
         </PopoverContent>

@@ -1,1 +1,1 @@
-export { ToastPage as default } from '@/features/ads/pages/toast-page';
+export { default } from '@/features/ads/pages/toast';

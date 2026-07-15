@@ -1,1 +1,1 @@
-export { SegmentedControlPage as default } from '@/features/ads/pages/segmented-control-page';
+export { default } from '@/features/ads/pages/segmented-control';

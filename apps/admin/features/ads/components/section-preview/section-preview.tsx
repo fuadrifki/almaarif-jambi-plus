@@ -16,7 +16,7 @@ export const SectionPreview = ({ title, description, code, children }: SectionPr
       {description && <p className="text-secondary">{description}</p>}
     </div>
 
-    <div className="p-6 border border-border rounded-xl min-h-[200px]">{children}</div>
+    <div className="p-6 border border-border rounded-xl">{children}</div>
 
     {code && <CodePreview code={code} />}
   </section>

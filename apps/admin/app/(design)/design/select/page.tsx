@@ -1,1 +1,1 @@
-export { SelectPage as default } from '@/features/ads/pages/select-page';
+export { default } from '@/features/ads/pages/select';

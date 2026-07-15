@@ -1,1 +1,1 @@
-export { SurfacePage as default } from '@/features/ads/pages/surface-page';
+export { default } from '@/features/ads/pages/surface';

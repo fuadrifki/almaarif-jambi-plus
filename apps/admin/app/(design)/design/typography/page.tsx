@@ -1,1 +1,1 @@
-export { TypographyPage as default } from '@/features/ads/pages/typography-page';
+export { default } from '@/features/ads/pages/typography';

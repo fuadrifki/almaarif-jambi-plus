@@ -1,1 +1,1 @@
-export { FieldPage as default } from '@/features/ads/pages/field-page';
+export { default } from '@/features/ads/pages/field';

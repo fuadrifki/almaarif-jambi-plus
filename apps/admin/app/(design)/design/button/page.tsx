@@ -1,1 +1,1 @@
-export { ButtonPage as default } from '@/features/ads/pages/button-page';
+export { default } from '@/features/ads/pages/button';

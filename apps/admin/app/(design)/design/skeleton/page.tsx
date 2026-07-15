@@ -1,1 +1,1 @@
-export { SkeletonPage as default } from '@/features/ads/pages/skeleton-page';
+export { default } from '@/features/ads/pages/skeleton';
