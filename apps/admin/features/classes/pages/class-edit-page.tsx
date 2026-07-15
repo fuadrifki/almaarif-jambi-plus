@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
 
 import { PageLayout } from '@/components/ui';
-import { classRepository } from '@/lib/data/class-repository';
 import { ClassForm } from '../components/class-form';
+import { classRepository } from '@/lib';
 
 type ClassEditPageProps = {
   params: Promise<{ id: string }>;

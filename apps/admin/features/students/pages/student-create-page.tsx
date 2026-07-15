@@ -1,6 +1,6 @@
 import { PageLayout } from '@/components/ui';
 import { StudentForm } from '../components/student-form';
-import { classRepository } from '@/lib/data/class-repository';
+import { classRepository } from '@/lib';
 
 export const StudentCreatePage = async () => {
   const classes = await classRepository.findAll();

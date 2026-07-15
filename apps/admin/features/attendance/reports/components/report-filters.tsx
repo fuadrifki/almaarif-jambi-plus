@@ -5,12 +5,14 @@ import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { Button, Field, Select, Surface } from '@/components/ui';
 import { CLASSES } from '@/config/lookups';
 import { ReportFilter } from '../../queries/report/types';
+import { Class } from '@/features/classes';
 
 type ReportFiltersProps = {
   className?: string;
+  classes: Class[];
 };
 
-export const ReportFilters = ({ className }: ReportFiltersProps) => {
+export const ReportFilters = ({ className, classes }: ReportFiltersProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -18,6 +20,11 @@ export const ReportFilters = ({ className }: ReportFiltersProps) => {
   const classId = searchParams.get('classId') || '';
   const date = searchParams.get('date') || '';
   const page = searchParams.get('page') || '1';
+
+  const classesOptions = classes.map((c) => ({
+    label: c.name,
+    value: c.id,
+  }));
 
   const updateSearchParams = useCallback(
     (updates: Partial<ReportFilter>) => {
@@ -53,7 +60,7 @@ export const ReportFilters = ({ className }: ReportFiltersProps) => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
         <Field label="Kelas">
           <Select
-            options={CLASSES}
+            options={classesOptions}
             value={classId}
             placeholder="Pilih Kelas"
             onChange={handleClassChange}
@@ -70,7 +77,7 @@ export const ReportFilters = ({ className }: ReportFiltersProps) => {
           />
         </Field>
 
-        <Button variant="ghost" onClick={handleReset}>
+        <Button variant="secondary" onClick={handleReset}>
           Reset
         </Button>
       </div>

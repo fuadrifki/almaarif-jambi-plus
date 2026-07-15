@@ -5,10 +5,10 @@ import {
   attendanceSessionRepository,
   attendanceRecordRepository,
   studentRepository,
+  classRepository,
 } from '@/lib/data';
 
 import { AttendancePageClient } from '@/features/attendance/pages/attendance-page-client';
-import { classRepository } from '@/lib/data/class-repository';
 
 export default async function AttendancePage() {
   const session = await getSession();

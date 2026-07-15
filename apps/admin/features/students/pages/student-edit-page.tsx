@@ -1,10 +1,9 @@
 import { notFound } from 'next/navigation';
 
-import { studentRepository } from '@/lib/data';
+import { classRepository, studentRepository } from '@/lib/data';
 
 import { StudentForm } from '../components/student-form';
 import { PageLayout } from '@/components/ui';
-import { classRepository } from '@/lib/data/class-repository';
 
 type StudentEditPageProps = {
   params: Promise<{ id: string }>;

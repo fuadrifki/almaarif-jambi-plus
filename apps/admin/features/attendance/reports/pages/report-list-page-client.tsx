@@ -28,7 +28,7 @@ export const ReportListPageClient = ({
       <PageLayout.Content>
         <div className="space-y-6">
           <ReportSummaryCards summary={summary} />
-          <ReportFilters />
+          <ReportFilters classes={classes} />
           <ReportAttendanceTable rows={rows} classes={classes} />
         </div>
       </PageLayout.Content>
