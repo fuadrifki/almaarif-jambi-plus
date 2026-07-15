@@ -11,11 +11,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   Surface,
-  toast,
 } from '@/components/ui';
 import { destroySession } from '@/features/auth/server';
 
 import type { User } from '@/lib/types/user';
+import { toast } from '@/components/ui/toast';
 
 export const UserMenu = ({ user }: { user: User }) => {
   const router = useRouter();

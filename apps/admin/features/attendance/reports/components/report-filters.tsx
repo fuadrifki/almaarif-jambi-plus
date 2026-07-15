@@ -2,9 +2,9 @@
 import { useCallback } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
-import { Button, Field, Select, Surface } from '@/components/ui';
-import { ReportFilter } from '../../queries/report/types';
-import { Class } from '@/features/classes';
+import { Button, Field, Select, Surface, DatePicker } from '@/components/ui';
+import { ReportFilter } from '../../queries/types';
+import { Class } from '@/features/classes/types';
 
 type ReportFiltersProps = {
   className?: string;
@@ -41,12 +41,14 @@ export const ReportFilters = ({ classes }: ReportFiltersProps) => {
     [pathname, searchParams, router],
   );
 
-  const handleClassChange = (value: string) => {
-    updateSearchParams({ classId: value, page: 1 });
+  const handleDateChange = (selectedDate: Date | undefined) => {
+    updateSearchParams({
+      date: selectedDate ? selectedDate.toISOString().split('T')[0] : undefined,
+    });
   };
 
-  const handleDateChange = (value: string) => {
-    updateSearchParams({ date: value, page: 1 });
+  const handleClassChange = (value: string) => {
+    updateSearchParams({ classId: value, page: 1 });
   };
 
   const handleReset = () => {
@@ -54,26 +56,20 @@ export const ReportFilters = ({ classes }: ReportFiltersProps) => {
   };
 
   return (
-    <Surface className="p-4">
+    <Surface className="p-4 h-[300px]">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
-        <Field label="Kelas">
-          <Select
-            options={classesOptions}
-            value={classId}
-            placeholder="Pilih Kelas"
-            onChange={handleClassChange}
-          />
-        </Field>
+        <Select
+          options={classesOptions}
+          value={classId}
+          placeholder="Kelas"
+          onChange={handleClassChange}
+        />
 
-        <Field label="Tanggal">
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => handleDateChange(e.target.value)}
-            className="w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20"
-            placeholder="Pilih Tanggal"
-          />
-        </Field>
+        <DatePicker
+          value={date ? new Date(date) : undefined}
+          onChange={handleDateChange}
+          size="md"
+        />
 
         <Button variant="outline" onClick={handleReset}>
           Reset

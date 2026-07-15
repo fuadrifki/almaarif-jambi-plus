@@ -50,7 +50,7 @@ export const ReportSummaryCards = ({ summary, className }: ReportSummaryCardsPro
       className: 'text-red-500',
     },
     {
-      label: 'Tanpa Keterangan',
+      label: 'Belum Absen',
       value: `${summary.notAttended} Siswa`,
       variant: 'default' as const,
       className: 'text-gray-500',
@@ -62,7 +62,7 @@ export const ReportSummaryCards = ({ summary, className }: ReportSummaryCardsPro
       {cards.map((card) => (
         <Card key={card.label} heading={card.label}>
           <div className="flex flex-col gap-2">
-            <p className={cn('text-2xl font-bold', card.className)}>{card.value}</p>
+            <p className={cn('text-xl md:text-2xl font-bold', card.className)}>{card.value}</p>
             <div className="flex items-center gap-2">
               <Badge variant={card.variant} className="text-xs">
                 {card.value ? '✓' : '—'}
