@@ -1,14 +1,14 @@
 import { redirect } from 'next/navigation';
-
 import { getSession } from '@/lib/auth';
+
 import {
   attendanceSessionRepository,
   attendanceRecordRepository,
-  studentRepository,
-  classRepository,
-} from '@/lib/data';
+} from '@/features/attendance/repositories';
 
 import { AttendancePageClient } from '@/features/attendance/pages/attendance-page-client';
+import { classRepository } from '@/features/classes/repositories';
+import { studentRepository } from '@/features/students/repositories';
 
 export default async function AttendancePage() {
   const session = await getSession();

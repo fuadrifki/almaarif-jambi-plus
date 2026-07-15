@@ -1,13 +1,13 @@
 import { redirect } from 'next/navigation';
-
 import { getSession } from '@/lib/auth';
+
 import {
   attendanceSessionRepository,
   attendanceRecordRepository,
-  studentRepository,
-} from '@/lib/data';
+} from '@/features/attendance/repositories/';
 
 import { AttendanceDetailPageClient } from '@/features/attendance/pages/attendance-detail-page-client';
+import { studentRepository } from '@/features/students/repositories';
 
 export default async function AttendanceDetailPage({
   params,

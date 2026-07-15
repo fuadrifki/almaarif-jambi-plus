@@ -1,10 +1,8 @@
-import { and, eq } from 'drizzle-orm';
-
 import { getDb } from '@/lib/db/client';
+import type { AttendanceSession } from '../types';
+import type { AttendanceSessionRepository } from './attendance-session.repository.types';
 import { attendanceSessions } from '@/lib/db/schema';
-
-import type { AttendanceSession } from '@/features/attendance/types';
-import type { AttendanceSessionRepository } from './types';
+import { and, eq } from 'drizzle-orm';
 
 const toSession = (row: typeof attendanceSessions.$inferSelect): AttendanceSession => ({
   id: String(row.id),

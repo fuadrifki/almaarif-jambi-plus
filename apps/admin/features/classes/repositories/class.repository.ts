@@ -3,8 +3,8 @@ import { and, eq, sql } from 'drizzle-orm';
 import { getDb } from '@/lib/db/client';
 import { classes, students, attendanceSessions } from '@/lib/db/schema';
 
-import type { Class } from '@/features/classes/types';
-import type { ClassRepository } from './types';
+import type { Class } from '../types';
+import type { ClassRepository } from './class.repository.types';
 
 const toClass = (row: typeof classes.$inferSelect): Class => ({
   id: String(row.id),

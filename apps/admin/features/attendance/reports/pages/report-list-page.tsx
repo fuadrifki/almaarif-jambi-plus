@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
 
-import { getAttendanceReport } from '@/features/attendance/queries/report/get-attendance-report';
 import { ReportListPageClient } from './report-list-page-client';
-import { classRepository } from '@/lib';
+import { getAttendanceReport } from '../../queries/get-attendance-report';
+import { classRepository } from '@/features/classes/repositories';
 
 type AttendanceReportsPageProps = {
   search: Promise<{ [key: string]: string | string[] | undefined }>;

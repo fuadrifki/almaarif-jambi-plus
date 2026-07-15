@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import type { ClassFormData } from './schemas';
 import { Class } from './types';
-import { classRepository } from '@/lib';
+import { classRepository } from '@/features/classes/repositories';
 
 export const createClass = async (data: ClassFormData) => {
   const existing = await classRepository.findByCode(data.code);

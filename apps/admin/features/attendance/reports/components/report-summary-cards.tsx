@@ -1,6 +1,6 @@
 import { cn } from '@/lib';
-import { ReportSummary } from '../../queries/report/types';
 import { Badge, Card } from '@/components/ui';
+import { ReportSummary } from '../../queries/types';
 
 type ReportSummaryCardsProps = {
   summary: ReportSummary | null;
@@ -23,31 +23,37 @@ export const ReportSummaryCards = ({ summary, className }: ReportSummaryCardsPro
       label: 'Total',
       value: `${summary.totalStudents} Siswa`,
       variant: 'info' as const,
-      className: 'text-blue-600',
+      className: 'text-blue-500',
     },
     {
       label: 'Hadir',
       value: `${summary.present} Siswa`,
       variant: 'success' as const,
-      className: 'text-green-600',
+      className: 'text-green-500',
     },
     {
       label: 'Sakit',
       value: `${summary.sick} Siswa`,
       variant: 'warning' as const,
-      className: 'text-yellow-600',
+      className: 'text-yellow-500',
     },
     {
       label: 'Izin',
       value: `${summary.permission} Siswa`,
       variant: 'info' as const,
-      className: 'text-blue-600',
+      className: 'text-blue-500',
     },
     {
       label: 'Alpha',
       value: `${summary.absent} Siswa`,
       variant: 'danger' as const,
-      className: 'text-red-600',
+      className: 'text-red-500',
+    },
+    {
+      label: 'Tanpa Keterangan',
+      value: `${summary.notAttended} Siswa`,
+      variant: 'default' as const,
+      className: 'text-gray-500',
     },
   ];
 

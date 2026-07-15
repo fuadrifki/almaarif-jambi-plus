@@ -1,10 +1,8 @@
-import { eq } from 'drizzle-orm';
-
 import { getDb } from '@/lib/db/client';
+import type { AttendanceRecord, AttendanceStatus } from '../types';
+import type { AttendanceRecordRepository } from './attendance-record.repository.types';
 import { attendanceRecords } from '@/lib/db/schema';
-
-import type { AttendanceRecord, AttendanceStatus } from '@/features/attendance/types';
-import type { AttendanceRecordRepository } from './types';
+import { eq } from 'drizzle-orm';
 
 const toRecord = (row: typeof attendanceRecords.$inferSelect): AttendanceRecord => ({
   id: String(row.id),

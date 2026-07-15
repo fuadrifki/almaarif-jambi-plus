@@ -4,8 +4,8 @@ import { PageLayout } from '@/components/ui';
 import { ReportSummaryCards } from '../components/report-summary-cards';
 import { ReportAttendanceTable } from '../components/report-attendance-table';
 import { ReportFilters } from '../components/report-filters';
-import { AttendanceReportResult } from '../../queries/report/types';
 import { Class } from '@/features/classes';
+import { AttendanceReportResult } from '../../queries/types';
 
 type ReportListPageClientProps = {
   report: AttendanceReportResult;

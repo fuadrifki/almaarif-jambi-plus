@@ -11,7 +11,7 @@ export const Card = ({
   className,
   ...props
 }: CardProps) => (
-  <Surface className={cn('space-y-6 p-6', className)} {...props}>
+  <Surface className={cn('space-y-4 p-4', className)} {...props}>
     {(heading || description) && (
       <header className="space-y-1">
         {heading && <h3 className="text-lg font-semibold">{heading}</h3>}

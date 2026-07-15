@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 
 import { PageLayout } from '@/components/ui';
 import { ClassForm } from '../components/class-form';
-import { classRepository } from '@/lib';
+import { classRepository } from '../repositories';
 
 type ClassEditPageProps = {
   params: Promise<{ id: string }>;

@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 
-import { classRepository, studentRepository } from '@/lib/data';
+import { classRepository } from '@/features/classes/repositories/index';
+import { studentRepository } from '@/features/students/repositories/index';
 
 import { StudentForm } from '../components/student-form';
 import { PageLayout } from '@/components/ui';

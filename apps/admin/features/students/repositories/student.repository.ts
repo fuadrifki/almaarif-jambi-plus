@@ -3,8 +3,9 @@ import { eq, like, or } from 'drizzle-orm';
 import { getDb } from '@/lib/db/client';
 import { students } from '@/lib/db/schema';
 
-import type { Student } from '@/features/students/types';
-import type { StudentRepository } from './types';
+import type { Student } from '../types';
+import type { StudentRepository } from './student.repository.types';
+import type { StudentRepository } from './student.repository.types';
 
 const toStudent = (row: typeof students.$inferSelect): Student => ({
   id: String(row.id),

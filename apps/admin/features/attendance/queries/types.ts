@@ -13,6 +13,7 @@ export type ReportSummary = {
   sick: number;
   permission: number;
   absent: number;
+  notAttended: number;
 };
 
 export type ReportRow = {

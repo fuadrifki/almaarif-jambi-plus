@@ -6,7 +6,7 @@ import { attendanceSessions } from '@/lib/db/schema';
 import { students } from '@/lib/db/schema';
 
 import type { AttendanceStatus } from '@/features/attendance/types';
-import type { AttendanceReportResult, ReportFilter } from './types';
+import type { ReportFilter, AttendanceReportResult } from './types';
 
 const PAGE_SIZE = 10;
 
@@ -92,6 +92,7 @@ export const getAttendanceReport = async (
     sick: allRecords.filter((r) => r.status === 'SICK').length,
     permission: allRecords.filter((r) => r.status === 'PERMISSION').length,
     absent: allRecords.filter((r) => r.status === 'ABSENT').length,
+    notAttended: allStudents.filter((s) => !allRecords.find((r) => r.studentId === s.id)).length,
   };
 
   const page = filter.page || 1;

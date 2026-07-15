@@ -1,4 +1,4 @@
-import { classRepository } from '@/lib';
+import { classRepository } from '../repositories';
 import { ClassListPageClient } from './class-list-page-client';
 
 export const ClassListPage = async () => {
