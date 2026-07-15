@@ -12,6 +12,7 @@
 @import './components/radio.css';
 @import './components/switch.css';
 @import './components/select.css';
+@import './components/date-picker.css';
 @import './components/dropdown-menu.css';
 @import './components/nav.css';
 @import './components/toast.css';

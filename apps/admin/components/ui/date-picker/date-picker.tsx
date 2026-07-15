@@ -1,5 +1,5 @@
 'use client';
-import { useState, forwardRef } from 'react';
+import { useState, forwardRef, useEffect } from 'react';
 import { DayPicker } from 'react-day-picker';
 import { Popover, PopoverContent, PopoverTrigger } from '../popover';
 import { cn } from '@/lib';
@@ -11,23 +11,28 @@ import 'react-day-picker/dist/style.css';
 import { DatePickerProps } from './date-picker.types';
 
 export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
-  (
-    {
-      value,
-      onChange,
-      placeholder = 'Pilih tanggal',
-      disabled = false,
-      error = false,
-      className,
-      size = 'md',
-      status = 'idle',
-      leftIcon,
-      rightIcon,
-      onOpenChange,
-    },
-    ref,
-  ) => {
+  ({
+    value,
+    onChange,
+    placeholder = 'Pilih tanggal',
+    disabled = false,
+    error = false,
+    className,
+    size = 'md',
+    status = 'idle',
+    leftIcon,
+    rightIcon,
+    onOpenChange,
+  }) => {
     const [open, setOpen] = useState(false);
+
+    const [displayMonth, setDisplayMonth] = useState(value ?? new Date());
+
+    useEffect(() => {
+      if (value) {
+        setDisplayMonth(value);
+      }
+    }, [value]);
 
     const handleSelect = (date: Date | undefined) => {
       onChange?.(date);
@@ -40,17 +45,6 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
     const handleOpenChange = (isOpen: boolean) => {
       setOpen(isOpen);
       onOpenChange?.(isOpen);
-    };
-
-    const getButtonSizeClasses = () => {
-      switch (size) {
-        case 'sm':
-          return 'h-8 pl-3 pr-9 text-sm';
-        case 'lg':
-          return 'h-12 pl-5 pr-14 text-lg';
-        default:
-          return 'h-10 pl-4 pr-12 text-base';
-      }
     };
 
     const getIconSizeClasses = () => {
@@ -70,22 +64,16 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       <Popover open={open} onOpenChange={handleOpenChange} modal={true}>
         <PopoverTrigger asChild>
           <Button
-            ref={ref}
             type="button"
             variant="outline"
             size={size}
             disabled={disabled || status === 'loading'}
             className={cn(
-              'ads-input-wrapper relative',
-              'ads-input',
-              'rounded-full',
-              'w-full',
-              'text-left',
-              'justify-start',
-              getButtonSizeClasses(),
-              '[&>span]:flex',
-              '[&>span]:items-center',
-              '[&>span]:gap-2',
+              'ads-date-picker__trigger',
+              `ads-date-picker__trigger--${size}`,
+              `ads-date-picker__trigger--${status}`,
+              leftIcon && 'ads-date-picker__trigger--has-left-icon',
+              rightIcon && 'ads-date-picker__trigger--has-right-icon',
               className,
             )}
           >
@@ -107,21 +95,14 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
           </Button>
         </PopoverTrigger>
 
-        <PopoverContent
-          className="ads-popover z-50 mt-2 rounded-md border bg-surface p-3 shadow-lg ring-1 ring-black/5 focus:outline-none"
-          sideOffset={4}
-        >
+        <PopoverContent className="ads-popover" sideOffset={4}>
           <DayPicker
-            mode="single"
             selected={value}
             onSelect={handleSelect}
-            className="ads-calendar"
-            classNames={{
-              today: 'bg-primary/20 text-primary',
-              selected:
-                'bg-brand text-red-500 hover:bg-brand hover:text-red-500 focus:bg-brand focus:text-red-500',
-              disabled: 'text-muted-foreground opacity-50 cursor-not-allowed',
-            }}
+            mode="single"
+            captionLayout="dropdown-years"
+            month={displayMonth}
+            className="ads-date-picker__calendar"
           />
         </PopoverContent>
       </Popover>

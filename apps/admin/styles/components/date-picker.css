@@ -1,0 +1,300 @@
+.ads-date-picker__trigger {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-start;
+
+  width: 100%;
+
+  padding-inline: 16px;
+
+  color: var(--text-primary);
+
+  background: rgb(255 255 255 / 0.08);
+
+  border: 1px solid rgb(255 255 255 / 0.22);
+
+  outline: none;
+
+  -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(180%);
+  backdrop-filter: blur(var(--blur-lg)) saturate(180%);
+
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.35),
+    var(--shadow-sm);
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.ads-date-picker__trigger:hover {
+  background: rgb(255 255 255 / 0.12);
+
+  border-color: rgb(255 255 255 / 0.35);
+}
+
+.ads-date-picker__trigger:focus-visible {
+  border-color: var(--brand);
+
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--brand) 25%, transparent),
+    inset 0 1px 0 rgb(255 255 255 / 0.35),
+    var(--shadow-md);
+}
+
+.ads-date-picker__trigger--error {
+  border-color: var(--danger);
+}
+
+.ads-date-picker__trigger--error:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 25%, transparent);
+}
+
+.ads-date-picker__trigger:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.55;
+}
+
+.ads-date-picker__trigger--sm {
+  height: 32px;
+
+  padding-inline: 12px;
+
+  font-size: 0.75rem;
+}
+
+.ads-date-picker__trigger--md {
+  height: 40px;
+
+  padding-inline: 16px;
+
+  font-size: 0.875rem;
+}
+
+.ads-date-picker__trigger--lg {
+  height: 48px;
+
+  padding-inline: 18px;
+
+  font-size: 1rem;
+}
+
+.ads-date-picker__trigger--has-left-icon {
+  padding-left: 40px;
+}
+
+.ads-date-picker__trigger--has-right-icon {
+  padding-right: 48px;
+}
+
+.ads-date-picker__calendar {
+  width: 100%;
+
+  background: rgb(255 255 255 / 0.12);
+
+  border: 1px solid rgb(255 255 255 / 0.22);
+
+  border-radius: 16px;
+
+  -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(180%);
+  backdrop-filter: blur(var(--blur-lg)) saturate(180%);
+
+  box-shadow: var(--shadow-lg);
+}
+
+.ads-date-picker__calendar .rdp {
+  --rdp-cell-size: 40px;
+
+  margin: 0;
+}
+
+.ads-date-picker__calendar .rdp-month {
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: 8px;
+}
+
+.ads-date-picker__calendar .rdp-month-caption {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  height: 40px;
+
+  font-weight: 600;
+
+  font-size: 1rem;
+
+  color: var(--text-primary);
+
+  background: transparent;
+
+  border: none;
+}
+
+.ads-date-picker__calendar .rdp-table {
+  width: 100%;
+
+  border-collapse: separate;
+
+  border-spacing: 4px;
+}
+
+.ads-date-picker__calendar .rdp-head-cell {
+  width: 40px;
+
+  height: 40px;
+
+  color: var(--text-secondary);
+
+  font-size: 0.75rem;
+
+  font-weight: 500;
+
+  text-transform: uppercase;
+
+  text-align: center;
+}
+
+.ads-date-picker__calendar .rdp-row {
+  display: flex;
+
+  justify-content: center;
+
+  margin-bottom: 4px;
+}
+
+.ads-date-picker__calendar .rdp-cell {
+  position: relative;
+
+  width: 40px;
+
+  height: 40px;
+}
+
+.ads-date-picker__calendar .rdp-button {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 100%;
+
+  height: 100%;
+
+  color: var(--text-primary);
+
+  cursor: pointer;
+
+  border-radius: 50%;
+
+  border: none;
+
+  outline: none;
+
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.ads-date-picker__calendar .rdp-button:hover:not([disabled]) {
+  background: rgb(255 255 255 / 0.12);
+
+  color: var(--text-primary);
+}
+
+.ads-date-picker__calendar .rdp-button:focus-visible:not([disabled]) {
+  border: 2px solid var(--brand);
+
+  background: transparent;
+}
+
+.ads-date-picker__calendar .rdp-button--selected {
+  color: white;
+
+  background: var(--brand);
+
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 25%, transparent);
+}
+
+.ads-date-picker__calendar .rdp-button--selected:hover {
+  filter: brightness(1.05);
+}
+
+.ads-date-picker__calendar .rdp-button:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.55;
+  color: var(--text-secondary);
+}
+
+.ads-date-picker__calendar .rdp-button--today {
+  border: 1px solid var(--brand);
+
+  background: transparent;
+
+  color: var(--brand);
+}
+
+.ads-date-picker__calendar .rdp-button--outside {
+  opacity: 0.55;
+
+  color: var(--text-secondary);
+  cursor: default;
+}
+
+.ads-date-picker__calendar .rdp-nav-button {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 32px;
+
+  height: 32px;
+
+  color: var(--text-secondary);
+
+  cursor: pointer;
+
+  border-radius: 50%;
+
+  border: none;
+
+  background: transparent;
+
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.ads-date-picker__calendar .rdp-nav-button:hover {
+  background: rgb(255 255 255 / 0.12);
+
+  color: var(--text-primary);
+}
+
+.ads-date-picker__calendar .rdp-nav-button:focus-visible {
+  outline: none;
+
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 25%, transparent);
+}
+
+.ads-date-picker__calendar .rdp-nav-button:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+}
+
+.ads-date-picker__calendar .rdp-today {
+  font-weight: 600;
+}

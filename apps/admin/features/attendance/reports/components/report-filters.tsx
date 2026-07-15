@@ -2,7 +2,7 @@
 import { useCallback } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
-import { Button, Field, Select, Surface, DatePicker } from '@/components/ui';
+import { Button, Select, Surface, DatePicker } from '@/components/ui';
 import { ReportFilter } from '../../queries/types';
 import { Class } from '@/features/classes/types';
 
@@ -56,7 +56,7 @@ export const ReportFilters = ({ classes }: ReportFiltersProps) => {
   };
 
   return (
-    <Surface className="p-4 h-[300px]">
+    <Surface className="p-4">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
         <Select
           options={classesOptions}
