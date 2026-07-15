@@ -104,6 +104,10 @@ export const designNavigation = [
         label: 'Pagination',
         href: '/design/pagination',
       },
+      {
+        label: 'Date Picker',
+        href: '/design/date-picker',
+      },
     ],
   },
 ] as const;

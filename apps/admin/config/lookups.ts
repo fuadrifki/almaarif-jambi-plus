@@ -1,6 +1,8 @@
 import type { SelectOption } from '@/components/ui';
 
-export type LookupItem = SelectOption;
+export interface LookupItem extends SelectOption {
+  class?: string;
+}
 
 export const CLASSES: LookupItem[] = [
   { value: 'class-1', label: 'Tahfidz A' },
@@ -10,10 +12,34 @@ export const CLASSES: LookupItem[] = [
 ];
 
 export const SUBJECTS: LookupItem[] = [
-  { value: 'subject-1', label: "Al-Qur'an" },
-  { value: 'subject-2', label: 'Hadits' },
-  { value: 'subject-3', label: 'Fiqh' },
-  { value: 'subject-4', label: 'Akidah' },
+  { label: 'Fikih (Safinatun Naja)', value: 'fikih_safinatun_naja', class: 'Tingkat Ibtidaiyah' },
+  { label: 'Tauhid (Aqidatul Awam)', value: 'tauhid_aqidatul_awam', class: 'Tingkat Ibtidaiyah' },
+  { label: 'Akhlak', value: 'akhlak_ibtidaiyah', class: 'Tingkat Ibtidaiyah' },
+  { label: 'Nahwu (Al-Ajurumiyah)', value: 'nahwu_al_ajurumiyah', class: 'Tingkat Ibtidaiyah' },
+  { label: 'Shorof', value: 'shorof_ibtidaiyah', class: 'Tingkat Ibtidaiyah' },
+  { label: "Imla'", value: 'imla', class: 'Tingkat Ibtidaiyah' },
+  { label: 'Quran', value: 'quran', class: 'Tingkat Ibtidaiyah' },
+  { label: 'Nahwu (Mutammimah)', value: 'nahwu_mutammimah', class: 'Tingkat Tsanawiyah' },
+  { label: 'Shorof (Al-Kailani)', value: 'shorof_al_kailani', class: 'Tingkat Tsanawiyah' },
+  { label: 'Fikih (Fathul Qorib)', value: 'fikih_fathul_qorib', class: 'Tingkat Tsanawiyah' },
+  { label: 'Hadits (Arbain Nawawi)', value: 'hadits_arbain_nawawi', class: 'Tingkat Tsanawiyah' },
+  { label: 'Akhlak (Washoya)', value: 'akhlak_washoya', class: 'Tingkat Tsanawiyah' },
+  { label: 'Nahwu (Alfiyah Ibnu Malik)', value: 'nahwu_alfiyah', class: 'Tingkat Aliyah' },
+  { label: "Fikih (Fathul Mu'in)", value: 'fikih_fathul_muin', class: 'Tingkat Aliyah' },
+  { label: 'Ushul Fikih', value: 'ushul_fikih', class: 'Tingkat Aliyah' },
+  { label: 'Tafsir', value: 'tafsir', class: 'Tingkat Aliyah' },
+  {
+    label: 'Balaghah (Jauharul Maknun)',
+    value: 'balaghah_jauharul_maknun',
+    class: 'Tingkat Aliyah',
+  },
+  { label: 'Mantiq', value: 'mantiq', class: 'Tingkat Aliyah' },
+  {
+    label: 'Gramatika Arab Intensif',
+    value: 'gramatika_arab_intensif',
+    class: "Tingkat I'dadiyah",
+  },
+  { label: 'Dasar Ilmu Agama', value: 'dasar_ilmu_agama', class: "Tingkat I'dadiyah" },
 ];
 
 export const TEACHERS: LookupItem[] = [

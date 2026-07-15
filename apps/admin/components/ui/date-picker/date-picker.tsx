@@ -1,7 +1,7 @@
 'use client';
 import { useState, forwardRef } from 'react';
 import { DayPicker } from 'react-day-picker';
-import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover';
+import { Popover, PopoverContent, PopoverTrigger } from '../popover';
 import { cn } from '@/lib';
 import { Calendar } from 'lucide-react';
 
@@ -77,7 +77,6 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
             disabled={disabled || status === 'loading'}
             className={cn(
               'ads-input-wrapper relative',
-              'ads-button',
               'ads-input',
               'rounded-full',
               'w-full',
@@ -121,7 +120,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
               today: 'bg-primary/20 text-primary',
               selected:
                 'bg-brand text-white hover:bg-brand hover:text-white focus:bg-brand focus:text-white',
-              // day_disabled: 'text-muted-foreground opacity-50 cursor-not-allowed',
+              day_disabled: 'text-muted-foreground opacity-50 cursor-not-allowed',
             }}
           />
         </PopoverContent>
