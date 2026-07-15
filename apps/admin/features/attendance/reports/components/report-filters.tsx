@@ -3,7 +3,6 @@ import { useCallback } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
 import { Button, Field, Select, Surface } from '@/components/ui';
-import { CLASSES } from '@/config/lookups';
 import { ReportFilter } from '../../queries/report/types';
 import { Class } from '@/features/classes';
 
@@ -12,14 +11,13 @@ type ReportFiltersProps = {
   classes: Class[];
 };
 
-export const ReportFilters = ({ className, classes }: ReportFiltersProps) => {
+export const ReportFilters = ({ classes }: ReportFiltersProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const classId = searchParams.get('classId') || '';
   const date = searchParams.get('date') || '';
-  const page = searchParams.get('page') || '1';
 
   const classesOptions = classes.map((c) => ({
     label: c.name,
@@ -77,7 +75,7 @@ export const ReportFilters = ({ className, classes }: ReportFiltersProps) => {
           />
         </Field>
 
-        <Button variant="secondary" onClick={handleReset}>
+        <Button variant="outline" onClick={handleReset}>
           Reset
         </Button>
       </div>

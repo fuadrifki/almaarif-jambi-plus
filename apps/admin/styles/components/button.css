@@ -64,7 +64,7 @@
 
   box-shadow:
     inset 0 2px 6px rgb(0 0 0 / 0.18),
-    0 6px 14px var(--button-primary-shadow);
+    0 2px 30px var(--button-primary-shadow);
 }
 
 /* ======================
@@ -87,6 +87,7 @@
 }
 
 .ads-button--secondary:hover {
+  filter: brightness(1.04);
   background: color-mix(in srgb, var(--button-secondary) 92%, white);
 
   box-shadow:
@@ -95,7 +96,11 @@
 }
 
 .ads-button--secondary:active {
+  filter: brightness(0.92);
   background: color-mix(in srgb, var(--button-ghost-hover) 82%, gray);
+  box-shadow:
+    inset 0 2px 6px rgb(0 0 0 / 0.18),
+    0 2px 30px var(--button-primary-shadow);
 }
 
 /* ======================
@@ -117,6 +122,9 @@
 .ads-button--ghost:active {
   filter: brightness(0.92);
   background: color-mix(in srgb, var(--button-ghost-hover) 82%, gray);
+  box-shadow:
+    inset 0 2px 6px rgb(0 0 0 / 0.18),
+    0 2px 30px var(--button-primary-shadow);
 }
 
 /* ======================
@@ -139,6 +147,33 @@
 
 .ads-button--danger:active {
   filter: brightness(0.92);
+  box-shadow:
+    inset 0 2px 6px rgb(0 0 0 / 0.18),
+    0 2px 30px var(--button-primary-shadow);
+}
+
+/* ======================
+   OUTLINE
+====================== */
+
+.ads-button--outline {
+  color: var(--brand);
+
+  background: transparent;
+
+  border: 1px solid var(--brand);
+}
+
+.ads-button--outline:hover {
+  filter: brightness(1.04);
+  background: color-mix(in srgb, var(--brand) 10%, transparent);
+}
+
+.ads-button--outline:active {
+  filter: brightness(0.92);
+  box-shadow:
+    inset 0 2px 6px rgb(0 0 0 / 0.18),
+    0 2px 30px var(--button-primary-shadow);
 }
 
 /* ======================

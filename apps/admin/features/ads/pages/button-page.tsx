@@ -18,7 +18,7 @@ export const ButtonPage = () => (
 
     <SectionPreview
       title="Variants"
-      description="Gunakan primary untuk aksi utama, secondary untuk aksi pendukung, ghost untuk aksi ringan, dan danger untuk aksi destruktif."
+      description="Gunakan primary untuk aksi utama, secondary untuk aksi pendukung, ghost untuk aksi ringan, outline untuk aksi sekunder namun menonjol, dan danger untuk aksi destruktif."
       code={`<>
   <Button>Primary</Button>
 
@@ -28,6 +28,10 @@ export const ButtonPage = () => (
 
   <Button variant="ghost">
     Ghost
+  </Button>
+
+  <Button variant="outline">
+    Outline
   </Button>
 
   <Button variant="danger">
@@ -41,6 +45,8 @@ export const ButtonPage = () => (
         <Button variant="secondary">Secondary</Button>
 
         <Button variant="ghost">Ghost</Button>
+
+        <Button variant="outline">Outline</Button>
 
         <Button variant="danger">Delete</Button>
       </div>
