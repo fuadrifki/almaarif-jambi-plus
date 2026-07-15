@@ -102,6 +102,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
             mode="single"
             captionLayout="dropdown-years"
             month={displayMonth}
+            onMonthChange={setDisplayMonth}
             className="ads-date-picker__calendar"
           />
         </PopoverContent>
