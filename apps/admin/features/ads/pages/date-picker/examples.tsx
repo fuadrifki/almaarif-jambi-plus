@@ -10,8 +10,8 @@ const longPlaceholder =
 export const DatePickerExamples = () => {
   const [defaultDate, setDefaultDate] = useState<Date | undefined>();
   const [placeholderDate, setPlaceholderDate] = useState<Date | undefined>();
-  const [controlledStartDate, setControlledStartDate] = useState<Date>(new Date());
-  const [controlledEndDate, setControlledEndDate] = useState<Date>(new Date());
+  const [controlledStartDate, setControlledStartDate] = useState<Date | undefined>(new Date());
+  const [controlledEndDate, setControlledEndDate] = useState<Date | undefined>(new Date());
   const [errorDate, setErrorDate] = useState<Date | undefined>();
   const [smDate, setSmDate] = useState<Date | undefined>();
   const [mdDate, setMdDate] = useState<Date | undefined>();

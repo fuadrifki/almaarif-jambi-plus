@@ -49,7 +49,7 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
   const onSubmit = async (data: StudentFormData) => {
     try {
       if (isEdit) {
-        await updateStudent(student.id, data);
+        await updateStudent(String(student.id), data);
 
         toast.success('Data siswa berhasil diperbarui');
       } else {
@@ -91,7 +91,7 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
               options={classes}
               value={selectedClassId}
               placeholder="Pilih kelas"
-              onChange={(value) => setValue('classId', value)}
+              onChange={(value) => setValue('classId', Number(value))}
               status={errors.classId ? 'error' : 'idle'}
             />
           </Field>

@@ -44,7 +44,13 @@ export const classRepository: ClassRepository = {
   },
 
   async create(data) {
-    const [row] = await getDb().insert(classes).values(data).returning();
+    const [row] = await getDb()
+      .insert(classes)
+      .values({
+        ...data,
+        description: data.description ?? '',
+      })
+      .returning();
 
     return toClass(row);
   },

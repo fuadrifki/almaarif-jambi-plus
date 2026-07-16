@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { generateClassName } from '@/lib/utils';
 
 import type { ClassFormData } from './schemas';
+import type { UpdateClassData } from './repositories/class.repository.types';
 import { classRepository } from '@/features/classes/repositories';
 
 export const createClass = async (data: ClassFormData) => {
@@ -38,13 +39,13 @@ export const updateClass = async (id: string, data: ClassFormData) => {
 
   const duplicate = await classRepository.findByCode(data.code);
 
-  if (duplicate && duplicate.id !== id) {
+  if (duplicate && duplicate.id !== Number(id)) {
     throw new Error('Kode kelas sudah digunakan');
   }
 
   const name = generateClassName(data.level, data.academicLevel, data.gender);
 
-  const updateData: any = {
+  const updateData: UpdateClassData = {
     code: data.code,
     name,
     level: Number(data.level),

@@ -13,7 +13,9 @@ export async function AttendanceReportsPage({ search }: AttendanceReportsPagePro
 
   const filter = {
     classId:
-      searchParams && typeof searchParams?.classId === 'string' ? searchParams?.classId : undefined,
+      searchParams && typeof searchParams?.classId === 'string'
+        ? Number(searchParams?.classId)
+        : undefined,
     date: searchParams && typeof searchParams?.date === 'string' ? searchParams?.date : undefined,
     page:
       searchParams && typeof searchParams?.page === 'string' && !isNaN(parseInt(searchParams?.page))

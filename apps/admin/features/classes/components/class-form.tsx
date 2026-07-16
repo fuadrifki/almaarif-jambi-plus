@@ -30,7 +30,7 @@ import { useMemo } from 'react';
 import { generateClassName } from '@/lib';
 
 type ClassFormProps = {
-  classData: Class;
+  classData?: Class;
 };
 
 export const ClassForm = ({ classData }: ClassFormProps) => {
@@ -59,7 +59,7 @@ export const ClassForm = ({ classData }: ClassFormProps) => {
   const onSubmit = async (data: ClassFormData) => {
     try {
       if (isEdit) {
-        await updateClass(classData.id, data);
+        await updateClass(String(classData.id), data);
         toast.success('Data kelas berhasil diperbarui');
       } else {
         await createClass(data);
@@ -106,7 +106,7 @@ export const ClassForm = ({ classData }: ClassFormProps) => {
                 .fill('')
                 .map((_, i) => ({ label: String(i + 1), value: String(i + 1) }))}
               value={watch('level')}
-              onChange={(value) => setValue('level', value)}
+              onChange={(value) => setValue('level', String(value))}
               placeholder="Pilih level"
               status={errors.level ? 'error' : 'idle'}
             />
