@@ -12,4 +12,5 @@ export type DatePickerProps = {
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   onOpenChange?: (open: boolean) => void;
+  format?: string;
 };
