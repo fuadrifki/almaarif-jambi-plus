@@ -10,9 +10,10 @@ CREATE TABLE "attendance_records" (
 --> statement-breakpoint
 CREATE TABLE "attendance_sessions" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"teacher_id" varchar(50) NOT NULL,
-	"class_id" varchar(50) NOT NULL,
-	"subject_id" varchar(50) NOT NULL,
+	"teacher_id" integer NOT NULL,
+	"class_id" integer NOT NULL,
+	"subject_id" integer NOT NULL,
+	"schedule_id" integer NOT NULL,
 	"date" varchar(10) NOT NULL,
 	"time" varchar(5) NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,

@@ -35,7 +35,6 @@ export default async function AttendancePage() {
   return (
     <AttendancePageClient
       teacherId={session.id}
-      teacherName={session.name}
       students={students}
       sessions={sessionsWithRecords}
       classes={classesOptions}

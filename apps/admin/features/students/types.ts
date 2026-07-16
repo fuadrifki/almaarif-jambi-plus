@@ -1,9 +1,8 @@
 export type Student = {
-  id: string;
+  id: number;
   nis: string;
   name: string;
-  classId: string;
-  room: string;
+  classId: number;
   guardianName: string;
   guardianPhone: string;
   address: string;

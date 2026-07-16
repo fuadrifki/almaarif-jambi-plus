@@ -5,14 +5,12 @@ import { students } from '@/lib/db/schema';
 
 import type { Student } from '../types';
 import type { StudentRepository } from './student.repository.types';
-import type { StudentRepository } from './student.repository.types';
 
 const toStudent = (row: typeof students.$inferSelect): Student => ({
-  id: String(row.id),
+  id: row.id,
   nis: row.nis,
   name: row.name,
   classId: row.classId,
-  room: row.room,
   guardianName: row.guardianName,
   guardianPhone: row.guardianPhone,
   address: row.address,

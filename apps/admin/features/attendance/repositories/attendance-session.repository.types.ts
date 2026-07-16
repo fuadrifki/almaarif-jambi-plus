@@ -4,7 +4,7 @@ export type AttendanceSessionRepository = {
   findAll(): Promise<AttendanceSession[]>;
   findById(id: string): Promise<AttendanceSession | null>;
   findByClassAndDate(classId: string, date: string): Promise<AttendanceSession[]>;
-  findByTeacherId(teacherId: string): Promise<AttendanceSession[]>;
+  findByTeacherId(teacherId: number): Promise<AttendanceSession[]>;
   create(
     data: Omit<AttendanceSession, 'id' | 'createdAt' | 'updatedAt'>,
   ): Promise<AttendanceSession>;

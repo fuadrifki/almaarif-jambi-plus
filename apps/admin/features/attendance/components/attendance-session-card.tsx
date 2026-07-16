@@ -2,9 +2,11 @@ import Link from 'next/link';
 
 import { Badge, SelectOption, Surface } from '@/components/ui';
 import { ATTENDANCE_STATUS } from '@/features/attendance/types';
-import { SUBJECTS } from '@/config/lookups';
 
 import type { AttendanceRecord, AttendanceSession } from '@/features/attendance/types';
+import { SUBJECTS } from '@/lib/db/seed-subjects';
+import { format } from 'date-fns';
+import { id } from 'date-fns/locale';
 
 type AttendanceSessionCardProps = {
   session: AttendanceSession;
@@ -31,23 +33,15 @@ export const AttendanceSessionCard = ({
   records,
   classes,
 }: AttendanceSessionCardProps) => {
-  const className = classes.find((c) => c.value === session.classId)?.label ?? '-';
+  const className = classes.find((c) => c.value === session.classId)?.label;
 
-  const subjectName =
-    SUBJECTS.find((s) => s.value === session.subjectId)?.label ?? session.subjectId;
+  const subjectName = SUBJECTS.find((s) => s.id === session.subjectId)?.label;
 
   const total = records.length;
   const present = records.filter((r) => r.status === ATTENDANCE_STATUS.PRESENT).length;
   const sick = records.filter((r) => r.status === ATTENDANCE_STATUS.SICK).length;
   const permission = records.filter((r) => r.status === ATTENDANCE_STATUS.PERMISSION).length;
   const absent = records.filter((r) => r.status === ATTENDANCE_STATUS.ABSENT).length;
-
-  const displayDate = new Date(session.date + 'T00:00:00').toLocaleDateString('id-ID', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  });
 
   return (
     <Link href={`/attendance/${session.id}`} className="block">
@@ -60,7 +54,8 @@ export const AttendanceSessionCard = ({
             </p>
 
             <p className="text-xs text-secondary">
-              {displayDate} &middot; {session.time} WIB
+              {format(new Date(session.date), 'EEEE, dd MMMM yyyy', { locale: id })} &middot;{' '}
+              {session.time} WIB
             </p>
           </div>
 

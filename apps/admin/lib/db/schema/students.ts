@@ -1,4 +1,4 @@
-import { index, pgTable, serial, text, timestamp, varchar } from 'drizzle-orm/pg-core';
+import { index, integer, pgTable, serial, text, timestamp, varchar } from 'drizzle-orm/pg-core';
 
 export const students = pgTable(
   'students',
@@ -6,7 +6,7 @@ export const students = pgTable(
     id: serial('id').primaryKey(),
     nis: varchar('nis', { length: 20 }).notNull().unique(),
     name: varchar('name', { length: 255 }).notNull(),
-    classId: varchar('class_id', { length: 50 }).notNull(),
+    classId: integer('class_id').notNull(),
     guardianName: varchar('guardian_name', { length: 225 }).notNull(),
     guardianPhone: varchar('guardian_phone', { length: 20 }).notNull(),
     address: text('address').notNull(),

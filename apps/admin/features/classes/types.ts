@@ -1,8 +1,8 @@
 export type Class = {
-  id: string;
+  id: number;
   code: string;
   name: string;
-  level: string;
+  level: number;
   academicLevel: string;
   gender: 'male' | 'female' | 'mixed';
   description: string;

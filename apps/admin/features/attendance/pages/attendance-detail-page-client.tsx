@@ -24,7 +24,6 @@ export const AttendanceDetailPageClient = ({
   records,
   students,
 }: AttendanceDetailPageClientProps) => {
-  console.log('🚀 ~ AttendanceDetailPageClient ~ records:', records);
   const router = useRouter();
 
   const className = useMemo(

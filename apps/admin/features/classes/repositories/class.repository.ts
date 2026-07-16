@@ -7,12 +7,12 @@ import type { Class } from '../types';
 import type { ClassRepository } from './class.repository.types';
 
 const toClass = (row: typeof classes.$inferSelect): Class => ({
-  id: String(row.id),
+  id: row.id,
   code: row.code,
   name: row.name,
   level: row.level,
   academicLevel: row.academicLevel,
-  gender: row.gender,
+  gender: row.gender as 'female' | 'male' | 'mixed',
   description: row.description,
   createdAt: row.createdAt,
   updatedAt: row.updatedAt,

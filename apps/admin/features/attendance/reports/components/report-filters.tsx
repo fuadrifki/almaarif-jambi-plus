@@ -62,7 +62,7 @@ export const ReportFilters = ({ classes }: ReportFiltersProps) => {
           options={classesOptions}
           value={classId}
           placeholder="Kelas"
-          onChange={handleClassChange}
+          onChange={(value) => handleClassChange(String(value))}
         />
 
         <DatePicker

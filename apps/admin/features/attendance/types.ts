@@ -8,10 +8,11 @@ export const ATTENDANCE_STATUS = {
 export type AttendanceStatus = (typeof ATTENDANCE_STATUS)[keyof typeof ATTENDANCE_STATUS];
 
 export type AttendanceSession = {
-  id: string;
-  teacherId: string;
-  classId: string;
-  subjectId: string;
+  id: number;
+  teacherId: number;
+  classId: number;
+  subjectId: number;
+  scheduleId: number;
   date: string;
   time: string;
   createdAt: Date;
@@ -19,9 +20,9 @@ export type AttendanceSession = {
 };
 
 export type AttendanceRecord = {
-  id: string;
-  sessionId: string;
-  studentId: string;
+  id: number;
+  sessionId: number;
+  studentId: number;
   status: AttendanceStatus;
   notes: string;
   createdAt: Date;

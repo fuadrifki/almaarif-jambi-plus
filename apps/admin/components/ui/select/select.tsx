@@ -22,7 +22,7 @@ export const Select = ({
 
   return (
     <SelectPrimitive.Root
-      value={value}
+      value={value ? String(value) : ''}
       defaultValue={defaultValue}
       disabled={disabled || isLoading}
       onValueChange={onChange}
@@ -52,7 +52,7 @@ export const Select = ({
             {options.map((option) => (
               <SelectPrimitive.Item
                 key={option.value}
-                value={option.value}
+                value={String(option.value)}
                 disabled={option.disabled}
                 className="ads-select__item"
               >

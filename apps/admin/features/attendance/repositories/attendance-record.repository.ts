@@ -5,9 +5,9 @@ import { attendanceRecords } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 
 const toRecord = (row: typeof attendanceRecords.$inferSelect): AttendanceRecord => ({
-  id: String(row.id),
-  sessionId: String(row.sessionId),
-  studentId: String(row.studentId),
+  id: row.id,
+  sessionId: row.sessionId,
+  studentId: row.studentId,
   status: row.status as AttendanceStatus,
   notes: row.notes,
   createdAt: row.createdAt,

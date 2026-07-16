@@ -1,12 +1,13 @@
-import { index, pgTable, serial, timestamp, varchar } from 'drizzle-orm/pg-core';
+import { index, integer, pgTable, serial, timestamp, varchar } from 'drizzle-orm/pg-core';
 
 export const attendanceSessions = pgTable(
   'attendance_sessions',
   {
     id: serial('id').primaryKey(),
-    teacherId: varchar('teacher_id', { length: 50 }).notNull(),
-    classId: varchar('class_id', { length: 50 }).notNull(),
-    subjectId: varchar('subject_id', { length: 50 }).notNull(),
+    teacherId: integer('teacher_id').notNull(),
+    classId: integer('class_id').notNull(),
+    subjectId: integer('subject_id').notNull(),
+    scheduleId: integer('schedule_id').notNull(),
     date: varchar('date', { length: 10 }).notNull(),
     time: varchar('time', { length: 5 }).notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),

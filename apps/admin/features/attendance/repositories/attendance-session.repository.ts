@@ -5,10 +5,11 @@ import { attendanceSessions } from '@/lib/db/schema';
 import { and, eq } from 'drizzle-orm';
 
 const toSession = (row: typeof attendanceSessions.$inferSelect): AttendanceSession => ({
-  id: String(row.id),
+  id: row.id,
   teacherId: row.teacherId,
   classId: row.classId,
   subjectId: row.subjectId,
+  scheduleId: row.scheduleId,
   date: row.date,
   time: row.time,
   createdAt: row.createdAt,

@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 
 import {
   Button,
+  DatePicker,
   EmptyState,
   PageLayout,
   SegmentedControl,
@@ -13,7 +14,6 @@ import {
   toast,
 } from '@/components/ui';
 import { ClipboardCheck, History, Plus } from 'lucide-react';
-import { SUBJECTS, TEACHERS } from '@/config/lookups';
 
 import { AttendanceSessionCard } from '../components/attendance-session-card';
 import { AttendanceStudentRow } from '../components/attendance-student-row';
@@ -21,12 +21,16 @@ import { submitAttendance } from '../server';
 
 import type { AttendanceRecord, AttendanceSession, AttendanceStatus } from '../types';
 import type { Student } from '@/features/students/types';
+import { SUBJECTS } from '@/lib/db/seed-subjects';
+import { TEACHERS } from '@/lib/db/seed-teachers';
+import { SCHEDULES } from '@/lib/db/seed-schedule';
+import { format, isEqual } from 'date-fns';
+import { id } from 'date-fns/locale';
 
 type SessionWithRecords = AttendanceSession & { records: AttendanceRecord[] };
 
 type AttendancePageClientProps = {
-  teacherId: string;
-  teacherName: string;
+  teacherId: number;
   students: Student[];
   sessions: SessionWithRecords[];
   classes: SelectOption[];
@@ -36,77 +40,60 @@ type Tab = 'input' | 'history';
 
 export const AttendancePageClient = ({
   teacherId,
-  teacherName,
   students,
   sessions,
   classes,
 }: AttendancePageClientProps) => {
   const [activeTab, setActiveTab] = useState<Tab>('input');
 
-  const now = useMemo(() => new Date(), []);
+  const teacherLabel = useMemo(() => TEACHERS.find((t) => t.id === teacherId)?.name, [teacherId]);
 
-  const date = useMemo(
-    () =>
-      `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`,
-    [now],
-  );
-
-  const time = useMemo(
-    () => `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`,
-    [now],
-  );
-
-  const displayDate = useMemo(
-    () =>
-      now.toLocaleDateString('id-ID', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }),
-    [now],
-  );
-
-  const teacherLabel = useMemo(
-    () => TEACHERS.find((t) => t.value === teacherId)?.label ?? teacherName,
-    [teacherId, teacherName],
-  );
-
-  const [classId, setClassId] = useState<string>('');
-  const [subjectId, setSubjectId] = useState<string>('');
+  const [classId, setClassId] = useState<number>(0);
   const [statuses, setStatuses] = useState<Record<string, AttendanceStatus>>({});
   const [notes, setNotes] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [dateFilter, setDateFilter] = useState('');
-  const [classFilter, setClassFilter] = useState('');
-  const [subjectFilter, setSubjectFilter] = useState('');
+  const [dateFilter, setDateFilter] = useState<Date | undefined>();
+  const [classFilter, setClassFilter] = useState(0);
+  const [subjectFilter, setSubjectFilter] = useState(0);
 
   const filteredStudents = useMemo(
     () => (classId ? students.filter((s) => s.classId === classId) : []),
     [students, classId],
   );
 
-  const dateOptions = useMemo(() => {
-    const uniqueDates = [...new Set(sessions.map((s) => s.date))].sort().reverse();
-    return [
-      { value: '', label: 'Semua Tanggal' },
-      ...uniqueDates.map((d) => ({
-        value: d,
-        label: new Date(d + 'T00:00:00').toLocaleDateString('id-ID', {
-          day: 'numeric',
-          month: 'short',
-          year: 'numeric',
-        }),
-      })),
-    ];
-  }, [sessions]);
+  const currentschedules = useMemo(() => {
+    const currentDay = format(new Date(), 'EEEE', { locale: id });
+    const currentTime = format(new Date(), 'HH:mm');
 
-  const subjectOptions = useMemo(() => [{ value: '', label: 'Semua Mapel' }, ...SUBJECTS], []);
+    return (
+      SCHEDULES.find((item) => {
+        const [start, end] = item.time.split('-');
+        const inRange = currentTime >= start && currentTime <= end;
+
+        return item.day === currentDay && inRange && item.classId === classId;
+      }) ?? undefined
+    );
+  }, [classId]);
+
+  const subjectsByClass = useMemo(() => {
+    const schedules = SCHEDULES.filter((s) => s.classId === classId);
+
+    const data = SUBJECTS.filter((s) => schedules.find((sch) => sch.subjectId === s.id));
+
+    const res = data.sort((a, b) => a.label.localeCompare(b.label));
+
+    return res.map((s) => ({ value: s.id, label: s.label }));
+  }, [classId]);
+
+  const subjectOptions = useMemo(
+    () => [{ value: 0, label: 'Mata pelajaran' }, ...subjectsByClass],
+    [subjectsByClass],
+  );
 
   const filteredSessions = useMemo(() => {
     return sessions.filter((s) => {
-      if (dateFilter && s.date !== dateFilter) return false;
+      if (dateFilter && isEqual(s.date, dateFilter)) return false;
       if (classFilter && s.classId !== classFilter) return false;
       if (subjectFilter && s.subjectId !== subjectFilter) return false;
       return true;
@@ -128,12 +115,6 @@ export const AttendancePageClient = ({
       return;
     }
 
-    if (!subjectId) {
-      toast.error('Pilih mata pelajaran terlebih dahulu');
-
-      return;
-    }
-
     const missingStatus = filteredStudents.find((s) => !statuses[s.id]);
 
     if (missingStatus) {
@@ -148,9 +129,10 @@ export const AttendancePageClient = ({
       await submitAttendance({
         teacherId,
         classId,
-        subjectId,
-        date,
-        time,
+        subjectId: currentschedules?.subjectId ?? 0,
+        scheduleId: currentschedules?.id ?? 0,
+        date: format(new Date(), 'yyyy-MM-dd'),
+        time: format(new Date(), 'hh:mm'),
         records: filteredStudents.map((student) => ({
           studentId: student.id,
           status: statuses[student.id],
@@ -179,9 +161,19 @@ export const AttendancePageClient = ({
         <Surface className="flex flex-wrap justify-between gap-x-2 gap-y-2 p-4 text-sm text-secondary">
           <span className="font-medium text-primary">{teacherLabel}</span>
 
-          <span>
-            {displayDate} {time} WIB
-          </span>
+          {currentschedules ? (
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span>Jadwal hari ini:</span>
+              <span className="font-semibold whitespace-nowrap">
+                {SUBJECTS.find((s) => s.id === currentschedules?.subjectId)?.label}
+              </span>
+              <span className="whitespace-nowrap">({currentschedules?.time})</span>
+            </div>
+          ) : classId > 0 ? (
+            <span className="text-sm text-secondary text-center">Tidak ada jadwal hari ini</span>
+          ) : (
+            <span className="text-sm text-secondary text-center">Belum ada jadwal hari ini</span>
+          )}
         </Surface>
 
         <SegmentedControl value={activeTab} onValueChange={(v) => setActiveTab(v as Tab)}>
@@ -195,39 +187,32 @@ export const AttendancePageClient = ({
         </SegmentedControl>
 
         {activeTab === 'input' && (
-          <div className="grid gap-4 grid-cols-2">
-            <Select options={classes} value={classId} placeholder="Kelas" onChange={setClassId} />
-
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 items-center">
             <Select
-              options={SUBJECTS}
-              value={subjectId}
-              placeholder="Mata Pelajaran"
-              onChange={setSubjectId}
+              options={classes}
+              value={classId}
+              placeholder="Kelas"
+              onChange={(value) => setClassId(Number(value))}
             />
           </div>
         )}
 
         {activeTab === 'history' && (
           <div className="grid gap-3 grid-cols-1 sm:grid-cols-3">
-            <Select
-              options={dateOptions}
-              value={dateFilter}
-              placeholder="Tanggal"
-              onChange={setDateFilter}
-            />
+            <DatePicker value={dateFilter} onChange={setDateFilter} placeholder="Pilih tanggal" />
 
             <Select
-              options={[{ value: '', label: 'Semua Kelas' }, ...classes]}
+              options={[{ value: 0, label: 'Semua Kelas' }, ...classes]}
               value={classFilter}
               placeholder="Kelas"
-              onChange={setClassFilter}
+              onChange={(value) => setClassFilter(Number(value))}
             />
 
             <Select
               options={subjectOptions}
               value={subjectFilter}
-              placeholder="Mapel"
-              onChange={setSubjectFilter}
+              placeholder="Mata pelajaran"
+              onChange={(value) => setSubjectFilter(Number(value))}
             />
           </div>
         )}
@@ -236,11 +221,11 @@ export const AttendancePageClient = ({
       <PageLayout.Content className="flex flex-col gap-y-4 justify-between w-full">
         {activeTab === 'input' && (
           <>
-            {!classId ? (
+            {!classId || !currentschedules ? (
               <EmptyState
                 icon={<ClipboardCheck size={32} />}
                 title="Pilih kelas untuk memulai"
-                description="Pilih kelas dan mata pelajaran terlebih dahulu untuk mengisi absensi."
+                description="Pilih kelas terlebih dahulu untuk mengisi absensi."
               />
             ) : filteredStudents.length === 0 ? (
               <EmptyState
@@ -266,7 +251,7 @@ export const AttendancePageClient = ({
             <div className="flex justify-end">
               <Button
                 onClick={handleSubmit}
-                disabled={!classId || !subjectId || filteredStudents.length === 0}
+                disabled={!classId || !currentschedules?.subjectId || filteredStudents.length === 0}
                 status={isSubmitting ? 'loading' : 'idle'}
               >
                 Simpan Absensi
