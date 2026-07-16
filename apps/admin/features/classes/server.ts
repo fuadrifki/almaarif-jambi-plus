@@ -18,7 +18,7 @@ export const createClass = async (data: ClassFormData) => {
   await classRepository.create({
     code: data.code,
     name,
-    level: data.level,
+    level: Number(data.level),
     academicLevel: data.academicLevel,
     gender: data.gender,
     description: data.description,
@@ -47,7 +47,7 @@ export const updateClass = async (id: string, data: ClassFormData) => {
   const updateData: any = {
     code: data.code,
     name,
-    level: data.level,
+    level: Number(data.level),
     academicLevel: data.academicLevel,
     gender: data.gender,
   };

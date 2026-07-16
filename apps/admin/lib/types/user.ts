@@ -1,7 +1,7 @@
 export type UserRole = 'admin' | 'teacher';
 
 export type User = {
-  id: string;
+  id: number;
   name: string;
   code: string;
   email: string;

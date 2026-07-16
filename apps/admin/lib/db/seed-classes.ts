@@ -7,7 +7,7 @@ export const seedData = [
   {
     id: 1,
     code: 'C001',
-    name: '1 Madin Putra',
+    name: '1 MADIN PA',
     level: 1,
     gender: 'male',
     academicLevel: 'Madin',
@@ -16,7 +16,7 @@ export const seedData = [
   {
     id: 2,
     code: 'C002',
-    name: '1 Madin Putri',
+    name: '1 MADIN PI',
     level: 1,
     gender: 'female',
     academicLevel: 'Madin',
@@ -25,7 +25,7 @@ export const seedData = [
   {
     id: 3,
     code: 'C003',
-    name: '2 Madin Putra',
+    name: '2 MADIN PA',
     level: 2,
     gender: 'male',
     academicLevel: 'Madin',
@@ -34,7 +34,7 @@ export const seedData = [
   {
     id: 4,
     code: 'C004',
-    name: '2 Madin Putri',
+    name: '2 MADIN PI',
     level: 2,
     gender: 'female',
     academicLevel: 'Madin',
@@ -43,7 +43,7 @@ export const seedData = [
   {
     id: 5,
     code: 'C005',
-    name: '3 Madin Putra',
+    name: '3 MADIN PA',
     level: 3,
     gender: 'male',
     academicLevel: 'Madin',
@@ -52,7 +52,7 @@ export const seedData = [
   {
     id: 6,
     code: 'C006',
-    name: '3 Madin Putri',
+    name: '3 MADIN PI',
     level: 3,
     gender: 'female',
     academicLevel: 'Madin',
@@ -61,7 +61,7 @@ export const seedData = [
   {
     id: 7,
     code: 'C007',
-    name: '4 Madin Putra',
+    name: '4 MADIN PA',
     level: 4,
     gender: 'male',
     academicLevel: 'Madin',
@@ -70,7 +70,7 @@ export const seedData = [
   {
     id: 8,
     code: 'C008',
-    name: '4 Madin Putri',
+    name: '4 MADIN PI',
     level: 4,
     gender: 'female',
     academicLevel: 'Madin',
@@ -79,18 +79,18 @@ export const seedData = [
   {
     id: 9,
     code: 'C009',
-    name: '5 Madin',
+    name: '5 MADIN',
     level: 5,
-    gender: 'female',
+    gender: 'mixed',
     academicLevel: 'Madin',
     description: 'Kelas Madin tingkat 5',
   },
   {
     id: 10,
     code: 'C010',
-    name: '6 Madin',
+    name: '6 MADIN',
     level: 6,
-    gender: 'male',
+    gender: 'mixed',
     academicLevel: 'Madin',
     description: 'Kelas Madin tingkat 6',
   },

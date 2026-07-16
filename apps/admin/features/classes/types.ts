@@ -2,9 +2,9 @@ export type Class = {
   id: string;
   code: string;
   name: string;
-  level: number;
+  level: string;
   academicLevel: string;
-  gender: 'male' | 'female';
+  gender: 'male' | 'female' | 'mixed';
   description: string;
   createdAt: Date;
   updatedAt: Date;

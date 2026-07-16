@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const classSchema = z.object({
   code: z.string().min(1, 'Kode kelas wajib diisi').max(50, 'Kode kelas maksimal 50 karakter'),
-  level: z.number().int().min(1, 'Tingkat kelas wajib diisi'),
+  level: z.string().min(1, 'Tingkat kelas wajib diisi'),
   academicLevel: z
     .string()
     .min(1, 'Tingkat akademis wajib diisi')

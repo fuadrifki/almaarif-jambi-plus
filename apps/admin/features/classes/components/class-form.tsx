@@ -4,12 +4,30 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button, Field, Input, Surface, toast, Select } from '@/components/ui';
+import {
+  Button,
+  Field,
+  Input,
+  Surface,
+  toast,
+  Select,
+  Table,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+} from '@/components/ui';
 
 import { createClass, updateClass } from '../server';
 
 import { classSchema, type ClassFormData } from '../schemas';
 import { Class } from '../types';
+import { SCHEDULES } from '@/lib/db/seed-schedule';
+import { TEACHERS } from '@/lib/db/seed-teachers';
+import { SUBJECTS } from '@/lib/db/seed-subjects';
+import { useMemo } from 'react';
+import { generateClassName } from '@/lib';
 
 type ClassFormProps = {
   classData: Class;
@@ -30,7 +48,7 @@ export const ClassForm = ({ classData }: ClassFormProps) => {
     defaultValues: classData
       ? {
           code: classData.code,
-          level: classData.level,
+          level: String(classData.level),
           academicLevel: classData.academicLevel,
           gender: classData.gender,
           description: classData.description,
@@ -54,14 +72,10 @@ export const ClassForm = ({ classData }: ClassFormProps) => {
     }
   };
 
-  const generatedName = (() => {
-    const level = watch('level') || 1;
-    const academicLevel = watch('academicLevel') || 'Madin';
-    const gender = watch('gender') || 'male';
-    return `${level} ${academicLevel.toUpperCase()} ${
-      gender === 'male' ? 'PA' : gender === 'female' ? 'PI' : ''
-    }`.trim();
-  })();
+  const classSchedules = useMemo(
+    () => SCHEDULES.filter((sch) => sch.classId === Number(classData?.id)),
+    [classData],
+  );
 
   return (
     <Surface className="p-6">
@@ -79,16 +93,21 @@ export const ClassForm = ({ classData }: ClassFormProps) => {
         <Field label="Generated Class Name">
           <div className="p-2 bg-gray-50 rounded-md border border-gray-200">
             <span className="text-sm text-gray-600">Preview:</span>
-            <div className="font-medium text-gray-800 mt-1">{generatedName}</div>
+            <div className="font-medium text-gray-800 mt-1">
+              {generateClassName(watch('level'), watch('academicLevel'), watch('gender'))}
+            </div>
           </div>
         </Field>
 
         <div className="grid gap-4 md:grid-cols-3">
           <Field label="Level" required error={errors.level?.message}>
-            <Input
-              type="number"
-              placeholder="Masukkan level"
-              {...register('level', { valueAsNumber: true })}
+            <Select
+              options={Array(6)
+                .fill('')
+                .map((_, i) => ({ label: String(i + 1), value: String(i + 1) }))}
+              value={watch('level')}
+              onChange={(value) => setValue('level', value)}
+              placeholder="Pilih level"
               status={errors.level ? 'error' : 'idle'}
             />
           </Field>
@@ -104,11 +123,12 @@ export const ClassForm = ({ classData }: ClassFormProps) => {
           <Field label="Gender" required error={errors.gender?.message}>
             <Select
               options={[
-                { label: 'Male', value: 'male' },
-                { label: 'Female', value: 'female' },
+                { label: 'Putra', value: 'male' },
+                { label: 'Putri', value: 'female' },
+                { label: 'Lainnya', value: 'mixed' },
               ]}
               value={watch('gender')}
-              onChange={(value) => setValue('gender', value as 'male' | 'female')}
+              onChange={(value) => setValue('gender', value as 'male' | 'female' | 'mixed')}
               placeholder="Pilih gender"
               status={errors.gender ? 'error' : 'idle'}
             />
@@ -122,6 +142,31 @@ export const ClassForm = ({ classData }: ClassFormProps) => {
             status={errors.description ? 'error' : 'idle'}
           />
         </Field>
+
+        {classData?.id && classSchedules.length > 0 && (
+          <Field label="Jadwal">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Hari</TableHead>
+                  <TableHead>Jam</TableHead>
+                  <TableHead>Mata Pelajaran</TableHead>
+                  <TableHead>Guru</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {classSchedules.map((s) => (
+                  <TableRow key={s.id}>
+                    <TableCell>{s.day}</TableCell>
+                    <TableCell>{s.time}</TableCell>
+                    <TableCell>{SUBJECTS.find((sub) => sub.id === s.subjectId)?.label}</TableCell>
+                    <TableCell>{TEACHERS.find((t) => t.id === s.teacherId)?.name ?? '-'}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Field>
+        )}
 
         <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
           <Button type="button" variant="ghost" onClick={() => router.push('/classes')}>
