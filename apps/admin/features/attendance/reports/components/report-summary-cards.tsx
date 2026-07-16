@@ -60,7 +60,7 @@ export const ReportSummaryCards = ({ summary, className }: ReportSummaryCardsPro
   return (
     <div className={cn('grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4', className)}>
       {cards.map((card) => (
-        <Card key={card.label} heading={card.label}>
+        <Card key={card.label} title={card.label}>
           <div className="flex flex-col gap-2">
             <p className={cn('text-xl md:text-2xl font-bold', card.className)}>{card.value}</p>
             <div className="flex items-center gap-2">

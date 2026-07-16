@@ -7,9 +7,10 @@ const attendanceStatusValues = Object.values(ATTENDANCE_STATUS) as [string, ...s
 export const attendanceStatusSchema = z.enum(attendanceStatusValues);
 
 export const attendanceSessionSchema = z.object({
-  teacherId: z.string().min(1, 'Guru wajib dipilih'),
-  classId: z.string().min(1, 'Kelas wajib dipilih'),
-  subjectId: z.string().min(1, 'Mata pelajaran wajib dipilih'),
+  teacherId: z.coerce.number().int().positive('Guru wajib dipilih'),
+  classId: z.coerce.number().int().positive('Kelas wajib dipilih'),
+  subjectId: z.coerce.number().int().positive('Mata pelajaran wajib dipilih'),
+  scheduleId: z.coerce.number().int().positive('Jadwal wajib dipilih'),
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Format tanggal tidak valid'),
   time: z.string().regex(/^\d{2}:\d{2}$/, 'Format waktu tidak valid'),
 });

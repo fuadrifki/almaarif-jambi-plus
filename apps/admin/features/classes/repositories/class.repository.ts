@@ -89,12 +89,12 @@ export const classRepository: ClassRepository = {
     const [studentCount] = await db
       .select({ count: sql`count(*)` })
       .from(students)
-      .where(eq(students.classId, id.toString()));
+      .where(eq(students.classId, numericId));
 
     const [attendanceSessionCount] = await db
       .select({ count: sql`count(*)` })
       .from(attendanceSessions)
-      .where(eq(attendanceSessions.classId, id.toString()));
+      .where(eq(attendanceSessions.classId, numericId));
 
     return {
       students: Number(studentCount.count),
