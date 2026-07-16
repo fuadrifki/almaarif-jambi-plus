@@ -6,6 +6,7 @@ import { students } from './schema';
 export const seedData = [
   // 1 MADIN PA
   {
+    id: 1,
     nis: '2024001',
     name: 'Ahmad Fauzan',
     classId: '1',
@@ -14,6 +15,7 @@ export const seedData = [
     address: 'Jl. Kenanga No. 1, Jambi',
   },
   {
+    id: 2,
     nis: '2024002',
     name: 'Muhammad Rizki',
     classId: '1',
@@ -22,6 +24,7 @@ export const seedData = [
     address: 'Jl. Melati No. 2, Jambi',
   },
   {
+    id: 3,
     nis: '2024003',
     name: 'Fajar Ramadhan',
     classId: '1',
@@ -30,6 +33,7 @@ export const seedData = [
     address: 'Jl. Mawar No. 3, Jambi',
   },
   {
+    id: 4,
     nis: '2024004',
     name: 'Rizwan Hakim',
     classId: '1',
@@ -38,6 +42,7 @@ export const seedData = [
     address: 'Jl. Anggrek No. 4, Jambi',
   },
   {
+    id: 5,
     nis: '2024005',
     name: 'Abdurrahman',
     classId: '1',
@@ -46,6 +51,7 @@ export const seedData = [
     address: 'Jl. Dahlia No. 5, Jambi',
   },
   {
+    id: 6,
     nis: '2024006',
     name: 'Ilham Maulana',
     classId: '1',
@@ -54,6 +60,7 @@ export const seedData = [
     address: 'Jl. Flamboyan No. 6, Jambi',
   },
   {
+    id: 7,
     nis: '2024007',
     name: 'Bagas Pratama',
     classId: '1',
@@ -62,6 +69,7 @@ export const seedData = [
     address: 'Jl. Durian No. 7, Jambi',
   },
   {
+    id: 8,
     nis: '2024008',
     name: 'Naufal Akbar',
     classId: '1',
@@ -70,6 +78,7 @@ export const seedData = [
     address: 'Jl. Cempaka No. 8, Jambi',
   },
   {
+    id: 9,
     nis: '2024009',
     name: 'Zidan Alfarizi',
     classId: '1',
@@ -78,6 +87,7 @@ export const seedData = [
     address: 'Jl. Mangga No. 9, Jambi',
   },
   {
+    id: 10,
     nis: '2024010',
     name: 'Haikal Fadillah',
     classId: '1',
@@ -88,6 +98,7 @@ export const seedData = [
 
   // 1 MADIN PI
   {
+    id: 11,
     nis: '2024011',
     name: 'Aisyah Zahra',
     classId: '2',
@@ -96,6 +107,7 @@ export const seedData = [
     address: 'Jl. Kenanga No. 11, Jambi',
   },
   {
+    id: 12,
     nis: '2024012',
     name: 'Nurul Aini',
     classId: '2',
@@ -104,6 +116,7 @@ export const seedData = [
     address: 'Jl. Kenanga No. 12, Jambi',
   },
   {
+    id: 13,
     nis: '2024013',
     name: 'Siti Khadijah',
     classId: '2',
@@ -112,6 +125,7 @@ export const seedData = [
     address: 'Jl. Kenanga No. 13, Jambi',
   },
   {
+    id: 14,
     nis: '2024014',
     name: 'Nabila Putri',
     classId: '2',
@@ -120,6 +134,7 @@ export const seedData = [
     address: 'Jl. Kenanga No. 14, Jambi',
   },
   {
+    id: 15,
     nis: '2024015',
     name: 'Aulia Rahmah',
     classId: '2',
@@ -128,6 +143,7 @@ export const seedData = [
     address: 'Jl. Kenanga No. 15, Jambi',
   },
   {
+    id: 16,
     nis: '2024016',
     name: 'Nadya Safitri',
     classId: '2',
@@ -136,6 +152,7 @@ export const seedData = [
     address: 'Jl. Kenanga No. 16, Jambi',
   },
   {
+    id: 17,
     nis: '2024017',
     name: 'Intan Permata',
     classId: '2',
@@ -144,6 +161,7 @@ export const seedData = [
     address: 'Jl. Kenanga No. 17, Jambi',
   },
   {
+    id: 18,
     nis: '2024018',
     name: 'Putri Maharani',
     classId: '2',
@@ -152,6 +170,7 @@ export const seedData = [
     address: 'Jl. Kenanga No. 18, Jambi',
   },
   {
+    id: 19,
     nis: '2024019',
     name: 'Salma Azzahra',
     classId: '2',
@@ -160,6 +179,7 @@ export const seedData = [
     address: 'Jl. Kenanga No. 19, Jambi',
   },
   {
+    id: 20,
     nis: '2024020',
     name: 'Syifa Nabila',
     classId: '2',
@@ -167,8 +187,6 @@ export const seedData = [
     guardianPhone: '081234560020',
     address: 'Jl. Kenanga No. 20, Jambi',
   },
-
-  // dst...
 ];
 
 async function seed() {

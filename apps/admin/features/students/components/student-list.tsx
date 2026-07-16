@@ -21,12 +21,14 @@ import { deleteStudent } from '../server';
 import { StudentCard } from './student-card';
 
 import type { Student } from '../types';
+import { Class } from '@/features/classes';
 
 type StudentListProps = {
   students: Student[];
+  classes: Class[];
 };
 
-export const StudentList = ({ students }: StudentListProps) => {
+export const StudentList = ({ students, classes }: StudentListProps) => {
   const router = useRouter();
   const [deleteTarget, setDeleteTarget] = useState<Student | null>(null);
   const [deleting, setDeleting] = useState(false);
@@ -65,7 +67,12 @@ export const StudentList = ({ students }: StudentListProps) => {
       ) : (
         <div className="space-y-3">
           {students.map((student) => (
-            <StudentCard key={student.id} student={student} onDelete={setDeleteTarget} />
+            <StudentCard
+              key={student.id}
+              student={student}
+              classes={classes}
+              onDelete={setDeleteTarget}
+            />
           ))}
         </div>
       )}

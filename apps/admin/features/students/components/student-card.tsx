@@ -1,18 +1,19 @@
 import Link from 'next/link';
 
 import { Button, Surface } from '@/components/ui';
-import { CLASSES } from '@/config/lookups';
-import { MapPin, Phone, Pencil, User, Trash2 } from 'lucide-react';
+import { MapPin, Phone, Pencil, User, Trash2, School } from 'lucide-react';
 
 import type { Student } from '../types';
+import { Class } from '@/features/classes';
 
 type StudentCardProps = {
   student: Student;
+  classes: Class[];
   onDelete: (student: Student) => void;
 };
 
-export const StudentCard = ({ student, onDelete }: StudentCardProps) => {
-  const className = CLASSES.find((c) => c.value === student.classId)?.label ?? student.classId;
+export const StudentCard = ({ student, classes, onDelete }: StudentCardProps) => {
+  const className = classes.find((c) => c.id === student.classId)?.name;
 
   return (
     <Surface className="p-4">
@@ -26,9 +27,11 @@ export const StudentCard = ({ student, onDelete }: StudentCardProps) => {
             </span>
           </div>
 
-          <p className="text-xs text-secondary">
-            {className} &middot; {student.room}
-          </p>
+          <div className="flex items-center gap-1.5 text-xs text-secondary">
+            <School size={12} className="shrink-0" />
+
+            <span className="truncate">{className}</span>
+          </div>
 
           <div className="flex items-center gap-1.5 text-xs text-secondary">
             <User size={12} className="shrink-0" />

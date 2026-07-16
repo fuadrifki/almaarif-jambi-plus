@@ -1,8 +1,9 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { generateClassName } from '@/lib/utils';
+
 import type { ClassFormData } from './schemas';
-import { Class } from './types';
 import { classRepository } from '@/features/classes/repositories';
 
 export const createClass = async (data: ClassFormData) => {
@@ -12,7 +13,16 @@ export const createClass = async (data: ClassFormData) => {
     throw new Error('Kode kelas sudah digunakan');
   }
 
-  await classRepository.create(data as Class);
+  const name = generateClassName(data.level, data.academicLevel, data.gender);
+
+  await classRepository.create({
+    code: data.code,
+    name,
+    level: data.level,
+    academicLevel: data.academicLevel,
+    gender: data.gender,
+    description: data.description,
+  });
 
   revalidatePath('/classes');
 
@@ -32,7 +42,23 @@ export const updateClass = async (id: string, data: ClassFormData) => {
     throw new Error('Kode kelas sudah digunakan');
   }
 
-  await classRepository.update(id, data);
+  const name = generateClassName(data.level, data.academicLevel, data.gender);
+
+  const updateData: any = {
+    code: data.code,
+    name,
+    level: data.level,
+    academicLevel: data.academicLevel,
+    gender: data.gender,
+  };
+
+  if (data.description !== undefined) {
+    updateData.description = data.description;
+  } else {
+    updateData.description = existing.description;
+  }
+
+  await classRepository.update(id, updateData);
 
   revalidatePath('/classes');
 };

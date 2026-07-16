@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1784200672310,
+      "tag": "0000_robust_wallop",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1784206821910,
+      "tag": "0001_elite_magma",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1784207492791,
+      "tag": "0002_blue_naoko",
+      "breakpoints": true
+    }
+  ]
+}

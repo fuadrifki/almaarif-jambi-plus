@@ -16,7 +16,7 @@ export const CardPage = () => (
   title="Dashboard"
   description="Ringkasan informasi"
 >
-  Content
+  Isi card berada di sini.
 </Card>`}
     >
       <Card title="Dashboard" description="Ringkasan informasi">

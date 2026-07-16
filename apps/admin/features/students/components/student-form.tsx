@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { Resolver } from 'react-hook-form';
 
-import { Button, Field, Input, Select, SelectOption, Surface, toast } from '@/components/ui';
+import { Button, Card, Field, Input, Select, SelectOption, Surface, toast } from '@/components/ui';
 
 import { createStudent, updateStudent } from '../server';
 import { studentSchema } from '../schemas';
@@ -37,7 +37,6 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
           nis: student.nis,
           name: student.name,
           classId: student.classId,
-          room: student.room,
           guardianName: student.guardianName,
           guardianPhone: student.guardianPhone,
           address: student.address,
@@ -66,8 +65,8 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
   };
 
   return (
-    <Surface className="p-6">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <Card title="Detail Siswa">
         <div className="grid gap-4 md:grid-cols-2">
           <Field label="NIS" required error={errors.nis?.message}>
             <Input
@@ -96,16 +95,10 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
               status={errors.classId ? 'error' : 'idle'}
             />
           </Field>
-
-          <Field label="Ruang" required error={errors.room?.message}>
-            <Input
-              placeholder="Masukkan ruang"
-              {...register('room')}
-              status={errors.room ? 'error' : 'idle'}
-            />
-          </Field>
         </div>
+      </Card>
 
+      <Card title="Detail Wali">
         <div className="grid gap-4 md:grid-cols-2">
           <Field label="Nama Wali" required error={errors.guardianName?.message}>
             <Input
@@ -131,17 +124,17 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
             status={errors.address ? 'error' : 'idle'}
           />
         </Field>
+      </Card>
 
-        <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
-          <Button type="button" variant="ghost" onClick={() => router.push('/students')}>
-            Batal
-          </Button>
+      <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
+        <Button type="button" variant="ghost" onClick={() => router.push('/students')}>
+          Batal
+        </Button>
 
-          <Button type="submit" status={isSubmitting ? 'loading' : 'idle'}>
-            {isEdit ? 'Simpan Perubahan' : 'Tambah Siswa'}
-          </Button>
-        </div>
-      </form>
-    </Surface>
+        <Button type="submit" status={isSubmitting ? 'loading' : 'idle'}>
+          {isEdit ? 'Simpan Perubahan' : 'Tambah Siswa'}
+        </Button>
+      </div>
+    </form>
   );
 };

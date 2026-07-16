@@ -3,20 +3,19 @@
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { Resolver } from 'react-hook-form';
 
-import { Button, Field, Input, Surface, toast } from '@/components/ui';
+import { Button, Field, Input, Surface, toast, Select } from '@/components/ui';
 
 import { createClass, updateClass } from '../server';
 
 import { classSchema, type ClassFormData } from '../schemas';
-import type { Class } from '../types';
+import { Class } from '../types';
 
 type ClassFormProps = {
-  class?: Class;
+  classData: Class;
 };
 
-export const ClassForm = ({ class: classData }: ClassFormProps) => {
+export const ClassForm = ({ classData }: ClassFormProps) => {
   const router = useRouter();
   const isEdit = !!classData;
 
@@ -24,14 +23,16 @@ export const ClassForm = ({ class: classData }: ClassFormProps) => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    setValue,
+    watch,
   } = useForm<ClassFormData>({
-    // zod v4.4.3 runtime is compatible with @hookform/resolvers v5.4.0,
-    // but the bundled type definitions are version-locked to an earlier zod v4 beta.
-    resolver: zodResolver(classSchema as never) as Resolver<ClassFormData>,
+    resolver: zodResolver(classSchema),
     defaultValues: classData
       ? {
           code: classData.code,
-          name: classData.name,
+          level: classData.level,
+          academicLevel: classData.academicLevel,
+          gender: classData.gender,
           description: classData.description,
         }
       : undefined,
@@ -41,11 +42,9 @@ export const ClassForm = ({ class: classData }: ClassFormProps) => {
     try {
       if (isEdit) {
         await updateClass(classData.id, data);
-
         toast.success('Data kelas berhasil diperbarui');
       } else {
         await createClass(data);
-
         toast.success('Kelas baru berhasil ditambahkan');
       }
 
@@ -54,6 +53,15 @@ export const ClassForm = ({ class: classData }: ClassFormProps) => {
       toast.error(error instanceof Error ? error.message : 'Terjadi kesalahan. Silakan coba lagi.');
     }
   };
+
+  const generatedName = (() => {
+    const level = watch('level') || 1;
+    const academicLevel = watch('academicLevel') || 'Madin';
+    const gender = watch('gender') || 'male';
+    return `${level} ${academicLevel.toUpperCase()} ${
+      gender === 'male' ? 'PA' : gender === 'female' ? 'PI' : ''
+    }`.trim();
+  })();
 
   return (
     <Surface className="p-6">
@@ -66,17 +74,48 @@ export const ClassForm = ({ class: classData }: ClassFormProps) => {
               status={errors.code ? 'error' : 'idle'}
             />
           </Field>
+        </div>
 
-          <Field label="Nama Kelas" required error={errors.name?.message}>
+        <Field label="Generated Class Name">
+          <div className="p-2 bg-gray-50 rounded-md border border-gray-200">
+            <span className="text-sm text-gray-600">Preview:</span>
+            <div className="font-medium text-gray-800 mt-1">{generatedName}</div>
+          </div>
+        </Field>
+
+        <div className="grid gap-4 md:grid-cols-3">
+          <Field label="Level" required error={errors.level?.message}>
             <Input
-              placeholder="Masukkan nama kelas"
-              {...register('name')}
-              status={errors.name ? 'error' : 'idle'}
+              type="number"
+              placeholder="Masukkan level"
+              {...register('level', { valueAsNumber: true })}
+              status={errors.level ? 'error' : 'idle'}
+            />
+          </Field>
+
+          <Field label="Academic Level" required error={errors.academicLevel?.message}>
+            <Input
+              placeholder="Masukkan tingkat akademis"
+              {...register('academicLevel')}
+              status={errors.academicLevel ? 'error' : 'idle'}
+            />
+          </Field>
+
+          <Field label="Gender" required error={errors.gender?.message}>
+            <Select
+              options={[
+                { label: 'Male', value: 'male' },
+                { label: 'Female', value: 'female' },
+              ]}
+              value={watch('gender')}
+              onChange={(value) => setValue('gender', value as 'male' | 'female')}
+              placeholder="Pilih gender"
+              status={errors.gender ? 'error' : 'idle'}
             />
           </Field>
         </div>
 
-        <Field label="Deskripsi" required error={errors.description?.message}>
+        <Field label="Deskripsi" error={errors.description?.message}>
           <Input
             placeholder="Masukkan deskripsi"
             {...register('description')}

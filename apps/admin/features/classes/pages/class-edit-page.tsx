@@ -29,7 +29,7 @@ export const ClassEditPage = async ({ params }: ClassEditPageProps) => {
       </PageLayout.Header>
 
       <PageLayout.Content>
-        <ClassForm class={classDetail} />
+        <ClassForm classData={classDetail} />
       </PageLayout.Content>
     </PageLayout>
   );

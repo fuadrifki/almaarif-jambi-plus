@@ -124,7 +124,6 @@ const toStudent = (row: StudentRow) => ({
   nis: row.nis,
   name: row.name,
   classId: row.classId,
-  room: row.room,
   guardianName: row.guardianName,
   guardianPhone: row.guardianPhone,
   address: row.address,

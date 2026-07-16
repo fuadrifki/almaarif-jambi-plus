@@ -1,4 +1,4 @@
-import { and, eq, sql } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 
 import { getDb } from '@/lib/db/client';
 import { classes, students, attendanceSessions } from '@/lib/db/schema';
@@ -10,6 +10,9 @@ const toClass = (row: typeof classes.$inferSelect): Class => ({
   id: String(row.id),
   code: row.code,
   name: row.name,
+  level: row.level,
+  academicLevel: row.academicLevel,
+  gender: row.gender,
   description: row.description,
   createdAt: row.createdAt,
   updatedAt: row.updatedAt,

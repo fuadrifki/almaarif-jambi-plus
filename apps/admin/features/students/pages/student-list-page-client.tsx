@@ -9,15 +9,17 @@ import { Search } from 'lucide-react';
 import { StudentList } from '../components/student-list';
 
 import type { Student } from '../types';
+import { Class } from '@/features/classes';
 
 const PAGE_SIZE = 20;
 const LOAD_DELAY = 200;
 
 type StudentListPageClientProps = {
   students: Student[];
+  classes: Class[];
 };
 
-export const StudentListPageClient = ({ students }: StudentListPageClientProps) => {
+export const StudentListPageClient = ({ students, classes }: StudentListPageClientProps) => {
   const router = useRouter();
   const [query, setQuery] = useState('');
   const [displayCount, setDisplayCount] = useState(PAGE_SIZE);
@@ -85,7 +87,7 @@ export const StudentListPageClient = ({ students }: StudentListPageClientProps) 
             </p>
           }
         >
-          <StudentList students={visible} />
+          <StudentList students={visible} classes={classes} />
         </InfiniteScroll>
       </PageLayout.Content>
     </PageLayout>
