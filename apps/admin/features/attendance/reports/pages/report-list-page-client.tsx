@@ -20,9 +20,9 @@ export const ReportListPageClient = ({
   return (
     <PageLayout>
       <PageLayout.Header>
-        <h1 className="text-2xl font-semibold sm:text-3xl">Siswa</h1>
+        <h1 className="text-2xl font-semibold sm:text-3xl">Laporan Absensi Siswa</h1>
 
-        <p className="text-secondary">Kelola data siswa pesantren.</p>
+        <p className="text-secondary">Buat data laporan absensi siswa pesantren.</p>
       </PageLayout.Header>
 
       <PageLayout.Content>
