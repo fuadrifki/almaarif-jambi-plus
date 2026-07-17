@@ -1,1 +1,1 @@
-export { StudentEditPage as default } from '@/features/students/pages/student-edit-page';
+export { StudentDetailPage as default } from '@/features/students/pages/student-detail-page';

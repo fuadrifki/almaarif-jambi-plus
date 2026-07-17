@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 import { Button, Card, Surface } from '@/components/ui';
 import { MapPin, Phone, Pencil, User, Trash2, School, CircleUser } from 'lucide-react';
@@ -14,10 +15,16 @@ type StudentCardProps = {
 };
 
 export const StudentCard = ({ student, classes, onDelete }: StudentCardProps) => {
+  const router = useRouter();
   const className = classes.find((c) => c.id === student.classId)?.name;
 
   return (
-    <Surface className="p-4">
+    <Surface
+      className="p-4 relative cursor-pointer group"
+      onClick={() => {
+        router.push(`/students/${student.id}`);
+      }}
+    >
       <div className="flex items-start gap-3">
         <div className="shrink-0">
           {student.photoUrl ? (
@@ -43,7 +50,9 @@ export const StudentCard = ({ student, classes, onDelete }: StudentCardProps) =>
 
         <div className="min-w-0 flex-1 space-y-1.5">
           <div className="flex items-center gap-2">
-            <h3 className="truncate text-sm font-medium text-primary">{student.name}</h3>
+            <h3 className="truncate text-sm font-medium text-primary group-hover:text-primary transition-colors">
+              {student.name}
+            </h3>
 
             <span className="shrink-0 rounded-full bg-white/10 px-2 py-0.5 text-[10px] text-secondary">
               {student.nis}
@@ -65,7 +74,7 @@ export const StudentCard = ({ student, classes, onDelete }: StudentCardProps) =>
 
             <Phone size={12} className="shrink-0" />
 
-            <span className="shrink-0">{student.guardianPhone}</span>
+            <span className="truncate">{student.guardianPhone}</span>
           </div>
 
           <div className="flex items-center gap-1.5 text-xs text-secondary">
@@ -76,7 +85,7 @@ export const StudentCard = ({ student, classes, onDelete }: StudentCardProps) =>
         </div>
 
         <div className="flex shrink-0 flex-col gap-1">
-          <Link href={`/students/${student.id}`}>
+          <Link href={`/students/${student.id}/edit`} onClick={(e) => e.stopPropagation()}>
             <Button variant="ghost" size="sm" leftIcon={<Pencil size={14} />}>
               Edit
             </Button>
@@ -86,12 +95,17 @@ export const StudentCard = ({ student, classes, onDelete }: StudentCardProps) =>
             variant="ghost"
             size="sm"
             leftIcon={<Trash2 size={14} />}
-            onClick={() => onDelete(student)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(student);
+            }}
           >
             Hapus
           </Button>
         </div>
       </div>
+
+      <div className="absolute inset-0 rounded-lg bg-transparent group-hover:bg-white/5 transition-colors" />
     </Surface>
   );
 };

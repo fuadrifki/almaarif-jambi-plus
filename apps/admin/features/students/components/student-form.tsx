@@ -248,6 +248,16 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
       </Card>
 
       <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
+        {isEdit && (
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={() => router.push(`/students/${student.id}`)}
+          >
+            Kembali ke Detail
+          </Button>
+        )}
+
         <Button type="button" variant="ghost" onClick={() => router.push('/students')}>
           Batal
         </Button>
