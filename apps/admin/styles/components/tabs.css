@@ -4,7 +4,7 @@
    Each item behaves like a Ghost Button.
    ============================== */
 
-.ads-segmented-control {
+.ads-tabs {
   position: relative;
 
   display: inline-flex;
@@ -20,7 +20,7 @@
   backdrop-filter: blur(var(--blur-lg)) saturate(190%) brightness(1.08);
 }
 
-.ads-segmented-control::before {
+.ads-tabs::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -42,7 +42,7 @@
 
 /* ---- Item (Ghost Button base) ---- */
 
-.ads-segmented-control__item {
+.ads-tabs__item {
   position: relative;
 
   display: inline-flex;
@@ -77,19 +77,19 @@
 
 /* Inactive: subtle hover (matches Ghost Button) */
 
-.ads-segmented-control__item:hover:not(.ads-segmented-control__item--active):not(:disabled) {
+.ads-tabs__item:hover:not(.ads-tabs__item--active):not(:disabled) {
   color: var(--text-primary);
   background: var(--button-ghost-hover);
 }
 
-.ads-segmented-control__item:active:not(.ads-segmented-control__item--active):not(:disabled) {
+.ads-tabs__item:active:not(.ads-tabs__item--active):not(:disabled) {
   filter: brightness(0.92);
   background: color-mix(in srgb, var(--button-ghost-hover) 82%, gray);
 }
 
 /* Active: brand border + glass background + primary text + subtle shadow */
 
-.ads-segmented-control__item--active {
+.ads-tabs__item--active {
   color: var(--text-primary);
 
   border-color: color-mix(in srgb, var(--brand) 40%, transparent);
@@ -104,26 +104,26 @@
     0 0 12px color-mix(in srgb, var(--brand) 8%, transparent);
 }
 
-.ads-segmented-control__item--active:hover {
+.ads-tabs__item--active:hover {
   filter: brightness(1.02);
 }
 
 /* Disabled */
 
-.ads-segmented-control__item:disabled {
+.ads-tabs__item:disabled {
   cursor: not-allowed;
   opacity: 0.55;
 }
 
 /* Focus visible */
 
-.ads-segmented-control__item:focus-visible {
+.ads-tabs__item:focus-visible {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 28%, transparent);
 }
 
 /* ---- Icon ---- */
 
-.ads-segmented-control__icon {
+.ads-tabs__icon {
   display: inline-flex;
   flex-shrink: 0;
   width: 16px;
@@ -133,12 +133,12 @@
 /* ---- Responsive: stack on small screens ---- */
 
 @media (max-width: 480px) {
-  .ads-segmented-control {
+  .ads-tabs {
     display: inline-flex;
     width: 100%;
   }
 
-  .ads-segmented-control__item {
+  .ads-tabs__item {
     flex: 1;
   }
 }

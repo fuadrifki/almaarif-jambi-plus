@@ -7,7 +7,7 @@ import {
   DatePicker,
   EmptyState,
   PageLayout,
-  SegmentedControl,
+  Tabs,
   Select,
   SelectOption,
   Surface,
@@ -24,7 +24,7 @@ import type { Student } from '@/features/students/types';
 import { SUBJECTS } from '@/lib/db/seed-subjects';
 import { TEACHERS } from '@/lib/db/seed-teachers';
 import { SCHEDULES } from '@/lib/db/seed-schedule';
-import { format, isEqual } from 'date-fns';
+import { format } from 'date-fns';
 import { id } from 'date-fns/locale';
 
 type SessionWithRecords = AttendanceSession & { records: AttendanceRecord[] };
@@ -186,15 +186,15 @@ export const AttendancePageClient = ({
           )}
         </Surface>
 
-        <SegmentedControl value={activeTab} onValueChange={(v) => setActiveTab(v as Tab)}>
-          <SegmentedControl.Item value="input" icon={<Plus size={16} />}>
+        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as Tab)}>
+          <Tabs.Item value="input" icon={<Plus size={16} />}>
             Isi Absensi
-          </SegmentedControl.Item>
+          </Tabs.Item>
 
-          <SegmentedControl.Item value="history" icon={<History size={16} />}>
+          <Tabs.Item value="history" icon={<History size={16} />}>
             Riwayat
-          </SegmentedControl.Item>
-        </SegmentedControl>
+          </Tabs.Item>
+        </Tabs>
 
         {activeTab === 'input' && (
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 items-center">

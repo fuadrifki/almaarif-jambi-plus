@@ -97,8 +97,8 @@ export const designNavigation = [
         href: '/design/infinite-scroll',
       },
       {
-        label: 'Segmented Control',
-        href: '/design/segmented-control',
+        label: 'Tabs',
+        href: '/design/tabs',
       },
       {
         label: 'Pagination',

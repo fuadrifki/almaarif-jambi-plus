@@ -19,4 +19,4 @@ export * from './page-layout';
 export * from './empty-state';
 export * from './infinite-scroll';
 export * from './skeleton';
-export * from './segmented-control';
+export * from './tabs';

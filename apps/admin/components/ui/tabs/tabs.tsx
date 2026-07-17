@@ -1,12 +1,9 @@
 'use client';
-
-import { createContext, useCallback, useContext } from 'react';
-
 import { cn } from '@/lib';
 
-import type { ReactElement, ReactNode } from 'react';
+import { createContext, useCallback, useContext, type ReactElement, type ReactNode } from 'react';
 
-import type { SegmentedControlItemProps, SegmentedControlProps } from './segmented-control.types';
+import type { TabsItemProps, TabsProps } from './tabs.types';
 
 type ContextValue = {
   value: string;
@@ -14,22 +11,11 @@ type ContextValue = {
   disabled?: boolean;
 };
 
-const SegmentedControlContext = createContext<ContextValue>({
-  value: '',
-  onValueChange: () => {},
-});
+const TabsContext = createContext<ContextValue>({ value: '', onValueChange: () => {} });
+const useTabs = () => useContext(TabsContext);
 
-const useSegmentedControl = () => useContext(SegmentedControlContext);
-
-const SegmentedControlItem = ({
-  value,
-  icon,
-  disabled,
-  children,
-  className,
-  ...props
-}: SegmentedControlItemProps) => {
-  const { value: activeValue, onValueChange, disabled: groupDisabled } = useSegmentedControl();
+const TabsItem = ({ value, icon, disabled, children, className, ...props }: TabsItemProps) => {
+  const { value: activeValue, onValueChange, disabled: groupDisabled } = useTabs();
   const isActive = activeValue === value;
   const isDisabled = disabled || groupDisabled;
 
@@ -39,29 +25,17 @@ const SegmentedControlItem = ({
       role="tab"
       aria-selected={isActive}
       disabled={isDisabled}
-      className={cn(
-        'ads-segmented-control__item',
-        isActive && 'ads-segmented-control__item--active',
-        className,
-      )}
+      className={cn('ads-tabs__item', isActive && 'ads-tabs__item--active', className)}
       onClick={() => onValueChange(value)}
       {...props}
     >
-      {icon && <span className="ads-segmented-control__icon">{icon}</span>}
-
+      {icon && <span className="ads-tabs__icon">{icon}</span>}
       {children}
     </button>
   );
 };
 
-const SegmentedControlRoot = ({
-  value,
-  onValueChange,
-  disabled,
-  children,
-  className,
-  ...props
-}: SegmentedControlProps) => {
+const TabsRoot = ({ value, onValueChange, disabled, children, className, ...props }: TabsProps) => {
   const items = useCallback(() => {
     const collected: string[] = [];
 
@@ -73,11 +47,7 @@ const SegmentedControlRoot = ({
         return;
       }
 
-      if (
-        typeof node === 'object' &&
-        'props' in node &&
-        (node as ReactElement).type === SegmentedControlItem
-      ) {
+      if (typeof node === 'object' && 'props' in node && (node as ReactElement).type === TabsItem) {
         collected.push((node as ReactElement<{ value: string }>).props.value);
       }
     };
@@ -106,18 +76,15 @@ const SegmentedControlRoot = ({
           nextIndex = (currentIndex + 1) % values.length;
           break;
         }
-
         case 'ArrowLeft':
         case 'ArrowUp': {
           nextIndex = (currentIndex - 1 + values.length) % values.length;
           break;
         }
-
         case 'Home': {
           nextIndex = 0;
           break;
         }
-
         case 'End': {
           nextIndex = values.length - 1;
           break;
@@ -134,19 +101,19 @@ const SegmentedControlRoot = ({
   );
 
   return (
-    <SegmentedControlContext.Provider value={{ value, onValueChange, disabled }}>
+    <TabsContext.Provider value={{ value, onValueChange, disabled }}>
       <div
         role="tablist"
-        className={cn('ads-segmented-control', className)}
+        className={cn('ads-tabs', className)}
         onKeyDown={handleKeyDown}
         {...props}
       >
         {children}
       </div>
-    </SegmentedControlContext.Provider>
+    </TabsContext.Provider>
   );
 };
 
-export const SegmentedControl = Object.assign(SegmentedControlRoot, {
-  Item: SegmentedControlItem,
+export const Tabs = Object.assign(TabsRoot, {
+  Item: TabsItem,
 });
