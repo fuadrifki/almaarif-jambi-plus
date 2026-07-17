@@ -32,7 +32,7 @@ export const StudentDetail = ({ student, classData }: StudentDetailProps) => {
                     alt="Foto siswa"
                     width={160}
                     height={160}
-                    className="h-40 w-4h-40 rounded-full object-cover"
+                    className="h-40 h-40 rounded-full object-cover"
                   />
                 </Card>
               </Surface>
@@ -52,7 +52,6 @@ export const StudentDetail = ({ student, classData }: StudentDetailProps) => {
           <Field label="NIS">
             <FieldValue>{student.nis}</FieldValue>
           </Field>
-
           <Field label="Nama Siswa">
             <FieldValue>{student.name}</FieldValue>
           </Field>
@@ -74,12 +73,10 @@ export const StudentDetail = ({ student, classData }: StudentDetailProps) => {
           <Field label="Nama Wali">
             <FieldValue>{student.guardianName}</FieldValue>
           </Field>
-
           <Field label="Telepon Wali">
             <FieldValue>{student.guardianPhone}</FieldValue>
           </Field>
         </div>
-
         <Field label="Alamat">
           <FieldValue>{student.address}</FieldValue>
         </Field>
@@ -104,7 +101,6 @@ export const StudentDetail = ({ student, classData }: StudentDetailProps) => {
           <Field label="Created At">
             <FieldValue>{formatDate(student.createdAt)}</FieldValue>
           </Field>
-
           <Field label="Updated At">
             <FieldValue>{formatDate(student.updatedAt)}</FieldValue>
           </Field>

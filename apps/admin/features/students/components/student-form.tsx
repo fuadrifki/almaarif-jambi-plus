@@ -35,14 +35,13 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
     watch,
     formState: { errors, isSubmitting },
   } = useForm<StudentFormData>({
-    // zod v4.4.3 runtime is compatible with @hookform/resolvers v5.4.0,
-    // but the bundled type definitions are version-locked to an earlier zod v4 beta.
     resolver: zodResolver(studentSchema as never) as Resolver<StudentFormData>,
     defaultValues: student
       ? {
           nis: student.nis,
           name: student.name,
           classId: student.classId,
+          room: student.room,
           guardianName: student.guardianName,
           guardianPhone: student.guardianPhone,
           address: student.address,
@@ -111,11 +110,9 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
     try {
       if (isEdit) {
         await updateStudent(String(student.id), data);
-
         toast.success('Data siswa berhasil diperbarui');
       } else {
         await createStudent(data);
-
         toast.success('Siswa baru berhasil ditambahkan');
       }
 
@@ -166,7 +163,6 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
                   <Camera size={14} className="mr-1 inline" />
                   {photoPreview ? 'Ganti' : 'Unggah'}
                 </Surface>
-
                 <input
                   type="file"
                   accept="image/jpeg,image/jpg,image/png,image/webp"
@@ -216,6 +212,14 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
               status={errors.classId ? 'error' : 'idle'}
             />
           </Field>
+
+          <Field label="Kamar" required error={errors.room?.message}>
+            <Input
+              placeholder="Masukkan kamar"
+              {...register('room')}
+              status={errors.room ? 'error' : 'idle'}
+            />
+          </Field>
         </div>
       </Card>
 
@@ -237,7 +241,6 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
             />
           </Field>
         </div>
-
         <Field label="Alamat" required error={errors.address?.message}>
           <Input
             placeholder="Masukkan alamat"
@@ -257,11 +260,9 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
             Kembali ke Detail
           </Button>
         )}
-
         <Button type="button" variant="ghost" onClick={() => router.push('/students')}>
           Batal
         </Button>
-
         <Button type="submit" status={isSubmitting ? 'loading' : 'idle'}>
           {isEdit ? 'Simpan Perubahan' : 'Tambah Siswa'}
         </Button>

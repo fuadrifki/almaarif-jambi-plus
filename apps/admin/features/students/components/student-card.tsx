@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import { Button, Card, Surface } from '@/components/ui';
-import { MapPin, Phone, Pencil, User, Trash2, School, CircleUser, Eye } from 'lucide-react';
+import { MapPin, Phone, Pencil, User, Trash2, BookOpen, HouseHeart, Eye } from 'lucide-react';
 
 import type { Student } from '../types';
 import { Class } from '@/features/classes';
@@ -42,20 +42,28 @@ export const StudentCard = ({ student, classes, onDelete }: StudentCardProps) =>
         </div>
 
         <div className="min-w-0 flex-1 space-y-1.5">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             <h3 className="truncate text-sm font-medium text-primary group-hover:text-primary transition-colors">
               {student.name}
             </h3>
 
-            <span className="shrink-0 rounded-full bg-white/10 px-2 py-0.5 text-[10px] text-secondary">
-              {student.nis}
-            </span>
+            <div className="flex flex-wrap items-center gap-1.5 text-xs text-secondary">
+              <span className="shrink-0 rounded-full bg-white/10 px-2 py-0.5 text-[10px]">
+                {student.nis}
+              </span>
+            </div>
           </div>
 
           <div className="flex items-center gap-1.5 text-xs text-secondary">
-            <School size={12} className="shrink-0" />
+            <BookOpen size={12} className="shrink-0" />
 
             <span className="truncate">{className}</span>
+
+            <span className="text-gray-600">&middot;</span>
+
+            <HouseHeart size={12} className="shrink-0" />
+
+            <span className="truncate">{student.room || '-'}</span>
           </div>
 
           <div className="flex items-center gap-1.5 text-xs text-secondary">
@@ -63,7 +71,7 @@ export const StudentCard = ({ student, classes, onDelete }: StudentCardProps) =>
 
             <span className="truncate">{student.guardianName}</span>
 
-            <span className="text-white/20">&middot;</span>
+            <span className="text-gray-600">&middot;</span>
 
             <Phone size={12} className="shrink-0" />
 
@@ -83,13 +91,11 @@ export const StudentCard = ({ student, classes, onDelete }: StudentCardProps) =>
               Detail
             </Button>
           </Link>
-
           <Link href={`/students/${student.id}/edit`}>
             <Button variant="ghost" size="sm" leftIcon={<Pencil size={14} />}>
               Edit
             </Button>
           </Link>
-
           <Button
             variant="ghost"
             size="sm"
