@@ -1,5 +1,5 @@
 import { PageLayout } from '@/components/ui';
-import { StudentForm } from '../components/student-form';
+import { StudentForm } from '@/features/students/components/student-form';
 import { classRepository } from '@/features/classes/repositories';
 
 export const StudentCreatePage = async () => {
@@ -12,7 +12,6 @@ export const StudentCreatePage = async () => {
         <div className="flex flex-col w-full gap-y-6">
           <section>
             <h1 className="text-2xl font-semibold sm:text-3xl">Tambah Siswa</h1>
-
             <p className="mt-2 text-secondary">Masukkan data siswa baru.</p>
           </section>
         </div>
