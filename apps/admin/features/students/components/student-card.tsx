@@ -1,9 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
 import { Button, Card, Surface } from '@/components/ui';
-import { MapPin, Phone, Pencil, User, Trash2, School, CircleUser } from 'lucide-react';
+import { MapPin, Phone, Pencil, User, Trash2, School, CircleUser, Eye } from 'lucide-react';
 
 import type { Student } from '../types';
 import { Class } from '@/features/classes';
@@ -15,16 +14,10 @@ type StudentCardProps = {
 };
 
 export const StudentCard = ({ student, classes, onDelete }: StudentCardProps) => {
-  const router = useRouter();
   const className = classes.find((c) => c.id === student.classId)?.name;
 
   return (
-    <Surface
-      className="p-4 relative cursor-pointer group"
-      onClick={() => {
-        router.push(`/students/${student.id}`);
-      }}
-    >
+    <Surface className="p-4 relative group">
       <div className="flex items-start gap-3">
         <div className="shrink-0">
           {student.photoUrl ? (
@@ -85,7 +78,13 @@ export const StudentCard = ({ student, classes, onDelete }: StudentCardProps) =>
         </div>
 
         <div className="flex shrink-0 flex-col gap-1">
-          <Link href={`/students/${student.id}/edit`} onClick={(e) => e.stopPropagation()}>
+          <Link href={`/students/${student.id}`}>
+            <Button variant="ghost" size="sm" leftIcon={<Eye size={14} />}>
+              Detail
+            </Button>
+          </Link>
+
+          <Link href={`/students/${student.id}/edit`}>
             <Button variant="ghost" size="sm" leftIcon={<Pencil size={14} />}>
               Edit
             </Button>
@@ -95,8 +94,7 @@ export const StudentCard = ({ student, classes, onDelete }: StudentCardProps) =>
             variant="ghost"
             size="sm"
             leftIcon={<Trash2 size={14} />}
-            onClick={(e) => {
-              e.stopPropagation();
+            onClick={() => {
               onDelete(student);
             }}
           >
@@ -104,8 +102,6 @@ export const StudentCard = ({ student, classes, onDelete }: StudentCardProps) =>
           </Button>
         </div>
       </div>
-
-      <div className="absolute inset-0 rounded-lg bg-transparent group-hover:bg-white/5 transition-colors" />
     </Surface>
   );
 };

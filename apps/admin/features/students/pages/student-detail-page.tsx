@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { classRepository } from '@/features/classes/repositories/index';
 import { studentRepository } from '@/features/students/repositories/index';
 
-import { StudentForm } from '@/features/students/components/student-form';
+import { StudentDetail } from '@/features/students/components/student-detail';
 import { PageLayout } from '@/components/ui';
 
 type StudentDetailPageProps = {
@@ -13,8 +13,7 @@ type StudentDetailPageProps = {
 export const StudentDetailPage = async ({ params }: StudentDetailPageProps) => {
   const { id } = await params;
   const student = await studentRepository.findById(id);
-  const classes = await classRepository.findAll();
-  const classesOptions = classes.map((c) => ({ label: c.name, value: c.id }));
+  const classData = await classRepository.findById(student.classId.toString());
 
   if (!student) {
     notFound();
@@ -25,15 +24,17 @@ export const StudentDetailPage = async ({ params }: StudentDetailPageProps) => {
       <PageLayout.Header>
         <div className="flex flex-col w-full gap-y-6">
           <section>
-            <h1 className="text-2xl font-semibold sm:text-3xl">Detail Siswa</h1>
+            <h1 className="text-2xl font-semibold sm:text-3xl">Student Profile</h1>
 
-            <p className="mt-2 text-secondary">Ubah data siswa {student.name}.</p>
+            <p className="mt-2 text-secondary">
+              View the detailed information of student {student.name}.
+            </p>
           </section>
         </div>
       </PageLayout.Header>
 
       <PageLayout.Content>
-        <StudentForm student={student} classes={classesOptions} />
+        <StudentDetail student={student} classData={classData} />
       </PageLayout.Content>
     </PageLayout>
   );
