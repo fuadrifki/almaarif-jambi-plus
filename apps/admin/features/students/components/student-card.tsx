@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { Button, Surface } from '@/components/ui';
 import { MapPin, Phone, Pencil, User, Trash2, School } from 'lucide-react';
@@ -17,7 +18,23 @@ export const StudentCard = ({ student, classes, onDelete }: StudentCardProps) =>
 
   return (
     <Surface className="p-4">
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex items-start gap-3">
+        <div className="shrink-0">
+          {student.photoUrl ? (
+            <Image
+              src={student.photoUrl}
+              alt={student.name}
+              width={40}
+              height={40}
+              className="h-10 w-10 rounded-full object-cover"
+            />
+          ) : (
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-sm font-semibold text-white/40">
+              {student.name.charAt(0).toUpperCase()}
+            </div>
+          )}
+        </div>
+
         <div className="min-w-0 flex-1 space-y-1.5">
           <div className="flex items-center gap-2">
             <h3 className="truncate text-sm font-medium text-primary">{student.name}</h3>

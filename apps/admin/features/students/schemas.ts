@@ -7,6 +7,7 @@ export const studentSchema = z.object({
   guardianName: z.string().min(1, 'Nama wali wajib diisi'),
   guardianPhone: z.string().min(1, 'Telepon wali wajib diisi'),
   address: z.string().min(1, 'Alamat wajib diisi'),
+  photoUrl: z.string().nullable().optional(),
 });
 
 export type StudentFormData = z.infer<typeof studentSchema>;

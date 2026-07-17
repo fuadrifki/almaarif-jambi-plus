@@ -10,6 +10,7 @@ export const students = pgTable(
     guardianName: varchar('guardian_name', { length: 225 }).notNull(),
     guardianPhone: varchar('guardian_phone', { length: 20 }).notNull(),
     address: text('address').notNull(),
+    photoUrl: text('photo_url'),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
   },

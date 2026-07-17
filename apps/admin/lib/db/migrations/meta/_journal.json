@@ -29,6 +29,13 @@
       "when": 1784222417613,
       "tag": "0003_optimal_karnak",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1784260797585,
+      "tag": "0004_far_machine_man",
+      "breakpoints": true
     }
   ]
 }

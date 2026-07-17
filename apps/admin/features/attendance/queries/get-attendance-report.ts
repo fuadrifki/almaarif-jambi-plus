@@ -127,6 +127,7 @@ const toStudent = (row: StudentRow) => ({
   guardianName: row.guardianName,
   guardianPhone: row.guardianPhone,
   address: row.address,
+  photoUrl: row.photoUrl ?? null,
   createdAt: row.createdAt,
   updatedAt: row.updatedAt,
 });

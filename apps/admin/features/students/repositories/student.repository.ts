@@ -14,6 +14,7 @@ const toStudent = (row: typeof students.$inferSelect): Student => ({
   guardianName: row.guardianName,
   guardianPhone: row.guardianPhone,
   address: row.address,
+  photoUrl: row.photoUrl,
   createdAt: row.createdAt,
   updatedAt: row.updatedAt,
 });
