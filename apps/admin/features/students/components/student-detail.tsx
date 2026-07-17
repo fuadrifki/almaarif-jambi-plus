@@ -1,10 +1,15 @@
-import { Button, Card, Field, FieldValue, Surface } from '@/components/ui';
+'use client';
+import { useState } from 'react';
+
+import { Button, Card, Field, FieldValue, Surface, Tabs, EmptyState } from '@/components/ui';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { Class } from '@/features/classes';
-
+import { History, FileSpreadsheet, User } from 'lucide-react';
 import type { Student } from '../types';
+import { formatDate } from '@/lib/utils/date';
+
+import { Class } from '@/features/classes';
 
 type StudentDetailProps = {
   student: Student;
@@ -12,7 +17,9 @@ type StudentDetailProps = {
 };
 
 export const StudentDetail = ({ student, classData }: StudentDetailProps) => {
-  return (
+  const [activeTab, setActiveTab] = useState('info');
+
+  const renderInfoTab = () => (
     <div className="space-y-4">
       <Card title="Foto Siswa">
         <div className="flex items-center justify-center sm:justify-start gap-4">
@@ -55,6 +62,10 @@ export const StudentDetail = ({ student, classData }: StudentDetailProps) => {
           <Field label="Kelas">
             <FieldValue>{classData?.name}</FieldValue>
           </Field>
+
+          <Field label="Kamar">
+            <FieldValue>{student?.room}</FieldValue>
+          </Field>
         </div>
       </Card>
 
@@ -86,6 +97,56 @@ export const StudentDetail = ({ student, classData }: StudentDetailProps) => {
             Edit
           </Button>
         </Link>
+      </div>
+
+      <Card>
+        <div className="grid gap-4 md:grid-cols-2">
+          <Field label="Created At">
+            <FieldValue>{formatDate(student.createdAt)}</FieldValue>
+          </Field>
+
+          <Field label="Updated At">
+            <FieldValue>{formatDate(student.updatedAt)}</FieldValue>
+          </Field>
+        </div>
+      </Card>
+    </div>
+  );
+
+  const renderAttendanceHistoryTab = () => (
+    <EmptyState
+      icon={<History size={32} />}
+      title="Belum ada riwayat absensi"
+      description="Fitur riwayat absensi akan tersedia pada milestone berikutnya."
+    />
+  );
+
+  const renderAttendanceReportTab = () => (
+    <EmptyState
+      icon={<FileSpreadsheet size={32} />}
+      title="Belum ada laporan absensi"
+      description="Fitur laporan absensi akan tersedia pada milestone berikutnya."
+    />
+  );
+
+  return (
+    <div className="space-y-4">
+      <Tabs value={activeTab} onValueChange={setActiveTab}>
+        <Tabs.Item value="info" icon={<User size={16} />}>
+          Info
+        </Tabs.Item>
+        <Tabs.Item value="history" icon={<History size={16} />}>
+          Riwayat Absensi
+        </Tabs.Item>
+        <Tabs.Item value="report" icon={<FileSpreadsheet size={16} />}>
+          Laporan Absensi
+        </Tabs.Item>
+      </Tabs>
+
+      <div>
+        {activeTab === 'info' && renderInfoTab()}
+        {activeTab === 'history' && renderAttendanceHistoryTab()}
+        {activeTab === 'report' && renderAttendanceReportTab()}
       </div>
     </div>
   );

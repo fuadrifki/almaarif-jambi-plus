@@ -2,6 +2,7 @@ export type Student = {
   id: number;
   nis: string;
   name: string;
+  room: string;
   classId: number;
   guardianName: string;
   guardianPhone: string;

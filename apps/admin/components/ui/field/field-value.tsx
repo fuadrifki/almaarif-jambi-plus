@@ -13,7 +13,7 @@ export const FieldValue = ({
       role="status"
       aria-live="polite"
     >
-      {children}
+      {children || '-'}
     </div>
   );
 };
