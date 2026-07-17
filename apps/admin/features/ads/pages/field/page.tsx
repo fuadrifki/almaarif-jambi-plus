@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 
-import { Field, Input } from '@/components/ui';
+import { Badge } from '@/components/ui';
+import { Field, Input, FieldValue } from '@/components/ui';
 
 import { SectionPreview } from '../../components/section-preview';
 
@@ -67,6 +68,66 @@ export const FieldPage = () => {
       >
         <Field label="Search" error={error} description="Ketik untuk mencari.">
           <Input value={value} onChange={handleChange} placeholder="Ketik..." />
+        </Field>
+      </SectionPreview>
+
+      <SectionPreview
+        title="Read-only FieldValue"
+        description="FieldValue for displaying read-only content. Use in Student Detail and other view modes."
+        code={`<Field label="Nama">
+  <FieldValue>Ahmad Fauzi</FieldValue>
+</Field>
+
+<Field label="Alamat">
+  <FieldValue className="whitespace-pre-wrap break-words">Jl. Merdeka No. 123, Jakarta</FieldValue>
+</Field>`}
+      >
+        <Field label="Nama">
+          <FieldValue>Ahmad Fauzi</FieldValue>
+        </Field>
+
+        <Field label="Alamat">
+          <FieldValue className="whitespace-pre-wrap break-words">
+            Jl. Merdeka No. 123, Jakarta
+          </FieldValue>
+        </Field>
+      </SectionPreview>
+
+      <SectionPreview
+        title="FieldValue with Badge"
+        description="FieldValue can contain Badge for status, labels, or indicators."
+        code={`<Field label="Status">
+  <FieldValue>
+    <Badge variant="success">Aktif</Badge>
+  </FieldValue>
+</Field>`}
+      >
+        <Field label="Status">
+          <FieldValue>
+            <Badge variant="success">Aktif</Badge>
+          </FieldValue>
+        </Field>
+      </SectionPreview>
+
+      <SectionPreview
+        title="FieldValue with ReactNode"
+        description="FieldValue accepts ReactNode for rich content like links, icons, and custom layouts."
+        code={`<Field label="Situs Web">
+  <FieldValue>
+    <div className="flex items-center gap-2">
+      <a href="https://example.com" className="text-primary hover:underline">https://example.com</a>
+    </div>
+  </FieldValue>
+</Field>`}
+      >
+        <Field label="Situs Web">
+          <FieldValue>
+            <div className="flex items-center gap-2">
+              <a href="https://example.com" className="text-primary hover:underline">
+                https://example.com
+              </a>
+            </div>
+          </FieldValue>
         </Field>
       </SectionPreview>
 

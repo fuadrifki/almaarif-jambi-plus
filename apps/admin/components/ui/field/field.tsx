@@ -10,7 +10,7 @@ export const Field = ({
 }: FieldProps) => (
   <div className="space-y-2">
     {label && (
-      <label htmlFor={id} className="block text-sm font-medium text-primary">
+      <label htmlFor={id} className="block text-sm font-semibold text-primary">
         {label}
 
         {required && <span className="ml-1 text-red-400">*</span>}

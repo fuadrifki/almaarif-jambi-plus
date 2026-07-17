@@ -13,18 +13,19 @@ type StudentDetailPageProps = {
 export const StudentDetailPage = async ({ params }: StudentDetailPageProps) => {
   const { id } = await params;
   const student = await studentRepository.findById(id);
-  const classData = await classRepository.findById(student.classId.toString());
 
   if (!student) {
     notFound();
   }
+
+  const classData = await classRepository.findById(student.classId.toString());
 
   return (
     <PageLayout>
       <PageLayout.Header>
         <div className="flex flex-col w-full gap-y-6">
           <section>
-            <h1 className="text-2xl font-semibold sm:text-3xl">Student Profile</h1>
+            <h1 className="text-2xl font-semibold sm:text-3xl text-primary">Student Profile</h1>
 
             <p className="mt-2 text-secondary">
               View the detailed information of student {student.name}.
