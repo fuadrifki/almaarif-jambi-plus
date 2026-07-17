@@ -28,13 +28,13 @@ export const StudentCard = ({ student, classes, onDelete }: StudentCardProps) =>
                   alt={student.name}
                   width={40}
                   height={40}
-                  className="h-20 w-20 rounded-full object-cover"
+                  className="h-10 w-10 rounded-full object-cover"
                 />
               </Card>
             </Surface>
           ) : (
             <Surface className="rounded-full!">
-              <Card className="flex h-20 w-20 items-center justify-center rounded-full text-sm font-semibold text-secondary">
+              <Card className="flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold text-secondary">
                 {student.name.charAt(0).toUpperCase()}
               </Card>
             </Surface>
