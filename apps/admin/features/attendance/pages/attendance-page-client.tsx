@@ -148,6 +148,10 @@ export const AttendancePageClient = ({
 
       toast.success('Absensi berhasil disimpan');
 
+      toast.success('Absensi berhasil disimpan');
+
+      // Reset form
+      setClassId(0);
       setStatuses({});
       setNotes({});
     } catch (error) {

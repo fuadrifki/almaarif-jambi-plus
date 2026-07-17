@@ -25,7 +25,6 @@ const STATUS_LABEL: Record<string, string> = {
 
 export const AttendanceRecordRow = ({ record, students }: AttendanceRecordRowProps) => {
   const student = students.find((s) => s.id === record.studentId);
-  console.log('🚀 ~ AttendanceRecordRow ~ students:', { students, student });
 
   return (
     <Surface className="flex items-center gap-4 p-4">
