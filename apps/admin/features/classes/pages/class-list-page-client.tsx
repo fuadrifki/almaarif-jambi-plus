@@ -59,9 +59,9 @@ export const ClassListPageClient = ({ classes }: ClassListPageClientProps) => {
             className="w-full sm:w-1/3"
           />
 
-          <Button className="w-full sm:w-auto shrink-0" onClick={() => router.push('/classes/new')}>
+          {/* <Button className="w-full sm:w-auto shrink-0" onClick={() => router.push('/classes/new')}>
             Tambah Kelas
-          </Button>
+          </Button> */}
         </div>
       </PageLayout.Header>
 
