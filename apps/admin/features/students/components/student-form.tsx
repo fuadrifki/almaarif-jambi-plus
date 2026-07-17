@@ -131,17 +131,23 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
         <div className="flex items-center gap-4">
           <div className="relative shrink-0">
             {photoPreview ? (
-              <Image
-                src={photoPreview}
-                alt="Foto siswa"
-                width={80}
-                height={80}
-                className="h-20 w-20 rounded-full object-cover"
-              />
+              <Surface className="rounded-full!">
+                <Card className="flex w-max h-max items-center justify-center rounded-full! text-sm font-semibold text-primary p-0">
+                  <Image
+                    src={photoPreview}
+                    alt="Foto siswa"
+                    width={80}
+                    height={80}
+                    className="h-20 w-20 rounded-full object-cover"
+                  />
+                </Card>
+              </Surface>
             ) : (
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-white/10 text-2xl font-semibold text-white/40">
-                {student?.name?.charAt(0)?.toUpperCase() ?? '?'}
-              </div>
+              <Surface className="rounded-full!">
+                <Card className="flex h-20 w-20 items-center justify-center rounded-full text-sm font-semibold text-secondary">
+                  {student?.name?.charAt(0)?.toUpperCase() ?? '?'}
+                </Card>
+              </Surface>
             )}
 
             {uploading && (
