@@ -28,7 +28,7 @@ export default async function AttendanceDetailPage({
   }
 
   const [records, students] = await Promise.all([
-    attendanceRecordRepository.findBySessionId(id),
+    attendanceRecordRepository.findBySessionId(Number(id)),
     studentRepository.findAll(),
   ]);
 

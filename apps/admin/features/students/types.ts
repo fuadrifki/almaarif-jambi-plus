@@ -3,9 +3,10 @@ export type Student = {
   nis: string;
   name: string;
   classId: number;
+  room: string;
   guardianName: string;
   guardianPhone: string;
   address: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 };

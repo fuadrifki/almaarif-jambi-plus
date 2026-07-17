@@ -27,7 +27,7 @@ export const updateStudent = async (id: string, data: StudentFormData) => {
 
   const duplicate = await studentRepository.findByNis(data.nis);
 
-  if (duplicate && duplicate.id !== id) {
+  if (duplicate && duplicate.id !== Number(id)) {
     throw new Error('NIS sudah terdaftar');
   }
 

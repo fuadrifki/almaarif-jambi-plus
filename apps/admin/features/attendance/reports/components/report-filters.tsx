@@ -48,7 +48,7 @@ export const ReportFilters = ({ classes }: ReportFiltersProps) => {
   };
 
   const handleClassChange = (value: string) => {
-    updateSearchParams({ classId: value, page: 1 });
+    updateSearchParams({ classId: Number(value), page: 1 });
   };
 
   const handleReset = () => {

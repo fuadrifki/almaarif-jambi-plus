@@ -8,7 +8,7 @@ import {
   TableRow,
 } from '@/components/ui';
 import { cn } from '@/lib';
-import { ReportRow } from '../../queries/report/types';
+import type { ReportRow } from '../../queries/types';
 import { Class } from '@/features/classes';
 
 type ReportAttendanceTableProps = {

@@ -2,7 +2,7 @@ import type { AttendanceStatus } from '@/features/attendance/types';
 import type { Student } from '@/features/students/types';
 
 export type ReportFilter = {
-  classId?: string;
+  classId?: number;
   date?: string;
   page?: number;
 };

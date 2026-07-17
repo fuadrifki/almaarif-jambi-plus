@@ -41,7 +41,7 @@ export const StudentList = ({ students, classes }: StudentListProps) => {
     setDeleting(true);
 
     try {
-      await deleteStudent(deleteTarget.id);
+      await deleteStudent(String(deleteTarget.id));
 
       toast.success('Siswa berhasil dihapus');
 

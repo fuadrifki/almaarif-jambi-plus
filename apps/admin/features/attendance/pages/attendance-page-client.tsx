@@ -49,8 +49,8 @@ export const AttendancePageClient = ({
   const teacherLabel = useMemo(() => TEACHERS.find((t) => t.id === teacherId)?.name, [teacherId]);
 
   const [classId, setClassId] = useState<number>(0);
-  const [statuses, setStatuses] = useState<Record<string, AttendanceStatus>>({});
-  const [notes, setNotes] = useState<Record<string, string>>({});
+  const [statuses, setStatuses] = useState<Record<number, AttendanceStatus>>({});
+  const [notes, setNotes] = useState<Record<number, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [dateFilter, setDateFilter] = useState<Date | undefined>();
@@ -71,40 +71,46 @@ export const AttendancePageClient = ({
         const [start, end] = item.time.split('-');
         const inRange = currentTime >= start && currentTime <= end;
 
-        return item.day === currentDay && inRange && item.classId === classId;
+        return (
+          item.day === currentDay &&
+          inRange &&
+          item.classId === classId &&
+          item.teacherId === teacherId
+        );
       }) ?? undefined
     );
-  }, [classId]);
+  }, [classId, teacherId]);
 
   const subjectsByClass = useMemo(() => {
-    const schedules = SCHEDULES.filter((s) => s.classId === classId);
+    const schedules = SCHEDULES.filter((s) => s.teacherId === teacherId);
 
     const data = SUBJECTS.filter((s) => schedules.find((sch) => sch.subjectId === s.id));
 
     const res = data.sort((a, b) => a.label.localeCompare(b.label));
 
     return res.map((s) => ({ value: s.id, label: s.label }));
-  }, [classId]);
+  }, [teacherId]);
 
   const subjectOptions = useMemo(
-    () => [{ value: 0, label: 'Mata pelajaran' }, ...subjectsByClass],
+    () => [{ value: 0, label: 'Semua' }, ...subjectsByClass],
     [subjectsByClass],
   );
 
   const filteredSessions = useMemo(() => {
     return sessions.filter((s) => {
-      if (dateFilter && isEqual(s.date, dateFilter)) return false;
+      if (dateFilter && format(s.date, 'yyyy-MM-dd') !== format(dateFilter, 'yyyy-MM-dd'))
+        return false;
       if (classFilter && s.classId !== classFilter) return false;
       if (subjectFilter && s.subjectId !== subjectFilter) return false;
       return true;
     });
   }, [sessions, dateFilter, classFilter, subjectFilter]);
 
-  const handleStatusChange = (studentId: string, status: AttendanceStatus) => {
+  const handleStatusChange = (studentId: number, status: AttendanceStatus) => {
     setStatuses((prev) => ({ ...prev, [studentId]: status }));
   };
 
-  const handleNotesChange = (studentId: string, value: string) => {
+  const handleNotesChange = (studentId: number, value: string) => {
     setNotes((prev) => ({ ...prev, [studentId]: value }));
   };
 
@@ -202,7 +208,7 @@ export const AttendancePageClient = ({
             <DatePicker value={dateFilter} onChange={setDateFilter} placeholder="Pilih tanggal" />
 
             <Select
-              options={[{ value: 0, label: 'Semua Kelas' }, ...classes]}
+              options={[{ value: 0, label: 'Semua' }, ...classes]}
               value={classFilter}
               placeholder="Kelas"
               onChange={(value) => setClassFilter(Number(value))}

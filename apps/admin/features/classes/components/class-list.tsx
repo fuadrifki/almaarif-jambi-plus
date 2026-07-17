@@ -39,7 +39,7 @@ export const ClassList = ({ classes }: ClassListProps) => {
     setDeleting(true);
 
     try {
-      await deleteClass(deleteTarget.id);
+      await deleteClass(String(deleteTarget.id));
 
       toast.success('Siswa berhasil dihapus');
 

@@ -9,8 +9,8 @@ type AttendanceStudentRowProps = {
   student: Student;
   status: AttendanceStatus | undefined;
   notes: string;
-  onStatusChange: (studentId: string, status: AttendanceStatus) => void;
-  onNotesChange: (studentId: string, notes: string) => void;
+  onStatusChange: (studentId: number, status: AttendanceStatus) => void;
+  onNotesChange: (studentId: number, notes: string) => void;
 };
 
 export const AttendanceStudentRow = ({

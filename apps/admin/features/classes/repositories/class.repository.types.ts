@@ -6,7 +6,7 @@ export type CreateClassData = {
   level: number;
   academicLevel: string;
   gender: 'male' | 'female' | 'mixed';
-  description?: string | null;
+  description?: string;
   createdAt?: Date;
   updatedAt?: Date;
 };

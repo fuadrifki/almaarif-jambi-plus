@@ -120,7 +120,7 @@ export const getAttendanceReport = async (
 };
 
 const toStudent = (row: StudentRow) => ({
-  id: String(row.id),
+  id: row.id,
   nis: row.nis,
   name: row.name,
   classId: row.classId,
