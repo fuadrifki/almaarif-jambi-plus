@@ -1,4 +1,4 @@
-import { eq, like, or } from 'drizzle-orm';
+import { desc, eq, like, or } from 'drizzle-orm';
 
 import { getDb } from '@/lib/db/client';
 import { students } from '@/lib/db/schema';
@@ -10,6 +10,7 @@ const toStudent = (row: typeof students.$inferSelect): Student => ({
   id: row.id,
   nis: row.nis,
   name: row.name,
+  room: row.room,
   classId: row.classId,
   guardianName: row.guardianName,
   guardianPhone: row.guardianPhone,
@@ -21,7 +22,7 @@ const toStudent = (row: typeof students.$inferSelect): Student => ({
 
 export const studentRepository: StudentRepository = {
   async findAll() {
-    const rows = await getDb().select().from(students);
+    const rows = await getDb().select().from(students).orderBy(desc(students.updatedAt));
 
     return rows.map(toStudent);
   },

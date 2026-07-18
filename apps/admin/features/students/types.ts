@@ -7,7 +7,7 @@ export type Student = {
   guardianName: string;
   guardianPhone: string;
   address: string;
-  photoUrl: string | null;
-  createdAt: Date;
-  updatedAt: Date;
+  photoUrl?: string | null;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
