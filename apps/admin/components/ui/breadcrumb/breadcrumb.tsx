@@ -1,36 +1,39 @@
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, House } from 'lucide-react';
 
 import { cn } from '@/lib';
 
 import type { BreadcrumbItem, BreadcrumbProps } from './breadcrumb.types';
+import Link from 'next/link';
+import { Button } from '../button';
 
 const renderItem = (item: BreadcrumbItem, isLast: boolean) => {
   const hasHref = item.href && !isLast;
 
   const content = (
-    <span className="ads-breadcrumb__link ads-breadcrumb__link--current" aria-current="page">
-      {item.icon && <item.icon className="ads-breadcrumb__icon" />}
+    <Button variant="ghost" size="sm" disabled leftIcon={item.icon && <item.icon size={16} />}>
       {item.label}
-      {isLast && !item.href && <ChevronRight className="ads-breadcrumb__chevron" />}
-    </span>
+    </Button>
   );
 
   if (hasHref) {
     return (
-      <a href={item.href} className="ads-breadcrumb__link">
-        {item.icon && <item.icon className="ads-breadcrumb__icon" />}
-        {item.label}
-      </a>
+      item.href && (
+        <Link href={item.href} className="ads-breadcrumb__link flex items-center">
+          <Button variant="ghost" size="sm" leftIcon={item.icon && <item.icon size={16} />}>
+            {item.label}
+          </Button>
+        </Link>
+      )
     );
   }
 
   return content;
 };
 
-export const Breadcrumb = ({ showHome = false, items, className, ...props }: BreadcrumbProps) => {
-  const homeItem = {
-    label: 'Home',
+export const Breadcrumb = ({ showHome = true, items, className, ...props }: BreadcrumbProps) => {
+  const homeItem: BreadcrumbItem = {
     href: '/',
+    icon: House,
   };
 
   const filteredItems = showHome ? [homeItem, ...items] : items;
@@ -38,23 +41,23 @@ export const Breadcrumb = ({ showHome = false, items, className, ...props }: Bre
 
   return (
     <nav aria-label="Breadcrumb" className={cn('ads-breadcrumb', className)} {...props}>
-      <ol className="ads-breadcrumb__list">
+      <div className="ads-breadcrumb__list flex items-center">
         {filteredItems.map((item, index) => {
           const isLast = index === lastIndex;
 
           return (
-            <li key={index} className="ads-breadcrumb__item">
+            <div key={index} className="ads-breadcrumb__item flex items-center">
               {renderItem(item, isLast)}
 
               {index < lastIndex && (
                 <span className="ads-breadcrumb__separator">
-                  <ChevronRight className="ads-breadcrumb__chevron" />
+                  <ChevronRight size={16} />
                 </span>
               )}
-            </li>
+            </div>
           );
         })}
-      </ol>
+      </div>
     </nav>
   );
 };

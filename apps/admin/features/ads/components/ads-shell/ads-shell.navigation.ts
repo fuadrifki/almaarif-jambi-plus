@@ -108,6 +108,10 @@ export const designNavigation = [
         label: 'Date Picker',
         href: '/design/date-picker',
       },
+      {
+        label: 'Breadcrumb',
+        href: '/design/breadcrumb',
+      },
     ],
   },
 ] as const;

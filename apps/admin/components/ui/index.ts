@@ -20,3 +20,4 @@ export * from './empty-state';
 export * from './infinite-scroll';
 export * from './skeleton';
 export * from './tabs';
+export * from './breadcrumb';
