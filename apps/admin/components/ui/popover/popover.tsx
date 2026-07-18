@@ -1,5 +1,5 @@
 import { cn } from '@/lib';
-import type { ComponentPropsWithoutRef, ReactNode } from 'react';
+import type { ComponentPropsWithoutRef } from 'react';
 
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 
@@ -9,20 +9,33 @@ const PopoverTrigger = PopoverPrimitive.Trigger;
 
 const PopoverContent = ({
   className,
+  side = 'bottom',
+  align = 'center',
   sideOffset = 8,
+  alignOffset = 0,
   children,
   ...props
-}: ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>) => {
+}: ComponentPropsWithoutRef<typeof PopoverPrimitive.Content> & {
+  side?: 'top' | 'right' | 'bottom' | 'left';
+  align?: 'start' | 'center' | 'end';
+  sideOffset?: number;
+  alignOffset?: number;
+}) => {
   return (
     <PopoverPrimitive.Portal>
       <PopoverPrimitive.Content
+        side={side}
+        align={align}
         sideOffset={sideOffset}
+        alignOffset={alignOffset}
         className={cn(
+          'z-50 ads-popover',
           'bg-surface/95 backdrop-blur-xl',
           'border border-border',
           'rounded-xl',
           'shadow-xl',
-          'ads-popover',
+          'p-2',
+          'ads-popover-content',
           className,
         )}
         {...props}

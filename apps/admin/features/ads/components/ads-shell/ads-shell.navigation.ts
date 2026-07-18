@@ -77,6 +77,10 @@ export const designNavigation = [
         href: '/design/alert-dialog',
       },
       {
+        label: 'Popover',
+        href: '/design/popover',
+      },
+      {
         label: 'Empty State',
         href: '/design/empty-state',
       },
