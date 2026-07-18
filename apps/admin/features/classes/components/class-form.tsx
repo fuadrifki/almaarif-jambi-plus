@@ -8,7 +8,6 @@ import {
   Button,
   Field,
   Input,
-  Surface,
   toast,
   Select,
   Table,
@@ -17,6 +16,7 @@ import {
   TableHead,
   TableBody,
   TableCell,
+  Card,
 } from '@/components/ui';
 
 import { createClass, updateClass } from '../server';
@@ -28,6 +28,7 @@ import { TEACHERS } from '@/lib/db/seed-teachers';
 import { SUBJECTS } from '@/lib/db/seed-subjects';
 import { useMemo } from 'react';
 import { generateClassName } from '@/lib';
+import Link from 'next/link';
 
 type ClassFormProps = {
   classData?: Class;
@@ -78,8 +79,8 @@ export const ClassForm = ({ classData }: ClassFormProps) => {
   );
 
   return (
-    <Surface className="p-6">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <Card>
         <div className="grid gap-4 md:grid-cols-2">
           <Field label="Kode" required error={errors.code?.message}>
             <Input
@@ -167,17 +168,19 @@ export const ClassForm = ({ classData }: ClassFormProps) => {
             </Table>
           </Field>
         )}
+      </Card>
 
-        <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
-          <Button type="button" variant="ghost" onClick={() => router.push('/classes')}>
-            Batal
+      <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
+        <Link href={`/classes`} className="w-full sm:w-max">
+          <Button type="button" variant="ghost">
+            Kembali
           </Button>
+        </Link>
 
-          <Button type="submit" status={isSubmitting ? 'loading' : 'idle'}>
-            {isEdit ? 'Simpan Perubahan' : 'Tambah Kelas'}
-          </Button>
-        </div>
-      </form>
-    </Surface>
+        <Button type="submit" status={isSubmitting ? 'loading' : 'idle'}>
+          {isEdit ? 'Simpan Perubahan' : 'Tambah Kelas'}
+        </Button>
+      </div>
+    </form>
   );
 };

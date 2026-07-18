@@ -1,10 +1,9 @@
 'use client';
 
 import { useMemo } from 'react';
-import { useRouter } from 'next/navigation';
 
-import { Button, EmptyState, PageLayout, Surface } from '@/components/ui';
-import { ArrowLeft, ClipboardCheck } from 'lucide-react';
+import { EmptyState, PageLayout, Surface } from '@/components/ui';
+import { ClipboardCheck } from 'lucide-react';
 
 import { CLASSES, SUBJECTS } from '@/config/lookups';
 
@@ -24,8 +23,6 @@ export const AttendanceDetailPageClient = ({
   records,
   students,
 }: AttendanceDetailPageClientProps) => {
-  const router = useRouter();
-
   const className = useMemo(
     () => CLASSES.find((c) => c.value === session.classId)?.label ?? session.classId,
     [session.classId],
@@ -55,15 +52,6 @@ export const AttendanceDetailPageClient = ({
   return (
     <PageLayout>
       <PageLayout.Header>
-        <Button
-          variant="ghost"
-          size="sm"
-          leftIcon={<ArrowLeft size={16} />}
-          onClick={() => router.push('/attendance')}
-        >
-          Kembali
-        </Button>
-
         <h1 className="text-2xl font-semibold sm:text-3xl">Detail Absensi</h1>
 
         <Surface className="space-y-3 p-4">

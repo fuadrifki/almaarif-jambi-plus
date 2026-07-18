@@ -15,6 +15,7 @@ import { studentSchema } from '../schemas';
 
 import type { StudentFormData } from '../schemas';
 import type { Student } from '../types';
+import Link from 'next/link';
 
 type StudentFormProps = {
   student?: Student;
@@ -141,8 +142,8 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
               </Surface>
             ) : (
               <Surface className="rounded-full!">
-                <Card className="flex h-20 w-20 items-center justify-center rounded-full text-sm font-semibold text-secondary">
-                  {student?.name?.charAt(0)?.toUpperCase() ?? '?'}
+                <Card className="flex h-20 w-20 items-center justify-center rounded-full text-4xl font-semibold text-secondary">
+                  {watch('name')?.charAt(0)?.toUpperCase() || '?'}
                 </Card>
               </Surface>
             )}
@@ -251,18 +252,12 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
       </Card>
 
       <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
-        {isEdit && (
-          <Button
-            type="button"
-            variant="ghost"
-            onClick={() => router.push(`/students/${student.id}`)}
-          >
-            Kembali ke Detail
+        <Link href={isEdit ? `/students/${student.id}` : `/students`} className="w-full sm:w-max">
+          <Button type="button" variant="ghost">
+            Kembali
           </Button>
-        )}
-        <Button type="button" variant="ghost" onClick={() => router.push('/students')}>
-          Batal
-        </Button>
+        </Link>
+
         <Button type="submit" status={isSubmitting ? 'loading' : 'idle'}>
           {isEdit ? 'Simpan Perubahan' : 'Tambah Siswa'}
         </Button>

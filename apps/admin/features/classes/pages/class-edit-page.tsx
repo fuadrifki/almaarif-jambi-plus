@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 
 import { PageLayout } from '@/components/ui';
+import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { ClassForm } from '../components/class-form';
 import { classRepository } from '../repositories';
 
@@ -19,13 +20,18 @@ export const ClassEditPage = async ({ params }: ClassEditPageProps) => {
   return (
     <PageLayout>
       <PageLayout.Header>
-        <div className="flex flex-col w-full gap-y-6">
-          <section>
-            <h1 className="text-2xl font-semibold sm:text-3xl">Edit Kelas</h1>
+        <Breadcrumb
+          items={[
+            { label: 'Classes', href: '/classes' },
+            { label: classDetail.name, href: `/classes/${id}` },
+            { label: 'Edit' },
+          ]}
+        />
+        <section>
+          <h1 className="text-2xl font-semibold sm:text-3xl">Edit Kelas</h1>
 
-            <p className="mt-2 text-secondary">Ubah data kelas {classDetail.name}.</p>
-          </section>
-        </div>
+          <p className="mt-2 text-secondary">Ubah data kelas {classDetail.name}.</p>
+        </section>
       </PageLayout.Header>
 
       <PageLayout.Content>

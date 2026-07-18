@@ -1,6 +1,7 @@
 'use client';
 
 import { PageLayout } from '@/components/ui';
+import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { ReportSummaryCards } from '../components/report-summary-cards';
 import { ReportAttendanceTable } from '../components/report-attendance-table';
 import { ReportFilters } from '../components/report-filters';
@@ -20,6 +21,13 @@ export const ReportListPageClient = ({
   return (
     <PageLayout>
       <PageLayout.Header>
+        <Breadcrumb
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Attendance', href: '/attendance' },
+            { label: 'Reports' },
+          ]}
+        />
         <h1 className="text-2xl font-semibold sm:text-3xl">Laporan Absensi Siswa</h1>
 
         <p className="text-secondary">Buat data laporan absensi siswa pesantren.</p>

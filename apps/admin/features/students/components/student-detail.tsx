@@ -1,13 +1,22 @@
 'use client';
 import { useState } from 'react';
 
-import { Button, Card, Field, FieldValue, Surface, Tabs, EmptyState } from '@/components/ui';
+import {
+  Button,
+  Card,
+  Field,
+  FieldValue,
+  Surface,
+  Tabs,
+  EmptyState,
+  PageLayout,
+  Breadcrumb,
+} from '@/components/ui';
 import Link from 'next/link';
 import Image from 'next/image';
 
 import { History, FileSpreadsheet, User } from 'lucide-react';
 import type { Student } from '../types';
-import { formatDate } from '@/lib/utils/date';
 
 import { Class } from '@/features/classes';
 
@@ -83,8 +92,8 @@ export const StudentDetail = ({ student, classData }: StudentDetailProps) => {
       </Card>
 
       <div className="flex gap-3 pt-2 items-center justify-center sm:justify-end">
-        <Link href="/students" className="w-full sm:w-max">
-          <Button type="button" variant="ghost" className="w-full">
+        <Link href={`/students`} className="w-full sm:w-max">
+          <Button type="button" variant="ghost">
             Kembali
           </Button>
         </Link>
@@ -95,17 +104,6 @@ export const StudentDetail = ({ student, classData }: StudentDetailProps) => {
           </Button>
         </Link>
       </div>
-
-      <Card>
-        <div className="grid gap-4 md:grid-cols-2">
-          <Field label="Created At">
-            <FieldValue>{formatDate(student.createdAt)}</FieldValue>
-          </Field>
-          <Field label="Updated At">
-            <FieldValue>{formatDate(student.updatedAt)}</FieldValue>
-          </Field>
-        </div>
-      </Card>
     </div>
   );
 
@@ -126,24 +124,37 @@ export const StudentDetail = ({ student, classData }: StudentDetailProps) => {
   );
 
   return (
-    <div className="space-y-4">
-      <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <Tabs.Item value="info" icon={<User size={16} />}>
-          Info
-        </Tabs.Item>
-        <Tabs.Item value="history" icon={<History size={16} />}>
-          Riwayat Absensi
-        </Tabs.Item>
-        <Tabs.Item value="report" icon={<FileSpreadsheet size={16} />}>
-          Laporan Absensi
-        </Tabs.Item>
-      </Tabs>
+    <PageLayout>
+      <PageLayout.Header>
+        <Breadcrumb items={[{ label: 'Students', href: '/students' }, { label: student.name }]} />
+        <section>
+          <h1 className="text-2xl font-semibold sm:text-3xl text-primary">Student Profile</h1>
 
-      <div>
+          <p className="mt-2 text-secondary">
+            View the detailed information of student {student.name}.
+          </p>
+        </section>
+
+        <div className="space-y-4">
+          <Tabs value={activeTab} onValueChange={setActiveTab}>
+            <Tabs.Item value="info" icon={<User size={16} />}>
+              Info
+            </Tabs.Item>
+            <Tabs.Item value="history" icon={<History size={16} />}>
+              Riwayat Absensi
+            </Tabs.Item>
+            <Tabs.Item value="report" icon={<FileSpreadsheet size={16} />}>
+              Laporan Absensi
+            </Tabs.Item>
+          </Tabs>
+        </div>
+      </PageLayout.Header>
+
+      <PageLayout.Content>
         {activeTab === 'info' && renderInfoTab()}
         {activeTab === 'history' && renderAttendanceHistoryTab()}
         {activeTab === 'report' && renderAttendanceReportTab()}
-      </div>
-    </div>
+      </PageLayout.Content>
+    </PageLayout>
   );
 };
