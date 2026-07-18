@@ -1,35 +1,82 @@
 'use client';
-import { useCallback } from 'react';
+
+import { useCallback, useMemo } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
-import { Button, Select, Surface, DatePicker } from '@/components/ui';
-import { ReportFilter } from '../../queries/types';
-import { Class } from '@/features/classes/types';
+import { Button, Select, Surface } from '@/components/ui';
+import type { Class } from '@/features/classes/types';
 
 type ReportFiltersProps = {
-  className?: string;
   classes: Class[];
+  teachers: { id: number; name: string }[];
+  subjects: { id: number; name: string }[];
+  className?: string;
 };
 
-export const ReportFilters = ({ classes }: ReportFiltersProps) => {
+function generateMonthOptions() {
+  const now = new Date();
+  const options: { label: string; value: string }[] = [];
+  for (let i = 0; i < 12; i++) {
+    const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const value = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+    const label = date.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
+    options.push({ label, value });
+  }
+  return options;
+}
+
+const STATUS_OPTIONS = [
+  { label: 'Semua Status', value: '' },
+  { label: 'Hadir', value: 'PRESENT' },
+  { label: 'Sakit', value: 'SICK' },
+  { label: 'Izin', value: 'PERMISSION' },
+  { label: 'Alpha', value: 'ABSENT' },
+  { label: 'Belum Absen', value: 'NOT_SUBMITTED' },
+];
+
+export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const classId = searchParams.get('classId') || '';
-  const date = searchParams.get('date') || '';
+  const monthOptions = useMemo(() => generateMonthOptions(), []);
 
-  const classesOptions = classes.map((c) => ({
-    label: c.name,
-    value: c.id,
-  }));
+  const month = searchParams.get('month') || '';
+  const classId = searchParams.get('classId') || '';
+  const teacherId = searchParams.get('teacherId') || '';
+  const subjectId = searchParams.get('subjectId') || '';
+  const status = searchParams.get('status') || '';
+
+  const classOptions = useMemo(
+    () => [
+      { label: 'Semua Kelas', value: '' },
+      ...classes.map((c) => ({ label: c.name, value: c.id })),
+    ],
+    [classes],
+  );
+
+  const teacherOptions = useMemo(
+    () => [
+      { label: 'Semua Guru', value: '' },
+      ...teachers.map((t) => ({ label: t.name, value: t.id })),
+    ],
+    [teachers],
+  );
+
+  const subjectOptions = useMemo(
+    () => [
+      { label: 'Semua Mata Pelajaran', value: '' },
+      ...subjects.map((s) => ({ label: s.name, value: s.id })),
+    ],
+    [subjects],
+  );
 
   const updateSearchParams = useCallback(
-    (updates: Partial<ReportFilter>) => {
+    (updates: Record<string, string | number | undefined>) => {
       const params = new URLSearchParams(searchParams);
 
       Object.entries(updates).forEach(([key, value]) => {
-        if (value) {
+        if (value !== undefined && value !== '') {
           params.set(key, String(value));
         } else {
           params.delete(key);
@@ -41,38 +88,76 @@ export const ReportFilters = ({ classes }: ReportFiltersProps) => {
     [pathname, searchParams, router],
   );
 
-  const handleDateChange = (selectedDate: Date | undefined) => {
-    updateSearchParams({
-      date: selectedDate ? selectedDate.toISOString().split('T')[0] : undefined,
-    });
+  const handleMonthChange = (value: string | number) => {
+    updateSearchParams({ month: String(value), status: undefined });
   };
 
-  const handleClassChange = (value: string) => {
-    updateSearchParams({ classId: Number(value), page: 1 });
+  const handleClassChange = (value: string | number) => {
+    updateSearchParams({ classId: String(value) || undefined });
+  };
+
+  const handleTeacherChange = (value: string | number) => {
+    updateSearchParams({ teacherId: String(value) || undefined });
+  };
+
+  const handleSubjectChange = (value: string | number) => {
+    updateSearchParams({ subjectId: String(value) || undefined });
+  };
+
+  const handleStatusChange = (value: string | number) => {
+    updateSearchParams({ status: String(value) || undefined });
   };
 
   const handleReset = () => {
-    router.push(pathname, { scroll: false });
+    const params = new URLSearchParams();
+    if (month) {
+      params.set('month', month);
+    }
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   return (
     <Surface className="p-4">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 items-end">
         <Select
-          options={classesOptions}
+          options={monthOptions}
+          value={month}
+          placeholder="Bulan"
+          onChange={handleMonthChange}
+        />
+
+        <Select
+          options={classOptions}
           value={classId}
           placeholder="Kelas"
-          onChange={(value) => handleClassChange(String(value))}
+          onChange={handleClassChange}
         />
 
-        <DatePicker
-          value={date ? new Date(date) : undefined}
-          onChange={handleDateChange}
-          size="md"
+        <Select
+          options={teacherOptions}
+          value={teacherId}
+          placeholder="Guru"
+          onChange={handleTeacherChange}
         />
 
+        <Select
+          options={subjectOptions}
+          value={subjectId}
+          placeholder="Mata Pelajaran"
+          onChange={handleSubjectChange}
+        />
+
+        <Select
+          options={STATUS_OPTIONS}
+          value={status}
+          placeholder="Status"
+          onChange={handleStatusChange}
+        />
+      </div>
+
+      <div className="flex justify-end mt-4">
         <Button variant="outline" onClick={handleReset}>
-          Reset
+          Reset Filter
         </Button>
       </div>
     </Surface>

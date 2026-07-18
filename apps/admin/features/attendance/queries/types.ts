@@ -1,34 +1,33 @@
-import type { AttendanceStatus } from '@/features/attendance/types';
 import type { Student } from '@/features/students/types';
 
 export type ReportFilter = {
+  month: string;
   classId?: number;
-  date?: string;
-  page?: number;
+  teacherId?: number;
+  subjectId?: number;
+  status?: string;
 };
 
 export type ReportSummary = {
-  totalStudents: number;
   present: number;
   sick: number;
-  permission: number;
+  excused: number;
   absent: number;
-  notAttended: number;
+  notYetSubmitted: number;
 };
 
 export type ReportRow = {
-  student: Student;
-  attendanceStatus: AttendanceStatus | null;
-  time: string | null;
-  session: string | null;
+  date: string;
+  student: Pick<Student, 'id' | 'name' | 'nis' | 'classId'>;
+  className: string;
+  subjectName: string;
+  teacherName: string;
+  status: string | null;
+  notes: string | null;
 };
 
 export type AttendanceReportResult = {
   summary: ReportSummary;
   rows: ReportRow[];
-  pagination: {
-    page: number;
-    pageCount: number;
-    total: number;
-  };
+  total: number;
 };

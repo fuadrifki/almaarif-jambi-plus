@@ -1,76 +1,117 @@
+'use client';
+
+import { useCallback } from 'react';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+
 import { cn } from '@/lib';
-import { Badge, Card } from '@/components/ui';
-import { ReportSummary } from '../../queries/types';
+import { Card } from '@/components/ui';
+import type { ReportSummary } from '../../queries/types';
 
 type ReportSummaryCardsProps = {
-  summary: ReportSummary | null;
+  summary: ReportSummary;
   className?: string;
 };
 
-export const ReportSummaryCards = ({ summary, className }: ReportSummaryCardsProps) => {
-  if (!summary) {
-    return (
-      <div className={cn('grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4', className)}>
-        {Array.from({ length: 5 }).map((_, i) => (
-          <div key={i} className="h-24 bg-surface animate-pulse rounded-lg" />
-        ))}
-      </div>
-    );
-  }
+const CARDS = [
+  {
+    key: 'present' as const,
+    label: 'Hadir',
+    valueKey: 'present' as const,
+    filterValue: 'PRESENT',
+    variant: 'success' as const,
+    className: 'text-green-500',
+    bgClassName: 'hover:bg-green-500/10',
+  },
+  {
+    key: 'sick' as const,
+    label: 'Sakit',
+    valueKey: 'sick' as const,
+    filterValue: 'SICK',
+    variant: 'warning' as const,
+    className: 'text-yellow-500',
+    bgClassName: 'hover:bg-yellow-500/10',
+  },
+  {
+    key: 'excused' as const,
+    label: 'Izin',
+    valueKey: 'excused' as const,
+    filterValue: 'PERMISSION',
+    variant: 'info' as const,
+    className: 'text-blue-500',
+    bgClassName: 'hover:bg-blue-500/10',
+  },
+  {
+    key: 'absent' as const,
+    label: 'Alpha',
+    valueKey: 'absent' as const,
+    filterValue: 'ABSENT',
+    variant: 'danger' as const,
+    className: 'text-red-500',
+    bgClassName: 'hover:bg-red-500/10',
+  },
+  {
+    key: 'notYetSubmitted' as const,
+    label: 'Belum Absen',
+    valueKey: 'notYetSubmitted' as const,
+    filterValue: 'NOT_SUBMITTED',
+    variant: 'default' as const,
+    className: 'text-gray-500',
+    bgClassName: 'hover:bg-gray-500/10',
+  },
+];
 
-  const cards = [
-    {
-      label: 'Total',
-      value: `${summary.totalStudents} Siswa`,
-      variant: 'info' as const,
-      className: 'text-blue-500',
+export const ReportSummaryCards = ({ summary, className }: ReportSummaryCardsProps) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const handleCardClick = useCallback(
+    (filterValue: string) => {
+      const params = new URLSearchParams(searchParams);
+      const currentStatus = params.get('status');
+
+      if (currentStatus === filterValue) {
+        params.delete('status');
+      } else {
+        params.set('status', filterValue);
+      }
+
+      router.push(`${pathname}?${params.toString()}`, { scroll: false });
     },
-    {
-      label: 'Hadir',
-      value: `${summary.present} Siswa`,
-      variant: 'success' as const,
-      className: 'text-green-500',
-    },
-    {
-      label: 'Sakit',
-      value: `${summary.sick} Siswa`,
-      variant: 'warning' as const,
-      className: 'text-yellow-500',
-    },
-    {
-      label: 'Izin',
-      value: `${summary.permission} Siswa`,
-      variant: 'info' as const,
-      className: 'text-blue-500',
-    },
-    {
-      label: 'Alpha',
-      value: `${summary.absent} Siswa`,
-      variant: 'danger' as const,
-      className: 'text-red-500',
-    },
-    {
-      label: 'Belum Absen',
-      value: `${summary.notAttended} Siswa`,
-      variant: 'default' as const,
-      className: 'text-gray-500',
-    },
-  ];
+    [pathname, searchParams, router],
+  );
+
+  const currentStatus = searchParams.get('status') || '';
 
   return (
     <div className={cn('grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4', className)}>
-      {cards.map((card) => (
-        <Card key={card.label} title={card.label}>
-          <div className="flex flex-col gap-2">
-            <p className={cn('text-xl md:text-2xl font-bold', card.className)}>{card.value}</p>
-            <div className="flex items-center gap-2">
-              <Badge variant={card.variant} className="text-xs">
-                {card.value ? '✓' : '—'}
-              </Badge>
-            </div>
-          </div>
-        </Card>
-      ))}
+      {CARDS.map((card) => {
+        const isActive = currentStatus === card.filterValue;
+
+        return (
+          <button
+            key={card.key}
+            type="button"
+            onClick={() => handleCardClick(card.filterValue)}
+            className={cn(
+              'text-left rounded-lg border transition-colors',
+              isActive
+                ? 'border-primary bg-primary/10'
+                : 'border-transparent bg-surface hover:border-border',
+              card.bgClassName,
+            )}
+          >
+            <Card title={card.label}>
+              <div className="flex flex-col gap-1">
+                <p className={cn('text-xl md:text-2xl font-bold', card.className)}>
+                  {summary[card.valueKey]}
+                </p>
+                <p className="text-xs text-secondary">klik untuk filter</p>
+              </div>
+            </Card>
+          </button>
+        );
+      })}
     </div>
   );
 };
