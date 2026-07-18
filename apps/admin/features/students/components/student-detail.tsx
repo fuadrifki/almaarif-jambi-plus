@@ -8,7 +8,6 @@ import {
   FieldValue,
   Surface,
   Tabs,
-  EmptyState,
   PageLayout,
   Breadcrumb,
 } from '@/components/ui';
@@ -17,15 +16,26 @@ import Image from 'next/image';
 
 import { History, FileSpreadsheet, User } from 'lucide-react';
 import type { Student } from '../types';
+import type { StudentAttendanceHistoryRow } from '../queries/get-student-attendance-history';
+import type { StudentAttendanceReportRow } from '../queries/get-student-attendance-report';
+import { StudentAttendanceHistoryTab } from './student-attendance-history-tab';
+import { StudentAttendanceReportTab } from './student-attendance-report-tab';
 
 import { Class } from '@/features/classes';
 
 type StudentDetailProps = {
   student: Student;
   classData: Class | null;
+  attendanceHistory: StudentAttendanceHistoryRow[];
+  attendanceReport: StudentAttendanceReportRow[];
 };
 
-export const StudentDetail = ({ student, classData }: StudentDetailProps) => {
+export const StudentDetail = ({
+  student,
+  classData,
+  attendanceHistory,
+  attendanceReport,
+}: StudentDetailProps) => {
   const [activeTab, setActiveTab] = useState('info');
 
   const renderInfoTab = () => (
@@ -107,21 +117,9 @@ export const StudentDetail = ({ student, classData }: StudentDetailProps) => {
     </div>
   );
 
-  const renderAttendanceHistoryTab = () => (
-    <EmptyState
-      icon={<History size={32} />}
-      title="Belum ada riwayat absensi"
-      description="Fitur riwayat absensi akan tersedia pada milestone berikutnya."
-    />
-  );
+  const renderAttendanceHistoryTab = () => <StudentAttendanceHistoryTab rows={attendanceHistory} />;
 
-  const renderAttendanceReportTab = () => (
-    <EmptyState
-      icon={<FileSpreadsheet size={32} />}
-      title="Belum ada laporan absensi"
-      description="Fitur laporan absensi akan tersedia pada milestone berikutnya."
-    />
-  );
+  const renderAttendanceReportTab = () => <StudentAttendanceReportTab rows={attendanceReport} />;
 
   return (
     <PageLayout>

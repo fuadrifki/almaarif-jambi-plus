@@ -10,6 +10,7 @@ const toClass = (row: typeof classes.$inferSelect): Class => ({
   id: row.id,
   code: row.code,
   name: row.name,
+  room: '',
   level: row.level,
   academicLevel: row.academicLevel,
   gender: row.gender as 'female' | 'male' | 'mixed',
