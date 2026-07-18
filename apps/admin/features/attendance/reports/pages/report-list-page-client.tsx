@@ -54,38 +54,36 @@ export const ReportListPageClient = ({
         />
         <h1 className="text-2xl font-semibold sm:text-3xl">Laporan Absensi Siswa</h1>
         <p className="text-secondary">Buat data laporan absensi siswa pesantren.</p>
+
+        <ReportSummaryCards summary={summary} />
+        <ReportFilters classes={classes} teachers={teachers} subjects={subjects} />
       </PageLayout.Header>
 
       <PageLayout.Content>
-        <div className="space-y-6">
-          <ReportSummaryCards summary={summary} />
-          <ReportFilters classes={classes} teachers={teachers} subjects={subjects} />
-
-          {rows.length === 0 ? (
-            <EmptyState
-              title="Tidak ada data"
-              description="Tidak ada data absensi untuk filter yang dipilih. Silakan ubah filter untuk melihat data."
-            />
-          ) : (
-            <InfiniteScroll
-              hasMore={hasMore}
-              isLoading={isLoadingMore}
-              onLoadMore={loadMore}
-              loader={
-                <div className="flex justify-center py-4">
-                  <Skeleton className="h-8 w-full" />
-                </div>
-              }
-              end={
-                <p className="text-center text-sm text-secondary py-4">
-                  Semua {rows.length} data sudah dimuat
-                </p>
-              }
-            >
-              <ReportAttendanceTable rows={visibleRows} classes={classes} />
-            </InfiniteScroll>
-          )}
-        </div>
+        {rows.length === 0 ? (
+          <EmptyState
+            title="Tidak ada data"
+            description="Tidak ada data absensi untuk filter yang dipilih. Silakan ubah filter untuk melihat data."
+          />
+        ) : (
+          <InfiniteScroll
+            hasMore={hasMore}
+            isLoading={isLoadingMore}
+            onLoadMore={loadMore}
+            loader={
+              <div className="flex justify-center py-4">
+                <Skeleton className="h-8 w-full" />
+              </div>
+            }
+            end={
+              <p className="text-center text-sm text-secondary py-4">
+                Semua {rows.length} data sudah dimuat
+              </p>
+            }
+          >
+            <ReportAttendanceTable rows={visibleRows} classes={classes} />
+          </InfiniteScroll>
+        )}
       </PageLayout.Content>
     </PageLayout>
   );

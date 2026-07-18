@@ -1,9 +1,11 @@
 'use client';
 
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
 import { Button, Select, Surface } from '@/components/ui';
+import { cn } from '@/lib';
+import { ChevronDown } from 'lucide-react';
 import type { Class } from '@/features/classes/types';
 
 type ReportFiltersProps = {
@@ -39,6 +41,8 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const [advancedOpen, setAdvancedOpen] = useState(false);
+
   const monthOptions = useMemo(() => generateMonthOptions(), []);
 
   const month = searchParams.get('month') || '';
@@ -46,6 +50,8 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
   const teacherId = searchParams.get('teacherId') || '';
   const subjectId = searchParams.get('subjectId') || '';
   const status = searchParams.get('status') || '';
+
+  const advancedFilterCount = [classId, teacherId, subjectId, status].filter(Boolean).length;
 
   const classOptions = useMemo(
     () => [
@@ -89,7 +95,7 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
   );
 
   const handleMonthChange = (value: string | number) => {
-    updateSearchParams({ month: String(value), status: undefined });
+    updateSearchParams({ month: String(value) });
   };
 
   const handleClassChange = (value: string | number) => {
@@ -118,47 +124,70 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
 
   return (
     <Surface className="p-4">
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 items-end">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-end">
         <Select
           options={monthOptions}
           value={month}
           placeholder="Bulan"
           onChange={handleMonthChange}
         />
-
-        <Select
-          options={classOptions}
-          value={classId}
-          placeholder="Kelas"
-          onChange={handleClassChange}
-        />
-
-        <Select
-          options={teacherOptions}
-          value={teacherId}
-          placeholder="Guru"
-          onChange={handleTeacherChange}
-        />
-
-        <Select
-          options={subjectOptions}
-          value={subjectId}
-          placeholder="Mata Pelajaran"
-          onChange={handleSubjectChange}
-        />
-
-        <Select
-          options={STATUS_OPTIONS}
-          value={status}
-          placeholder="Status"
-          onChange={handleStatusChange}
-        />
       </div>
 
       <div className="flex justify-end mt-4">
-        <Button variant="outline" onClick={handleReset}>
-          Reset Filter
+        <Button variant="ghost" onClick={() => setAdvancedOpen((prev) => !prev)} className="gap-2">
+          Filter Lanjutan
+          {advancedFilterCount > 0 && (
+            <span className="inline-flex items-center justify-center rounded-full bg-primary px-2 py-0.5 text-xs font-medium text-primary-foreground">
+              {advancedFilterCount}
+            </span>
+          )}
+          <ChevronDown
+            className={cn('size-4 transition-transform duration-200', advancedOpen && 'rotate-180')}
+          />
         </Button>
+      </div>
+
+      <div
+        className={cn(
+          'overflow-hidden transition-all duration-200',
+          advancedOpen ? 'mt-4 max-h-[500px] opacity-100' : 'max-h-0 opacity-0',
+        )}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+          <Select
+            options={classOptions}
+            value={classId}
+            placeholder="Kelas"
+            onChange={handleClassChange}
+          />
+
+          <Select
+            options={teacherOptions}
+            value={teacherId}
+            placeholder="Guru"
+            onChange={handleTeacherChange}
+          />
+
+          <Select
+            options={subjectOptions}
+            value={subjectId}
+            placeholder="Mata Pelajaran"
+            onChange={handleSubjectChange}
+          />
+
+          <Select
+            options={STATUS_OPTIONS}
+            value={status}
+            placeholder="Status"
+            onChange={handleStatusChange}
+          />
+        </div>
+
+        <div className="flex justify-end mt-4">
+          <Button variant="outline" onClick={handleReset}>
+            Reset Filter
+          </Button>
+        </div>
       </div>
     </Surface>
   );

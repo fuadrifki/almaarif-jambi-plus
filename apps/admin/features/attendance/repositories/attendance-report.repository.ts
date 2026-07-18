@@ -4,8 +4,6 @@ import { and, asc, count, desc, eq, isNull, like } from 'drizzle-orm';
 
 import type {
   AttendanceReportFilter,
-  AttendanceReportRow,
-  AttendanceReportSummaryRow,
   AttendanceReportRepository,
 } from './attendance-report.repository.types';
 
@@ -59,7 +57,7 @@ export const attendanceReportRepository: AttendanceReportRepository = {
           eq(attendanceRecords.studentId, students.id),
         ),
       )
-      .leftJoin(classes, eq(students.classId, classes.id))
+      .innerJoin(classes, eq(students.classId, classes.id))
       .where(and(...conditions))
       .orderBy(desc(attendanceSessions.date), asc(students.name));
 
