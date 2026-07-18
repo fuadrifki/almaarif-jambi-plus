@@ -20,6 +20,8 @@ import type { StudentAttendanceHistoryRow } from '../queries/get-student-attenda
 import type { StudentAttendanceReportRow } from '../queries/get-student-attendance-report';
 import { StudentAttendanceHistoryTab } from './student-attendance-history-tab';
 import { StudentAttendanceReportTab } from './student-attendance-report-tab';
+import { hasPermission } from '@/lib/utils';
+import type { Permission } from '@/lib/permissions';
 
 import { Class } from '@/features/classes';
 
@@ -28,6 +30,9 @@ type StudentDetailProps = {
   classData: Class | null;
   attendanceHistory: StudentAttendanceHistoryRow[];
   attendanceReport: StudentAttendanceReportRow[];
+  permissions?: {
+    canEditStudent?: boolean;
+  };
 };
 
 export const StudentDetail = ({
@@ -35,6 +40,7 @@ export const StudentDetail = ({
   classData,
   attendanceHistory,
   attendanceReport,
+  permissions,
 }: StudentDetailProps) => {
   const [activeTab, setActiveTab] = useState('info');
 
@@ -108,11 +114,13 @@ export const StudentDetail = ({
           </Button>
         </Link>
 
-        <Link href={`/students/${student.id}/edit`} className="w-full sm:w-max">
-          <Button type="submit" className="w-full">
-            Edit
-          </Button>
-        </Link>
+        {permissions?.canEditStudent && (
+          <Link href={`/students/${student.id}/edit`} className="w-full sm:w-max">
+            <Button type="submit" className="w-full">
+              Edit
+            </Button>
+          </Link>
+        )}
       </div>
     </div>
   );

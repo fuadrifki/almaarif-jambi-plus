@@ -11,10 +11,16 @@ type StudentCardProps = {
   student: Student;
   classes: Class[];
   onDelete: (student: Student) => void;
+  permissions?: {
+    canEditStudent?: boolean;
+    canDeleteStudent?: boolean;
+  };
 };
 
-export const StudentCard = ({ student, classes, onDelete }: StudentCardProps) => {
+export const StudentCard = ({ student, classes, onDelete, permissions }: StudentCardProps) => {
   const className = classes.find((c) => c.id === student.classId)?.name;
+  const canEdit = permissions?.canEditStudent || false;
+  const canDelete = permissions?.canDeleteStudent || false;
 
   return (
     <Surface className="p-4 relative group">
@@ -91,21 +97,25 @@ export const StudentCard = ({ student, classes, onDelete }: StudentCardProps) =>
               Detail
             </Button>
           </Link>
-          <Link href={`/students/${student.id}/edit`}>
-            <Button variant="ghost" size="sm" leftIcon={<Pencil size={14} />}>
-              Edit
+          {canEdit && (
+            <Link href={`/students/${student.id}/edit`}>
+              <Button variant="ghost" size="sm" leftIcon={<Pencil size={14} />}>
+                Edit
+              </Button>
+            </Link>
+          )}
+          {canDelete && (
+            <Button
+              variant="ghost"
+              size="sm"
+              leftIcon={<Trash2 size={14} />}
+              onClick={() => {
+                onDelete(student);
+              }}
+            >
+              Hapus
             </Button>
-          </Link>
-          <Button
-            variant="ghost"
-            size="sm"
-            leftIcon={<Trash2 size={14} />}
-            onClick={() => {
-              onDelete(student);
-            }}
-          >
-            Hapus
-          </Button>
+          )}
         </div>
       </div>
     </Surface>

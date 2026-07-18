@@ -35,7 +35,7 @@ export const navigation: NavigationItem[] = [
     label: 'Siswa',
     href: '/students',
     icon: Users,
-    roles: ['admin'],
+    roles: ['admin', 'teacher'],
   },
   {
     label: 'Kelas',

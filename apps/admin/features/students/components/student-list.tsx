@@ -22,10 +22,13 @@ import { StudentCard } from './student-card';
 
 import type { Student } from '../types';
 import { Class } from '@/features/classes';
+import type { Permission } from '@/lib/permissions';
+import { hasPermission } from '@/lib/utils';
 
 type StudentListProps = {
   students: Student[];
   classes: Class[];
+  permissions?: Permission;
 };
 
 export const StudentList = ({ students, classes }: StudentListProps) => {

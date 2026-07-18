@@ -10,16 +10,22 @@ import { StudentList } from '../components/student-list';
 
 import type { Student } from '../types';
 import { Class } from '@/features/classes';
+import type { Permission } from '@/lib/permissions';
 
 const PAGE_SIZE = 20;
 const LOAD_DELAY = 200;
 
-type StudentListPageClientProps = {
+export type StudentListPageClientProps = {
   students: Student[];
   classes: Class[];
+  permissions: Permission;
 };
 
-export const StudentListPageClient = ({ students, classes }: StudentListPageClientProps) => {
+export const StudentListPageClient = ({
+  students,
+  classes,
+  permissions,
+}: StudentListPageClientProps) => {
   const router = useRouter();
   const [query, setQuery] = useState('');
   const [displayCount, setDisplayCount] = useState(PAGE_SIZE);
@@ -62,12 +68,14 @@ export const StudentListPageClient = ({ students, classes }: StudentListPageClie
             className="w-full sm:w-1/3"
           />
 
-          <Button
-            className="w-full sm:w-auto shrink-0"
-            onClick={() => router.push('/students/new')}
-          >
-            Tambah Siswa
-          </Button>
+          {permissions?.canCreateStudent && (
+            <Button
+              className="w-full sm:w-auto shrink-0"
+              onClick={() => router.push('/students/new')}
+            >
+              Tambah Siswa
+            </Button>
+          )}
         </div>
       </PageLayout.Header>
 
@@ -87,7 +95,7 @@ export const StudentListPageClient = ({ students, classes }: StudentListPageClie
             </p>
           }
         >
-          <StudentList students={visible} classes={classes} />
+          <StudentList students={visible} classes={classes} permissions={permissions} />
         </InfiniteScroll>
       </PageLayout.Content>
     </PageLayout>
