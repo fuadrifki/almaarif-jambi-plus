@@ -2,8 +2,8 @@
 import { useState } from 'react';
 import { Button, Input, Surface } from '@/components/ui';
 import { cn } from '@/lib';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { SectionPreview } from '../../components/section-preview';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 export const PopoverPage = () => {
   const [name, setName] = useState('');
@@ -331,198 +331,88 @@ export const PopoverPage = () => {
       <SectionPreview
         title="Placement"
         description="Demonstrates semua sisi dan alinasi yang didukung: top, bottom, left, right, start, center, end."
-        code={`<div className="space-y-4">
-  <div className="flex gap-2 flex-wrap">
-    <button
-      onClick={() => setPlacementExample('top-center')}
-      className="px-3 py-1.5 text-sm rounded-lg border border-border hover:bg-white/10"
-    >
-      Top Center
-    </button>
-    <button
-      onClick={() => setPlacementExample('bottom-center')}
-      className="px-3 py-1.5 text-sm rounded-lg border border-border hover:bg-white/10"
-    >
-      Bottom Center
-    </button>
-    <button
-      onClick={() => setPlacementExample('left-start')}
-      className="px-3 py-1.5 text-sm rounded-lg border border-border hover:bg-white/10"
-    >
-      Left Start
-    </button>
-    <button
-      onClick={() => setPlacementExample('right-end')}
-      className="px-3 py-1.5 text-sm rounded-lg border border-border hover:bg-white/10"
-    >
-      Right End
-    </button>
-  </div>
-  <Popover open={true} modal={true}>
-    <PopoverTrigger asChild>
-      <Button variant="secondary">Fixed Popover</Button>
-    </PopoverTrigger>
-    {placementExample === 'top-center' ? (
-      <PopoverContent side="top" align="center" sideOffset={12} className="w-64">
-        <div className="text-sm font-semibold text-center">Top Center</div>
-      </PopoverContent>
-    ) : placementExample === 'bottom-center' ? (
-      <PopoverContent side="bottom" align="center" sideOffset={12} className="w-64">
-        <div className="text-sm font-semibold text-center">Bottom Center</div>
-      </PopoverContent>
-    ) : placementExample === 'left-start' ? (
-      <PopoverContent side="left" align="start" sideOffset={12} className="w-64">
-        <div className="text-sm font-semibold">Left Start</div>
-      </PopoverContent>
-    ) : placementExample === 'right-end' ? (
-      <PopoverContent side="right" align="end" sideOffset={12} className="w-64">
-        <div className="text-sm font-semibold text-right">Right End</div>
-      </PopoverContent>
-    ) : null}
-  </Popover>
-</div>`}
+        code={`<Popover>
+  <PopoverTrigger asChild>
+    <Button variant="secondary">Top Center</Button>
+  </PopoverTrigger>
+
+  <PopoverContent side="top" align="center" sideOffset={12} className="w-64">
+    <div className="text-sm font-semibold text-center">Top Center</div>
+  </PopoverContent>
+</Popover>
+
+<Popover>
+  <PopoverTrigger asChild>
+    <Button variant="secondary">Bottom Center</Button>
+  </PopoverTrigger>
+
+  <PopoverContent side="bottom" align="center" sideOffset={12} className="w-64">
+    <div className="text-sm font-semibold text-center">Bottom Center</div>
+  </PopoverContent>
+</Popover>
+
+<Popover>
+  <PopoverTrigger asChild>
+    <Button variant="secondary">Left Start</Button>
+  </PopoverTrigger>
+
+  <PopoverContent side="left" align="start" sideOffset={12} className="w-64">
+    <div className="text-sm font-semibold">Left Start</div>
+  </PopoverContent>
+</Popover>
+
+<Popover>
+  <PopoverTrigger asChild>
+    <Button variant="secondary">Right End</Button>
+  </PopoverTrigger>
+
+  <PopoverContent side="right" align="end" sideOffset={12} className="w-64">
+    <div className="text-sm font-semibold text-right">Right End</div>
+  </PopoverContent>
+</Popover>`}
       >
         <div className="space-y-4">
-          <div className="flex gap-2 flex-wrap">
-            <button
-              onClick={() => setPlacementExample('top-center')}
-              className="px-3 py-1.5 text-sm rounded-lg border border-border hover:bg-white/10"
-            >
-              Top Center
-            </button>
-            <button
-              onClick={() => setPlacementExample('bottom-center')}
-              className="px-3 py-1.5 text-sm rounded-lg border border-border hover:bg-white/10"
-            >
-              Bottom Center
-            </button>
-            <button
-              onClick={() => setPlacementExample('left-start')}
-              className="px-3 py-1.5 text-sm rounded-lg border border-border hover:bg-white/10"
-            >
-              Left Start
-            </button>
-            <button
-              onClick={() => setPlacementExample('right-end')}
-              className="px-3 py-1.5 text-sm rounded-lg border border-border hover:bg-white/10"
-            >
-              Right End
-            </button>
-          </div>
-          <Popover open={true} modal={true}>
-            <PopoverTrigger asChild>
-              <Button variant="secondary">Fixed Popover</Button>
-            </PopoverTrigger>
-            {placementExample === 'top-center' ? (
+          <div className="flex flex-wrap gap-4">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="secondary">Top Center</Button>
+              </PopoverTrigger>
+
               <PopoverContent side="top" align="center" sideOffset={12} className="w-64">
                 <div className="text-sm font-semibold text-center">Top Center</div>
               </PopoverContent>
-            ) : placementExample === 'bottom-center' ? (
+            </Popover>
+
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="secondary">Bottom Center</Button>
+              </PopoverTrigger>
+
               <PopoverContent side="bottom" align="center" sideOffset={12} className="w-64">
                 <div className="text-sm font-semibold text-center">Bottom Center</div>
               </PopoverContent>
-            ) : placementExample === 'left-start' ? (
+            </Popover>
+
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="secondary">Left Start</Button>
+              </PopoverTrigger>
+
               <PopoverContent side="left" align="start" sideOffset={12} className="w-64">
                 <div className="text-sm font-semibold">Left Start</div>
               </PopoverContent>
-            ) : placementExample === 'right-end' ? (
+            </Popover>
+
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="secondary">Right End</Button>
+              </PopoverTrigger>
+
               <PopoverContent side="right" align="end" sideOffset={12} className="w-64">
                 <div className="text-sm font-semibold text-right">Right End</div>
               </PopoverContent>
-            ) : null}
-          </Popover>
-        </div>
-      </SectionPreview>
-
-      <SectionPreview
-        title="Width"
-        description="Mendemonstrasikan tiga opsi lebar: auto width (default), fixed width, dan full content width."
-        code={`<div className="space-y-4">
-  <div className="flex gap-2 flex-wrap">
-    <button
-      onClick={() => setWidthExample('auto')}
-      className="px-3 py-1.5 text-sm rounded-lg border border-border hover:bg-white/10 ${widthExample === 'auto' ? 'bg-white/10' : ''}"
-    >
-      Auto Width
-    </button>
-    <button
-      onClick={() => setWidthExample('fixed')}
-      className="px-3 py-1.5 text-sm rounded-lg border border-border hover:bg-white/10 ${widthExample === 'fixed' ? 'bg-white/10' : ''}"
-    >
-      Fixed Width
-    </button>
-    <button
-      onClick={() => setWidthExample('content')}
-      className="px-3 py-1.5 text-sm rounded-lg border border-border hover:bg-white/10 ${widthExample === 'content' ? 'bg-white/10' : ''}"
-    >
-      Content Width
-    </button>
-  </div>
-  <Popover open={true} modal={true}>
-    <PopoverTrigger asChild>
-      <Button variant="secondary">Width Example</Button>
-    </PopoverTrigger>
-    <PopoverContent
-      className={
-        widthExample === 'auto'
-          ? 'w-auto'
-          : widthExample === 'fixed'
-            ? 'w-80'
-            : 'w-full'
-      }
-    >
-      <div className="space-y-3">
-        <div className="text-sm font-semibold">Popover Content</div>
-        <div className="text-xs text-secondary">
-          Current width: {widthExample}
-        </div>
-        <div className="text-xs text-secondary">
-          This demonstrates width variation based on example selection.
-        </div>
-      </div>
-    </PopoverContent>
-  </Popover>
-</div>`}
-      >
-        <div className="space-y-4">
-          <div className="flex gap-2 flex-wrap">
-            <button
-              onClick={() => setWidthExample('auto')}
-              className="px-3 py-1.5 text-sm rounded-lg border border-border hover:bg-white/10 ${widthExample === 'auto' ? 'bg-white/10' : ''}"
-            >
-              Auto Width
-            </button>
-            <button
-              onClick={() => setWidthExample('fixed')}
-              className="px-3 py-1.5 text-sm rounded-lg border border-border hover:bg-white/10 ${widthExample === 'fixed' ? 'bg-white/10' : ''}"
-            >
-              Fixed Width
-            </button>
-            <button
-              onClick={() => setWidthExample('content')}
-              className="px-3 py-1.5 text-sm rounded-lg border border-border hover:bg-white/10 ${widthExample === 'content' ? 'bg-white/10' : ''}"
-            >
-              Content Width
-            </button>
+            </Popover>
           </div>
-          <Popover open={true} modal={true}>
-            <PopoverTrigger asChild>
-              <Button variant="secondary">Width Example</Button>
-            </PopoverTrigger>
-            <PopoverContent
-              className={
-                widthExample === 'auto' ? 'w-auto' : widthExample === 'fixed' ? 'w-80' : 'w-full'
-              }
-            >
-              <div className="space-y-3">
-                <div className="text-sm font-semibold">Popover Content</div>
-                <div className="text-xs text-secondary">Current width: {widthExample}</div>
-                <div className="text-xs text-secondary">
-                  This demonstrates width variation based on example selection.
-                </div>
-              </div>
-            </PopoverContent>
-          </Popover>
         </div>
       </SectionPreview>
 

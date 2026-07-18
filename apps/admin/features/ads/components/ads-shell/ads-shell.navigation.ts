@@ -65,10 +65,6 @@ export const designNavigation = [
         href: '/design/badge',
       },
       {
-        label: 'Dropdown Menu',
-        href: '/design/dropdown-menu',
-      },
-      {
         label: 'Toast',
         href: '/design/toast',
       },
@@ -79,6 +75,10 @@ export const designNavigation = [
       {
         label: 'Popover',
         href: '/design/popover',
+      },
+      {
+        label: 'Dropdown Menu',
+        href: '/design/dropdown-menu',
       },
       {
         label: 'Empty State',
