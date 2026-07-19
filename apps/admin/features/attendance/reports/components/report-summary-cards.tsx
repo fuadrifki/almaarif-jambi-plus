@@ -85,7 +85,7 @@ export const ReportSummaryCards = ({ summary, className }: ReportSummaryCardsPro
             type="button"
             onClick={() => handleCardClick(card.filterValue)}
             className={cn(
-              'text-left rounded-lg border transition-colors',
+              'text-left rounded-3xl border transition-colors cursor-pointer',
               isActive
                 ? 'border-primary bg-primary/10'
                 : 'border-transparent bg-surface hover:border-border',
