@@ -26,7 +26,7 @@ export const AttendanceStudentRow = ({
         {student.nis}
       </Badge>
 
-      <span className="truncate text-sm font-medium text-primary">{student.name}</span>
+      <span className="truncate text-sm font-semibold text-primary">{student.name}</span>
     </div>
 
     <RadioGroup
