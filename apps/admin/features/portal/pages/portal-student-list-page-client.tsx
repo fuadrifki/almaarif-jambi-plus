@@ -20,6 +20,7 @@ import {
 import { ArrowLeft, Search, Users } from 'lucide-react';
 
 import type { Student } from '@/features/students/types';
+import Link from 'next/link';
 
 type PortalStudent = Student & {
   className: string;
@@ -67,22 +68,26 @@ export const PortalStudentListPageClient = ({
   return (
     <PageLayout>
       <PageLayout.Header>
-        <div className="flex items-center gap-2">
-          <Button variant="ghost" size="sm" onClick={() => router.push('/')}>
-            <ArrowLeft size={16} />
-          </Button>
-          <h1 className="text-2xl font-semibold sm:text-3xl">Daftar Siswa</h1>
+        <div className="flex flex-col w-full gap-y-6 pt-4">
+          <Link href="/">
+            <Button variant="ghost" size="sm" leftIcon={<ArrowLeft size={16} />}>
+              Kembali ke Menu Utama
+            </Button>
+          </Link>
+
+          <section>
+            <h1 className="text-2xl font-semibold sm:text-3xl">Daftar Siswa</h1>
+            <p className="text-secondary mt-2">Laporan kegiatan siswa dapat Anda lihat disini.</p>
+          </section>
+
+          <Input
+            placeholder="Cari berdasarkan nama atau NIS..."
+            leftIcon={<Search size={16} />}
+            value={query}
+            onChange={(e) => handleQueryChange(e.target.value)}
+            className="w-full sm:w-1/3"
+          />
         </div>
-
-        <p className="text-secondary">Cari siswa berdasarkan nama atau NIS.</p>
-
-        <Input
-          placeholder="Cari berdasarkan nama atau NIS..."
-          leftIcon={<Search size={16} />}
-          value={query}
-          onChange={(e) => handleQueryChange(e.target.value)}
-          className="w-full sm:w-1/3"
-        />
       </PageLayout.Header>
 
       <PageLayout.Content>

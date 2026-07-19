@@ -7,6 +7,8 @@ import { Button, Field, Input, Surface, toast } from '@/components/ui';
 import { login } from '@/features/auth';
 import { createSession } from '@/features/auth/server';
 import { Logo } from '@almaarif/brand';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 
 type FieldErrors = {
   email?: string;
@@ -108,6 +110,12 @@ export const LoginForm = () => {
           >
             Login
           </Button>
+
+          <Link href="/">
+            <Button variant="ghost" size="sm" leftIcon={<ArrowLeft size={16} />}>
+              Kembali ke Menu Utama
+            </Button>
+          </Link>
         </form>
       </Surface>
     </main>
