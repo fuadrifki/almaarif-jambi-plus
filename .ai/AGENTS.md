@@ -1,7 +1,7 @@
 # Project Rules
 
-This file is a mirror of the root `AGENTS.md` for AI tool discovery.
+This file is for AI tool discovery at the monorepo root.
 
-**Source:** [`/AGENTS.md`](../AGENTS.md)
+**Authoritative version:** [`apps/admin/AGENTS.md`](apps/admin/AGENTS.md)
 
-> ⚠️ Always read the root `AGENTS.md` for the authoritative version. This file may not be up to date.
+> Always read `apps/admin/AGENTS.md` for the authoritative project rules.

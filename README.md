@@ -53,8 +53,9 @@ cd apps/admin
 # Push schema to database
 pnpm db:push
 
-# Seed sample data (10 students)
-pnpm db:seed
+# Seed sample data (students and classes)
+pnpm db:seed-students
+pnpm db:seed-classes
 ```
 
 ### 4. Start development server
@@ -67,16 +68,17 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Available Scripts
 
-| Script             | Description                     |
-| ------------------ | ------------------------------- |
-| `pnpm dev`         | Start Next.js dev server        |
-| `pnpm build`       | Production build                |
-| `pnpm lint`        | Run ESLint                      |
-| `pnpm typecheck`   | TypeScript type check           |
-| `pnpm db:push`     | Push schema changes to database |
-| `pnpm db:generate` | Generate migration files        |
-| `pnpm db:migrate`  | Run pending migrations          |
-| `pnpm db:seed`     | Seed database with sample data  |
+| Script                  | Description                        |
+| ----------------------- | ---------------------------------- |
+| `pnpm dev`              | Start Next.js dev server           |
+| `pnpm build`            | Production build                   |
+| `pnpm lint`             | Run ESLint                         |
+| `pnpm typecheck`        | TypeScript type check              |
+| `pnpm db:push`          | Push schema changes to database    |
+| `pnpm db:generate`      | Generate migration files           |
+| `pnpm db:migrate`       | Run pending migrations             |
+| `pnpm db:seed-students` | Seed database with sample students |
+| `pnpm db:seed-classes`  | Seed database with sample classes  |
 
 ## Environment Variables
 

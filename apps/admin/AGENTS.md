@@ -83,14 +83,15 @@ backdrop-filter: blur(var(--blur-lg)) saturate(180%);
 
 # Current ADS Status
 
-Completed (23 components):
+Completed (26 components):
 
 - Surface, Card, Header, Field, PageLayout
 - Button, Input, Textarea, Select, Checkbox, Radio, Switch
-- Table, Badge
+- Table, Badge, DatePicker
 - DropdownMenu, AlertDialog, Toast
 - Skeleton, EmptyState
-- Pagination, SegmentedControl, InfiniteScroll
+- Pagination, InfiniteScroll
+- Tabs, Breadcrumb, Popover
 - ThemeToggle
 
 ---

@@ -218,32 +218,20 @@ Implement progressively.
 
 Completed:
 
-- Surface
-- Button
-- Field
-- Input
-- Select
-- Textarea
-- Checkbox
-- Radio
-- Switch
-
-In progress:
-
-- Badge
+- Surface, Button, Field, Input, Select, Textarea, Checkbox, Radio, Switch
+- Badge, Card, Header, Table, DatePicker
+- DropdownMenu, AlertDialog, Toast
+- Skeleton, EmptyState, Pagination, InfiniteScroll
+- Tabs, Breadcrumb, Popover, PageLayout
+- ThemeToggle
 
 Future:
 
 - Avatar
 - Divider
 - Tooltip
-- Tabs
 - Accordion
 - Drawer
-- Toast
-- Table
-- Pagination
-- DatePicker
 - Combobox
 - MultiSelect
 
