@@ -1,51 +1,36 @@
+import { format } from 'date-fns';
 import { notFound } from 'next/navigation';
 
-import { ReportListPageClient } from './report-list-page-client';
-import { getAttendanceReport } from '../../queries/get-attendance-report';
 import { classRepository } from '@/features/classes/repositories';
 import { SUBJECTS } from '@/lib/db/seed-subjects';
 import { TEACHERS } from '@/lib/db/seed-teachers';
 
+import { getAttendanceReport } from '../../queries/get-attendance-report';
 import type { ReportFilter } from '../../queries/types';
+import { ReportListPageClient } from './report-list-page-client';
 
 type AttendanceReportsPageProps = {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
-function getCurrentMonth(): string {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  return `${year}-${month}`;
-}
+const getParam = (value: string | string[] | undefined) =>
+  typeof value === 'string' && value ? value : undefined;
 
-function parseStringParam(value: string | string[] | undefined): string | undefined {
-  if (typeof value === 'string' && value.length > 0) {
-    return value;
-  }
-  return undefined;
-}
+const getNumberParam = (value: string | string[] | undefined) => {
+  const number = Number(getParam(value));
 
-function parseNumberParam(value: string | string[] | undefined): number | undefined {
-  const str = parseStringParam(value);
-  if (str) {
-    const num = Number(str);
-    if (!Number.isNaN(num)) {
-      return num;
-    }
-  }
-  return undefined;
-}
+  return Number.isNaN(number) ? undefined : number;
+};
 
 export async function AttendanceReportsPage({ searchParams }: AttendanceReportsPageProps) {
   const params = await searchParams;
 
   const filter: ReportFilter = {
-    month: parseStringParam(params?.month) ?? getCurrentMonth(),
-    classId: parseNumberParam(params?.classId),
-    teacherId: parseNumberParam(params?.teacherId),
-    subjectId: parseNumberParam(params?.subjectId),
-    status: parseStringParam(params?.status),
+    month: getParam(params.month) ?? format(new Date(), 'yyyy-MM'),
+    classId: getNumberParam(params.classId),
+    teacherId: getNumberParam(params.teacherId),
+    subjectId: getNumberParam(params.subjectId),
+    status: getParam(params.status),
   };
 
   const [report, classes] = await Promise.all([
@@ -57,23 +42,19 @@ export async function AttendanceReportsPage({ searchParams }: AttendanceReportsP
     notFound();
   }
 
-  const teachers = TEACHERS.filter((t) => t.role === 'teacher').map((t) => ({
-    id: t.id,
-    name: t.name,
-  }));
-
-  const subjects = SUBJECTS.map((s) => ({
-    id: s.id,
-    name: s.label,
-  }));
-
   return (
     <ReportListPageClient
-      key={`${filter.month}-${filter.classId}-${filter.teacherId}-${filter.subjectId}-${filter.status}`}
+      key={Object.values(filter).join('-')}
       report={report}
       classes={classes}
-      teachers={teachers}
-      subjects={subjects}
+      teachers={TEACHERS.filter(({ role }) => role === 'teacher').map(({ id, name }) => ({
+        id,
+        name,
+      }))}
+      subjects={SUBJECTS.map(({ id, label }) => ({
+        id,
+        name: label,
+      }))}
     />
   );
 }

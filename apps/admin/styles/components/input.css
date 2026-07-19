@@ -16,7 +16,7 @@
 
   background: rgb(255 255 255 / 0.08);
 
-  border: 1px solid rgb(255 255 255 / 0.22);
+  border: 1px solid rgb(200 200 200 / 0.22);
 
   outline: none;
 
@@ -96,6 +96,10 @@
   padding-inline: 18px;
 
   font-size: 1rem;
+}
+
+.ads-input--has-left-icon {
+  padding-inline-start: 42px;
 }
 
 .ads-input__loader,

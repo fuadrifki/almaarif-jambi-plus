@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function LandingPage() {
   return (
     <PageLayout>
-      <PageLayout.Content className="flex items-center justify-center">
+      <PageLayout.Content className="flex items-center justify-center px-4">
         <div className="w-full max-w-md space-y-8 text-center">
           <div className="flex justify-center">
             <Logo width={200} height={60} />

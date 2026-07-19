@@ -3,9 +3,10 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
-import { Badge, Button, Select, Surface } from '@/components/ui';
+import { Badge, Button, Input, Select, Surface } from '@/components/ui';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import type { Class } from '@/features/classes/types';
+import { Plus, Search } from 'lucide-react';
 
 type ReportFiltersProps = {
   classes: Class[];
@@ -44,6 +45,7 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
 
   const monthOptions = useMemo(() => generateMonthOptions(), []);
 
+  const search = searchParams.get('search') || '';
   const month = searchParams.get('month') || '';
   const classId = searchParams.get('classId') || '';
   const teacherId = searchParams.get('teacherId') || '';
@@ -92,8 +94,12 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
     [pathname, searchParams, router],
   );
 
+  const handleSearchChange = (value: string) => {
+    updateSearchParams({ search: String(value) || undefined });
+  };
+
   const handleMonthChange = (value: string | number) => {
-    updateSearchParams({ month: String(value) });
+    updateSearchParams({ month: String(value) || undefined });
   };
 
   const handleClassChange = (value: string | number) => {
@@ -123,13 +129,13 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
 
   return (
     <Surface className="p-4">
-      <div className="flex flex-col md:flex-row gap-4">
-        <Select
-          options={monthOptions}
-          value={month}
-          placeholder="Bulan"
-          onChange={handleMonthChange}
-          className="w-full sm:w-52!"
+      <div className="flex flex-col md:flex-row items-center gap-4">
+        <Input
+          placeholder="Cari berdasarkan nama atau NIS..."
+          leftIcon={<Search />}
+          value={search}
+          onChange={(e) => handleSearchChange(e.target.value)}
+          className="w-full sm:w-1/3"
         />
 
         <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen} modal={true}>
@@ -155,6 +161,13 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
               </div>
 
               <div className="px-4 py-4 space-y-4 overflow-y-auto flex-1 w-full">
+                <Select
+                  options={monthOptions}
+                  value={month}
+                  placeholder="Bulan"
+                  onChange={handleMonthChange}
+                />
+
                 <Select
                   options={classOptions}
                   value={classId}

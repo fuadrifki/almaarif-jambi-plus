@@ -68,7 +68,7 @@ export const PortalStudentListPageClient = ({
   return (
     <PageLayout>
       <PageLayout.Header>
-        <div className="flex flex-col w-full gap-y-6 pt-4">
+        <div className="flex flex-col w-full gap-y-4 pt-4">
           <Link href="/">
             <Button variant="ghost" size="sm" leftIcon={<ArrowLeft size={16} />}>
               Kembali ke Menu Utama

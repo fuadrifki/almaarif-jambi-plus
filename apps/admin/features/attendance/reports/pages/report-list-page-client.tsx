@@ -48,8 +48,8 @@ export const ReportListPageClient = ({
       <PageLayout.Header>
         <Breadcrumb
           items={[
-            { label: 'Home', href: '/' },
-            { label: 'Attendance', href: '/attendance' },
+            { label: 'Home', href: '/dashboard/' },
+            { label: 'Attendance', href: '/dashboard/attendance' },
             { label: 'Reports' },
           ]}
         />
