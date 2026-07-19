@@ -13,4 +13,5 @@ export type DatePickerProps = {
   rightIcon?: React.ReactNode;
   onOpenChange?: (open: boolean) => void;
   format?: string;
+  resettable?: boolean;
 };

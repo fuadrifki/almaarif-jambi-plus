@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 import { id } from 'date-fns/locale';
 
-export const formatDate = (date: Date): string => {
-  return format(date, 'd MMMM yyyy, HH:mm', { locale: id });
+export const formatDate = (date: Date, formatValue = 'd MMMM yyyy, HH:mm'): string => {
+  return format(date, formatValue, { locale: id });
 };

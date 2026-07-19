@@ -20,6 +20,7 @@ export const DatePickerExamples = () => {
   const [multipleStartDate, setMultipleStartDate] = useState<Date | undefined>();
   const [multipleEndDate, setMultipleEndDate] = useState<Date | undefined>();
   const [longPlaceholderDate, setLongPlaceholderDate] = useState<Date | undefined>();
+  const [resettableDate, setResettableDate] = useState<Date | undefined>();
 
   return (
     <>
@@ -253,6 +254,29 @@ export const DatePickerExamples = () => {
               value={longPlaceholderDate}
               onChange={setLongPlaceholderDate}
               placeholder={longPlaceholder}
+            />
+          </Field>
+        </div>
+      </SectionPreview>
+
+      {/* Resettable */}
+      <SectionPreview
+        title="Resettable"
+        description="DatePicker with optional reset button. Reset only appears when resettable is enabled and a date is selected."
+        code={`<DatePicker
+  value={resettableDate}
+  onChange={setResettableDate}
+  placeholder="Pilih tanggal"
+  resettable
+/>`}
+      >
+        <div className="w-full max-w-md">
+          <Field label="Tanggal">
+            <DatePicker
+              value={resettableDate}
+              onChange={setResettableDate}
+              placeholder="Pilih tanggal"
+              resettable
             />
           </Field>
         </div>

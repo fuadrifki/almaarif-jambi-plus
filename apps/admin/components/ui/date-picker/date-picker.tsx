@@ -25,10 +25,17 @@ export const DatePicker = ({
   rightIcon,
   onOpenChange,
   format = 'dd MMMM yyyy',
+  resettable = false,
 }: DatePickerProps) => {
   const [open, setOpen] = useState(false);
 
   const [displayMonth, setDisplayMonth] = useState(value ?? new Date());
+
+  const handleReset = () => {
+    onChange?.(undefined);
+    // Keep the popover open
+    // Trigger re-render to keep the popover open
+  };
 
   const handleSelect = (date: Date | undefined) => {
     onChange?.(date);
@@ -96,6 +103,20 @@ export const DatePicker = ({
           locale={id}
           className="ads-date-picker__calendar"
         />
+
+        {resettable && value && (
+          <div className="my-3 flex items-center px-4">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={handleReset}
+              className="text-secondary hover:text-primary transition-colors"
+            >
+              Reset
+            </Button>
+          </div>
+        )}
       </PopoverContent>
     </Popover>
   );

@@ -58,12 +58,20 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
   );
 
   const teacherOptions = useMemo(
-    () => [{ label: 'Semua', value: '' }, ...teachers.map((t) => ({ label: t.name, value: t.id }))],
+    () =>
+      [
+        { label: 'Semua', value: '' },
+        ...teachers.map((t) => ({ label: t.name, value: t.id })),
+      ].sort((a, b) => a.label.localeCompare(b.label)),
     [teachers],
   );
 
   const subjectOptions = useMemo(
-    () => [{ label: 'Semua', value: '' }, ...subjects.map((s) => ({ label: s.name, value: s.id }))],
+    () =>
+      [
+        { label: 'Semua', value: '' },
+        ...subjects.map((s) => ({ label: s.name, value: s.id })),
+      ].sort((a, b) => a.label.localeCompare(b.label)),
     [subjects],
   );
 
@@ -133,13 +141,17 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
           </PopoverTrigger>
 
           <PopoverContent
-            className="w-full sm:w-60 p-0"
+            className="w-full sm:w-80 p-0"
             sideOffset={8}
             onOpenAutoFocus={(e) => e.preventDefault()}
           >
             <div className="flex flex-col h-full w-full">
-              <div className="px-4 py-3 border-b border-border">
+              <div className="px-4 py-3 border-b border-border flex items-center gap-3 justify-between">
                 <h2 className="text-lg font-semibold">Filters</h2>
+
+                <Button variant="outline" onClick={handleReset}>
+                  Reset
+                </Button>
               </div>
 
               <div className="px-4 py-4 space-y-4 overflow-y-auto flex-1 w-full">
@@ -170,15 +182,6 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
                   placeholder="Status"
                   onChange={handleStatusChange}
                 />
-              </div>
-
-              <div className="px-4 py-3 border-t border-border flex justify-end gap-2">
-                <Button variant="outline" onClick={handleReset}>
-                  Reset
-                </Button>
-                <Button variant="primary" onClick={() => setIsPopoverOpen(false)}>
-                  Apply
-                </Button>
               </div>
             </div>
           </PopoverContent>

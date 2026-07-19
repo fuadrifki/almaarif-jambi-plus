@@ -94,16 +94,9 @@
 .ads-date-picker__calendar {
   width: 100%;
 
-  background: rgb(255 255 255 / 0.12);
-
   border: 1px solid rgb(255 255 255 / 0.22);
 
   border-radius: 16px;
-
-  -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(180%);
-  backdrop-filter: blur(var(--blur-lg)) saturate(180%);
-
-  box-shadow: var(--shadow-lg);
 }
 
 .ads-date-picker__calendar .rdp {
@@ -206,8 +199,6 @@
 }
 
 .ads-date-picker__calendar .rdp-button:hover:not([disabled]) {
-  background: rgb(255 255 255 / 0.12);
-
   color: var(--text-primary);
 }
 
@@ -219,8 +210,6 @@
 
 .ads-date-picker__calendar .rdp-button--selected {
   color: white;
-
-  background: var(--brand);
 
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 25%, transparent);
 }
@@ -278,8 +267,6 @@
 }
 
 .ads-date-picker__calendar .rdp-nav-button:hover {
-  background: rgb(255 255 255 / 0.12);
-
   color: var(--text-primary);
 }
 

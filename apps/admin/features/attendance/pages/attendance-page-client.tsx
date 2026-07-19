@@ -26,6 +26,7 @@ import { TEACHERS } from '@/lib/db/seed-teachers';
 import { SCHEDULES } from '@/lib/db/seed-schedule';
 import { format } from 'date-fns';
 import { id } from 'date-fns/locale';
+import { formatDate } from '@/lib/utils/date';
 
 type SessionWithRecords = AttendanceSession & { records: AttendanceRecord[] };
 
@@ -147,8 +148,6 @@ export const AttendancePageClient = ({
 
       toast.success('Absensi berhasil disimpan');
 
-      toast.success('Absensi berhasil disimpan');
-
       onResetTab();
     } catch (error) {
       toast.error(
@@ -176,6 +175,9 @@ export const AttendancePageClient = ({
 
         <Surface className="flex flex-wrap justify-between gap-x-2 gap-y-2 p-4 text-sm text-secondary">
           <span className="font-medium text-primary">{teacherLabel}</span>
+          <span className="text-secondary">
+            {formatDate(new Date(), 'EEEE, dd MMMM yyyy HH:mm')}
+          </span>
         </Surface>
 
         <Tabs
@@ -218,7 +220,12 @@ export const AttendancePageClient = ({
 
         {activeTab === 'history' && (
           <div className="grid gap-3 grid-cols-1 sm:grid-cols-3">
-            <DatePicker value={dateFilter} onChange={setDateFilter} placeholder="Pilih tanggal" />
+            <DatePicker
+              value={dateFilter}
+              onChange={setDateFilter}
+              placeholder="Pilih tanggal"
+              resettable
+            />
 
             <Select
               options={[{ value: 0, label: 'Semua' }, ...classes]}
