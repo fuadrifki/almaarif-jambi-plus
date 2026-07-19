@@ -23,7 +23,6 @@ import { StudentCard } from './student-card';
 import type { Student } from '../types';
 import { Class } from '@/features/classes';
 import type { Permission } from '@/lib/permissions';
-import { hasPermission } from '@/lib/utils';
 
 type StudentListProps = {
   students: Student[];
@@ -31,7 +30,7 @@ type StudentListProps = {
   permissions?: Permission;
 };
 
-export const StudentList = ({ students, classes }: StudentListProps) => {
+export const StudentList = ({ students, classes, permissions }: StudentListProps) => {
   const router = useRouter();
   const [deleteTarget, setDeleteTarget] = useState<Student | null>(null);
   const [deleting, setDeleting] = useState(false);
@@ -75,6 +74,7 @@ export const StudentList = ({ students, classes }: StudentListProps) => {
               student={student}
               classes={classes}
               onDelete={setDeleteTarget}
+              permissions={permissions}
             />
           ))}
         </div>
