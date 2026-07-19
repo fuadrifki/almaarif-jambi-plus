@@ -1,1 +1,1 @@
-export * from './page';
+export { TabsPage as default } from './page';

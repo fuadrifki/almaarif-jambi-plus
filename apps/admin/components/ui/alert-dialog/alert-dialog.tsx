@@ -3,7 +3,7 @@
 import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog';
 
 import { cn } from '@/lib';
-import { Button } from '@/components/ui/button';
+import { Button } from '../button';
 
 import type { ComponentPropsWithoutRef } from 'react';
 

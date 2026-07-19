@@ -1,4 +1,4 @@
-import { studentRepository } from '@/features/students/repositories/index';
+import { studentRepository } from '@/features/students/repositories';
 
 import { StudentListPageClient } from './student-list-page-client';
 import { classRepository } from '@/features/classes/repositories';

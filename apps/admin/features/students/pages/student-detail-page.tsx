@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 
-import { classRepository } from '@/features/classes/repositories/index';
-import { studentRepository } from '@/features/students/repositories/index';
+import { classRepository } from '@/features/classes/repositories';
+import { studentRepository } from '@/features/students/repositories';
 import { getStudentAttendanceHistory } from '@/features/students/queries/get-student-attendance-history';
 import { getStudentAttendanceReport } from '@/features/students/queries/get-student-attendance-report';
 import { getSession } from '@/lib/auth';

@@ -22,7 +22,7 @@ export const Button = ({
       type="button"
       disabled={disabled || isLoading}
       className={cn(
-        'ads-button relative overflow-hidden rounded-full font-semibold whitespace-nowrap',
+        'ads-button rounded-full font-semibold whitespace-nowrap',
         `ads-button--${variant}`,
         `ads-button--${size}`,
         className,

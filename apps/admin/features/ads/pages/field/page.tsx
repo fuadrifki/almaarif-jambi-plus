@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 
-import { Badge } from '@/components/ui';
-import { Field, Input, FieldValue } from '@/components/ui';
+import { Badge, Field, Input, FieldValue } from '@/components/ui';
 
 import { SectionPreview } from '../../components/section-preview';
 

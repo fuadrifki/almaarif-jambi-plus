@@ -5,7 +5,7 @@ import { mkdir, writeFile, unlink, stat } from 'node:fs/promises';
 import path from 'node:path';
 import crypto from 'node:crypto';
 
-import { studentRepository } from '@/features/students/repositories/index';
+import { studentRepository } from '@/features/students/repositories';
 import type { StudentFormData } from './schemas';
 
 const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads', 'students');

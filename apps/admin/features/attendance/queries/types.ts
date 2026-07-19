@@ -1,12 +1,7 @@
 import type { Student } from '@/features/students/types';
+import type { AttendanceReportFilter } from '../repositories/attendance-report.repository.types';
 
-export type ReportFilter = {
-  month: string;
-  classId?: number;
-  teacherId?: number;
-  subjectId?: number;
-  status?: string;
-};
+export type ReportFilter = AttendanceReportFilter;
 
 export type ReportSummary = {
   present: number;

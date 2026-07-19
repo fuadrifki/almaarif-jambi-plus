@@ -1,1 +1,1 @@
-export { TabsPage as default } from '@/features/ads/pages/tabs';
+export { default } from '@/features/ads/pages/tabs';

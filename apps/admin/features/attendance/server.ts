@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache';
 import {
   attendanceSessionRepository,
   attendanceRecordRepository,
-} from '@/features/attendance/repositories/index';
+} from '@/features/attendance/repositories';
 
 import type { AttendanceStatus } from './types';
 

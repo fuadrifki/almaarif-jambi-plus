@@ -4,7 +4,7 @@ import { getSession } from '@/lib/auth';
 import {
   attendanceSessionRepository,
   attendanceRecordRepository,
-} from '@/features/attendance/repositories/';
+} from '@/features/attendance/repositories';
 
 import { AttendanceDetailPageClient } from '@/features/attendance/pages/attendance-detail-page-client';
 import { studentRepository } from '@/features/students/repositories';
