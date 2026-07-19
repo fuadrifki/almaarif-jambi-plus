@@ -9,6 +9,7 @@ import { ReportAttendanceTable } from '../components/report-attendance-table';
 import { ReportFilters } from '../components/report-filters';
 import type { Class } from '@/features/classes/types';
 import type { AttendanceReportResult } from '../../queries/types';
+import { FileSpreadsheet } from 'lucide-react';
 
 const PAGE_SIZE = 20;
 const LOAD_DELAY = 200;
@@ -63,6 +64,7 @@ export const ReportListPageClient = ({
           <EmptyState
             title="Tidak ada data"
             description="Tidak ada data absensi untuk filter yang dipilih. Silakan ubah filter untuk melihat data."
+            icon={<FileSpreadsheet size={32} />}
           />
         ) : (
           <InfiniteScroll

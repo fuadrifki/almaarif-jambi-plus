@@ -57,7 +57,7 @@ export const StudentDetail = ({
                     alt="Foto siswa"
                     width={160}
                     height={160}
-                    className="h-40 h-40 rounded-full object-cover"
+                    className="h-40 w-40 rounded-full object-cover"
                   />
                 </Card>
               </Surface>

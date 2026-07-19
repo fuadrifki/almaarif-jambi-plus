@@ -9,7 +9,7 @@ import { TEACHERS } from '@/lib/db/seed-teachers';
 import type { ReportFilter } from '../../queries/types';
 
 type AttendanceReportsPageProps = {
-  search: Promise<{ [key: string]: string | string[] | undefined }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 function getCurrentMonth(): string {
@@ -37,15 +37,15 @@ function parseNumberParam(value: string | string[] | undefined): number | undefi
   return undefined;
 }
 
-export async function AttendanceReportsPage({ search }: AttendanceReportsPageProps) {
-  const searchParams = await search;
+export async function AttendanceReportsPage({ searchParams }: AttendanceReportsPageProps) {
+  const params = await searchParams;
 
   const filter: ReportFilter = {
-    month: parseStringParam(searchParams?.month) ?? getCurrentMonth(),
-    classId: parseNumberParam(searchParams?.classId),
-    teacherId: parseNumberParam(searchParams?.teacherId),
-    subjectId: parseNumberParam(searchParams?.subjectId),
-    status: parseStringParam(searchParams?.status),
+    month: parseStringParam(params?.month) ?? getCurrentMonth(),
+    classId: parseNumberParam(params?.classId),
+    teacherId: parseNumberParam(params?.teacherId),
+    subjectId: parseNumberParam(params?.subjectId),
+    status: parseStringParam(params?.status),
   };
 
   const [report, classes] = await Promise.all([
@@ -69,6 +69,7 @@ export async function AttendanceReportsPage({ search }: AttendanceReportsPagePro
 
   return (
     <ReportListPageClient
+      key={`${filter.month}-${filter.classId}-${filter.teacherId}-${filter.subjectId}-${filter.status}`}
       report={report}
       classes={classes}
       teachers={teachers}
