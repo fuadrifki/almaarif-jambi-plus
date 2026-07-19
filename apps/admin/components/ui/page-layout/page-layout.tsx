@@ -9,7 +9,7 @@ import type {
 
 const PageLayoutRoot = ({ className, ...props }: PageLayoutProps) => (
   <div
-    className={cn('flex flex-1 min-h-0 flex-col overflow-hidden gap-y-4', className)}
+    className={cn('flex min-h-0 flex-col overflow-hidden gap-y-4 h-screen', className)}
     {...props}
   />
 );

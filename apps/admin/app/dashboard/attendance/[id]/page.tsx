@@ -24,7 +24,7 @@ export default async function AttendanceDetailPage({
   const attendanceSession = await attendanceSessionRepository.findById(id);
 
   if (!attendanceSession || attendanceSession.teacherId !== session.id) {
-    redirect('/attendance');
+    redirect('/dashboard/attendance');
   }
 
   const [records, students] = await Promise.all([

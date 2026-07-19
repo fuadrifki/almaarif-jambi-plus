@@ -44,7 +44,7 @@ export const AttendanceSessionCard = ({
   const absent = records.filter((r) => r.status === ATTENDANCE_STATUS.ABSENT).length;
 
   return (
-    <Link href={`/attendance/${session.id}`} className="block">
+    <Link href={`/dashboard/attendance/${session.id}`} className="block">
       <Surface className="space-y-3 p-4 transition hover:border-white/20">
         <div className="flex items-start justify-between gap-3">
           <div className="space-y-1">

@@ -4,7 +4,7 @@ export const designNavigation = [
     items: [
       {
         label: 'Admin',
-        href: '/',
+        href: '/dashboard',
       },
     ],
   },

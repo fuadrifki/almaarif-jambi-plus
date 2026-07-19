@@ -6,7 +6,9 @@ export const ClassCreatePage = () => {
   return (
     <PageLayout>
       <PageLayout.Header>
-        <Breadcrumb items={[{ label: 'Classes', href: '/classes' }, { label: 'Create' }]} />
+        <Breadcrumb
+          items={[{ label: 'Classes', href: '/dashboard/classes' }, { label: 'Create' }]}
+        />
         <section>
           <h1 className="text-2xl font-semibold sm:text-3xl">Tambah Kelas</h1>
 

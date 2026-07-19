@@ -27,9 +27,9 @@ export const StudentEditPage = async ({ params }: StudentEditPageProps) => {
         <div className="flex flex-col w-full gap-y-6">
           <Breadcrumb
             items={[
-              { label: 'Home', href: '/' },
-              { label: 'Students', href: '/students' },
-              { label: student.name, href: `/students/${id}` },
+              { label: 'Home', href: '/dashboard' },
+              { label: 'Students', href: '/dashboard/students' },
+              { label: student.name, href: `/dashboard/students/${id}` },
               { label: 'Edit' },
             ]}
           />

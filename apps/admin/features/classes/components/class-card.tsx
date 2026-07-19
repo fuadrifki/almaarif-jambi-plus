@@ -31,7 +31,7 @@ export const ClassCard = ({ class: classData, onDelete }: ClassCardProps) => {
         </div>
 
         <div className="flex shrink-0 flex-col gap-1">
-          <Link href={`/classes/${classData.id}`}>
+          <Link href={`/dashboard/classes/${classData.id}`}>
             <Button variant="ghost" size="sm" leftIcon={<Pencil size={14} />}>
               Edit
             </Button>

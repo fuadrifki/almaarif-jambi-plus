@@ -33,6 +33,8 @@ type StudentDetailProps = {
   permissions?: {
     canEditStudent?: boolean;
   };
+  basePath?: string;
+  showEditButton?: boolean;
 };
 
 export const StudentDetail = ({
@@ -41,6 +43,8 @@ export const StudentDetail = ({
   attendanceHistory,
   attendanceReport,
   permissions,
+  basePath = '/dashboard/students',
+  showEditButton = true,
 }: StudentDetailProps) => {
   const [activeTab, setActiveTab] = useState('info');
 
@@ -108,14 +112,14 @@ export const StudentDetail = ({
       </Card>
 
       <div className="flex gap-3 pt-2 items-center justify-center sm:justify-end">
-        <Link href={`/students`} className="w-full sm:w-max">
+        <Link href={basePath} className="w-full sm:w-max">
           <Button type="button" variant="ghost">
             Kembali
           </Button>
         </Link>
 
-        {permissions?.canEditStudent && (
-          <Link href={`/students/${student.id}/edit`} className="w-full sm:w-max">
+        {showEditButton && permissions?.canEditStudent && (
+          <Link href={`${basePath}/${student.id}/edit`} className="w-full sm:w-max">
             <Button type="submit" className="w-full">
               Edit
             </Button>
@@ -132,7 +136,7 @@ export const StudentDetail = ({
   return (
     <PageLayout>
       <PageLayout.Header>
-        <Breadcrumb items={[{ label: 'Students', href: '/students' }, { label: student.name }]} />
+        <Breadcrumb items={[{ label: 'Students', href: basePath }, { label: student.name }]} />
         <section>
           <h1 className="text-2xl font-semibold sm:text-3xl text-primary">Student Profile</h1>
 

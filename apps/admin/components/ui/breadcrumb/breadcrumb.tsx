@@ -32,7 +32,7 @@ const renderItem = (item: BreadcrumbItem, isLast: boolean) => {
 
 export const Breadcrumb = ({ showHome = true, items, className, ...props }: BreadcrumbProps) => {
   const homeItem: BreadcrumbItem = {
-    href: '/',
+    href: '/dashboard',
     icon: House,
   };
 

@@ -20,7 +20,8 @@ export const Sidebar = ({ role }: SidebarProps) => {
   return (
     <Surface className="h-full space-y-3 p-4">
       {items.map(({ label, href, icon: Icon, disabled, badge }) => {
-        const isActive = href === '/' ? pathname === '/' : pathname.startsWith(href);
+        const isActive =
+          href === '/dashboard' ? pathname === '/dashboard' : pathname.startsWith(href);
 
         return (
           <Link

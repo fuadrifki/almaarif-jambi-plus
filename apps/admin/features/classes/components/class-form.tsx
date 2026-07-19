@@ -67,7 +67,7 @@ export const ClassForm = ({ classData }: ClassFormProps) => {
         toast.success('Kelas baru berhasil ditambahkan');
       }
 
-      router.push('/classes');
+      router.push('/dashboard/classes');
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Terjadi kesalahan. Silakan coba lagi.');
     }
@@ -171,7 +171,7 @@ export const ClassForm = ({ classData }: ClassFormProps) => {
       </Card>
 
       <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
-        <Link href={`/classes`} className="w-full sm:w-max">
+        <Link href={`/dashboard/classes`} className="w-full sm:w-max">
           <Button type="button" variant="ghost">
             Kembali
           </Button>

@@ -117,7 +117,7 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
         toast.success('Siswa baru berhasil ditambahkan');
       }
 
-      router.push('/students');
+      router.push('/dashboard/students');
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Terjadi kesalahan. Silakan coba lagi.');
     }
@@ -252,7 +252,10 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
       </Card>
 
       <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
-        <Link href={isEdit ? `/students/${student.id}` : `/students`} className="w-full sm:w-max">
+        <Link
+          href={isEdit ? `/dashboard/students/${student.id}` : '/dashboard/students'}
+          className="w-full sm:w-max"
+        >
           <Button type="button" variant="ghost">
             Kembali
           </Button>

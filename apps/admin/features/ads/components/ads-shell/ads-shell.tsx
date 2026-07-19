@@ -37,7 +37,8 @@ const NavContent = ({ onNavigate }: { onNavigate?: () => void }) => {
 
           <div className="space-y-1">
             {group.items.map(({ label, href }) => {
-              const isActive = href === '/' ? pathname === href : pathname.startsWith(href);
+              const isActive =
+                href === '/dashboard' ? pathname === href : pathname.startsWith(href);
 
               return (
                 <Link

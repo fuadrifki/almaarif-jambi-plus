@@ -71,7 +71,7 @@ export const StudentListPageClient = ({
           {permissions?.canCreateStudent && (
             <Button
               className="w-full sm:w-auto shrink-0"
-              onClick={() => router.push('/students/new')}
+              onClick={() => router.push('/dashboard/students/new')}
             >
               Tambah Siswa
             </Button>

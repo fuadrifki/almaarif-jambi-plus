@@ -27,25 +27,25 @@ export type NavigationItem = {
 export const navigation: NavigationItem[] = [
   {
     label: 'Dashboard',
-    href: '/',
+    href: '/dashboard',
     icon: LayoutDashboard,
     roles: ['admin', 'teacher'],
   },
   {
     label: 'Siswa',
-    href: '/students',
+    href: '/dashboard/students',
     icon: Users,
     roles: ['admin', 'teacher'],
   },
   {
     label: 'Kelas',
-    href: '/classes',
+    href: '/dashboard/classes',
     icon: BookOpen,
     roles: ['admin'],
   },
   {
     label: 'Laporan Absensi',
-    href: '/attendance/reports',
+    href: '/dashboard/attendance/reports',
     icon: BarChart3,
     roles: ['admin'],
   },
@@ -59,7 +59,7 @@ export const navigation: NavigationItem[] = [
   },
   {
     label: 'Absensi',
-    href: '/attendance',
+    href: '/dashboard/attendance',
     icon: ClipboardCheck,
     roles: ['teacher'],
   },

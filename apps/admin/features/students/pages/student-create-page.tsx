@@ -13,8 +13,8 @@ export const StudentCreatePage = async () => {
         <div className="flex flex-col w-full gap-y-6">
           <Breadcrumb
             items={[
-              { label: 'Home', href: '/' },
-              { label: 'Students', href: '/students' },
+              { label: 'Home', href: '/dashboard' },
+              { label: 'Students', href: '/dashboard/students' },
               { label: 'Create' },
             ]}
           />

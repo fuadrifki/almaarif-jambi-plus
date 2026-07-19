@@ -64,7 +64,9 @@ export const StudentList = ({ students, classes, permissions }: StudentListProps
           icon={<Users size={32} />}
           title="Belum ada siswa"
           description="Mulai menambahkan data siswa pesantren."
-          action={<Button onClick={() => router.push('/students/new')}>Tambah Siswa</Button>}
+          action={
+            <Button onClick={() => router.push('/dashboard/students/new')}>Tambah Siswa</Button>
+          }
         />
       ) : (
         <div className="space-y-3">

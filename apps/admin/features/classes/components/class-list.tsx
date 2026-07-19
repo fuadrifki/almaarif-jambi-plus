@@ -60,7 +60,9 @@ export const ClassList = ({ classes }: ClassListProps) => {
           icon={<Users size={32} />}
           title="Belum ada siswa"
           description="Mulai menambahkan data siswa pesantren."
-          action={<Button onClick={() => router.push('/classes/new')}>Tambah Siswa</Button>}
+          action={
+            <Button onClick={() => router.push('/dashboard/classes/new')}>Tambah Siswa</Button>
+          }
         />
       ) : (
         <div className="space-y-3">

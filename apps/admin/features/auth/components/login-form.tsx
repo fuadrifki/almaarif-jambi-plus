@@ -55,7 +55,7 @@ export const LoginForm = () => {
 
       toast.success('Login berhasil');
 
-      router.push('/');
+      router.push('/dashboard');
       router.refresh();
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Login gagal. Silakan coba lagi.');

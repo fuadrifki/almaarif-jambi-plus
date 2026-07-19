@@ -21,7 +21,8 @@ export const MobileNav = ({ role }: MobileNavProps) => {
   const primary = items.slice(0, MOBILE_MAX_PRIMARY_ITEMS);
   const hasOverflow = items.length > MOBILE_MAX_PRIMARY_ITEMS;
 
-  const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname.startsWith(href));
+  const isActive = (href: string) =>
+    href === '/dashboard' ? pathname === '/dashboard' : pathname.startsWith(href);
 
   const renderItem = (item: NavigationItem) => {
     const active = isActive(item.href);
@@ -51,10 +52,10 @@ export const MobileNav = ({ role }: MobileNavProps) => {
 
         {hasOverflow && (
           <Link
-            href="/more"
+            href="/dashboard/more"
             className={cn(
               'ads-mobile-nav-item flex flex-col items-center justify-center',
-              isActive('/more') && 'ads-mobile-nav-item--active',
+              isActive('/dashboard/more') && 'ads-mobile-nav-item--active',
             )}
           >
             <CircleEllipsis size={20} />

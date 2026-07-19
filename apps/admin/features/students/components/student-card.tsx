@@ -92,13 +92,13 @@ export const StudentCard = ({ student, classes, onDelete, permissions }: Student
         </div>
 
         <div className="flex shrink-0 flex-col gap-1">
-          <Link href={`/students/${student.id}`}>
+          <Link href={`/dashboard/students/${student.id}`}>
             <Button variant="ghost" size="sm" leftIcon={<Eye size={14} />}>
               Detail
             </Button>
           </Link>
           {canEdit && (
-            <Link href={`/students/${student.id}/edit`}>
+            <Link href={`/dashboard/students/${student.id}/edit`}>
               <Button variant="ghost" size="sm" leftIcon={<Pencil size={14} />}>
                 Edit
               </Button>

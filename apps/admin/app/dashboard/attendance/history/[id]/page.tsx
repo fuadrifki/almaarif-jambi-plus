@@ -6,5 +6,5 @@ export default async function AttendanceHistoryDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  redirect(`/attendance/${id}`);
+  redirect(`/dashboard/attendance/${id}`);
 }

@@ -22,8 +22,8 @@ export const ClassEditPage = async ({ params }: ClassEditPageProps) => {
       <PageLayout.Header>
         <Breadcrumb
           items={[
-            { label: 'Classes', href: '/classes' },
-            { label: classDetail.name, href: `/classes/${id}` },
+            { label: 'Classes', href: '/dashboard/classes' },
+            { label: classDetail.name, href: `/dashboard/classes/${id}` },
             { label: 'Edit' },
           ]}
         />
