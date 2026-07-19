@@ -29,13 +29,7 @@ const PopoverContent = ({
         sideOffset={sideOffset}
         alignOffset={alignOffset}
         className={cn(
-          'ads-popover',
-          'bg-surface/95 backdrop-blur-xl',
-          'border border-border',
-          'rounded-xl',
-          'shadow-xl',
-          'p-2',
-          'ads-popover-content',
+          'ads-popover bg-surface/95 backdrop-blur-xl border border-border rounded-xl shadow-xl w-full p-0 min-w-(--radix-popover-trigger-width)',
           className,
         )}
         {...props}

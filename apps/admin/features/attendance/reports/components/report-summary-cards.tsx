@@ -49,15 +49,6 @@ const CARDS = [
     className: 'text-red-500',
     bgClassName: 'hover:bg-red-500/10',
   },
-  {
-    key: 'notYetSubmitted' as const,
-    label: 'Belum Absen',
-    valueKey: 'notYetSubmitted' as const,
-    filterValue: 'NOT_SUBMITTED',
-    variant: 'default' as const,
-    className: 'text-gray-500',
-    bgClassName: 'hover:bg-gray-500/10',
-  },
 ];
 
 export const ReportSummaryCards = ({ summary, className }: ReportSummaryCardsProps) => {
@@ -84,7 +75,7 @@ export const ReportSummaryCards = ({ summary, className }: ReportSummaryCardsPro
   const currentStatus = searchParams.get('status') || '';
 
   return (
-    <div className={cn('grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4', className)}>
+    <div className={cn('grid grid-cols-2 lg:grid-cols-4 gap-4', className)}>
       {CARDS.map((card) => {
         const isActive = currentStatus === card.filterValue;
 

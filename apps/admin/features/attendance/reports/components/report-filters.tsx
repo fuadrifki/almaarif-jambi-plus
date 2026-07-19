@@ -3,9 +3,8 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
-import { Button, Select, Surface } from '@/components/ui';
-import { cn } from '@/lib';
-import { ChevronDown } from 'lucide-react';
+import { Badge, Button, Select, Surface } from '@/components/ui';
+import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import type { Class } from '@/features/classes/types';
 
 type ReportFiltersProps = {
@@ -28,7 +27,7 @@ function generateMonthOptions() {
 }
 
 const STATUS_OPTIONS = [
-  { label: 'Semua Status', value: '' },
+  { label: 'Semua', value: '' },
   { label: 'Hadir', value: 'PRESENT' },
   { label: 'Sakit', value: 'SICK' },
   { label: 'Izin', value: 'PERMISSION' },
@@ -41,7 +40,7 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const [advancedOpen, setAdvancedOpen] = useState(false);
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   const monthOptions = useMemo(() => generateMonthOptions(), []);
 
@@ -54,26 +53,17 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
   const advancedFilterCount = [classId, teacherId, subjectId, status].filter(Boolean).length;
 
   const classOptions = useMemo(
-    () => [
-      { label: 'Semua Kelas', value: '' },
-      ...classes.map((c) => ({ label: c.name, value: c.id })),
-    ],
+    () => [{ label: 'Semua', value: '' }, ...classes.map((c) => ({ label: c.name, value: c.id }))],
     [classes],
   );
 
   const teacherOptions = useMemo(
-    () => [
-      { label: 'Semua Guru', value: '' },
-      ...teachers.map((t) => ({ label: t.name, value: t.id })),
-    ],
+    () => [{ label: 'Semua', value: '' }, ...teachers.map((t) => ({ label: t.name, value: t.id }))],
     [teachers],
   );
 
   const subjectOptions = useMemo(
-    () => [
-      { label: 'Semua Mata Pelajaran', value: '' },
-      ...subjects.map((s) => ({ label: s.name, value: s.id })),
-    ],
+    () => [{ label: 'Semua', value: '' }, ...subjects.map((s) => ({ label: s.name, value: s.id }))],
     [subjects],
   );
 
@@ -120,74 +110,79 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
       params.set('month', month);
     }
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    setIsPopoverOpen(false);
   };
 
   return (
     <Surface className="p-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-end">
+      <div className="flex flex-col md:flex-row gap-4">
         <Select
           options={monthOptions}
           value={month}
           placeholder="Bulan"
           onChange={handleMonthChange}
+          className="w-full sm:w-52!"
         />
-      </div>
 
-      <div className="flex justify-end mt-4">
-        <Button variant="ghost" onClick={() => setAdvancedOpen((prev) => !prev)} className="gap-2">
-          Filter Lanjutan
-          {advancedFilterCount > 0 && (
-            <span className="inline-flex items-center justify-center rounded-full bg-primary px-2 py-0.5 text-xs font-medium text-primary-foreground">
-              {advancedFilterCount}
-            </span>
-          )}
-          <ChevronDown
-            className={cn('size-4 transition-transform duration-200', advancedOpen && 'rotate-180')}
-          />
-        </Button>
-      </div>
+        <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen} modal={true}>
+          <PopoverTrigger asChild>
+            <Button variant="outline" className="gap-2">
+              Filter Lanjutan
+              {advancedFilterCount > 0 && <Badge variant="info">{advancedFilterCount}</Badge>}
+            </Button>
+          </PopoverTrigger>
 
-      <div
-        className={cn(
-          'overflow-hidden transition-all duration-200',
-          advancedOpen ? 'mt-4 max-h-[500px] opacity-100' : 'max-h-0 opacity-0',
-        )}
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
-          <Select
-            options={classOptions}
-            value={classId}
-            placeholder="Kelas"
-            onChange={handleClassChange}
-          />
+          <PopoverContent
+            className="w-full sm:w-60 p-0"
+            sideOffset={8}
+            onOpenAutoFocus={(e) => e.preventDefault()}
+          >
+            <div className="flex flex-col h-full w-full">
+              <div className="px-4 py-3 border-b border-border">
+                <h2 className="text-lg font-semibold">Filters</h2>
+              </div>
 
-          <Select
-            options={teacherOptions}
-            value={teacherId}
-            placeholder="Guru"
-            onChange={handleTeacherChange}
-          />
+              <div className="px-4 py-4 space-y-4 overflow-y-auto flex-1 w-full">
+                <Select
+                  options={classOptions}
+                  value={classId}
+                  placeholder="Kelas"
+                  onChange={handleClassChange}
+                />
 
-          <Select
-            options={subjectOptions}
-            value={subjectId}
-            placeholder="Mata Pelajaran"
-            onChange={handleSubjectChange}
-          />
+                <Select
+                  options={teacherOptions}
+                  value={teacherId}
+                  placeholder="Guru"
+                  onChange={handleTeacherChange}
+                />
 
-          <Select
-            options={STATUS_OPTIONS}
-            value={status}
-            placeholder="Status"
-            onChange={handleStatusChange}
-          />
-        </div>
+                <Select
+                  options={subjectOptions}
+                  value={subjectId}
+                  placeholder="Mata Pelajaran"
+                  onChange={handleSubjectChange}
+                />
 
-        <div className="flex justify-end mt-4">
-          <Button variant="outline" onClick={handleReset}>
-            Reset Filter
-          </Button>
-        </div>
+                <Select
+                  options={STATUS_OPTIONS}
+                  value={status}
+                  placeholder="Status"
+                  onChange={handleStatusChange}
+                />
+              </div>
+
+              <div className="px-4 py-3 border-t border-border flex justify-end gap-2">
+                <Button variant="outline" onClick={handleReset}>
+                  Reset
+                </Button>
+                <Button variant="primary" onClick={() => setIsPopoverOpen(false)}>
+                  Apply
+                </Button>
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
       </div>
     </Surface>
   );

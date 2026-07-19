@@ -55,7 +55,6 @@ export const ReportListPageClient = ({
         <h1 className="text-2xl font-semibold sm:text-3xl">Laporan Absensi Siswa</h1>
         <p className="text-secondary">Buat data laporan absensi siswa pesantren.</p>
 
-        <ReportSummaryCards summary={summary} />
         <ReportFilters classes={classes} teachers={teachers} subjects={subjects} />
       </PageLayout.Header>
 
@@ -81,7 +80,11 @@ export const ReportListPageClient = ({
               </p>
             }
           >
-            <ReportAttendanceTable rows={visibleRows} classes={classes} />
+            <div className="flex flex-col gap-y-4 w-full">
+              <ReportSummaryCards summary={summary} />
+
+              <ReportAttendanceTable rows={visibleRows} classes={classes} />
+            </div>
           </InfiniteScroll>
         )}
       </PageLayout.Content>
