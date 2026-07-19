@@ -85,7 +85,7 @@ export const DatePicker = ({
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="ads-popover" sideOffset={4}>
+      <PopoverContent className="ads-popover" sideOffset={4} widthSameTrigger={false}>
         <DayPicker
           selected={value}
           onSelect={handleSelect}

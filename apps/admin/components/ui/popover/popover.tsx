@@ -7,20 +7,24 @@ const Popover = PopoverPrimitive.Root;
 
 const PopoverTrigger = PopoverPrimitive.Trigger;
 
+export type PopoverContentProps = ComponentPropsWithoutRef<typeof PopoverPrimitive.Content> & {
+  side?: 'top' | 'right' | 'bottom' | 'left';
+  align?: 'start' | 'center' | 'end';
+  sideOffset?: number;
+  alignOffset?: number;
+  widthSameTrigger?: boolean;
+};
+
 const PopoverContent = ({
   className,
   side = 'bottom',
   align = 'center',
   sideOffset = 8,
   alignOffset = 0,
+  widthSameTrigger = true,
   children,
   ...props
-}: ComponentPropsWithoutRef<typeof PopoverPrimitive.Content> & {
-  side?: 'top' | 'right' | 'bottom' | 'left';
-  align?: 'start' | 'center' | 'end';
-  sideOffset?: number;
-  alignOffset?: number;
-}) => {
+}: PopoverContentProps) => {
   return (
     <PopoverPrimitive.Portal>
       <PopoverPrimitive.Content
@@ -29,7 +33,8 @@ const PopoverContent = ({
         sideOffset={sideOffset}
         alignOffset={alignOffset}
         className={cn(
-          'ads-popover bg-surface/95 backdrop-blur-xl border border-border rounded-xl shadow-xl w-full p-0 min-w-(--radix-popover-trigger-width)',
+          'ads-popover bg-surface/95 backdrop-blur-xl border border-border rounded-xl shadow-xl w-full p-0',
+          widthSameTrigger && 'min-w-(--radix-popover-trigger-width)',
           className,
         )}
         {...props}

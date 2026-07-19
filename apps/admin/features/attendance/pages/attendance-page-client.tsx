@@ -49,6 +49,7 @@ export const AttendancePageClient = ({
   const teacherLabel = useMemo(() => TEACHERS.find((t) => t.id === teacherId)?.name, [teacherId]);
 
   const [classId, setClassId] = useState<number>(0);
+  const [subjectId, setSubjectId] = useState<number>(0);
   const [statuses, setStatuses] = useState<Record<number, AttendanceStatus>>({});
   const [notes, setNotes] = useState<Record<number, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -62,39 +63,37 @@ export const AttendancePageClient = ({
     [students, classId],
   );
 
-  const currentschedules = useMemo(() => {
-    const currentDay = format(new Date(), 'EEEE', { locale: id });
-    const currentTime = format(new Date(), 'HH:mm');
+  const currentDate = useMemo(() => {
+    const day = format(new Date(), 'EEEE', { locale: id });
+    const time = format(new Date(), 'HH:mm');
 
-    return (
-      SCHEDULES.find((item) => {
-        const [start, end] = item.time.split('-');
-        const inRange = currentTime >= start && currentTime <= end;
-
-        return (
-          item.day === currentDay &&
-          inRange &&
-          item.classId === classId &&
-          item.teacherId === teacherId
-        );
-      }) ?? undefined
-    );
-  }, [classId, teacherId]);
+    return {
+      day,
+      time,
+    };
+  }, []);
 
   const subjectsByClass = useMemo(() => {
-    const schedules = SCHEDULES.filter((s) => s.teacherId === teacherId);
+    const schedules = SCHEDULES.filter((item) => {
+      const [start, end] = item.time.split('-');
+      const inRange = currentDate.time >= start && currentDate.time <= end;
 
-    const data = SUBJECTS.filter((s) => schedules.find((sch) => sch.subjectId === s.id));
+      return item.day === currentDate.day && inRange && item.classId === classId;
+    });
+
+    const data = SUBJECTS.filter((item) => schedules.find((s) => s.subjectId === item.id));
 
     const res = data.sort((a, b) => a.label.localeCompare(b.label));
 
     return res.map((s) => ({ value: s.id, label: s.label }));
-  }, [teacherId]);
+  }, [currentDate, classId]);
 
-  const subjectOptions = useMemo(
-    () => [{ value: 0, label: 'Semua' }, ...subjectsByClass],
-    [subjectsByClass],
-  );
+  const subjectOptions = useMemo((): SelectOption[] => {
+    const data = SUBJECTS.map((s) => ({ value: s.id, label: s.label })).sort((a, b) =>
+      a.label.localeCompare(b.label),
+    );
+    return [{ value: 0, label: 'Semua' }, ...data];
+  }, []);
 
   const filteredSessions = useMemo(() => {
     return sessions.filter((s) => {
@@ -135,8 +134,8 @@ export const AttendancePageClient = ({
       await submitAttendance({
         teacherId,
         classId,
-        subjectId: currentschedules?.subjectId ?? 0,
-        scheduleId: currentschedules?.id ?? 0,
+        subjectId,
+        scheduleId: 0,
         date: format(new Date(), 'yyyy-MM-dd'),
         time: format(new Date(), 'hh:mm'),
         records: filteredStudents.map((student) => ({
@@ -150,10 +149,7 @@ export const AttendancePageClient = ({
 
       toast.success('Absensi berhasil disimpan');
 
-      // Reset form
-      setClassId(0);
-      setStatuses({});
-      setNotes({});
+      onResetTab();
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : 'Gagal menyimpan absensi. Silakan coba lagi.',
@@ -163,6 +159,16 @@ export const AttendancePageClient = ({
     }
   };
 
+  const onResetTab = () => {
+    setClassId(0);
+    setSubjectId(0);
+    setStatuses({});
+    setNotes({});
+    setDateFilter(undefined);
+    setClassFilter(0);
+    setSubjectFilter(0);
+  };
+
   return (
     <PageLayout>
       <PageLayout.Header>
@@ -170,23 +176,15 @@ export const AttendancePageClient = ({
 
         <Surface className="flex flex-wrap justify-between gap-x-2 gap-y-2 p-4 text-sm text-secondary">
           <span className="font-medium text-primary">{teacherLabel}</span>
-
-          {currentschedules ? (
-            <div className="flex flex-wrap items-center gap-1.5">
-              <span>Jadwal hari ini:</span>
-              <span className="font-semibold whitespace-nowrap">
-                {SUBJECTS.find((s) => s.id === currentschedules?.subjectId)?.label}
-              </span>
-              <span className="whitespace-nowrap">({currentschedules?.time})</span>
-            </div>
-          ) : classId > 0 ? (
-            <span className="text-sm text-secondary text-center">Tidak ada jadwal hari ini</span>
-          ) : (
-            <span className="text-sm text-secondary text-center">Belum ada jadwal hari ini</span>
-          )}
         </Surface>
 
-        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as Tab)}>
+        <Tabs
+          value={activeTab}
+          onValueChange={(v) => {
+            onResetTab();
+            setActiveTab(v as Tab);
+          }}
+        >
           <Tabs.Item value="input" icon={<Plus size={16} />}>
             Isi Absensi
           </Tabs.Item>
@@ -202,7 +200,18 @@ export const AttendancePageClient = ({
               options={classes}
               value={classId}
               placeholder="Kelas"
-              onChange={(value) => setClassId(Number(value))}
+              onChange={(value) => {
+                setSubjectId(0);
+                setClassId(Number(value));
+              }}
+            />
+
+            <Select
+              options={subjectsByClass}
+              value={subjectId}
+              placeholder="Mata pelajaran"
+              onChange={(value) => setSubjectId(Number(value))}
+              disabled={!classId}
             />
           </div>
         )}
@@ -231,17 +240,17 @@ export const AttendancePageClient = ({
       <PageLayout.Content className="flex flex-col gap-y-4 justify-between w-full">
         {activeTab === 'input' && (
           <>
-            {!classId || !currentschedules ? (
+            {classId && !subjectsByClass.length ? (
               <EmptyState
                 icon={<ClipboardCheck size={32} />}
-                title="Pilih kelas untuk memulai"
-                description="Pilih kelas terlebih dahulu untuk mengisi absensi."
+                title="Mata pelajaran belum tersedia"
+                description="Tidak ada mata pelajaran di kelas ini."
               />
-            ) : filteredStudents.length === 0 ? (
+            ) : !classId || !subjectId ? (
               <EmptyState
                 icon={<ClipboardCheck size={32} />}
-                title="Tidak ada siswa"
-                description="Tidak ada siswa yang terdaftar di kelas ini."
+                title="Pilih untuk memulai"
+                description="Pilih kelas dan mata pelajaran terlebih dahulu untuk mengisi absensi."
               />
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
@@ -261,7 +270,7 @@ export const AttendancePageClient = ({
             <div className="flex justify-end">
               <Button
                 onClick={handleSubmit}
-                disabled={!classId || !currentschedules?.subjectId || filteredStudents.length === 0}
+                disabled={!classId || !subjectId || filteredStudents.length === 0}
                 status={isSubmitting ? 'loading' : 'idle'}
               >
                 Simpan Absensi
