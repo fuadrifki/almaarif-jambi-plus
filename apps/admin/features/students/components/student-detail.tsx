@@ -35,6 +35,7 @@ type StudentDetailProps = {
   };
   basePath?: string;
   showEditButton?: boolean;
+  showBreadcrumb?: boolean;
 };
 
 export const StudentDetail = ({
@@ -45,6 +46,7 @@ export const StudentDetail = ({
   permissions,
   basePath = '/dashboard/students',
   showEditButton = true,
+  showBreadcrumb = true,
 }: StudentDetailProps) => {
   const [activeTab, setActiveTab] = useState('info');
 
@@ -136,7 +138,9 @@ export const StudentDetail = ({
   return (
     <PageLayout>
       <PageLayout.Header>
-        <Breadcrumb items={[{ label: 'Students', href: basePath }, { label: student.name }]} />
+        {showBreadcrumb && (
+          <Breadcrumb items={[{ label: 'Students', href: basePath }, { label: student.name }]} />
+        )}
         <section>
           <h1 className="text-2xl font-semibold sm:text-3xl text-primary">Student Profile</h1>
 

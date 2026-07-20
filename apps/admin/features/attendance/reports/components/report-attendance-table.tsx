@@ -45,12 +45,12 @@ export const ReportAttendanceTable = ({ rows, className }: ReportAttendanceTable
     <Table className={cn('min-w-full', className)}>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[120px]">Tanggal</TableHead>
-          <TableHead className="w-[180px]">Siswa</TableHead>
-          <TableHead className="w-[120px]">Kelas</TableHead>
-          <TableHead className="w-[150px]">Mata Pelajaran</TableHead>
-          <TableHead className="w-[150px]">Guru</TableHead>
-          <TableHead className="w-[100px]">Status</TableHead>
+          <TableHead className="w-30">Tanggal</TableHead>
+          <TableHead className="w-45">Siswa</TableHead>
+          <TableHead className="w-30">Kelas</TableHead>
+          <TableHead className="w-37.5">Mata Pelajaran</TableHead>
+          <TableHead className="w-37.5">Guru</TableHead>
+          <TableHead className="w-25">Status</TableHead>
           <TableHead>Catatan</TableHead>
         </TableRow>
       </TableHeader>
@@ -78,9 +78,7 @@ export const ReportAttendanceTable = ({ rows, className }: ReportAttendanceTable
             </TableCell>
             <TableCell>{getStatusBadge(row.status)}</TableCell>
             <TableCell>
-              <div className="text-sm text-secondary max-w-[200px] truncate">
-                {row.notes || '-'}
-              </div>
+              <div className="text-sm text-secondary max-w-50 truncate">{row.notes || '-'}</div>
             </TableCell>
           </TableRow>
         ))}

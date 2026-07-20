@@ -18,11 +18,12 @@ import {
   TableRow,
 } from '@/components/ui';
 import { ArrowLeft, Search, Users } from 'lucide-react';
-
-import type { Student } from '@/features/students/types';
 import Link from 'next/link';
 
-type PortalStudent = Student & {
+type PortalStudent = {
+  id: number;
+  name: string;
+  nis: string;
   className: string;
   attendancePercentage: number;
 };

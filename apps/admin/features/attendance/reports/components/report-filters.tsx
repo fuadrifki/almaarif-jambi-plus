@@ -52,7 +52,7 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
   const subjectId = searchParams.get('subjectId') || '';
   const status = searchParams.get('status') || '';
 
-  const advancedFilterCount = [classId, teacherId, subjectId, status].filter(Boolean).length;
+  const advancedFilterCount = [month, classId, teacherId, subjectId, status].filter(Boolean).length;
 
   const classOptions = useMemo(
     () => [{ label: 'Semua', value: '' }, ...classes.map((c) => ({ label: c.name, value: c.id }))],
@@ -120,9 +120,6 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
 
   const handleReset = () => {
     const params = new URLSearchParams();
-    if (month) {
-      params.set('month', month);
-    }
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
     setIsPopoverOpen(false);
   };
@@ -141,7 +138,7 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
         <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen} modal={true}>
           <PopoverTrigger asChild>
             <Button variant="outline" className="gap-2">
-              Filter Lanjutan
+              Filter
               {advancedFilterCount > 0 && <Badge variant="info">{advancedFilterCount}</Badge>}
             </Button>
           </PopoverTrigger>
