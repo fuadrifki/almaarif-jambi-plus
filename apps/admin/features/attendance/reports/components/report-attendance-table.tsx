@@ -10,6 +10,7 @@ import {
 import { cn } from '@/lib';
 import type { ReportRow } from '../../queries/types';
 import type { Class } from '@/features/classes/types';
+import { formatDate } from '@/lib/utils/date';
 
 type ReportAttendanceTableProps = {
   rows: ReportRow[];
@@ -47,6 +48,7 @@ export const ReportAttendanceTable = ({ rows, className }: ReportAttendanceTable
         <TableRow>
           <TableHead className="w-30">Tanggal</TableHead>
           <TableHead className="w-45">Siswa</TableHead>
+          <TableHead className="w-30">NIS</TableHead>
           <TableHead className="w-30">Kelas</TableHead>
           <TableHead className="w-37.5">Mata Pelajaran</TableHead>
           <TableHead className="w-37.5">Guru</TableHead>
@@ -61,24 +63,28 @@ export const ReportAttendanceTable = ({ rows, className }: ReportAttendanceTable
             className={index % 2 === 0 ? 'bg-surface/50' : ''}
           >
             <TableCell>
-              <div className="text-sm">{row.date}</div>
+              <div className="text-sm">
+                {formatDate(new Date(row.date), 'EEEE, d MMMM yyyy HH:mm')}
+              </div>
             </TableCell>
             <TableCell>
-              <div className="font-medium text-primary">{row.student.name}</div>
-              <div className="text-xs text-secondary">{row.student.nis}</div>
+              <div className="text-primary">{row.student.name}</div>
             </TableCell>
             <TableCell>
-              <div className="text-sm text-secondary">{row.className}</div>
+              <div className="text-primary">{row.student.nis}</div>
             </TableCell>
             <TableCell>
-              <div className="text-sm text-secondary">{row.subjectName}</div>
+              <div className="text-primary">{row.className}</div>
             </TableCell>
             <TableCell>
-              <div className="text-sm text-secondary">{row.teacherName}</div>
+              <div className="text-primary">{row.subjectName}</div>
+            </TableCell>
+            <TableCell>
+              <div className="text-primary">{row.teacherName}</div>
             </TableCell>
             <TableCell>{getStatusBadge(row.status)}</TableCell>
             <TableCell>
-              <div className="text-sm text-secondary max-w-50 truncate">{row.notes || '-'}</div>
+              <div className="text-primary max-w-50 truncate">{row.notes || '-'}</div>
             </TableCell>
           </TableRow>
         ))}

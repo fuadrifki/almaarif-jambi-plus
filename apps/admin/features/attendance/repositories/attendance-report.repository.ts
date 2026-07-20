@@ -1,6 +1,6 @@
 import { getDb } from '@/lib/db/client';
 import { attendanceSessions, attendanceRecords, students, classes } from '@/lib/db/schema';
-import { and, asc, count, desc, eq, isNull, like } from 'drizzle-orm';
+import { and, asc, count, desc, eq, ilike, isNull, like, or } from 'drizzle-orm';
 
 import type {
   AttendanceReportFilter,
@@ -18,6 +18,17 @@ const buildMonthConditions = (filter: AttendanceReportFilter) => {
   }
   if (filter.subjectId) {
     conditions.push(eq(attendanceSessions.subjectId, filter.subjectId));
+  }
+
+  if (filter.search) {
+    const searchPattern = `%${filter.search}%`;
+    const searchCondition = or(
+      ilike(students.name, searchPattern),
+      ilike(students.nis, searchPattern),
+    );
+    if (searchCondition) {
+      conditions.push(searchCondition);
+    }
   }
 
   return conditions;

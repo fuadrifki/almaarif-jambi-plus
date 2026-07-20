@@ -46,13 +46,7 @@ export const ReportListPageClient = ({
   return (
     <PageLayout>
       <PageLayout.Header>
-        <Breadcrumb
-          items={[
-            { label: 'Home', href: '/dashboard/' },
-            { label: 'Attendance', href: '/dashboard/attendance' },
-            { label: 'Reports' },
-          ]}
-        />
+        <Breadcrumb items={[{ label: 'Reports' }]} />
         <h1 className="text-2xl font-semibold sm:text-3xl">Laporan Absensi Siswa</h1>
         <p className="text-secondary">Buat data laporan absensi siswa pesantren.</p>
 

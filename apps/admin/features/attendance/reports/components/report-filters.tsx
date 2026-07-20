@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
 import { Badge, Button, Input, Select, Surface } from '@/components/ui';
@@ -45,7 +45,7 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
 
   const monthOptions = useMemo(() => generateMonthOptions(), []);
 
-  const search = searchParams.get('search') || '';
+  const q = searchParams.get('search') || '';
   const month = searchParams.get('month') || '';
   const classId = searchParams.get('classId') || '';
   const teacherId = searchParams.get('teacherId') || '';
@@ -94,10 +94,6 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
     [pathname, searchParams, router],
   );
 
-  const handleSearchChange = (value: string) => {
-    updateSearchParams({ search: String(value) || undefined });
-  };
-
   const handleMonthChange = (value: string | number) => {
     updateSearchParams({ month: String(value) || undefined });
   };
@@ -118,6 +114,16 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
     updateSearchParams({ status: String(value) || undefined });
   };
 
+  const [search, setSearch] = useState(q);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      updateSearchParams({ search: String(search) || undefined });
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [search, updateSearchParams]);
+
   const handleReset = () => {
     const params = new URLSearchParams();
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
@@ -131,7 +137,7 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
           placeholder="Cari berdasarkan nama atau NIS..."
           leftIcon={<Search />}
           value={search}
-          onChange={(e) => handleSearchChange(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
           className="w-full sm:w-1/3"
         />
 
