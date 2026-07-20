@@ -1,3 +1,5 @@
+import { SelectOption } from '@/components/ui';
+
 export const ATTENDANCE_STATUS = {
   PRESENT: 'PRESENT',
   SICK: 'SICK',
@@ -5,18 +7,14 @@ export const ATTENDANCE_STATUS = {
   ABSENT: 'ABSENT',
 } as const;
 
+export const ATTENDANCE_STATUS_OPTIONS: SelectOption[] = [
+  { label: 'Hadir', value: ATTENDANCE_STATUS.PRESENT },
+  { label: 'Sakit', value: ATTENDANCE_STATUS.SICK },
+  { label: 'Alpha', value: ATTENDANCE_STATUS.ABSENT },
+  { label: 'Izin', value: ATTENDANCE_STATUS.PERMISSION },
+];
+
 export type AttendanceStatus = (typeof ATTENDANCE_STATUS)[keyof typeof ATTENDANCE_STATUS];
-
-export const ORIGINAL_TEACHER_STATUS = {
-  PERMISSION: 'PERMISSION',
-  SICK: 'SICK',
-  OFFICIAL_DUTY: 'OFFICIAL_DUTY',
-  ABSENT: 'ABSENT',
-  OTHER: 'OTHER',
-} as const;
-
-export type OriginalTeacherStatus =
-  (typeof ORIGINAL_TEACHER_STATUS)[keyof typeof ORIGINAL_TEACHER_STATUS];
 
 export type AttendanceSession = {
   id: number;
@@ -26,7 +24,7 @@ export type AttendanceSession = {
   scheduleId: number;
   date: string;
   time: string;
-  originalTeacherStatus: OriginalTeacherStatus | null;
+  originalTeacherStatus: string | null;
   substituteNotes: string | null;
   createdAt: Date;
   updatedAt: Date;

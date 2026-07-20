@@ -7,7 +7,7 @@ import {
   attendanceRecordRepository,
 } from '@/features/attendance/repositories';
 
-import type { AttendanceStatus, OriginalTeacherStatus } from './types';
+import type { AttendanceStatus } from './types';
 
 type SubmitAttendanceInput = {
   teacherId: number;
@@ -16,8 +16,8 @@ type SubmitAttendanceInput = {
   scheduleId: number;
   date: string;
   time: string;
-  originalTeacherStatus?: OriginalTeacherStatus | null;
-  substituteNotes?: string | null;
+  originalTeacherStatus?: string;
+  substituteNotes?: string;
   records: {
     studentId: number;
     status: AttendanceStatus;

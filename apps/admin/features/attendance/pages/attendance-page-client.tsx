@@ -8,8 +8,6 @@ import {
   EmptyState,
   Field,
   PageLayout,
-  RadioGroup,
-  RadioItem,
   Surface,
   Tabs,
   Select,
@@ -23,13 +21,14 @@ import { AttendanceSessionCard } from '../components/attendance-session-card';
 import { AttendanceStudentRow } from '../components/attendance-student-row';
 import { submitAttendance } from '../server';
 
-import type {
-  AttendanceRecord,
-  AttendanceSession,
-  AttendanceStatus,
-  OriginalTeacherStatus,
+import {
+  ATTENDANCE_STATUS,
+  ATTENDANCE_STATUS_OPTIONS,
+  type AttendanceRecord,
+  type AttendanceSession,
+  type AttendanceStatus,
 } from '../types';
-import { ORIGINAL_TEACHER_STATUS } from '../types';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import type { Student } from '@/features/students/types';
 import { SUBJECTS } from '@/lib/db/seed-subjects';
 import { TEACHERS } from '@/lib/db/seed-teachers';
@@ -49,14 +48,6 @@ type AttendancePageClientProps = {
 
 type Tab = 'input' | 'history';
 
-const ORIGINAL_TEACHER_STATUS_LABEL: Record<OriginalTeacherStatus, string> = {
-  [ORIGINAL_TEACHER_STATUS.PERMISSION]: 'Izin',
-  [ORIGINAL_TEACHER_STATUS.SICK]: 'Sakit',
-  [ORIGINAL_TEACHER_STATUS.OFFICIAL_DUTY]: 'Dinas',
-  [ORIGINAL_TEACHER_STATUS.ABSENT]: 'Tidak Hadir',
-  [ORIGINAL_TEACHER_STATUS.OTHER]: 'Lainnya',
-};
-
 export const AttendancePageClient = ({
   teacherId,
   students,
@@ -73,19 +64,15 @@ export const AttendancePageClient = ({
   const [notes, setNotes] = useState<Record<number, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [originalTeacherStatus, setOriginalTeacherStatus] = useState<OriginalTeacherStatus | null>(
-    null,
-  );
+  const [openTeacherSubstitute, setOpenTeacherSubstitute] = useState(false);
+  const [originalTeacherStatus, setOriginalTeacherStatus] = useState('');
   const [substituteNotes, setSubstituteNotes] = useState('');
+  const [substituteConfirmed, setSubstituteConfirmed] = useState(false);
 
   const [dateFilter, setDateFilter] = useState<Date | undefined>();
+
   const [classFilter, setClassFilter] = useState(0);
   const [subjectFilter, setSubjectFilter] = useState(0);
-
-  const filteredStudents = useMemo(
-    () => (classId ? students.filter((s) => s.classId === classId) : []),
-    [students, classId],
-  );
 
   const currentDate = useMemo(() => {
     const day = format(new Date(), 'EEEE', { locale: id });
@@ -96,21 +83,6 @@ export const AttendancePageClient = ({
       time,
     };
   }, []);
-
-  const subjectsByClass = useMemo(() => {
-    const schedules = SCHEDULES.filter((item) => {
-      const [start, end] = item.time.split('-');
-      const inRange = currentDate.time >= start && currentDate.time <= end;
-
-      return item.day === currentDate.day && inRange && item.classId === classId;
-    });
-
-    const data = SUBJECTS.filter((item) => schedules.find((s) => s.subjectId === item.id));
-
-    const res = data.sort((a, b) => a.label.localeCompare(b.label));
-
-    return res.map((s) => ({ value: s.id, label: s.label }));
-  }, [currentDate, classId]);
 
   const matchedSchedule = useMemo(() => {
     if (!classId || !subjectId) return null;
@@ -132,15 +104,43 @@ export const AttendancePageClient = ({
 
   const isSubstituteMode = useMemo(() => {
     if (!matchedSchedule || matchedSchedule.teacherId === null) return false;
-
     return matchedSchedule.teacherId !== teacherId;
   }, [matchedSchedule, teacherId]);
 
   const originalTeacherName = useMemo(() => {
     if (!isSubstituteMode || !matchedSchedule?.teacherId) return null;
-
     return TEACHERS.find((t) => t.id === matchedSchedule.teacherId)?.name ?? null;
   }, [isSubstituteMode, matchedSchedule]);
+
+  const shouldShowStudentList = useMemo(() => {
+    if (isSubstituteMode) {
+      return Boolean(
+        substituteConfirmed &&
+        (originalTeacherStatus !== ATTENDANCE_STATUS.PERMISSION || substituteNotes.trim()),
+      );
+    }
+    return classId > 0;
+  }, [isSubstituteMode, substituteConfirmed, originalTeacherStatus, substituteNotes, classId]);
+
+  const filteredStudents = useMemo(
+    () => (shouldShowStudentList ? students.filter((s) => s.classId === classId) : []),
+    [shouldShowStudentList, students, classId],
+  );
+
+  const subjectsByClass = useMemo(() => {
+    const schedules = SCHEDULES.filter((item) => {
+      const [start, end] = item.time.split('-');
+      const inRange = currentDate.time >= start && currentDate.time <= end;
+
+      return item.day === currentDate.day && inRange && item.classId === classId;
+    });
+
+    const data = SUBJECTS.filter((item) => schedules.find((s) => s.subjectId === item.id));
+
+    const res = data.sort((a, b) => a.label.localeCompare(b.label));
+
+    return res.map((s) => ({ value: s.id, label: s.label }));
+  }, [currentDate, classId]);
 
   const subjectOptions = useMemo((): SelectOption[] => {
     const data = SUBJECTS.map((s) => ({ value: s.id, label: s.label })).sort((a, b) =>
@@ -168,34 +168,6 @@ export const AttendancePageClient = ({
   };
 
   const handleSubmit = async () => {
-    if (!classId) {
-      toast.error('Pilih kelas terlebih dahulu');
-
-      return;
-    }
-
-    const missingStatus = filteredStudents.find((s) => !statuses[s.id]);
-
-    if (missingStatus) {
-      toast.error(`Status wajib dipilih untuk ${missingStatus.name}`);
-
-      return;
-    }
-
-    if (isSubstituteMode) {
-      if (!originalTeacherStatus) {
-        toast.error('Status guru asli wajib dipilih');
-
-        return;
-      }
-
-      if (!substituteNotes.trim()) {
-        toast.error('Catatan pengganti wajib diisi');
-
-        return;
-      }
-    }
-
     setIsSubmitting(true);
 
     try {
@@ -206,8 +178,8 @@ export const AttendancePageClient = ({
         scheduleId: matchedSchedule?.id ?? 0,
         date: format(new Date(), 'yyyy-MM-dd'),
         time: format(new Date(), 'hh:mm'),
-        originalTeacherStatus: isSubstituteMode ? originalTeacherStatus : null,
-        substituteNotes: isSubstituteMode ? substituteNotes.trim() : null,
+        originalTeacherStatus: isSubstituteMode ? originalTeacherStatus : undefined,
+        substituteNotes: isSubstituteMode ? substituteNotes.trim() : undefined,
         records: filteredStudents.map((student) => ({
           studentId: student.id,
           status: statuses[student.id],
@@ -232,11 +204,22 @@ export const AttendancePageClient = ({
     setSubjectId(0);
     setStatuses({});
     setNotes({});
-    setOriginalTeacherStatus(null);
+    setOriginalTeacherStatus('');
     setSubstituteNotes('');
     setDateFilter(undefined);
     setClassFilter(0);
     setSubjectFilter(0);
+  };
+
+  const disabledDetailOriginalTeacher = !Boolean(
+    originalTeacherStatus &&
+    (originalTeacherStatus !== ATTENDANCE_STATUS.PERMISSION || substituteNotes.trim()),
+  );
+
+  const handleSubstituteConfirmed = () => {
+    if (disabledDetailOriginalTeacher) return;
+    setSubstituteConfirmed(true);
+    setOpenTeacherSubstitute(false);
   };
 
   return (
@@ -268,14 +251,17 @@ export const AttendancePageClient = ({
         </Tabs>
 
         {activeTab === 'input' && (
-          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 items-center">
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 items-center">
             <Select
               options={classes}
               value={classId}
               placeholder="Kelas"
               onChange={(value) => {
-                setSubjectId(0);
                 setClassId(Number(value));
+                setSubjectId(0);
+                setSubstituteConfirmed(false);
+                setOriginalTeacherStatus('');
+                setSubstituteNotes('');
               }}
             />
 
@@ -283,9 +269,70 @@ export const AttendancePageClient = ({
               options={subjectsByClass}
               value={subjectId}
               placeholder="Mata pelajaran"
-              onChange={(value) => setSubjectId(Number(value))}
+              onChange={(value) => {
+                setSubjectId(Number(value));
+                setSubstituteConfirmed(false);
+                setOriginalTeacherStatus('');
+                setSubstituteNotes('');
+              }}
               disabled={!classId}
             />
+
+            {isSubstituteMode && matchedSchedule?.teacherId !== teacherId && (
+              <Popover open={openTeacherSubstitute} onOpenChange={setOpenTeacherSubstitute}>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" className="w-full">
+                    Keterangan guru asli
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-80 p-4 space-y-4">
+                  <div className="space-y-3">
+                    <Field label="Status kehadiran guru asli" required>
+                      <Select
+                        options={ATTENDANCE_STATUS_OPTIONS.slice(1)}
+                        value={originalTeacherStatus}
+                        placeholder="Status kehadiran"
+                        onChange={(value) => {
+                          setOriginalTeacherStatus(String(value));
+                          setSubstituteNotes('');
+                        }}
+                        disabled={!classId}
+                      />
+                    </Field>
+
+                    {originalTeacherStatus === ATTENDANCE_STATUS.PERMISSION && (
+                      <Field label="Catatan" required>
+                        <Textarea
+                          placeholder="Alasan guru asli tidak hadir"
+                          value={substituteNotes}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            setSubstituteNotes(value);
+
+                            if (!value) {
+                              setSubstituteConfirmed(false);
+                            }
+                          }}
+                          size="sm"
+                          resize="none"
+                          rows={2}
+                        />
+                      </Field>
+                    )}
+                  </div>
+
+                  <div className="flex gap-2 pt-2">
+                    <Button
+                      className="flex-1"
+                      onClick={handleSubstituteConfirmed}
+                      disabled={disabledDetailOriginalTeacher}
+                    >
+                      Simpan
+                    </Button>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            )}
           </div>
         )}
 
@@ -330,83 +377,51 @@ export const AttendancePageClient = ({
                 title="Pilih untuk memulai"
                 description="Pilih kelas dan mata pelajaran terlebih dahulu untuk mengisi absensi."
               />
-            ) : (
-              <>
-                {isSubstituteMode && (
-                  <Surface className="p-4 space-y-4">
-                    <div className="flex items-center gap-2 text-amber-400">
-                      <AlertTriangle size={18} />
-                      <p className="text-sm font-semibold">
-                        Guru Pengganti &mdash; {originalTeacherName}
-                      </p>
-                    </div>
-
-                    <p className="text-xs text-secondary">
-                      Anda sedang mengisi absensi sebagai guru penganti untuk{' '}
-                      <span className="font-medium text-primary">{originalTeacherName}</span>.
-                    </p>
-
-                    <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
-                      <Field
-                        label="Status Guru Asli"
-                        required
-                        error={!originalTeacherStatus ? undefined : undefined}
-                      >
-                        <RadioGroup
-                          value={originalTeacherStatus ?? undefined}
-                          onValueChange={(value) =>
-                            setOriginalTeacherStatus(value as OriginalTeacherStatus)
-                          }
-                          className="flex flex-wrap gap-1"
-                        >
-                          {Object.values(ORIGINAL_TEACHER_STATUS).map((status) => (
-                            <RadioItem key={status} value={status}>
-                              {ORIGINAL_TEACHER_STATUS_LABEL[status]}
-                            </RadioItem>
-                          ))}
-                        </RadioGroup>
-                      </Field>
-
-                      <Field label="Catatan" required>
-                        <Textarea
-                          placeholder="Alasan guru asli tidak hadir"
-                          value={substituteNotes}
-                          onChange={(e) => setSubstituteNotes(e.target.value)}
-                          size="sm"
-                          resize="none"
-                          rows={2}
-                        />
-                      </Field>
-                    </div>
-                  </Surface>
-                )}
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
-                  {filteredStudents.map((student) => (
-                    <AttendanceStudentRow
-                      key={student.id}
-                      student={student}
-                      status={statuses[student.id]}
-                      notes={notes[student.id] ?? ''}
-                      onStatusChange={handleStatusChange}
-                      onNotesChange={handleNotesChange}
-                    />
-                  ))}
+            ) : !shouldShowStudentList ? (
+              <Surface className="p-4 space-y-4">
+                <div className="flex items-center gap-2 text-amber-400">
+                  <AlertTriangle size={18} />
+                  <p className="text-sm font-semibold">
+                    Guru Pengganti &mdash; {originalTeacherName}
+                  </p>
                 </div>
-              </>
-            )}
 
-            <div className="flex justify-end">
-              <Button
-                onClick={handleSubmit}
-                disabled={!classId || !subjectId || filteredStudents.length === 0}
-                status={isSubmitting ? 'loading' : 'idle'}
-              >
-                Simpan Absensi
-              </Button>
-            </div>
+                <p className="text-secondary">Anda akan mengajar sebagai Guru Pengganti.</p>
+                <p className="text-secondary">
+                  Guru sesuai jadwal:
+                  <span className="font-medium text-primary"> {originalTeacherName}</span>
+                </p>
+
+                <p className="text-secondary">
+                  Silakan isi status guru asli terlebih dahulu sebelum memulai absensi.
+                </p>
+              </Surface>
+            ) : (
+              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
+                {filteredStudents.map((student) => (
+                  <AttendanceStudentRow
+                    key={student.id}
+                    student={student}
+                    status={statuses[student.id]}
+                    notes={notes[student.id] ?? ''}
+                    onStatusChange={handleStatusChange}
+                    onNotesChange={handleNotesChange}
+                  />
+                ))}
+              </div>
+            )}
           </>
         )}
+
+        <div className="flex justify-end">
+          <Button
+            onClick={handleSubmit}
+            disabled={!classId || !subjectId || filteredStudents.length === 0}
+            status={isSubmitting ? 'loading' : 'idle'}
+          >
+            Simpan Absensi
+          </Button>
+        </div>
 
         {activeTab === 'history' && (
           <>

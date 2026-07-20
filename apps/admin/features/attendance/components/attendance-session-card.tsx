@@ -1,15 +1,10 @@
 import Link from 'next/link';
 
 import { Badge, SelectOption, Surface } from '@/components/ui';
-import { ATTENDANCE_STATUS, ORIGINAL_TEACHER_STATUS } from '@/features/attendance/types';
+import { ATTENDANCE_STATUS, ATTENDANCE_STATUS_OPTIONS } from '@/features/attendance/types';
 
-import type {
-  AttendanceRecord,
-  AttendanceSession,
-  OriginalTeacherStatus,
-} from '@/features/attendance/types';
+import type { AttendanceRecord, AttendanceSession } from '@/features/attendance/types';
 import { SUBJECTS } from '@/lib/db/seed-subjects';
-import { TEACHERS } from '@/lib/db/seed-teachers';
 import { format } from 'date-fns';
 import { id } from 'date-fns/locale';
 
@@ -33,14 +28,6 @@ const STATUS_LABEL: Record<string, string> = {
   [ATTENDANCE_STATUS.ABSENT]: 'Alpha',
 };
 
-const ORIGINAL_TEACHER_STATUS_LABEL: Record<OriginalTeacherStatus, string> = {
-  [ORIGINAL_TEACHER_STATUS.PERMISSION]: 'Izin',
-  [ORIGINAL_TEACHER_STATUS.SICK]: 'Sakit',
-  [ORIGINAL_TEACHER_STATUS.OFFICIAL_DUTY]: 'Dinas',
-  [ORIGINAL_TEACHER_STATUS.ABSENT]: 'Tidak Hadir',
-  [ORIGINAL_TEACHER_STATUS.OTHER]: 'Lainnya',
-};
-
 export const AttendanceSessionCard = ({
   session,
   records,
@@ -58,7 +45,7 @@ export const AttendanceSessionCard = ({
 
   const isSubstitute = session.originalTeacherStatus !== null;
   const originalTeacherLabel = isSubstitute
-    ? ORIGINAL_TEACHER_STATUS_LABEL[session.originalTeacherStatus!]
+    ? ATTENDANCE_STATUS_OPTIONS.find((o) => o.value === session.originalTeacherStatus!)?.label
     : null;
 
   return (
