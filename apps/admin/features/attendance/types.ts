@@ -7,6 +7,17 @@ export const ATTENDANCE_STATUS = {
 
 export type AttendanceStatus = (typeof ATTENDANCE_STATUS)[keyof typeof ATTENDANCE_STATUS];
 
+export const ORIGINAL_TEACHER_STATUS = {
+  PERMISSION: 'PERMISSION',
+  SICK: 'SICK',
+  OFFICIAL_DUTY: 'OFFICIAL_DUTY',
+  ABSENT: 'ABSENT',
+  OTHER: 'OTHER',
+} as const;
+
+export type OriginalTeacherStatus =
+  (typeof ORIGINAL_TEACHER_STATUS)[keyof typeof ORIGINAL_TEACHER_STATUS];
+
 export type AttendanceSession = {
   id: number;
   teacherId: number;
@@ -15,6 +26,8 @@ export type AttendanceSession = {
   scheduleId: number;
   date: string;
   time: string;
+  originalTeacherStatus: OriginalTeacherStatus | null;
+  substituteNotes: string | null;
   createdAt: Date;
   updatedAt: Date;
 };

@@ -135,7 +135,7 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
       <div className="flex flex-col md:flex-row items-center gap-4">
         <Input
           placeholder="Cari berdasarkan nama atau NIS..."
-          leftIcon={<Search />}
+          leftIcon={<Search size={16} />}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="w-full sm:w-1/3"

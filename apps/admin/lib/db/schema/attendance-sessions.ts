@@ -1,4 +1,4 @@
-import { index, integer, pgTable, serial, timestamp, varchar } from 'drizzle-orm/pg-core';
+import { index, integer, pgTable, serial, text, timestamp, varchar } from 'drizzle-orm/pg-core';
 
 export const attendanceSessions = pgTable(
   'attendance_sessions',
@@ -10,6 +10,8 @@ export const attendanceSessions = pgTable(
     scheduleId: integer('schedule_id').notNull(),
     date: varchar('date', { length: 10 }).notNull(),
     time: varchar('time', { length: 5 }).notNull(),
+    originalTeacherStatus: varchar('original_teacher_status', { length: 20 }),
+    substituteNotes: text('substitute_notes'),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
   },

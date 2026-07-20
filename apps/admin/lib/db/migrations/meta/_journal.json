@@ -36,6 +36,13 @@
       "when": 1784260797585,
       "tag": "0004_far_machine_man",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1753000000000,
+      "tag": "0006_add_substitute_teacher_fields",
+      "breakpoints": true
     }
   ]
 }

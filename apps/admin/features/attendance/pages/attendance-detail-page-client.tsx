@@ -2,20 +2,29 @@
 
 import { useMemo } from 'react';
 
-import { EmptyState, PageLayout, Surface } from '@/components/ui';
+import { Badge, EmptyState, PageLayout, Surface } from '@/components/ui';
 import { ClipboardCheck } from 'lucide-react';
 
 import { CLASSES, SUBJECTS } from '@/config/lookups';
 
 import { AttendanceRecordRow } from '../components/attendance-record-row';
 
-import type { AttendanceRecord, AttendanceSession } from '../types';
+import type { AttendanceRecord, AttendanceSession, OriginalTeacherStatus } from '../types';
+import { ORIGINAL_TEACHER_STATUS } from '../types';
 import type { Student } from '@/features/students/types';
 
 type AttendanceDetailPageClientProps = {
   session: AttendanceSession;
   records: AttendanceRecord[];
   students: Student[];
+};
+
+const ORIGINAL_TEACHER_STATUS_LABEL: Record<OriginalTeacherStatus, string> = {
+  [ORIGINAL_TEACHER_STATUS.PERMISSION]: 'Izin',
+  [ORIGINAL_TEACHER_STATUS.SICK]: 'Sakit',
+  [ORIGINAL_TEACHER_STATUS.OFFICIAL_DUTY]: 'Dinas',
+  [ORIGINAL_TEACHER_STATUS.ABSENT]: 'Tidak Hadir',
+  [ORIGINAL_TEACHER_STATUS.OTHER]: 'Lainnya',
 };
 
 export const AttendanceDetailPageClient = ({
@@ -49,6 +58,8 @@ export const AttendanceDetailPageClient = ({
   const permission = records.filter((r) => r.status === 'PERMISSION').length;
   const absent = records.filter((r) => r.status === 'ABSENT').length;
 
+  const isSubstitute = session.originalTeacherStatus !== null;
+
   return (
     <PageLayout>
       <PageLayout.Header>
@@ -76,6 +87,24 @@ export const AttendanceDetailPageClient = ({
               <p className="font-medium text-primary">{subjectName}</p>
             </div>
           </div>
+
+          {isSubstitute && (
+            <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
+              <div>
+                <p className="text-secondary">Status Guru Asli</p>
+                <Badge variant="warning">
+                  {ORIGINAL_TEACHER_STATUS_LABEL[session.originalTeacherStatus!]}
+                </Badge>
+              </div>
+
+              {session.substituteNotes && (
+                <div className="col-span-2 sm:col-span-3">
+                  <p className="text-secondary">Catatan Pengganti</p>
+                  <p className="font-medium text-primary">{session.substituteNotes}</p>
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="flex flex-wrap gap-3 text-xs text-secondary">
             <span>Total: {records.length}</span>

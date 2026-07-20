@@ -6,20 +6,30 @@ import {
   Button,
   DatePicker,
   EmptyState,
+  Field,
   PageLayout,
+  RadioGroup,
+  RadioItem,
+  Surface,
   Tabs,
   Select,
   SelectOption,
-  Surface,
+  Textarea,
   toast,
 } from '@/components/ui';
-import { ClipboardCheck, History, Plus } from 'lucide-react';
+import { AlertTriangle, ClipboardCheck, History, Plus } from 'lucide-react';
 
 import { AttendanceSessionCard } from '../components/attendance-session-card';
 import { AttendanceStudentRow } from '../components/attendance-student-row';
 import { submitAttendance } from '../server';
 
-import type { AttendanceRecord, AttendanceSession, AttendanceStatus } from '../types';
+import type {
+  AttendanceRecord,
+  AttendanceSession,
+  AttendanceStatus,
+  OriginalTeacherStatus,
+} from '../types';
+import { ORIGINAL_TEACHER_STATUS } from '../types';
 import type { Student } from '@/features/students/types';
 import { SUBJECTS } from '@/lib/db/seed-subjects';
 import { TEACHERS } from '@/lib/db/seed-teachers';
@@ -39,6 +49,14 @@ type AttendancePageClientProps = {
 
 type Tab = 'input' | 'history';
 
+const ORIGINAL_TEACHER_STATUS_LABEL: Record<OriginalTeacherStatus, string> = {
+  [ORIGINAL_TEACHER_STATUS.PERMISSION]: 'Izin',
+  [ORIGINAL_TEACHER_STATUS.SICK]: 'Sakit',
+  [ORIGINAL_TEACHER_STATUS.OFFICIAL_DUTY]: 'Dinas',
+  [ORIGINAL_TEACHER_STATUS.ABSENT]: 'Tidak Hadir',
+  [ORIGINAL_TEACHER_STATUS.OTHER]: 'Lainnya',
+};
+
 export const AttendancePageClient = ({
   teacherId,
   students,
@@ -54,6 +72,11 @@ export const AttendancePageClient = ({
   const [statuses, setStatuses] = useState<Record<number, AttendanceStatus>>({});
   const [notes, setNotes] = useState<Record<number, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [originalTeacherStatus, setOriginalTeacherStatus] = useState<OriginalTeacherStatus | null>(
+    null,
+  );
+  const [substituteNotes, setSubstituteNotes] = useState('');
 
   const [dateFilter, setDateFilter] = useState<Date | undefined>();
   const [classFilter, setClassFilter] = useState(0);
@@ -88,6 +111,36 @@ export const AttendancePageClient = ({
 
     return res.map((s) => ({ value: s.id, label: s.label }));
   }, [currentDate, classId]);
+
+  const matchedSchedule = useMemo(() => {
+    if (!classId || !subjectId) return null;
+
+    return (
+      SCHEDULES.find((item) => {
+        const [start, end] = item.time.split('-');
+        const inRange = currentDate.time >= start && currentDate.time <= end;
+
+        return (
+          item.day === currentDate.day &&
+          inRange &&
+          item.classId === classId &&
+          item.subjectId === subjectId
+        );
+      }) ?? null
+    );
+  }, [classId, subjectId, currentDate]);
+
+  const isSubstituteMode = useMemo(() => {
+    if (!matchedSchedule || matchedSchedule.teacherId === null) return false;
+
+    return matchedSchedule.teacherId !== teacherId;
+  }, [matchedSchedule, teacherId]);
+
+  const originalTeacherName = useMemo(() => {
+    if (!isSubstituteMode || !matchedSchedule?.teacherId) return null;
+
+    return TEACHERS.find((t) => t.id === matchedSchedule.teacherId)?.name ?? null;
+  }, [isSubstituteMode, matchedSchedule]);
 
   const subjectOptions = useMemo((): SelectOption[] => {
     const data = SUBJECTS.map((s) => ({ value: s.id, label: s.label })).sort((a, b) =>
@@ -129,6 +182,20 @@ export const AttendancePageClient = ({
       return;
     }
 
+    if (isSubstituteMode) {
+      if (!originalTeacherStatus) {
+        toast.error('Status guru asli wajib dipilih');
+
+        return;
+      }
+
+      if (!substituteNotes.trim()) {
+        toast.error('Catatan pengganti wajib diisi');
+
+        return;
+      }
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -136,9 +203,11 @@ export const AttendancePageClient = ({
         teacherId,
         classId,
         subjectId,
-        scheduleId: 0,
+        scheduleId: matchedSchedule?.id ?? 0,
         date: format(new Date(), 'yyyy-MM-dd'),
         time: format(new Date(), 'hh:mm'),
+        originalTeacherStatus: isSubstituteMode ? originalTeacherStatus : null,
+        substituteNotes: isSubstituteMode ? substituteNotes.trim() : null,
         records: filteredStudents.map((student) => ({
           studentId: student.id,
           status: statuses[student.id],
@@ -163,6 +232,8 @@ export const AttendancePageClient = ({
     setSubjectId(0);
     setStatuses({});
     setNotes({});
+    setOriginalTeacherStatus(null);
+    setSubstituteNotes('');
     setDateFilter(undefined);
     setClassFilter(0);
     setSubjectFilter(0);
@@ -260,18 +331,69 @@ export const AttendancePageClient = ({
                 description="Pilih kelas dan mata pelajaran terlebih dahulu untuk mengisi absensi."
               />
             ) : (
-              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
-                {filteredStudents.map((student) => (
-                  <AttendanceStudentRow
-                    key={student.id}
-                    student={student}
-                    status={statuses[student.id]}
-                    notes={notes[student.id] ?? ''}
-                    onStatusChange={handleStatusChange}
-                    onNotesChange={handleNotesChange}
-                  />
-                ))}
-              </div>
+              <>
+                {isSubstituteMode && (
+                  <Surface className="p-4 space-y-4">
+                    <div className="flex items-center gap-2 text-amber-400">
+                      <AlertTriangle size={18} />
+                      <p className="text-sm font-semibold">
+                        Guru Pengganti &mdash; {originalTeacherName}
+                      </p>
+                    </div>
+
+                    <p className="text-xs text-secondary">
+                      Anda sedang mengisi absensi sebagai guru penganti untuk{' '}
+                      <span className="font-medium text-primary">{originalTeacherName}</span>.
+                    </p>
+
+                    <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
+                      <Field
+                        label="Status Guru Asli"
+                        required
+                        error={!originalTeacherStatus ? undefined : undefined}
+                      >
+                        <RadioGroup
+                          value={originalTeacherStatus ?? undefined}
+                          onValueChange={(value) =>
+                            setOriginalTeacherStatus(value as OriginalTeacherStatus)
+                          }
+                          className="flex flex-wrap gap-1"
+                        >
+                          {Object.values(ORIGINAL_TEACHER_STATUS).map((status) => (
+                            <RadioItem key={status} value={status}>
+                              {ORIGINAL_TEACHER_STATUS_LABEL[status]}
+                            </RadioItem>
+                          ))}
+                        </RadioGroup>
+                      </Field>
+
+                      <Field label="Catatan" required>
+                        <Textarea
+                          placeholder="Alasan guru asli tidak hadir"
+                          value={substituteNotes}
+                          onChange={(e) => setSubstituteNotes(e.target.value)}
+                          size="sm"
+                          resize="none"
+                          rows={2}
+                        />
+                      </Field>
+                    </div>
+                  </Surface>
+                )}
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
+                  {filteredStudents.map((student) => (
+                    <AttendanceStudentRow
+                      key={student.id}
+                      student={student}
+                      status={statuses[student.id]}
+                      notes={notes[student.id] ?? ''}
+                      onStatusChange={handleStatusChange}
+                      onNotesChange={handleNotesChange}
+                    />
+                  ))}
+                </div>
+              </>
             )}
 
             <div className="flex justify-end">

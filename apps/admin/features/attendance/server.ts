@@ -7,7 +7,7 @@ import {
   attendanceRecordRepository,
 } from '@/features/attendance/repositories';
 
-import type { AttendanceStatus } from './types';
+import type { AttendanceStatus, OriginalTeacherStatus } from './types';
 
 type SubmitAttendanceInput = {
   teacherId: number;
@@ -16,6 +16,8 @@ type SubmitAttendanceInput = {
   scheduleId: number;
   date: string;
   time: string;
+  originalTeacherStatus?: OriginalTeacherStatus | null;
+  substituteNotes?: string | null;
   records: {
     studentId: number;
     status: AttendanceStatus;
@@ -31,6 +33,8 @@ export const submitAttendance = async (input: SubmitAttendanceInput) => {
     scheduleId: input.scheduleId,
     date: input.date,
     time: input.time,
+    originalTeacherStatus: input.originalTeacherStatus ?? null,
+    substituteNotes: input.substituteNotes ?? null,
   });
 
   await attendanceRecordRepository.createBatch(

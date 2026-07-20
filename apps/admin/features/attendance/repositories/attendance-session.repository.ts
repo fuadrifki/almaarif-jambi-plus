@@ -1,5 +1,5 @@
 import { getDb } from '@/lib/db/client';
-import type { AttendanceSession } from '../types';
+import type { AttendanceSession, OriginalTeacherStatus } from '../types';
 import type { AttendanceSessionRepository } from './attendance-session.repository.types';
 import { attendanceSessions } from '@/lib/db/schema';
 import { and, eq } from 'drizzle-orm';
@@ -12,6 +12,8 @@ const toSession = (row: typeof attendanceSessions.$inferSelect): AttendanceSessi
   scheduleId: row.scheduleId,
   date: row.date,
   time: row.time,
+  originalTeacherStatus: row.originalTeacherStatus as OriginalTeacherStatus | null,
+  substituteNotes: row.substituteNotes,
   createdAt: row.createdAt,
   updatedAt: row.updatedAt,
 });

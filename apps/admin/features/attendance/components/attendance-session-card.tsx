@@ -1,10 +1,15 @@
 import Link from 'next/link';
 
 import { Badge, SelectOption, Surface } from '@/components/ui';
-import { ATTENDANCE_STATUS } from '@/features/attendance/types';
+import { ATTENDANCE_STATUS, ORIGINAL_TEACHER_STATUS } from '@/features/attendance/types';
 
-import type { AttendanceRecord, AttendanceSession } from '@/features/attendance/types';
+import type {
+  AttendanceRecord,
+  AttendanceSession,
+  OriginalTeacherStatus,
+} from '@/features/attendance/types';
 import { SUBJECTS } from '@/lib/db/seed-subjects';
+import { TEACHERS } from '@/lib/db/seed-teachers';
 import { format } from 'date-fns';
 import { id } from 'date-fns/locale';
 
@@ -28,6 +33,14 @@ const STATUS_LABEL: Record<string, string> = {
   [ATTENDANCE_STATUS.ABSENT]: 'Alpha',
 };
 
+const ORIGINAL_TEACHER_STATUS_LABEL: Record<OriginalTeacherStatus, string> = {
+  [ORIGINAL_TEACHER_STATUS.PERMISSION]: 'Izin',
+  [ORIGINAL_TEACHER_STATUS.SICK]: 'Sakit',
+  [ORIGINAL_TEACHER_STATUS.OFFICIAL_DUTY]: 'Dinas',
+  [ORIGINAL_TEACHER_STATUS.ABSENT]: 'Tidak Hadir',
+  [ORIGINAL_TEACHER_STATUS.OTHER]: 'Lainnya',
+};
+
 export const AttendanceSessionCard = ({
   session,
   records,
@@ -43,6 +56,11 @@ export const AttendanceSessionCard = ({
   const permission = records.filter((r) => r.status === ATTENDANCE_STATUS.PERMISSION).length;
   const absent = records.filter((r) => r.status === ATTENDANCE_STATUS.ABSENT).length;
 
+  const isSubstitute = session.originalTeacherStatus !== null;
+  const originalTeacherLabel = isSubstitute
+    ? ORIGINAL_TEACHER_STATUS_LABEL[session.originalTeacherStatus!]
+    : null;
+
   return (
     <Link href={`/dashboard/attendance/${session.id}`} className="block">
       <Surface className="space-y-3 p-4 transition hover:border-white/20">
@@ -57,6 +75,10 @@ export const AttendanceSessionCard = ({
               {format(new Date(session.date), 'EEEE, dd MMMM yyyy', { locale: id })} &middot;{' '}
               {session.time} WIB
             </p>
+
+            {isSubstitute && (
+              <p className="text-xs text-amber-400">Pengganti &middot; {originalTeacherLabel}</p>
+            )}
           </div>
 
           <span className="shrink-0 text-xs text-secondary">{total} siswa</span>
@@ -73,6 +95,8 @@ export const AttendanceSessionCard = ({
               {STATUS_LABEL[status]} {count}
             </Badge>
           ))}
+
+          {isSubstitute && <Badge variant="warning">Pengganti</Badge>}
         </div>
       </Surface>
     </Link>
