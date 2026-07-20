@@ -46,7 +46,7 @@ export const TableRow = ({ className, ...props }: TableRowProps) => (
 );
 
 export const TableHead = ({ className, ...props }: TableHeadProps) => (
-  <th className={cn('ads-table__head', className)} {...props} />
+  <th className={cn('ads-table__head text-sm font-semibold', className)} {...props} />
 );
 
 export const TableCell = ({ className, ...props }: TableCellProps) => (

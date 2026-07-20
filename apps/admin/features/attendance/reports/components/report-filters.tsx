@@ -60,20 +60,22 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
   );
 
   const teacherOptions = useMemo(
-    () =>
-      [
-        { label: 'Semua', value: '' },
-        ...teachers.map((t) => ({ label: t.name, value: t.id })),
-      ].sort((a, b) => a.label.localeCompare(b.label)),
+    () => [
+      { label: 'Semua', value: '' },
+      ...teachers
+        .map((t) => ({ label: t.name, value: t.id }))
+        .sort((a, b) => a.label.localeCompare(b.label)),
+    ],
     [teachers],
   );
 
   const subjectOptions = useMemo(
-    () =>
-      [
-        { label: 'Semua', value: '' },
-        ...subjects.map((s) => ({ label: s.name, value: s.id })),
-      ].sort((a, b) => a.label.localeCompare(b.label)),
+    () => [
+      { label: 'Semua', value: '' },
+      ...subjects
+        .map((s) => ({ label: s.name, value: s.id }))
+        .sort((a, b) => a.label.localeCompare(b.label)),
+    ],
     [subjects],
   );
 

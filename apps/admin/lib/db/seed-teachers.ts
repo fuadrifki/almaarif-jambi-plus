@@ -1,4 +1,4 @@
-const STATIC_DATE = new Date('2025-01-01T00:00:00.000Z');
+const STATIC_DATE = new Date('2026-01-01T00:00:00.000Z');
 
 export const TEACHERS = [
   {

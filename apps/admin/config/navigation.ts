@@ -3,6 +3,8 @@ import {
   BarChart3,
   BookOpen,
   ClipboardCheck,
+  FileSearch,
+  FileUser,
   GraduationCap,
   LayoutDashboard,
   Palette,
@@ -46,7 +48,13 @@ export const navigation: NavigationItem[] = [
   {
     label: 'Laporan Absensi',
     href: '/dashboard/attendance/reports',
-    icon: BarChart3,
+    icon: FileUser,
+    roles: ['admin'],
+  },
+  {
+    label: 'Laporan Guru',
+    href: '/dashboard/attendance/teachers',
+    icon: FileSearch,
     roles: ['admin'],
   },
   {

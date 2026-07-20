@@ -43,6 +43,13 @@
       "when": 1753000000000,
       "tag": "0006_add_substitute_teacher_fields",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1784554865741,
+      "tag": "0006_wooden_triton",
+      "breakpoints": true
     }
   ]
 }
