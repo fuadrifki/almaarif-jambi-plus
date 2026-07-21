@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { PageLayout, Surface, Tabs, SelectOption, toast } from '@/components/ui';
 import { History, Plus } from 'lucide-react';
@@ -50,7 +50,7 @@ export const AttendancePageClient = ({
   const [notes, setNotes] = useState<Record<number, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [originalTeacherStatus, setOriginalTeacherStatus] = useState('');
+  const [scheduledTeacherStatus, setscheduledTeacherStatus] = useState('');
   const [substituteNotes, setSubstituteNotes] = useState('');
   const [substituteConfirmed, setSubstituteConfirmed] = useState(false);
 
@@ -98,11 +98,11 @@ export const AttendancePageClient = ({
     if (isSubstituteMode) {
       return Boolean(
         substituteConfirmed &&
-        (originalTeacherStatus !== ATTENDANCE_STATUS.PERMISSION || substituteNotes.trim()),
+        (scheduledTeacherStatus !== ATTENDANCE_STATUS.PERMISSION || substituteNotes.trim()),
       );
     }
     return classId > 0;
-  }, [isSubstituteMode, substituteConfirmed, originalTeacherStatus, substituteNotes, classId]);
+  }, [isSubstituteMode, substituteConfirmed, scheduledTeacherStatus, substituteNotes, classId]);
 
   const filteredStudents = useMemo(
     () => (shouldShowStudentList ? students.filter((s) => s.classId === classId) : []),
@@ -138,12 +138,13 @@ export const AttendancePageClient = ({
     try {
       await submitAttendance({
         teacherId,
+        scheduledTeacherId: matchedSchedule?.teacherId ?? null,
         classId,
         subjectId,
         scheduleId: matchedSchedule?.id ?? 0,
         date: format(new Date(), 'yyyy-MM-dd'),
         time: format(new Date(), 'hh:mm'),
-        originalTeacherStatus: isSubstituteMode ? originalTeacherStatus : undefined,
+        scheduledTeacherStatus: isSubstituteMode ? scheduledTeacherStatus : '',
         substituteNotes: isSubstituteMode ? substituteNotes.trim() : undefined,
         records: filteredStudents.map((student) => ({
           studentId: student.id,
@@ -169,7 +170,7 @@ export const AttendancePageClient = ({
     setSubjectId(0);
     setStatuses({});
     setNotes({});
-    setOriginalTeacherStatus('');
+    setscheduledTeacherStatus('');
     setSubstituteNotes('');
     setSubstituteConfirmed(false);
   };
@@ -181,19 +182,19 @@ export const AttendancePageClient = ({
   const onSelectClass = (value: number) => {
     setClassId(Number(value));
     setSubstituteConfirmed(false);
-    setOriginalTeacherStatus('');
+    setscheduledTeacherStatus('');
     setSubstituteNotes('');
   };
 
   const onSelectSubject = (value: number) => {
     setSubjectId(Number(value));
     setSubstituteConfirmed(false);
-    setOriginalTeacherStatus('');
+    setscheduledTeacherStatus('');
     setSubstituteNotes('');
   };
 
-  const onSelectOriginalTeacherStatus = (value: string) => {
-    setOriginalTeacherStatus(value);
+  const onSelectscheduledTeacherStatus = (value: string) => {
+    setscheduledTeacherStatus(value);
     setSubstituteNotes('');
   };
 
@@ -263,11 +264,11 @@ export const AttendancePageClient = ({
             subjectsByClass={subjectsByClass}
             subjectId={subjectId}
             isSubstituteMode={isSubstituteMode}
-            originalTeacherStatus={originalTeacherStatus}
+            scheduledTeacherStatus={scheduledTeacherStatus}
             substituteNotes={substituteNotes}
             onSelectClass={onSelectClass}
             onSelectSubject={onSelectSubject}
-            onSelectOriginalTeacherStatus={onSelectOriginalTeacherStatus}
+            onSelectscheduledTeacherStatus={onSelectscheduledTeacherStatus}
             onChangeSubstituteNotes={onChangeSubstituteNotes}
             handleSubstituteConfirmed={handleSubstituteConfirmed}
           />

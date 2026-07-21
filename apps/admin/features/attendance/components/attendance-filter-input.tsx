@@ -13,11 +13,11 @@ type AttendanceFilterInputProps = {
   subjectsByClass: SelectOption[];
   subjectId: number;
   isSubstituteMode: boolean;
-  originalTeacherStatus: string;
+  scheduledTeacherStatus: string;
   substituteNotes: string;
   onSelectClass: (classId: number) => void;
   onSelectSubject: (subjectId: number) => void;
-  onSelectOriginalTeacherStatus: (status: string) => void;
+  onSelectscheduledTeacherStatus: (status: string) => void;
   onChangeSubstituteNotes: (notes: string) => void;
   handleSubstituteConfirmed: () => void;
 };
@@ -28,11 +28,11 @@ export const AttendanceFilterInput = ({
   subjectsByClass,
   subjectId,
   isSubstituteMode,
-  originalTeacherStatus,
+  scheduledTeacherStatus,
   substituteNotes,
   onSelectClass,
   onSelectSubject,
-  onSelectOriginalTeacherStatus,
+  onSelectscheduledTeacherStatus,
   onChangeSubstituteNotes,
   handleSubstituteConfirmed,
 }: AttendanceFilterInputProps) => {
@@ -42,8 +42,8 @@ export const AttendanceFilterInput = ({
 
   const isValidSubstituteMode = [
     isValidSelected,
-    originalTeacherStatus,
-    originalTeacherStatus !== ATTENDANCE_STATUS.PERMISSION || substituteNotes,
+    scheduledTeacherStatus,
+    scheduledTeacherStatus !== ATTENDANCE_STATUS.PERMISSION || substituteNotes,
   ].every(Boolean);
 
   const disabledDetailOriginalTeacher = [
@@ -84,15 +84,15 @@ export const AttendanceFilterInput = ({
               <Field label="Status berhalangan" required>
                 <Select
                   options={ATTENDANCE_STATUS_OPTIONS.slice(1)}
-                  value={originalTeacherStatus}
+                  value={scheduledTeacherStatus}
                   placeholder="Pilih"
                   onChange={(value) => {
-                    onSelectOriginalTeacherStatus(String(value));
+                    onSelectscheduledTeacherStatus(String(value));
                   }}
                 />
               </Field>
 
-              {originalTeacherStatus === ATTENDANCE_STATUS.PERMISSION && (
+              {scheduledTeacherStatus === ATTENDANCE_STATUS.PERMISSION && (
                 <Field label="Keterangan" required>
                   <Textarea
                     placeholder="Alasan guru asli berhalangan"

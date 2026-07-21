@@ -21,7 +21,7 @@ const STATUS_BADGE: Record<string, 'success' | 'warning' | 'info' | 'danger'> = 
   ABSENT: 'danger',
 };
 
-const ORIGINAL_TEACHER_STATUS_LABEL: Record<string, string> = {
+const scheduled_teacher_status_LABEL: Record<string, string> = {
   PRESENT: 'Hadir',
   PERMISSION: 'Izin',
   SICK: 'Sakit',
@@ -39,14 +39,14 @@ function getStatusBadge(status: string | null) {
   if (!variant) {
     return (
       <Badge variant="default">
-        {ORIGINAL_TEACHER_STATUS_LABEL[status as keyof typeof ORIGINAL_TEACHER_STATUS_LABEL]}
+        {scheduled_teacher_status_LABEL[status as keyof typeof scheduled_teacher_status_LABEL]}
       </Badge>
     );
   }
 
   return (
     <Badge variant={variant}>
-      {ORIGINAL_TEACHER_STATUS_LABEL[status as keyof typeof ORIGINAL_TEACHER_STATUS_LABEL]}
+      {scheduled_teacher_status_LABEL[status as keyof typeof scheduled_teacher_status_LABEL]}
     </Badge>
   );
 }
@@ -105,9 +105,9 @@ export const TeacherAttendanceTable = ({ rows }: { rows: TeacherAttendanceRow[] 
             <TableCell>
               <div className="text-sm max-w-40 truncate text-secondary">
                 {row.notes ? <span>{row.notes}</span> : '-'}
-                {row.originalTeacherStatus && (
+                {row.scheduledTeacherStatus && (
                   <div className="text-xs text-amber-400 mt-1">
-                    Status Asli: {ORIGINAL_TEACHER_STATUS_LABEL[row.originalTeacherStatus]}
+                    Status Asli: {scheduled_teacher_status_LABEL[row.scheduledTeacherStatus]}
                   </div>
                 )}
                 {row.substituteNotes && (

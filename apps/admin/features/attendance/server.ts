@@ -11,12 +11,13 @@ import type { AttendanceStatus } from './types';
 
 type SubmitAttendanceInput = {
   teacherId: number;
+  scheduledTeacherId: number | null;
   classId: number;
   subjectId: number;
   scheduleId: number;
   date: string;
   time: string;
-  originalTeacherStatus?: string;
+  scheduledTeacherStatus: string;
   substituteNotes?: string;
   records: {
     studentId: number;
@@ -28,12 +29,13 @@ type SubmitAttendanceInput = {
 export const submitAttendance = async (input: SubmitAttendanceInput) => {
   const session = await attendanceSessionRepository.create({
     teacherId: input.teacherId,
+    scheduledTeacherId: input.scheduledTeacherId,
     classId: input.classId,
     subjectId: input.subjectId,
     scheduleId: input.scheduleId,
     date: input.date,
     time: input.time,
-    originalTeacherStatus: input.originalTeacherStatus ?? null,
+    scheduledTeacherStatus: input.scheduledTeacherStatus,
     substituteNotes: input.substituteNotes ?? null,
   });
 

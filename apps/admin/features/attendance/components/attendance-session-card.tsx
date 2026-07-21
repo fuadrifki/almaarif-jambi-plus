@@ -43,9 +43,9 @@ export const AttendanceSessionCard = ({
   const permission = records.filter((r) => r.status === ATTENDANCE_STATUS.PERMISSION).length;
   const absent = records.filter((r) => r.status === ATTENDANCE_STATUS.ABSENT).length;
 
-  const isSubstitute = session.originalTeacherStatus !== null;
+  const isSubstitute = session.scheduledTeacherStatus !== null;
   const originalTeacherLabel = isSubstitute
-    ? ATTENDANCE_STATUS_OPTIONS.find((o) => o.value === session.originalTeacherStatus!)?.label
+    ? ATTENDANCE_STATUS_OPTIONS.find((o) => o.value === session.scheduledTeacherStatus!)?.label
     : null;
 
   return (

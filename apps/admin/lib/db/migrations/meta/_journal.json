@@ -50,6 +50,13 @@
       "when": 1784554865741,
       "tag": "0006_wooden_triton",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1784626233176,
+      "tag": "0007_sticky_iceman",
+      "breakpoints": true
     }
   ]
 }

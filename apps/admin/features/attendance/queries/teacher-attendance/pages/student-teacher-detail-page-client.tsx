@@ -24,7 +24,7 @@ import { ClipboardCheck } from 'lucide-react';
 import type { Student } from '@/features/students/types';
 import { CLASSES, SUBJECTS } from '@/config/lookups';
 
-const ORIGINAL_TEACHER_STATUS_LABEL: Record<string, string> = {
+const scheduled_teacher_status_LABEL: Record<string, string> = {
   PERMISSION: 'Izin',
   SICK: 'Sakit',
   OFFICIAL_DUTY: 'Dinas',
@@ -58,7 +58,7 @@ export const StudentTeacherDetailPageClient = ({
     return {
       ...session,
       teacherName: originalTeacherName,
-      isSubstitute: session.originalTeacherStatus !== null,
+      isSubstitute: session.scheduledTeacherStatus !== null,
     };
   });
 
@@ -143,7 +143,7 @@ export const StudentTeacherDetailPageClient = ({
                       <TableCell>
                         {record.isSubstitute ? (
                           <Badge variant="warning">
-                            {ORIGINAL_TEACHER_STATUS_LABEL[record.originalTeacherStatus!]}
+                            {scheduled_teacher_status_LABEL[record.scheduledTeacherStatus!]}
                           </Badge>
                         ) : (
                           <Badge

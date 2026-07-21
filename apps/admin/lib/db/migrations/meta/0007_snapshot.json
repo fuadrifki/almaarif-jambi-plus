@@ -1,6 +1,6 @@
 {
-  "id": "63daa2d4-31a8-428a-b7f8-5a2fba4a1b96",
-  "prevId": "a89b472b-908d-4a2f-bf6f-b459fc7e4d41",
+  "id": "29303c01-8c1e-4f73-80eb-a0c7b7c11f75",
+  "prevId": "63daa2d4-31a8-428a-b7f8-5a2fba4a1b96",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -149,11 +149,17 @@
           "primaryKey": false,
           "notNull": true
         },
+        "scheduled_teacher_id": {
+          "name": "scheduled_teacher_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
         "scheduled_teacher_status": {
           "name": "scheduled_teacher_status",
           "type": "varchar(20)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "substitute_notes": {
           "name": "substitute_notes",

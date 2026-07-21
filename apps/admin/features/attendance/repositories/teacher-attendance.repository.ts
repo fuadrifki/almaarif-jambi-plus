@@ -54,7 +54,7 @@ export const teacherAttendanceRepository: TeacherAttendanceRepository = {
         time: attendanceSessions.time,
         attendanceStatus: attendanceRecords.status,
         notes: attendanceRecords.notes,
-        originalTeacherStatus: attendanceSessions.originalTeacherStatus,
+        scheduledTeacherStatus: attendanceSessions.scheduledTeacherStatus,
         substituteNotes: attendanceSessions.substituteNotes,
         totalStudents: count(attendanceRecords.id),
       })
@@ -76,7 +76,7 @@ export const teacherAttendanceRepository: TeacherAttendanceRepository = {
         attendanceSessions.subjectId,
         attendanceSessions.date,
         attendanceSessions.time,
-        attendanceSessions.originalTeacherStatus,
+        attendanceSessions.scheduledTeacherStatus,
         attendanceSessions.substituteNotes,
         attendanceRecords.status,
         attendanceRecords.notes,
@@ -97,7 +97,7 @@ export const teacherAttendanceRepository: TeacherAttendanceRepository = {
       substituteCount: 0, // TODO: hitung dari seed-schedule pada milestone berikutnya
       attendanceStatus: row.attendanceStatus,
       notes: row.notes,
-      originalTeacherStatus: row.originalTeacherStatus,
+      scheduledTeacherStatus: row.scheduledTeacherStatus,
       substituteNotes: row.substituteNotes,
     }));
   },

@@ -62,7 +62,7 @@ export const getTeacherAttendanceReport = async (
     substituteCount: row.substituteCount,
     attendanceStatus: row.attendanceStatus,
     notes: row.notes,
-    originalTeacherStatus: row.originalTeacherStatus,
+    scheduledTeacherStatus: row.scheduledTeacherStatus,
     substituteNotes: row.substituteNotes,
   }));
 

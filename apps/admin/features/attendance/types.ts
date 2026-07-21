@@ -19,12 +19,13 @@ export type AttendanceStatus = (typeof ATTENDANCE_STATUS)[keyof typeof ATTENDANC
 export type AttendanceSession = {
   id: number;
   teacherId: number;
+  scheduledTeacherId: number | null;
   classId: number;
   subjectId: number;
   scheduleId: number;
   date: string;
   time: string;
-  originalTeacherStatus: string;
+  scheduledTeacherStatus: string;
   substituteNotes: string | null;
   createdAt: Date;
   updatedAt: Date;

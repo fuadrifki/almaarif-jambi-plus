@@ -51,7 +51,7 @@ export const AttendanceDetailPageClient = ({
   const permission = records.filter((r) => r.status === 'PERMISSION').length;
   const absent = records.filter((r) => r.status === 'ABSENT').length;
 
-  const isSubstitute = session.originalTeacherStatus !== null;
+  const isSubstitute = session.scheduledTeacherStatus !== null;
 
   return (
     <PageLayout>
@@ -96,7 +96,7 @@ export const AttendanceDetailPageClient = ({
                 <Badge variant="warning">
                   {
                     ATTENDANCE_STATUS_OPTIONS.find(
-                      (o) => o.value === session.originalTeacherStatus!,
+                      (o) => o.value === session.scheduledTeacherStatus!,
                     )?.label
                   }
                 </Badge>

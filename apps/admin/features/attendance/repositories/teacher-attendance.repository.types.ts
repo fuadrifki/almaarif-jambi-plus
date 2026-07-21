@@ -19,7 +19,7 @@ export type TeacherAttendanceRow = {
   substituteCount: number;
   attendanceStatus: string | null;
   notes: string | null;
-  originalTeacherStatus: string | null;
+  scheduledTeacherStatus: string | null;
   substituteNotes: string | null;
 };
 
