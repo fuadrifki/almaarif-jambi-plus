@@ -181,6 +181,7 @@ export const AttendancePageClient = ({
 
   const onSelectClass = (value: number) => {
     setClassId(Number(value));
+    setSubjectId(0);
     setSubstituteConfirmed(false);
     setscheduledTeacherStatus('');
     setSubstituteNotes('');

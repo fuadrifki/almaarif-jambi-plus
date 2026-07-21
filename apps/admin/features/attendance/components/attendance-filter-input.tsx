@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { Button, Field, Select, SelectOption, Textarea } from '@/components/ui';
 
-import { ATTENDANCE_STATUS, ATTENDANCE_STATUS_OPTIONS, Schedule } from '../types';
+import { ATTENDANCE_STATUS, ATTENDANCE_STATUS_OPTIONS } from '../types';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 type AttendanceFilterInputProps = {
