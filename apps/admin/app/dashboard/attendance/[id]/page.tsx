@@ -8,6 +8,7 @@ import {
 
 import { AttendanceDetailPageClient } from '@/features/attendance/pages/attendance-detail-page-client';
 import { studentRepository } from '@/features/students/repositories';
+import { classRepository } from '@/features/classes/repositories';
 
 export default async function AttendanceDetailPage({
   params,
@@ -27,12 +28,18 @@ export default async function AttendanceDetailPage({
     redirect('/dashboard/attendance');
   }
 
-  const [records, students] = await Promise.all([
+  const [records, students, classes] = await Promise.all([
     attendanceRecordRepository.findBySessionId(Number(id)),
     studentRepository.findAll(),
+    classRepository.findAll(),
   ]);
 
   return (
-    <AttendanceDetailPageClient session={attendanceSession} records={records} students={students} />
+    <AttendanceDetailPageClient
+      session={attendanceSession}
+      records={records}
+      students={students}
+      classes={classes}
+    />
   );
 }

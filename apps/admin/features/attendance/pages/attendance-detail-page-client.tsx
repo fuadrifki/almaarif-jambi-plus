@@ -2,43 +2,36 @@
 
 import { useMemo } from 'react';
 
-import { Badge, EmptyState, PageLayout, Surface } from '@/components/ui';
+import { Badge, Breadcrumb, EmptyState, PageLayout, Surface } from '@/components/ui';
 import { ClipboardCheck } from 'lucide-react';
-
-import { CLASSES, SUBJECTS } from '@/config/lookups';
 
 import { AttendanceRecordRow } from '../components/attendance-record-row';
 
-import type { AttendanceRecord, AttendanceSession, OriginalTeacherStatus } from '../types';
-import { ORIGINAL_TEACHER_STATUS } from '../types';
+import { ATTENDANCE_STATUS_OPTIONS, type AttendanceRecord, type AttendanceSession } from '../types';
 import type { Student } from '@/features/students/types';
+import { Class } from '@/features/classes';
+import { SUBJECTS } from '@/lib/db/seed-subjects';
 
 type AttendanceDetailPageClientProps = {
   session: AttendanceSession;
   records: AttendanceRecord[];
   students: Student[];
-};
-
-const ORIGINAL_TEACHER_STATUS_LABEL: Record<OriginalTeacherStatus, string> = {
-  [ORIGINAL_TEACHER_STATUS.PERMISSION]: 'Izin',
-  [ORIGINAL_TEACHER_STATUS.SICK]: 'Sakit',
-  [ORIGINAL_TEACHER_STATUS.OFFICIAL_DUTY]: 'Dinas',
-  [ORIGINAL_TEACHER_STATUS.ABSENT]: 'Tidak Hadir',
-  [ORIGINAL_TEACHER_STATUS.OTHER]: 'Lainnya',
+  classes: Class[];
 };
 
 export const AttendanceDetailPageClient = ({
   session,
   records,
   students,
+  classes,
 }: AttendanceDetailPageClientProps) => {
   const className = useMemo(
-    () => CLASSES.find((c) => c.value === session.classId)?.label ?? session.classId,
-    [session.classId],
+    () => classes.find((c) => c.id === session.classId)?.name ?? '-',
+    [session.classId, classes],
   );
 
   const subjectName = useMemo(
-    () => SUBJECTS.find((s) => s.value === session.subjectId)?.label ?? session.subjectId,
+    () => SUBJECTS.find((s) => s.id === session.subjectId)?.label ?? '-',
     [session.subjectId],
   );
 
@@ -63,6 +56,14 @@ export const AttendanceDetailPageClient = ({
   return (
     <PageLayout>
       <PageLayout.Header>
+        <Breadcrumb
+          items={[
+            { label: 'Students', href: '/dashboard/attendance' },
+            { label: 'Riwayat', href: '/dashboard/attendance' },
+            { label: `${className} - ${subjectName}` },
+          ]}
+        />
+
         <h1 className="text-2xl font-semibold sm:text-3xl">Detail Absensi</h1>
 
         <Surface className="space-y-3 p-4">
@@ -93,7 +94,11 @@ export const AttendanceDetailPageClient = ({
               <div>
                 <p className="text-secondary">Status Guru Asli</p>
                 <Badge variant="warning">
-                  {ORIGINAL_TEACHER_STATUS_LABEL[session.originalTeacherStatus!]}
+                  {
+                    ATTENDANCE_STATUS_OPTIONS.find(
+                      (o) => o.value === session.originalTeacherStatus!,
+                    )?.label
+                  }
                 </Badge>
               </div>
 

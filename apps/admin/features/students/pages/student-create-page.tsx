@@ -12,11 +12,7 @@ export const StudentCreatePage = async () => {
       <PageLayout.Header>
         <div className="flex flex-col w-full gap-y-6">
           <Breadcrumb
-            items={[
-              { label: 'Home', href: '/dashboard' },
-              { label: 'Students', href: '/dashboard/students' },
-              { label: 'Create' },
-            ]}
+            items={[{ label: 'Students', href: '/dashboard/students' }, { label: 'Create' }]}
           />
           <section>
             <h1 className="text-2xl font-semibold sm:text-3xl">Tambah Siswa</h1>
