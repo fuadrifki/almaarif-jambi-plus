@@ -7,4 +7,5 @@ export type FieldProps = {
   required?: boolean;
   id?: string;
   children: ReactNode;
+  className?: string;
 };

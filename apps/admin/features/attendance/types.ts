@@ -24,8 +24,8 @@ export type AttendanceSession = {
   scheduleId: number;
   date: string;
   time: string;
-  originalTeacherStatus: string | null;
-  substituteNotes: string | null;
+  originalTeacherStatus: string;
+  substituteNotes: string;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -38,4 +38,13 @@ export type AttendanceRecord = {
   notes: string;
   createdAt: Date;
   updatedAt: Date;
+};
+
+export type Schedule = {
+  id: number;
+  teacherId: number | null;
+  classId: number;
+  subjectId: number;
+  day: string;
+  time: string;
 };

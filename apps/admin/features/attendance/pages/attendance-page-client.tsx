@@ -2,15 +2,26 @@
 
 import { useMemo, useState } from 'react';
 
-import { PageLayout, Surface, Tabs, SelectOption } from '@/components/ui';
+import { PageLayout, Surface, Tabs, SelectOption, toast } from '@/components/ui';
 import { History, Plus } from 'lucide-react';
 
-import { type AttendanceRecord, type AttendanceSession } from '../types';
+import {
+  ATTENDANCE_STATUS,
+  AttendanceStatus,
+  Schedule,
+  type AttendanceRecord,
+  type AttendanceSession,
+} from '../types';
 import type { Student } from '@/features/students/types';
 import { TEACHERS } from '@/lib/db/seed-teachers';
 import { formatDate } from '@/lib/utils/date';
 import { AttendanceInputSection } from '../components/attendance-input-section';
 import { AttendanceHistorySection } from '../components/attendance-history-section';
+import { AttendanceFilterInput } from '../components/attendance-filter-input';
+import { SCHEDULES } from '@/lib/db/seed-schedule';
+import { SUBJECTS } from '@/lib/db/seed-subjects';
+import { submitAttendance } from '../server';
+import { format } from 'date-fns';
 
 type SessionWithRecords = AttendanceSession & { records: AttendanceRecord[] };
 
@@ -30,8 +41,166 @@ export const AttendancePageClient = ({
   classes,
 }: AttendancePageClientProps) => {
   const [activeTab, setActiveTab] = useState<Tab>('input');
+  const [classId, setClassId] = useState<number>(0);
+  const [subjectId, setSubjectId] = useState<number>(0);
+  const [statuses, setStatuses] = useState<Record<number, AttendanceStatus>>({});
+  const [notes, setNotes] = useState<Record<number, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [originalTeacherStatus, setOriginalTeacherStatus] = useState('');
+  const [substituteNotes, setSubstituteNotes] = useState('');
+  const [substituteConfirmed, setSubstituteConfirmed] = useState(false);
 
   const teacherLabel = useMemo(() => TEACHERS.find((t) => t.id === teacherId)?.name, [teacherId]);
+
+  const currentDate = useMemo(() => {
+    const day = formatDate(new Date(), 'EEEE');
+    const time = formatDate(new Date(), 'HH:mm');
+
+    return {
+      day,
+      time,
+    };
+  }, []);
+
+  const matchedSchedule = useMemo((): Schedule | null => {
+    if (!classId || !subjectId) return null;
+
+    return (
+      SCHEDULES.find((item) => {
+        const [start, end] = item.time.split('-');
+        const inRange = currentDate.time >= start && currentDate.time <= end;
+
+        return (
+          item.day === currentDate.day &&
+          inRange &&
+          item.classId === classId &&
+          item.subjectId === subjectId
+        );
+      }) ?? null
+    );
+  }, [classId, subjectId, currentDate]);
+
+  const isSubstituteMode = useMemo(() => {
+    if (!matchedSchedule || matchedSchedule.teacherId === null) return false;
+    return matchedSchedule.teacherId !== teacherId;
+  }, [matchedSchedule, teacherId]);
+
+  const originalTeacherName = useMemo(() => {
+    if (!isSubstituteMode || !matchedSchedule?.teacherId) return '';
+    return TEACHERS.find((t) => t.id === matchedSchedule.teacherId)?.name ?? '';
+  }, [isSubstituteMode, matchedSchedule]);
+
+  const shouldShowStudentList = useMemo(() => {
+    if (isSubstituteMode) {
+      return Boolean(
+        substituteConfirmed &&
+        (originalTeacherStatus !== ATTENDANCE_STATUS.PERMISSION || substituteNotes.trim()),
+      );
+    }
+    return classId > 0;
+  }, [isSubstituteMode, substituteConfirmed, originalTeacherStatus, substituteNotes, classId]);
+
+  const filteredStudents = useMemo(
+    () => (shouldShowStudentList ? students.filter((s) => s.classId === classId) : []),
+    [shouldShowStudentList, students, classId],
+  );
+
+  const subjectsByClass = useMemo((): SelectOption[] => {
+    const schedules = SCHEDULES.filter((item) => {
+      const [start, end] = item.time.split('-');
+      const inRange = currentDate.time >= start && currentDate.time <= end;
+
+      return item.day === currentDate.day && inRange && item.classId === classId;
+    });
+
+    const data = SUBJECTS.filter((item) => schedules.find((s) => s.subjectId === item.id));
+
+    const res = data.sort((a, b) => a.label.localeCompare(b.label));
+
+    return res.map((s) => ({ value: s.id, label: s.label }));
+  }, [currentDate, classId]);
+
+  const handleStatusChange = (studentId: number, status: AttendanceStatus) => {
+    setStatuses((prev) => ({ ...prev, [studentId]: status }));
+  };
+
+  const handleNotesChange = (studentId: number, value: string) => {
+    setNotes((prev) => ({ ...prev, [studentId]: value }));
+  };
+
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+
+    try {
+      await submitAttendance({
+        teacherId,
+        classId,
+        subjectId,
+        scheduleId: matchedSchedule?.id ?? 0,
+        date: format(new Date(), 'yyyy-MM-dd'),
+        time: format(new Date(), 'hh:mm'),
+        originalTeacherStatus: isSubstituteMode ? originalTeacherStatus : undefined,
+        substituteNotes: isSubstituteMode ? substituteNotes.trim() : undefined,
+        records: filteredStudents.map((student) => ({
+          studentId: student.id,
+          status: statuses[student.id],
+          notes: notes[student.id] ?? '',
+        })),
+      });
+
+      toast.success('Absensi berhasil disimpan');
+
+      onResetTab();
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : 'Gagal menyimpan absensi. Silakan coba lagi.',
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const onResetTab = () => {
+    setClassId(0);
+    setSubjectId(0);
+    setStatuses({});
+    setNotes({});
+    setOriginalTeacherStatus('');
+    setSubstituteNotes('');
+    setSubstituteConfirmed(false);
+  };
+
+  const handleSubstituteConfirmed = () => {
+    setSubstituteConfirmed(true);
+  };
+
+  const onSelectClass = (value: number) => {
+    setClassId(Number(value));
+    setSubstituteConfirmed(false);
+    setOriginalTeacherStatus('');
+    setSubstituteNotes('');
+  };
+
+  const onSelectSubject = (value: number) => {
+    setSubjectId(Number(value));
+    setSubstituteConfirmed(false);
+    setOriginalTeacherStatus('');
+    setSubstituteNotes('');
+  };
+
+  const onSelectOriginalTeacherStatus = (value: string) => {
+    setOriginalTeacherStatus(value);
+    setSubstituteNotes('');
+  };
+
+  const onChangeSubstituteNotes = (value: string) => {
+    setSubstituteNotes(value);
+
+    if (!value) {
+      setSubstituteConfirmed(false);
+    }
+  };
 
   return (
     <PageLayout>
@@ -59,15 +228,41 @@ export const AttendancePageClient = ({
             Riwayat
           </Tabs.Item>
         </Tabs>
+
+        {activeTab === 'input' && (
+          <AttendanceFilterInput
+            classes={classes}
+            classId={classId}
+            subjectsByClass={subjectsByClass}
+            subjectId={subjectId}
+            isSubstituteMode={isSubstituteMode}
+            originalTeacherStatus={originalTeacherStatus}
+            substituteNotes={substituteNotes}
+            onSelectClass={onSelectClass}
+            onSelectSubject={onSelectSubject}
+            onSelectOriginalTeacherStatus={onSelectOriginalTeacherStatus}
+            onChangeSubstituteNotes={onChangeSubstituteNotes}
+            handleSubstituteConfirmed={handleSubstituteConfirmed}
+            onReset={onResetTab}
+          />
+        )}
       </PageLayout.Header>
 
       <PageLayout.Content>
         {activeTab === 'input' && (
           <AttendanceInputSection
-            teacherId={teacherId}
-            students={students}
-            sessions={sessions}
-            classes={classes}
+            classId={classId}
+            subjectsByClass={subjectsByClass}
+            subjectId={subjectId}
+            shouldShowStudentList={shouldShowStudentList}
+            originalTeacherName={originalTeacherName}
+            filteredStudents={filteredStudents}
+            statuses={statuses}
+            notes={notes}
+            isSubmitting={isSubmitting}
+            handleStatusChange={handleStatusChange}
+            handleNotesChange={handleNotesChange}
+            handleSubmit={handleSubmit}
           />
         )}
         {activeTab === 'history' && (

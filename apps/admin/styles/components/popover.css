@@ -5,43 +5,25 @@
 /* ---- Content (Liquid Glass) ---- */
 
 .ads-popover {
-  position: absolute;
-  z-index: 200;
-  min-width: 180px;
-  overflow: hidden;
-
-  border-radius: var(--radius-xl);
-  background: var(--surface);
-  border: 1px solid rgb(200 200 200 / 0.22);
-
-  -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(190%) brightness(1.08);
-  backdrop-filter: blur(var(--blur-lg)) saturate(190%) brightness(1.08);
-
-  box-shadow:
-    0 8px 32px rgb(0 0 0 / 0.12),
-    0 2px 8px rgb(0 0 0 / 0.06);
-
-  padding: 4px;
-
   opacity: 0;
   transform: scale(0.96) translateY(-4px);
 
   animation: ads-popover-open 0.15s var(--motion-ease) forwards;
 }
 
-.ads-popover[style*="bottom"] {
+.ads-popover[style*='bottom'] {
   margin-top: var(--spacing-md);
 }
 
-.ads-popover[style*="top"] {
+.ads-popover[style*='top'] {
   margin-bottom: var(--spacing-md);
 }
 
-.ads-popover[style*="left"] {
+.ads-popover[style*='left'] {
   margin-right: var(--spacing-md);
 }
 
-.ads-popover[style*="right"] {
+.ads-popover[style*='right'] {
   margin-left: var(--spacing-md);
 }
 

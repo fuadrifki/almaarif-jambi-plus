@@ -1,4 +1,6 @@
-export const SCHEDULES = [
+import { Schedule } from '@/features/attendance';
+
+export const SCHEDULES: Schedule[] = [
   // ===== 1 Madin Putra =====
   { id: 1, classId: 1, day: 'Senin', time: '00:00-23:59', subjectId: 1, teacherId: null }, // Iqro
   { id: 2, classId: 1, day: 'Selasa', time: '00:00-23:59', subjectId: 2, teacherId: null }, // Fasholatan

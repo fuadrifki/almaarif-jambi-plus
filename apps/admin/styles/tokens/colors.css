@@ -8,7 +8,7 @@
   --text-primary: #1a1421;
   --text-secondary: #4d4d4d;
 
-  --border: #d9e1ec;
+  --border: rgb(200 200 200 / 0.5);
 
   --brand: #2563eb;
   --brand-soft: #dbeafe;
@@ -37,7 +37,7 @@
   --text-primary: #fafafa;
   --text-secondary: #c3c7d1;
 
-  --border: #30343d;
+  --border: rgb(255 255 255 / 0.35);
 
   --brand: #5b8cff;
   --brand-soft: #1d3f73;

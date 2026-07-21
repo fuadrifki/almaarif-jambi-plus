@@ -1,3 +1,4 @@
+import { cn } from '@/lib';
 import type { FieldProps } from './field.types';
 
 export const Field = ({
@@ -7,8 +8,9 @@ export const Field = ({
   error,
   id,
   children,
+  className,
 }: FieldProps) => (
-  <div className="space-y-2">
+  <div className={cn('space-y-2', className)}>
     {label && (
       <label htmlFor={id} className="block text-sm font-semibold text-primary">
         {label}
