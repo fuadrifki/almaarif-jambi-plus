@@ -1,6 +1,6 @@
 'use client';
 
-import { Badge, RadioGroup, RadioItem, Surface, Textarea } from '@/components/ui';
+import { Badge, RadioGroup, RadioItem, Card, Textarea } from '@/components/ui';
 
 import type { AttendanceStatus } from '../types';
 import type { Student } from '@/features/students/types';
@@ -23,7 +23,7 @@ export const AttendanceStudentList = ({
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
       {students.map((student) => (
-        <Surface key={student.id} className="p-4 flex flex-col gap-y-2 max-h-max">
+        <Card key={student.id} className="p-4 flex flex-col gap-y-2 max-h-max">
           <div className="flex items-center gap-3">
             <Badge variant="info" className="text-xs text-secondary px-2">
               {student.nis}
@@ -56,7 +56,7 @@ export const AttendanceStudentList = ({
               rows={1}
             />
           )}
-        </Surface>
+        </Card>
       ))}
     </div>
   );

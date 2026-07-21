@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react';
 
 import {
   PageLayout,
-  Surface,
+  Card,
   EmptyState,
   Table,
   TableBody,
@@ -74,7 +74,7 @@ export const StudentTeacherDetailPageClient = ({
         <h1 className="text-2xl font-semibold sm:text-3xl">Detail Guru</h1>
         <p className="text-secondary">Laporan absensi guru pengajar untuk {student.name}.</p>
 
-        <Surface className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
+        <Card className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
           <div>
             <p className="text-xs text-secondary uppercase">NIS</p>
             <p className="font-medium text-primary">{student.nis}</p>
@@ -91,7 +91,7 @@ export const StudentTeacherDetailPageClient = ({
             <p className="text-xs text-secondary uppercase">Status</p>
             <Badge variant="success">Aktif</Badge>
           </div>
-        </Surface>
+        </Card>
       </PageLayout.Header>
 
       <PageLayout.Content>
@@ -121,7 +121,7 @@ export const StudentTeacherDetailPageClient = ({
                 </TableHeader>
                 <TableBody>
                   {attendanceHistory.map((record) => (
-                    <TableRow key={record.id} className="hover:bg-surface/50">
+                    <TableRow key={record.id} className="hover:bg-Card/50">
                       <TableCell>
                         {new Date(record.date + 'T00:00:00').toLocaleDateString('id-ID', {
                           weekday: 'short',
@@ -210,7 +210,7 @@ export const StudentTeacherDetailPageClient = ({
                 </TableHeader>
                 <TableBody>
                   {attendanceReport.map((report) => (
-                    <TableRow key={report.month} className="hover:bg-surface/50">
+                    <TableRow key={report.month} className="hover:bg-Card/50">
                       <TableCell className="font-medium text-primary">{report.month}</TableCell>
                       <TableCell>
                         <Badge variant="success">{report.present}</Badge>

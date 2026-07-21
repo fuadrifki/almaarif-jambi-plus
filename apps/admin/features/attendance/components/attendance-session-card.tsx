@@ -1,12 +1,12 @@
 import Link from 'next/link';
 
-import { Badge, SelectOption, Surface } from '@/components/ui';
+import { Badge, SelectOption, Card } from '@/components/ui';
 import { ATTENDANCE_STATUS, ATTENDANCE_STATUS_OPTIONS } from '@/features/attendance/types';
 
 import type { AttendanceRecord, AttendanceSession } from '@/features/attendance/types';
 import { SUBJECTS } from '@/lib/db/seed-subjects';
-import { format } from 'date-fns';
-import { id } from 'date-fns/locale';
+import { formatDate } from '@/lib/utils/date';
+import { Ban, Calendar1, Dot } from 'lucide-react';
 
 type AttendanceSessionCardProps = {
   session: AttendanceSession;
@@ -35,7 +35,7 @@ export const AttendanceSessionCard = ({
 }: AttendanceSessionCardProps) => {
   const className = classes.find((c) => c.value === session.classId)?.label;
 
-  const subjectName = SUBJECTS.find((s) => s.id === session.subjectId)?.label;
+  const subject = SUBJECTS.find((s) => s.id === session.subjectId);
 
   const total = records.length;
   const present = records.filter((r) => r.status === ATTENDANCE_STATUS.PRESENT).length;
@@ -43,49 +43,97 @@ export const AttendanceSessionCard = ({
   const permission = records.filter((r) => r.status === ATTENDANCE_STATUS.PERMISSION).length;
   const absent = records.filter((r) => r.status === ATTENDANCE_STATUS.ABSENT).length;
 
-  const isSubstitute = session.scheduledTeacherStatus !== null;
+  const isSubstitute =
+    session.scheduledTeacherId && session.scheduledTeacherId !== session?.teacherId;
+
+  const isAssigned = !session.scheduledTeacherId;
+
+  const isSubjectTeacher =
+    session.scheduledTeacherId && session.scheduledTeacherId === session?.teacherId;
+
   const originalTeacherLabel = isSubstitute
     ? ATTENDANCE_STATUS_OPTIONS.find((o) => o.value === session.scheduledTeacherStatus!)?.label
     : null;
 
   return (
     <Link href={`/dashboard/attendance/${session.id}`} className="block">
-      <Surface className="space-y-3 p-4 transition hover:border-white/20">
-        <div className="flex items-start justify-between gap-3">
+      <Card className="space-y-3 p-4 transition hover:border-white/20">
+        <div className="flex flex-col sm:flex-row justify-between gap-4">
           <div className="space-y-1">
-            <p className="text-sm text-primary font-bold">
-              <span>{className}</span> &middot;{' '}
-              <span className="font-medium text-secondary">{subjectName}</span>
-            </p>
+            <div className="text-sm text-primary font-bold flex flex-wrap items-center space-y-1">
+              <span>{className}</span>
 
-            <p className="text-xs text-secondary">
-              {format(new Date(session.date), 'EEEE, dd MMMM yyyy', { locale: id })} &middot;{' '}
-              {session.time} WIB
-            </p>
+              <Dot size={20} className="shrink-0" />
+
+              <span className="font-medium text-secondary">{subject?.label}</span>
+
+              {isSubstitute && (
+                <>
+                  <Dot size={20} className="shrink-0" />
+                  <Badge variant="info" className="w-max">
+                    Pengganti
+                  </Badge>
+                </>
+              )}
+
+              {isAssigned && (
+                <>
+                  <Dot size={20} className="shrink-0" />
+                  <Badge variant="warning" className="w-max">
+                    Ditugaskan
+                  </Badge>
+                </>
+              )}
+
+              {isSubjectTeacher && (
+                <>
+                  <Dot size={20} className="shrink-0" />
+                  <Badge variant="success" className="w-max">
+                    Guru mata pelajaran
+                  </Badge>
+                </>
+              )}
+            </div>
+
+            <div className="flex items-center gap-1.5 text-xs text-secondary">
+              <Calendar1 size={12} className="shrink-0" />
+
+              <span>{formatDate(new Date(session.date), 'EEEE, dd MMMM yyyy')}</span>
+
+              <span>{session.time}</span>
+            </div>
 
             {isSubstitute && (
-              <p className="text-xs text-amber-400">Pengganti &middot; {originalTeacherLabel}</p>
+              <div className="flex items-start gap-1.5 text-xs text-secondary">
+                <Ban size={12} className="shrink-0 mt-0.5" />
+
+                <div className="text-xs text-secondary">
+                  <span>Keterangan berhalangan : </span>
+                  <span className="font-medium">
+                    {originalTeacherLabel} ({session.substituteNotes})
+                  </span>
+                </div>
+              </div>
             )}
           </div>
 
-          <span className="shrink-0 text-xs text-secondary">{total} siswa</span>
+          <div className="flex flex-col items-end justify-center space-y-2">
+            <span className="shrink-0 text-sm text-secondary font-semibold">{total} siswa</span>
+            <div className="flex flex-wrap gap-2">
+              {[
+                { status: ATTENDANCE_STATUS.PRESENT, count: present },
+                { status: ATTENDANCE_STATUS.SICK, count: sick },
+                { status: ATTENDANCE_STATUS.PERMISSION, count: permission },
+                { status: ATTENDANCE_STATUS.ABSENT, count: absent },
+              ].map(({ status, count }) => (
+                <Badge key={status} variant={STATUS_BADGE[status]}>
+                  {STATUS_LABEL[status]} {count}
+                </Badge>
+              ))}
+            </div>
+          </div>
         </div>
-
-        <div className="flex flex-wrap gap-2">
-          {[
-            { status: ATTENDANCE_STATUS.PRESENT, count: present },
-            { status: ATTENDANCE_STATUS.SICK, count: sick },
-            { status: ATTENDANCE_STATUS.PERMISSION, count: permission },
-            { status: ATTENDANCE_STATUS.ABSENT, count: absent },
-          ].map(({ status, count }) => (
-            <Badge key={status} variant={STATUS_BADGE[status]}>
-              {STATUS_LABEL[status]} {count}
-            </Badge>
-          ))}
-
-          {isSubstitute && <Badge variant="warning">Pengganti</Badge>}
-        </div>
-      </Surface>
+      </Card>
     </Link>
   );
 };

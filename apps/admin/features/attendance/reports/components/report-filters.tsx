@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
-import { Badge, Button, Input, Select, Surface } from '@/components/ui';
+import { Badge, Button, Input, Select, Card } from '@/components/ui';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import type { Class } from '@/features/classes/types';
 import { Plus, Search } from 'lucide-react';
@@ -133,7 +133,7 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
   };
 
   return (
-    <Surface className="p-4">
+    <Card className="p-4">
       <div className="flex flex-col md:flex-row items-center gap-4">
         <Input
           placeholder="Cari berdasarkan nama atau NIS..."
@@ -205,6 +205,6 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
           </PopoverContent>
         </Popover>
       </div>
-    </Surface>
+    </Card>
   );
 };

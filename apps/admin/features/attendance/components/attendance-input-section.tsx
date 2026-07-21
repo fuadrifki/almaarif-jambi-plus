@@ -1,7 +1,7 @@
 'use client';
 
-import { Button, EmptyState, SelectOption, Surface } from '@/components/ui';
-import { AlertTriangle, ClipboardCheck } from 'lucide-react';
+import { Button, EmptyState, SelectOption, Card } from '@/components/ui';
+import { ClipboardCheck } from 'lucide-react';
 import type { Student } from '@/features/students/types';
 import { AttendanceStudentRow } from './attendance-student-row';
 import { AttendanceStatus } from '../types';
@@ -50,12 +50,7 @@ export const AttendanceInputSection = ({
           description="Pilih kelas dan mata pelajaran terlebih dahulu untuk mengisi absensi."
         />
       ) : !shouldShowStudentList ? (
-        <Surface className="p-4 space-y-4">
-          <div className="flex items-center gap-2 text-amber-400">
-            <AlertTriangle size={18} />
-            <p className="text-sm font-semibold">Guru Pengganti &mdash; {originalTeacherName}</p>
-          </div>
-
+        <Card className="p-4 space-y-2">
           <p className="text-secondary">Anda akan mengajar sebagai Guru Pengganti.</p>
           <p className="text-secondary">
             Guru sesuai jadwal:
@@ -63,9 +58,9 @@ export const AttendanceInputSection = ({
           </p>
 
           <p className="text-secondary">
-            Silakan isi status guru asli terlebih dahulu sebelum memulai absensi.
+            Silakan isi keterangan guru asli terlebih dahulu sebelum memulai absensi.
           </p>
-        </Surface>
+        </Card>
       ) : (
         <>
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">

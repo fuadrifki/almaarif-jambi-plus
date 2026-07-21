@@ -73,7 +73,7 @@ export const TeacherAttendanceTable = ({ rows }: { rows: TeacherAttendanceRow[] 
         {rows.map((row, index) => (
           <TableRow
             key={`${index}-${row.teacher.id}-${row.date}`}
-            className={index % 2 === 0 ? 'bg-surface/50' : ''}
+            className={index % 2 === 0 ? 'bg-Card/50' : ''}
           >
             <TableCell>
               <div className="text-sm">

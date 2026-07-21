@@ -1,4 +1,4 @@
-import { Badge, Card, Surface } from '@/components/ui';
+import { Badge, Card } from '@/components/ui';
 import { ATTENDANCE_STATUS } from '@/features/attendance/types';
 
 import type { AttendanceRecord } from '@/features/attendance/types';
@@ -30,11 +30,11 @@ export const AttendanceRecordRow = ({ record, students }: AttendanceRecordRowPro
   const student = students.find((s) => s.id === record.studentId);
 
   return (
-    <Surface className="flex items-center gap-4 p-4">
+    <Card className="flex items-center gap-4 p-4">
       <div className="min-w-0 flex-1 flex items-center gap-2">
         <div className="shrink-0">
           {student?.photoUrl ? (
-            <Surface className="rounded-full!">
+            <Card className="rounded-full!">
               <Card className="flex w-max h-max items-center justify-center rounded-full! text-sm font-semibold text-primary p-0">
                 <Image
                   src={student.photoUrl}
@@ -44,13 +44,13 @@ export const AttendanceRecordRow = ({ record, students }: AttendanceRecordRowPro
                   className="h-10 w-10 rounded-full object-cover"
                 />
               </Card>
-            </Surface>
+            </Card>
           ) : (
-            <Surface className="rounded-full!">
+            <Card className="rounded-full!">
               <Card className="flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold text-secondary">
                 {student?.name.charAt(0).toUpperCase()}
               </Card>
-            </Surface>
+            </Card>
           )}
         </div>
 
@@ -82,6 +82,6 @@ export const AttendanceRecordRow = ({ record, students }: AttendanceRecordRowPro
       <Badge variant={STATUS_BADGE[record.status]} className="shrink-0">
         {STATUS_LABEL[record.status]}
       </Badge>
-    </Surface>
+    </Card>
   );
 };

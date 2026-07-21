@@ -76,7 +76,7 @@ export const AttendanceFilterInput = ({
         <Popover open={openTeacherSubstitute} onOpenChange={setOpenTeacherSubstitute}>
           <PopoverTrigger asChild>
             <Button variant="outline" className="w-full">
-              Keterangan guru asli
+              Keterangan Guru Asli
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-80 p-4 space-y-4">
@@ -109,17 +109,16 @@ export const AttendanceFilterInput = ({
               )}
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
-              <Button
-                onClick={() => {
-                  handleSubstituteConfirmed();
-                  setOpenTeacherSubstitute(false);
-                }}
-                disabled={disabledDetailOriginalTeacher}
-              >
-                Simpan
-              </Button>
-            </div>
+            <Button
+              onClick={() => {
+                handleSubstituteConfirmed();
+                setOpenTeacherSubstitute(false);
+              }}
+              disabled={disabledDetailOriginalTeacher}
+              className="w-full mt-2"
+            >
+              Simpan
+            </Button>
           </PopoverContent>
         </Popover>
       )}

@@ -84,7 +84,7 @@ export const ReportSummaryCards = ({ summary, className }: ReportSummaryCardsPro
               'text-left rounded-3xl border transition-colors cursor-pointer',
               isActive
                 ? 'border-primary bg-primary/10'
-                : 'border-transparent bg-surface hover:border-border',
+                : 'border-transparent bg-Card hover:border-border',
               card.bgClassName,
             )}
           >

@@ -1,7 +1,7 @@
 'use client';
 
 import { X, Calendar } from 'lucide-react';
-import { Surface, Button, Input, Select } from '@/components/ui';
+import { Card, Button, Input, Select } from '@/components/ui';
 
 type AttendanceHeaderProps = {
   dateFilter: Date | undefined;
@@ -27,7 +27,7 @@ export const AttendanceHeader = ({
   clearFilters,
 }: AttendanceHeaderProps) => {
   return (
-    <Surface className="p-4 space-y-4">
+    <Card className="p-4 space-y-4">
       <div className="flex flex-wrap justify-between items-start gap-4">
         <h1 className="text-2xl font-semibold sm:text-3xl">Riwayat Absensi</h1>
 
@@ -69,6 +69,6 @@ export const AttendanceHeader = ({
           onChange={(value) => onSubjectChange(Number(value))}
         />
       </div>
-    </Surface>
+    </Card>
   );
 };

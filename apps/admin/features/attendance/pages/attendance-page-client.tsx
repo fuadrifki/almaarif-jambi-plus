@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 
-import { PageLayout, Surface, Tabs, SelectOption, toast } from '@/components/ui';
+import { PageLayout, Card, Tabs, SelectOption, toast } from '@/components/ui';
 import { History, Plus } from 'lucide-react';
 
 import {
@@ -165,6 +165,11 @@ export const AttendancePageClient = ({
     }
   };
 
+  const onChangeTab = (v: string) => {
+    setActiveTab(v as Tab);
+    onResetTab();
+  };
+
   const onResetTab = () => {
     setClassId(0);
     setSubjectId(0);
@@ -236,19 +241,14 @@ export const AttendancePageClient = ({
       <PageLayout.Header>
         <h1 className="text-2xl font-semibold sm:text-3xl">Absensi</h1>
 
-        <Surface className="flex flex-wrap justify-between gap-x-2 gap-y-2 p-4 text-sm text-secondary">
+        <Card className="flex flex-wrap justify-between gap-x-2 gap-y-2 p-4 text-sm text-secondary">
           <span className="font-medium text-primary">{teacherLabel}</span>
           <span className="text-secondary">
             {formatDate(new Date(), 'EEEE, dd MMMM yyyy HH:mm')}
           </span>
-        </Surface>
+        </Card>
 
-        <Tabs
-          value={activeTab}
-          onValueChange={(v) => {
-            setActiveTab(v as Tab);
-          }}
-        >
+        <Tabs value={activeTab} onValueChange={onChangeTab}>
           <Tabs.Item value="input" icon={<Plus size={16} />}>
             Isi Absensi
           </Tabs.Item>

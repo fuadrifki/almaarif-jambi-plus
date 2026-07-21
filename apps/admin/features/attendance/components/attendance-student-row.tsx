@@ -1,6 +1,6 @@
 'use client';
 
-import { Badge, RadioGroup, RadioItem, Surface, Textarea } from '@/components/ui';
+import { Badge, RadioGroup, RadioItem, Card, Textarea } from '@/components/ui';
 
 import type { AttendanceStatus } from '../types';
 import type { Student } from '@/features/students/types';
@@ -20,7 +20,7 @@ export const AttendanceStudentRow = ({
   onStatusChange,
   onNotesChange,
 }: AttendanceStudentRowProps) => (
-  <Surface className="p-4 flex flex-col gap-y-2 max-h-max">
+  <Card hoverable className="p-4 flex flex-col gap-y-2 max-h-max">
     <div className="flex items-center gap-3">
       <Badge variant="info" className="text-xs text-secondary px-2">
         {student.nis}
@@ -53,5 +53,5 @@ export const AttendanceStudentRow = ({
         rows={1}
       />
     )}
-  </Surface>
+  </Card>
 );

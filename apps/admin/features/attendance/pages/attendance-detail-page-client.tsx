@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 
-import { Badge, Breadcrumb, EmptyState, PageLayout, Surface } from '@/components/ui';
+import { Badge, Breadcrumb, EmptyState, PageLayout, Card } from '@/components/ui';
 import { ClipboardCheck } from 'lucide-react';
 
 import { AttendanceRecordRow } from '../components/attendance-record-row';
@@ -66,7 +66,7 @@ export const AttendanceDetailPageClient = ({
 
         <h1 className="text-2xl font-semibold sm:text-3xl">Detail Absensi</h1>
 
-        <Surface className="space-y-3 p-4">
+        <Card className="space-y-3 p-4">
           <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
             <div>
               <p className="text-secondary">Tanggal</p>
@@ -122,7 +122,7 @@ export const AttendanceDetailPageClient = ({
 
             <span className="text-red-400">Alpha: {absent}</span>
           </div>
-        </Surface>
+        </Card>
       </PageLayout.Header>
 
       <PageLayout.Content>
