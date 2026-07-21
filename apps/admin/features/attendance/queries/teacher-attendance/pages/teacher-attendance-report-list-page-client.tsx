@@ -6,7 +6,7 @@ import { PageLayout, EmptyState, InfiniteScroll, Skeleton } from '@/components/u
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 import type { Class } from '@/features/classes/types';
 import { FileSpreadsheet } from 'lucide-react';
-import { ReportFilters } from '@/features/attendance/reports/components/report-filters';
+import { TeacherAttendanceFilters } from '../components/teacher-attendance-filters';
 import { TeacherAttendanceTable } from '../components/teacher-attendance-table';
 import { TeacherAttendanceResult } from '../types';
 import { TeacherSummaryCards } from '../components/teacher-summary-cards';
@@ -50,7 +50,7 @@ export const TeacherAttendanceReportListPageClient = ({
         <h1 className="text-2xl font-semibold sm:text-3xl">Laporan Absensi Guru</h1>
         <p className="text-secondary">Buat data laporan absensi guru pesantren.</p>
 
-        <ReportFilters classes={classes} teachers={teachers} subjects={subjects} />
+        <TeacherAttendanceFilters classes={classes} teachers={teachers} subjects={subjects} />
       </PageLayout.Header>
 
       <PageLayout.Content>

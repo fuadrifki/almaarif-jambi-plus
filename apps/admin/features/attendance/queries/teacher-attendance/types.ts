@@ -1,40 +1,31 @@
-import type { Class } from '@/features/classes/types';
-
-export type ReportSummary = {
-  present: number;
-  sick: number;
-  excused: number;
-  absent: number;
-  notYetSubmitted: number;
-};
-
 export type TeacherAttendanceRow = {
+  sessionId: number;
   date: string;
   time: string;
   teacher: {
     id: number;
     name: string;
   };
-  class: Class;
+  class: {
+    id: number;
+    name: string;
+  };
   subject: {
     id: number;
     label: string;
   };
-  totalStudents: number;
   totalClasses: number;
+  totalSubjects: number;
+  totalTeaching: number;
   substituteCount: number;
-  attendanceStatus: string | null;
-  notes: string | null;
-  scheduledTeacherStatus: string | null;
-  substituteNotes: string | null;
+  statusLabel: string;
+  catatanLabel: string;
 };
 
 export type TeacherAttendanceSummary = {
-  teacherId: number;
-  teacherName: string;
   totalClasses: number;
   totalSubjects: number;
-  totalAttendanceSessions: number;
+  totalTeaching: number;
   substituteCount: number;
 };
 

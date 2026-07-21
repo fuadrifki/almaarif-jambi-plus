@@ -15,40 +15,21 @@ import Link from 'next/link';
 import { Eye } from 'lucide-react';
 
 const STATUS_BADGE: Record<string, 'success' | 'warning' | 'info' | 'danger'> = {
-  PRESENT: 'success',
-  SICK: 'warning',
-  PERMISSION: 'info',
-  ABSENT: 'danger',
+  Hadir: 'success',
+  Sakit: 'warning',
+  Izin: 'info',
+  Dinas: 'info',
+  Alpha: 'danger',
+  'Guru Pengganti': 'warning',
+  'Guru Membantu': 'info',
 };
 
-const scheduled_teacher_status_LABEL: Record<string, string> = {
-  PRESENT: 'Hadir',
-  PERMISSION: 'Izin',
-  SICK: 'Sakit',
-  OFFICIAL_DUTY: 'Dinas',
-  ABSENT: 'Tidak Hadir',
-  OTHER: 'Lainnya',
-};
-
-function getStatusBadge(status: string | null) {
-  if (!status) {
-    return <Badge variant="default">Belum Absen</Badge>;
-  }
-
-  const variant = STATUS_BADGE[status as keyof typeof STATUS_BADGE];
+function getStatusBadge(status: string) {
+  const variant = STATUS_BADGE[status];
   if (!variant) {
-    return (
-      <Badge variant="default">
-        {scheduled_teacher_status_LABEL[status as keyof typeof scheduled_teacher_status_LABEL]}
-      </Badge>
-    );
+    return <Badge variant="default">{status}</Badge>;
   }
-
-  return (
-    <Badge variant={variant}>
-      {scheduled_teacher_status_LABEL[status as keyof typeof scheduled_teacher_status_LABEL]}
-    </Badge>
-  );
+  return <Badge variant={variant}>{status}</Badge>;
 }
 
 export const TeacherAttendanceTable = ({ rows }: { rows: TeacherAttendanceRow[] }) => {
@@ -72,7 +53,7 @@ export const TeacherAttendanceTable = ({ rows }: { rows: TeacherAttendanceRow[] 
       <TableBody>
         {rows.map((row, index) => (
           <TableRow
-            key={`${index}-${row.teacher.id}-${row.date}`}
+            key={`${row.sessionId}-${row.teacher.id}-${index}`}
             className={index % 2 === 0 ? 'bg-card/50' : ''}
           >
             <TableCell>
@@ -88,35 +69,23 @@ export const TeacherAttendanceTable = ({ rows }: { rows: TeacherAttendanceRow[] 
               <div className="text-sm text-secondary">{row.subject.label}</div>
             </TableCell>
             <TableCell>
-              <div className="text-sm">{row.totalStudents || '-'}</div>
-            </TableCell>
-            <TableCell>
               <div className="text-sm">{row.totalClasses || '-'}</div>
             </TableCell>
             <TableCell>
-              <div className="text-sm">{row.totalClasses || '-'}</div>
+              <div className="text-sm">{row.totalSubjects || '-'}</div>
+            </TableCell>
+            <TableCell>
+              <div className="text-sm">{row.totalTeaching || '-'}</div>
             </TableCell>
             <TableCell>
               {row.substituteCount ? <Badge variant="warning">Pengganti</Badge> : '-'}
             </TableCell>
-            <TableCell>{getStatusBadge(row.attendanceStatus)}</TableCell>
+            <TableCell>{getStatusBadge(row.statusLabel)}</TableCell>
             <TableCell>
-              <div className="text-sm max-w-40 truncate text-secondary">
-                {row.notes ? <span>{row.notes}</span> : '-'}
-                {row.scheduledTeacherStatus && (
-                  <div className="text-xs text-amber-400 mt-1">
-                    Status Asli: {scheduled_teacher_status_LABEL[row.scheduledTeacherStatus]}
-                  </div>
-                )}
-                {row.substituteNotes && (
-                  <div className="text-xs text-amber-400">
-                    Catatan Pengganti: {row.substituteNotes}
-                  </div>
-                )}
-              </div>
+              <div className="text-sm max-w-48 truncate text-secondary">{row.catatanLabel}</div>
             </TableCell>
             <TableCell>
-              <Link href={`/dashboard/students/${row.teacher.id}`}>
+              <Link href={`/dashboard/attendance/teachers/${row.teacher.id}`}>
                 <Button variant="ghost" size="sm" leftIcon={<Eye size={14} />}>
                   Detail
                 </Button>

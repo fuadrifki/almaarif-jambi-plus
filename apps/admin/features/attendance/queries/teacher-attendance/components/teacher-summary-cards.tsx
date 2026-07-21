@@ -17,9 +17,9 @@ export const TeacherSummaryCards = ({ summary }: { summary: TeacherAttendanceSum
       className: 'text-yellow-500',
     },
     {
-      key: 'totalAttendanceSessions' as const,
-      label: 'Total Hadir',
-      valueKey: 'totalAttendanceSessions' as const,
+      key: 'totalTeaching' as const,
+      label: 'Total Mengajar',
+      valueKey: 'totalTeaching' as const,
       className: 'text-blue-500',
     },
     {

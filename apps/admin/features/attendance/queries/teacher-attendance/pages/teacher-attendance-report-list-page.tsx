@@ -1,4 +1,3 @@
-import { format } from 'date-fns';
 import { notFound } from 'next/navigation';
 
 import { classRepository } from '@/features/classes/repositories';
@@ -29,7 +28,8 @@ export async function TeacherAttendanceReportsPage({
 
   const filter: TeacherAttendanceFilter = {
     search: getParam(params.search),
-    month: getParam(params.month) ?? format(new Date(), 'yyyy-MM'),
+    date: getParam(params.date),
+    month: getParam(params.month),
     classId: getNumberParam(params.classId),
     teacherId: getNumberParam(params.teacherId),
     subjectId: getNumberParam(params.subjectId),
