@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { Button, Surface } from '@/components/ui';
+import { Button, Card } from '@/components/ui';
 import { Pencil, Notebook, Trash2 } from 'lucide-react';
 
 import type { Class } from '../types';
@@ -12,7 +12,7 @@ type ClassCardProps = {
 
 export const ClassCard = ({ class: classData, onDelete }: ClassCardProps) => {
   return (
-    <Surface className="p-4">
+    <Card className="p-4">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0 flex-1 space-y-1.5">
           <div className="flex items-center gap-2">
@@ -47,6 +47,6 @@ export const ClassCard = ({ class: classData, onDelete }: ClassCardProps) => {
           </Button>
         </div>
       </div>
-    </Surface>
+    </Card>
   );
 };

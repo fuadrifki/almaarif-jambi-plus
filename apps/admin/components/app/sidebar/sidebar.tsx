@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { Badge, Surface } from '@/components/ui';
+import { Badge, Card } from '@/components/ui';
 import { getNavigationForRole } from '@/config/navigation';
 import { cn } from '@/lib';
 
@@ -18,7 +18,7 @@ export const Sidebar = ({ role }: SidebarProps) => {
   const items = getNavigationForRole(role);
 
   return (
-    <Surface className="h-full space-y-3 p-4">
+    <Card className="h-full space-y-3 p-4">
       {items.map(({ label, href, icon: Icon, disabled, badge }) => {
         const isActive =
           href === '/dashboard' ? pathname === '/dashboard' : pathname.startsWith(href);
@@ -42,6 +42,6 @@ export const Sidebar = ({ role }: SidebarProps) => {
           </Link>
         );
       })}
-    </Surface>
+    </Card>
   );
 };

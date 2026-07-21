@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Camera, X } from 'lucide-react';
 import type { Resolver } from 'react-hook-form';
 
-import { Button, Card, Field, Input, Select, SelectOption, Surface, toast } from '@/components/ui';
+import { Button, Card, Field, Input, Select, SelectOption, toast } from '@/components/ui';
 
 import { createStudent, updateStudent, uploadStudentPhoto, deleteStudentPhoto } from '../server';
 import { studentSchema } from '../schemas';
@@ -129,7 +129,7 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
         <div className="flex items-center gap-4">
           <div className="relative shrink-0">
             {photoPreview ? (
-              <Surface className="rounded-full!">
+              <Card className="rounded-full!">
                 <Card className="flex w-max h-max items-center justify-center rounded-full! text-sm font-semibold text-primary p-0">
                   <Image
                     src={photoPreview}
@@ -139,13 +139,13 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
                     className="h-20 w-20 rounded-full object-cover"
                   />
                 </Card>
-              </Surface>
+              </Card>
             ) : (
-              <Surface className="rounded-full!">
+              <Card className="rounded-full!">
                 <Card className="flex h-20 w-20 items-center justify-center rounded-full text-4xl font-semibold text-secondary">
                   {watch('name')?.charAt(0)?.toUpperCase() || '?'}
                 </Card>
-              </Surface>
+              </Card>
             )}
 
             {uploading && (
@@ -160,10 +160,10 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
 
             <div className="flex gap-2">
               <label>
-                <Surface className="cursor-pointer px-3 py-1.5 text-xs hover:bg-white/10">
+                <Card className="cursor-pointer px-3 py-1.5 text-xs hover:bg-white/10">
                   <Camera size={14} className="mr-1 inline" />
                   {photoPreview ? 'Ganti' : 'Unggah'}
-                </Surface>
+                </Card>
                 <input
                   type="file"
                   accept="image/jpeg,image/jpg,image/png,image/webp"

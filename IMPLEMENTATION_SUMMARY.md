@@ -82,7 +82,7 @@
 - ✅ Reuses existing attendanceSessionRepository
 - ✅ Reuses existing classRepository and teacherRepository
 - ✅ Follows Page → Query → Repository → Database pattern
-- ✅ Uses ADS components (Surface, Tabs, Table, etc.)
+- ✅ Uses ADS components (Card, Tabs, Table, etc.)
 - ✅ Uses existing filter components
 - ✅ No modified existing student attendance features
 - ✅ No modified authentication system

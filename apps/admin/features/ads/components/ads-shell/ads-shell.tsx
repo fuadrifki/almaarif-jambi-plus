@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 
-import { Header, Surface } from '@/components/ui';
+import { Header, Card } from '@/components/ui';
 import { cn } from '@/lib';
 import { Logo } from '@almaarif/brand';
 import { ThemeToggle } from '../theme-toggle';
@@ -121,11 +121,11 @@ export const DesignShell = ({ children }: DesignShellProps) => {
 
       {/* Desktop sidebar */}
       <aside className="ads-layout__sidebar p-4">
-        <Surface className="flex h-full flex-col">
+        <Card className="flex h-full flex-col">
           <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-3">
             <NavContent />
           </div>
-        </Surface>
+        </Card>
       </aside>
 
       {/* Mobile drawer */}
@@ -139,7 +139,7 @@ export const DesignShell = ({ children }: DesignShellProps) => {
           <div className="ads-drawer__overlay" onClick={closeDrawer} aria-hidden="true" />
 
           <div className="ads-drawer__panel" ref={drawerRef}>
-            <Surface className="flex h-full flex-col">
+            <Card className="flex h-full flex-col">
               <div className="flex items-center justify-between p-4">
                 <div className="flex items-center gap-3">
                   <Logo width={40} height={24} />
@@ -159,7 +159,7 @@ export const DesignShell = ({ children }: DesignShellProps) => {
               <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-4">
                 <NavContent onNavigate={closeDrawer} />
               </div>
-            </Surface>
+            </Card>
           </div>
         </div>
       )}

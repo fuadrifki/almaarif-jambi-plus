@@ -85,7 +85,7 @@ backdrop-filter: blur(var(--blur-lg)) saturate(180%);
 
 Completed (26 components):
 
-- Surface, Card, Header, Field, PageLayout
+- Card, Card, Header, Field, PageLayout
 - Button, Input, Textarea, Select, Checkbox, Radio, Switch
 - Table, Badge, DatePicker
 - DropdownMenu, AlertDialog, Toast

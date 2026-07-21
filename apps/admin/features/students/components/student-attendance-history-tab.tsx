@@ -108,10 +108,7 @@ export const StudentAttendanceHistoryTab = ({ rows }: StudentAttendanceHistoryTa
         </TableHeader>
         <TableBody>
           {visible.map((row, index) => (
-            <TableRow
-              key={`${row.date}-${index}`}
-              className={index % 2 === 0 ? 'bg-surface/50' : ''}
-            >
+            <TableRow key={`${row.date}-${index}`} className={index % 2 === 0 ? 'bg-card/50' : ''}>
               <TableCell>
                 <span className="text-sm text-secondary">{formatDate(row.date)}</span>
               </TableCell>

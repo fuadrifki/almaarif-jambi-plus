@@ -581,7 +581,7 @@ export const TablePage = () => (
 
       <div className="mt-3 space-y-2 text-xs text-secondary">
         <div>
-          <code className="text-primary">Table</code> — Root container. Wraps content in Surface
+          <code className="text-primary">Table</code> — Root container. Wraps content in Card
           (glass) with scrollable area. Accepts <code>maxHeight</code> for sticky header.
         </div>
         <div>

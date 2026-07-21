@@ -27,7 +27,7 @@ app/ → features/ → components/ → lib/
 
 - Does each feature own its types, logic, server actions, and pages?
 - Are there any shared types that should be extracted to `lib/`?
-- Does `packages/brand/` have clear, minimal API surface?
+- Does `packages/brand/` have clear, minimal API Card?
 
 ### Feature Boundaries
 

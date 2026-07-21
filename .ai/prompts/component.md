@@ -52,7 +52,7 @@ Which pattern does this component follow? Is it consistent with similar componen
 
 ### States (per AGENTS.md Design Rules)
 
-- liquid glass UI — does it wrap Surface or use `ads-` CSS classes?
+- liquid glass UI — does it wrap Card or use `ads-` CSS classes?
 - blur — backdrop-filter applied?
 - rounded corners — `rounded-*` or `border-radius`?
 - borders — present and using `--border` token?
@@ -96,7 +96,7 @@ Which pattern does this component follow? Is it consistent with similar componen
 
 ## Output
 
-For each of the 12 ADS components (Surface, Button, Input, Textarea, Select, Checkbox, Radio, Switch, Field, Card, Header, Badge), produce:
+For each of the 12 ADS components (Card, Button, Input, Textarea, Select, Checkbox, Radio, Switch, Field, Card, Header, Badge), produce:
 
 ```yaml
 component: Button

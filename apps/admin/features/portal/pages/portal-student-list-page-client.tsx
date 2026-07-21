@@ -128,7 +128,7 @@ export const PortalStudentListPageClient = ({
                 {visible.map((student, index) => (
                   <TableRow
                     key={student.id}
-                    className="cursor-pointer hover:bg-surface-hover"
+                    className="cursor-pointer hover:bg-card-hover"
                     onClick={() => router.push(`/students/${student.id}`)}
                   >
                     <TableCell>{index + 1}</TableCell>

@@ -241,7 +241,7 @@ export const AttendancePageClient = ({
       <PageLayout.Header>
         <h1 className="text-2xl font-semibold sm:text-3xl">Absensi</h1>
 
-        <Card className="flex flex-wrap justify-between gap-x-2 gap-y-2 p-4 text-sm text-secondary">
+        <Card className="flex flex-wrap justify-between gap-x-2 text-sm text-secondary">
           <span className="font-medium text-primary">{teacherLabel}</span>
           <span className="text-secondary">
             {formatDate(new Date(), 'EEEE, dd MMMM yyyy HH:mm')}

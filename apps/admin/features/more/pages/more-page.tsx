@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { PageLayout, Surface } from '@/components/ui';
+import { PageLayout, Card } from '@/components/ui';
 import { getNavigationForRole, MOBILE_MAX_PRIMARY_ITEMS } from '@/config/navigation';
 import { getSession } from '@/lib/auth';
 
@@ -26,7 +26,7 @@ export const MorePage = async () => {
           </section>
 
           {session && (
-            <Surface className="p-6">
+            <Card className="p-6">
               <div className="flex items-center gap-4">
                 <UserCircle size={24} />
 
@@ -38,7 +38,7 @@ export const MorePage = async () => {
                   <p className="mt-0.5 text-xs capitalize text-secondary">{session.role}</p>
                 </div>
               </div>
-            </Surface>
+            </Card>
           )}
         </div>
       </PageLayout.Header>
@@ -50,7 +50,7 @@ export const MorePage = async () => {
               Navigasi
             </h2>
 
-            <Surface className="divide-y divide-white/10 p-2">
+            <Card className="divide-y divide-white/10 p-2">
               {items.map(({ label, href, icon: Icon, disabled, badge }) => (
                 <Link
                   key={href}
@@ -73,7 +73,7 @@ export const MorePage = async () => {
                   )}
                 </Link>
               ))}
-            </Surface>
+            </Card>
           </section>
 
           <section className="space-y-2">
@@ -81,9 +81,9 @@ export const MorePage = async () => {
               Akun
             </h2>
 
-            <Surface className="p-2">
+            <Card className="p-2">
               <LogoutButton />
-            </Surface>
+            </Card>
           </section>
         </div>
       </PageLayout.Content>

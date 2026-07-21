@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { LogOut, Settings, UserIcon, UserCircle } from 'lucide-react';
+import { LogOut, Settings, UserIcon, UserCircle, Mail, UserKey } from 'lucide-react';
 
 import {
   DropdownMenu,
@@ -10,7 +10,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  Surface,
+  Card,
 } from '@/components/ui';
 import { destroySession } from '@/features/auth/server';
 
@@ -36,7 +36,7 @@ export const UserMenu = ({ user }: { user: User }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Surface>
+        <Card noPadding>
           <button
             type="button"
             className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm cursor-pointer"
@@ -45,16 +45,22 @@ export const UserMenu = ({ user }: { user: User }) => {
 
             <span className="hidden text-sm font-medium text-primary sm:inline">{user.name}</span>
           </button>
-        </Surface>
+        </Card>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" sideOffset={8}>
-        <DropdownMenuLabel>
+        <DropdownMenuLabel className="space-y-1">
           <p className="text-base font-semibold text-primary">{user.name}</p>
 
-          <p className="text-xs text-secondary">{user.email}</p>
+          <div className="flex items-center gap-1.5 text-xs text-secondary">
+            <Mail size={12} className="shrink-0" />
+            <p className="text-xs text-secondary font-normal">{user.email}</p>
+          </div>
 
-          <p className="text-xs capitalize text-secondary">{user.role}</p>
+          <div className="flex items-center gap-1.5 text-xs text-secondary">
+            <UserKey size={12} className="shrink-0" />
+            <p className="text-xs capitalize text-secondary">{user.role}</p>
+          </div>
         </DropdownMenuLabel>
 
         <DropdownMenuSeparator />

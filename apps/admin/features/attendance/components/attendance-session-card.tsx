@@ -57,7 +57,7 @@ export const AttendanceSessionCard = ({
 
   return (
     <Link href={`/dashboard/attendance/${session.id}`} className="block">
-      <Card className="space-y-3 p-4 transition hover:border-white/20">
+      <Card hoverable className="space-y-3">
         <div className="flex flex-col sm:flex-row justify-between gap-4">
           <div className="space-y-1">
             <div className="text-sm text-primary font-bold flex flex-wrap items-center space-y-1">

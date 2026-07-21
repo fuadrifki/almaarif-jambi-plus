@@ -34,22 +34,24 @@ export const AttendanceRecordRow = ({ record, students }: AttendanceRecordRowPro
       <div className="min-w-0 flex-1 flex items-center gap-2">
         <div className="shrink-0">
           {student?.photoUrl ? (
-            <Card className="rounded-full!">
-              <Card className="flex w-max h-max items-center justify-center rounded-full! text-sm font-semibold text-primary p-0">
-                <Image
-                  src={student.photoUrl}
-                  alt={student.name}
-                  width={40}
-                  height={40}
-                  className="h-10 w-10 rounded-full object-cover"
-                />
-              </Card>
+            <Card
+              noPadding
+              className="flex w-max h-max items-center justify-center rounded-full text-sm font-semibold text-primary p-0"
+            >
+              <Image
+                src={student.photoUrl}
+                alt={student.name}
+                width={40}
+                height={40}
+                className="h-10 w-10 rounded-full object-cover"
+              />
             </Card>
           ) : (
-            <Card className="rounded-full!">
-              <Card className="flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold text-secondary">
-                {student?.name.charAt(0).toUpperCase()}
-              </Card>
+            <Card
+              noPadding
+              className="flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold text-secondary"
+            >
+              {student?.name.charAt(0).toUpperCase()}
             </Card>
           )}
         </div>
@@ -57,7 +59,7 @@ export const AttendanceRecordRow = ({ record, students }: AttendanceRecordRowPro
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <Link href={`/dashboard/students/${record.studentId}`}>
-              <span className="truncate text-sm font-medium text-primary">
+              <span className="truncate text-sm font-medium text-primary hover:underline">
                 {student?.name ?? record.studentId}
               </span>
             </Link>

@@ -284,7 +284,7 @@ export const BreadcrumbPage = () => {
         title="Responsif"
         description="Breadcrumb yang mencukupi kebutuhan layout mobile dan desktop."
         code={`<div className="w-full space-y-4">
-  <div className="px-4 py-3 bg-surface border border-border rounded-lg">
+  <div className="px-4 py-3 bg-card border border-border rounded-lg">
     <div className="text-xs text-secondary mb-2">Desktop View</div>
     <Breadcrumb items={[
     {
@@ -304,7 +304,7 @@ export const BreadcrumbPage = () => {
     }]} />
   </div>
 
-  <div className="px-4 py-3 bg-surface border border-border rounded-lg">
+  <div className="px-4 py-3 bg-card border border-border rounded-lg">
     <div className="text-xs text-secondary mb-2">Mobile View</div>
     <div className="overflow-x-auto pb-2">
       <Breadcrumb items={[
@@ -328,7 +328,7 @@ export const BreadcrumbPage = () => {
 </div>`}
       >
         <div className="w-full space-y-4">
-          <div className="px-4 py-3 bg-surface border border-border rounded-lg">
+          <div className="px-4 py-3 bg-card border border-border rounded-lg">
             <div className="text-xs text-secondary mb-2">Desktop View</div>
             <Breadcrumb
               items={[
@@ -351,7 +351,7 @@ export const BreadcrumbPage = () => {
             />
           </div>
 
-          <div className="px-4 py-3 bg-surface border border-border rounded-lg">
+          <div className="px-4 py-3 bg-card border border-border rounded-lg">
             <div className="text-xs text-secondary mb-2">Mobile View</div>
             <div className="overflow-x-auto pb-2">
               <Breadcrumb
@@ -451,7 +451,7 @@ export const BreadcrumbPage = () => {
       <SectionPreview
         title="Real-World Implementation"
         description="Contoh implementasi yang sebenarnya digunakan di halaman aplikasi."
-        code={`<div className="flex justify-between items-center p-4 bg-surface border border-border rounded-lg">
+        code={`<div className="flex justify-between items-center p-4 bg-card border border-border rounded-lg">
   <Breadcrumb
       items={[{
       label: 'Dashboard',
@@ -471,7 +471,7 @@ export const BreadcrumbPage = () => {
   </div>
 </div>`}
       >
-        <div className="flex justify-between items-center p-4 bg-surface border border-border rounded-lg">
+        <div className="flex justify-between items-center p-4 bg-card border border-border rounded-lg">
           <Breadcrumb
             items={[
               {

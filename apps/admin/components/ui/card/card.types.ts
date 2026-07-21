@@ -4,4 +4,6 @@ export type CardProps = HTMLAttributes<HTMLDivElement> & {
   heading?: ReactNode;
   description?: ReactNode;
   footer?: ReactNode;
+  hoverable?: boolean;
+  noPadding?: boolean;
 };

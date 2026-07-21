@@ -89,7 +89,7 @@ export const StudentAttendanceReportTab = ({ rows }: StudentAttendanceReportTabP
                   : 'danger';
 
             return (
-              <TableRow key={row.month} className={index % 2 === 0 ? 'bg-surface/50' : ''}>
+              <TableRow key={row.month} className={index % 2 === 0 ? 'bg-card/50' : ''}>
                 <TableCell>
                   <div className="font-medium text-primary">{row.month}</div>
                 </TableCell>

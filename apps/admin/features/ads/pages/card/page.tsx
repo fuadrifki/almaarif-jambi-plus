@@ -7,11 +7,15 @@ export const CardPage = () => (
       <p className="text-sm font-medium text-secondary">Components</p>
 
       <h1 className="text-4xl font-bold tracking-tight">Card</h1>
+
+      <p className="text-secondary">
+        Komponen dasar ADS untuk membuat container dengan efek glass, blur, border, dan elevation.
+      </p>
     </header>
 
     <SectionPreview
       title="Basic Card"
-      description="Card menggunakan Surface sebagai base."
+      description="Card menggunakan Card sebagai base."
       code={`<Card
   title="Dashboard"
   description="Ringkasan informasi"

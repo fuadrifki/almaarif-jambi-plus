@@ -34,7 +34,7 @@ commit: c1f0c83b3d56a7604d3a0f497d66cbaf269db626
 | #    | Issue                                                       | Details                                                                                                                                                                                                                                                                  |
 | ---- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | ME-1 | **Unused barrel exports**                                   | `features/dashboard/index.ts` barrel is bypassed by `app/(dashboard)/page.tsx` (imports directly from `@/features/dashboard/pages/dashboard-page`). `components/app/sidebar/index.ts` barrel is bypassed by `app-shell.tsx` (direct relative import).                    |
-| ME-2 | **Inconsistent import paths to UI barrel**                  | `login-form.tsx` imports `Button` via `@/components/ui/button` (direct) but `Surface` via `@/components/ui` (barrel). Mix of both patterns in same file.                                                                                                                 |
+| ME-2 | **Inconsistent import paths to UI barrel**                  | `login-form.tsx` imports `Button` via `@/components/ui/button` (direct) but `Card` via `@/components/ui` (barrel). Mix of both patterns in same file.                                                                                                                    |
 | ME-3 | **Import ordering inconsistencies**                         | `login-form.tsx`: external `@almaarif/brand` placed after internal `@/features/auth` imports. `app-shell.tsx`: `@almaarif/brand` sandwiched between aliases. `ads-shell.tsx`: relative imports before alias imports. `theme-toggle.tsx`: alias before external packages. |
 | ME-4 | **`components.json` points to nonexistent hooks directory** | `"hooks": "@/hooks"` — the `hooks/` directory was deleted.                                                                                                                                                                                                               |
 | ME-5 | **`public/brand/logo.png` is never referenced**             | The brand logo used by the app comes from the `@almaarif/brand` workspace package, not from `public/`.                                                                                                                                                                   |
@@ -56,7 +56,7 @@ The following issues identified by subagents were already resolved in earlier se
 - `field.css` (was orphaned/empty) — **deleted**
 - `glass.css` (unused tokens) — **deleted**
 - `shadow.css` (unused tokens) — **deleted**
-- Surface `:hover` (no-op rule) — **removed**
+- Card `:hover` (no-op rule) — **removed**
 - Unused tokens in `colors.css` (14 tokens) — **removed**
 - Unused tokens in `motion.css` (2 tokens) — **removed**
 - `theme.css` imports — **updated**

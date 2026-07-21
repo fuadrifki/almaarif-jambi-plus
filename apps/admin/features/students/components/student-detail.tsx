@@ -1,16 +1,7 @@
 'use client';
 import { useState } from 'react';
 
-import {
-  Button,
-  Card,
-  Field,
-  FieldValue,
-  Surface,
-  Tabs,
-  PageLayout,
-  Breadcrumb,
-} from '@/components/ui';
+import { Button, Card, Field, FieldValue, Tabs, PageLayout, Breadcrumb } from '@/components/ui';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -20,8 +11,6 @@ import type { StudentAttendanceHistoryRow } from '../queries/get-student-attenda
 import type { StudentAttendanceReportRow } from '../queries/get-student-attendance-report';
 import { StudentAttendanceHistoryTab } from './student-attendance-history-tab';
 import { StudentAttendanceReportTab } from './student-attendance-report-tab';
-import { hasPermission } from '@/lib/utils';
-import type { Permission } from '@/lib/permissions';
 
 import { Class } from '@/features/classes';
 
@@ -56,23 +45,25 @@ export const StudentDetail = ({
         <div className="flex items-center justify-center sm:justify-start gap-4">
           <div className="relative shrink-0">
             {student.photoUrl ? (
-              <Surface className="rounded-full!">
-                <Card className="flex w-max h-max items-center justify-center rounded-full! text-sm font-semibold text-primary p-0">
-                  <Image
-                    src={student.photoUrl}
-                    alt="Foto siswa"
-                    width={160}
-                    height={160}
-                    className="h-40 w-40 rounded-full object-cover"
-                  />
-                </Card>
-              </Surface>
+              <Card
+                noPadding
+                className="flex w-max h-max items-center justify-center rounded-full! text-sm font-semibold text-primary p-0"
+              >
+                <Image
+                  src={student.photoUrl}
+                  alt="Foto siswa"
+                  width={160}
+                  height={160}
+                  className="h-40 w-40 rounded-full object-cover"
+                />
+              </Card>
             ) : (
-              <Surface className="rounded-full!">
-                <Card className="flex h-40 w-40 items-center justify-center rounded-full text-6xl font-semibold text-secondary">
-                  {student?.name?.charAt(0)?.toUpperCase() ?? '?'}
-                </Card>
-              </Surface>
+              <Card
+                noPadding
+                className="flex h-40 w-40 items-center justify-center rounded-full! text-6xl font-semibold text-secondary"
+              >
+                {student?.name?.charAt(0)?.toUpperCase() ?? '?'}
+              </Card>
             )}
           </div>
         </div>

@@ -60,7 +60,7 @@ export const ReportAttendanceTable = ({ rows, className }: ReportAttendanceTable
         {rows.map((row, index) => (
           <TableRow
             key={`${row.student.id}-${row.date}`}
-            className={index % 2 === 0 ? 'bg-Card/50' : ''}
+            className={index % 2 === 0 ? 'bg-card/50' : ''}
           >
             <TableCell>
               <div className="text-sm">

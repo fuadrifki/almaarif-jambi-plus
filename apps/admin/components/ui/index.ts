@@ -9,7 +9,6 @@ export * from './input';
 export * from './radio';
 export * from './select';
 export * from './switch';
-export * from './surface';
 export * from './table';
 export * from './textarea';
 export * from './toast';

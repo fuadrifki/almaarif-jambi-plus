@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Field, DatePicker, Surface } from '@/components/ui';
+import { Field, DatePicker, Card } from '@/components/ui';
 import { SectionPreview } from '../../components/section-preview';
 
 const longPlaceholder =
@@ -16,7 +16,7 @@ export const DatePickerExamples = () => {
   const [smDate, setSmDate] = useState<Date | undefined>();
   const [mdDate, setMdDate] = useState<Date | undefined>();
   const [lgDate, setLgDate] = useState<Date | undefined>();
-  const [surfaceDate, setSurfaceDate] = useState<Date | undefined>();
+  const [CardDate, setCardDate] = useState<Date | undefined>();
   const [multipleStartDate, setMultipleStartDate] = useState<Date | undefined>();
   const [multipleEndDate, setMultipleEndDate] = useState<Date | undefined>();
   const [longPlaceholderDate, setLongPlaceholderDate] = useState<Date | undefined>();
@@ -188,24 +188,24 @@ export const DatePickerExamples = () => {
         </div>
       </SectionPreview>
 
-      {/* Inside ADS Surface */}
+      {/* Inside ADS Card */}
       <SectionPreview
-        title="Inside ADS Surface"
-        description="DatePicker di dalam Surface."
-        code={`<Surface className="p-6">
-  <DatePicker placeholder="Pilih tanggal di dalam surface" />
-</Surface>`}
+        title="Inside ADS Card"
+        description="DatePicker di dalam Card."
+        code={`<Card className="p-6">
+  <DatePicker placeholder="Pilih tanggal di dalam Card" />
+</Card>`}
       >
         <div className="w-full max-w-md">
-          <Surface className="p-6">
+          <Card className="p-6">
             <Field label="Tanggal">
               <DatePicker
-                value={surfaceDate}
-                onChange={setSurfaceDate}
-                placeholder="Pilih tanggal di dalam surface"
+                value={CardDate}
+                onChange={setCardDate}
+                placeholder="Pilih tanggal di dalam Card"
               />
             </Field>
-          </Surface>
+          </Card>
         </div>
       </SectionPreview>
 

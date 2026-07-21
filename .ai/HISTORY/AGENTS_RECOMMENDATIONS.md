@@ -63,7 +63,7 @@ Two discrepancies:
 
 **Source:** `apps/admin/AGENTS.md` > Current ADS Status
 
-**Current text:** Lists Surface, Button, Field, Input, Select, Textarea, Checkbox, Radio, Switch as completed, Badge as not finished.
+**Current text:** Lists Card, Button, Field, Input, Select, Textarea, Checkbox, Radio, Switch as completed, Badge as not finished.
 
 **Why it's outdated:** This status list is hardcoded and must be manually updated. It has no connection to the actual component state. It's already stale — Badge's incompleteness is tracked in health reports but the AGENTS.md status doesn't reference the specific gaps (no CSS, no barrel export, empty docs page).
 
@@ -173,11 +173,11 @@ features/{name}/
 
 ---
 
-### 2.10 Surface as Base Primitive
+### 2.10 Card as Base Primitive
 
-**Evidence:** Card and Header wrap `Surface`. Sidebar wraps `Surface`. The Liquid Glass visual is defined once in `surface.css` and inherited via composition.
+**Evidence:** Card and Header wrap `Card`. Sidebar wraps `Card`. The Liquid Glass visual is defined once in `Card.css` and inherited via composition.
 
-**Recommendation:** Add to apps/admin `AGENTS.md` > Architecture Rules: "Surface is the base Liquid Glass primitive. Components that need the glass visual should wrap Surface rather than duplicating the CSS."
+**Recommendation:** Add to apps/admin `AGENTS.md` > Architecture Rules: "Card is the base Liquid Glass primitive. Components that need the glass visual should wrap Card rather than duplicating the CSS."
 
 ---
 
@@ -308,7 +308,7 @@ styles/
 │   └── typography.css
 ├── components/        — BEM CSS per component
 │   ├── button.css
-│   ├── surface.css
+│   ├── Card.css
 │   └── ...
 ├── layout.css         — Grid layout classes
 └── theme.css          — Imports tokens → components → body styling
@@ -322,11 +322,11 @@ styles/
 
 **Convention:**
 
-| Category            | Pattern                                              | Examples                               |
-| ------------------- | ---------------------------------------------------- | -------------------------------------- |
-| Native HTML wrapper | Extends `HTMLAttributes<HTMLElement>` + custom props | Surface, Button, Card, Input, Textarea |
-| Radix wrapper       | `ComponentPropsWithoutRef<typeof Root>` or similar   | Checkbox, Radio, Select, Switch        |
-| Compound wrapper    | Standalone `type` with custom props                  | Field, Header, PageLayout              |
+| Category            | Pattern                                              | Examples                            |
+| ------------------- | ---------------------------------------------------- | ----------------------------------- |
+| Native HTML wrapper | Extends `HTMLAttributes<HTMLElement>` + custom props | Card, Button, Card, Input, Textarea |
+| Radix wrapper       | `ComponentPropsWithoutRef<typeof Root>` or similar   | Checkbox, Radio, Select, Switch     |
+| Compound wrapper    | Standalone `type` with custom props                  | Field, Header, PageLayout           |
 
 **Supported by:** All 23 components follow one of these three patterns.
 
@@ -344,12 +344,12 @@ styles/
 
 **Convention:** The Liquid Glass effect is implemented via:
 
-- `backdrop-filter: blur(var(--blur-lg)) saturate(190%) brightness(1.08)` on `.ads-surface`
+- `backdrop-filter: blur(var(--blur-lg)) saturate(190%) brightness(1.08)` on `.ads-cards`
 - `::before` pseudo-element with `mask-composite: exclude` for gradient borders
 - `::after` pseudo-element with gradient for top highlight/sheen
 - Multi-gradient ambient background via `--background-page`
 
-**Supported by:** `styles/components/surface.css`, `styles/tokens/background.css`, `styles/tokens/colors.css`
+**Supported by:** `styles/components/Card.css`, `styles/tokens/background.css`, `styles/tokens/colors.css`
 
 ---
 
@@ -423,7 +423,7 @@ styles/
 | **Remove** | Current Development Direction | Sprint scope, not permanent rules                              |
 | **Remove** | Current Feature               | Sprint scope, not permanent rules                              |
 | **Add**    | Architecture Rules            | Document route group organization and auth rules               |
-| **Add**    | Architecture Rules            | Surface as base primitive                                      |
+| **Add**    | Architecture Rules            | Card as base primitive                                         |
 | **Add**    | Architecture Rules            | Props architecture patterns (3 categories)                     |
 | **Add**    | Design Rules                  | Expand Liquid Glass implementation details                     |
 | **Add**    | —                             | CSS variable token system (reference `styles/tokens/`)         |

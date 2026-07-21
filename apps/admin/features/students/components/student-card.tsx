@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { Button, Card, Surface } from '@/components/ui';
+import { Button, Card } from '@/components/ui';
 import { MapPin, Phone, Pencil, User, Trash2, BookOpen, HouseHeart, Eye } from 'lucide-react';
 
 import type { Student } from '../types';
@@ -23,27 +23,29 @@ export const StudentCard = ({ student, classes, onDelete, permissions }: Student
   const canDelete = permissions?.canDeleteStudent || false;
 
   return (
-    <Surface className="p-4 relative group">
+    <Card className="p-4 relative group" hoverable>
       <div className="flex items-start gap-3">
         <div className="shrink-0">
           {student.photoUrl ? (
-            <Surface className="rounded-full!">
-              <Card className="flex w-max h-max items-center justify-center rounded-full! text-sm font-semibold text-primary p-0">
-                <Image
-                  src={student.photoUrl}
-                  alt={student.name}
-                  width={40}
-                  height={40}
-                  className="h-10 w-10 rounded-full object-cover"
-                />
-              </Card>
-            </Surface>
+            <Card
+              noPadding
+              className="flex w-max h-max items-center justify-center rounded-full text-sm font-semibold text-primary p-0"
+            >
+              <Image
+                src={student.photoUrl}
+                alt={student.name}
+                width={40}
+                height={40}
+                className="h-10 w-10 rounded-full object-cover"
+              />
+            </Card>
           ) : (
-            <Surface className="rounded-full!">
-              <Card className="flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold text-secondary">
-                {student.name.charAt(0).toUpperCase()}
-              </Card>
-            </Surface>
+            <Card
+              noPadding
+              className="flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold text-secondary"
+            >
+              {student.name.charAt(0).toUpperCase()}
+            </Card>
           )}
         </div>
 
@@ -118,6 +120,6 @@ export const StudentCard = ({ student, classes, onDelete, permissions }: Student
           )}
         </div>
       </div>
-    </Surface>
+    </Card>
   );
 };

@@ -223,16 +223,16 @@ Dependencies are noted — tasks with no dependencies can be parallelised.
 
 ### T14 — Standardize UI component imports in login-form.tsx
 
-| Field               | Value                                                                                                                                      |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Issue**           | ME-2 — Mixes barrel and direct UI imports                                                                                                  |
-| **Priority**        | Medium                                                                                                                                     |
-| **Complexity**      | Trivial                                                                                                                                    |
-| **Estimated files** | 1 (`features/auth/components/login-form.tsx`)                                                                                              |
-| **Estimated LOC**   | ~2 (change import lines)                                                                                                                   |
-| **Risk**            | Low — import path change only                                                                                                              |
-| **Dependencies**    | None                                                                                                                                       |
-| **Description**     | Change `import { Button } from '@/components/ui/button'` to `import { Button } from '@/components/ui'`. Keep `Surface` import from barrel. |
+| Field               | Value                                                                                                                                   |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| **Issue**           | ME-2 — Mixes barrel and direct UI imports                                                                                               |
+| **Priority**        | Medium                                                                                                                                  |
+| **Complexity**      | Trivial                                                                                                                                 |
+| **Estimated files** | 1 (`features/auth/components/login-form.tsx`)                                                                                           |
+| **Estimated LOC**   | ~2 (change import lines)                                                                                                                |
+| **Risk**            | Low — import path change only                                                                                                           |
+| **Dependencies**    | None                                                                                                                                    |
+| **Description**     | Change `import { Button } from '@/components/ui/button'` to `import { Button } from '@/components/ui'`. Keep `Card` import from barrel. |
 
 ---
 

@@ -135,7 +135,7 @@ app/
         ├── segmented-control/page.tsx
         ├── select/page.tsx
         ├── skeleton/page.tsx
-        ├── surface/page.tsx
+        ├── Card/page.tsx
         ├── switch/page.tsx
         ├── table/page.tsx
         ├── textarea/page.tsx
@@ -593,46 +593,46 @@ export { DashboardPage as default } from '@/features/dashboard/pages/dashboard-p
 
 ### ADS Component Inventory
 
-| Component        | Category   | Primitive           | Client? | Test? | CSS file?                | CSS classes defined?                                                                                                                                                                                                  |
-| ---------------- | ---------- | ------------------- | ------- | ----- | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Surface          | Layout     | `<div>`             | No      | No    | ✅ surface.css           | `ads-surface`, `::before`, `::after`                                                                                                                                                                                  |
-| Card             | Layout     | Surface             | No      | No    | ❌ Tailwind              | Uses Tailwind utility classes directly                                                                                                                                                                                |
-| Header           | Layout     | Surface             | No      | No    | ❌ Tailwind              | Uses Tailwind utility classes directly                                                                                                                                                                                |
-| Field            | Layout     | `<div>/<label>`     | No      | No    | ❌ Tailwind              | Uses Tailwind utility classes directly                                                                                                                                                                                |
-| PageLayout       | Layout     | `<div>`             | No      | No    | ❌ Tailwind              | Uses Tailwind utility classes directly                                                                                                                                                                                |
-| Table            | Data       | Surface + `<table>` | No      | No    | ✅ table.css             | `ads-table`, `ads-table__scroll`, `ads-table__table`, `ads-table__header`, `ads-table__body`, `ads-table__footer`, `ads-table__row`, `ads-table__head`, `ads-table__cell`, `ads-table--compact`, `ads-table--striped` |
-| Button           | Input      | `<button>`          | No      | No    | ✅ button.css            | `ads-button`, `ads-button--{variant}`, `ads-button--{size}`, `ads-button__content`                                                                                                                                    |
-| Input            | Input      | `<input>`           | Yes     | No    | ✅ input.css             | `ads-input`, `ads-input-wrapper`, `ads-input--{size}`, `ads-input--{status}`, `ads-input__loader`, `ads-input__action`                                                                                                |
-| Textarea         | Input      | `<textarea>`        | Yes     | No    | ✅ textarea.css          | `ads-textarea`, `ads-textarea--{size}`, `ads-textarea--{status}`, `ads-textarea--resize-{resize}`                                                                                                                     |
-| Select           | Input      | Radix Select        | Yes     | No    | ✅ select.css            | `ads-select__trigger`, `ads-select__trigger--{size}`, `ads-select__trigger--{status}`, `ads-select__content`, `ads-select__item`                                                                                      |
-| Checkbox         | Input      | Radix Checkbox      | Yes     | No    | ✅ checkbox.css          | `ads-checkbox`, `ads-checkbox__indicator`                                                                                                                                                                             |
-| Radio            | Input      | Radix RadioGroup    | Yes     | No    | ✅ radio.css             | `ads-radio-group`, `ads-radio-item`, `ads-radio-item__label`, `ads-radio`, `ads-radio__indicator`, `ads-radio__dot`                                                                                                   |
-| Switch           | Input      | Radix Switch        | Yes     | No    | ✅ switch.css            | `ads-switch`, `ads-switch__thumb`                                                                                                                                                                                     |
-| Badge            | Display    | `<span>`            | No      | No    | ✅ badge.css             | `ads-badge`, `ads-badge--{variant}`                                                                                                                                                                                   |
-| DropdownMenu     | Overlay    | Radix DropdownMenu  | Yes     | No    | ✅ dropdown-menu.css     | `ads-dropdown-menu`, `ads-dropdown-menu__item`, `ads-dropdown-menu__separator`, `ads-dropdown-menu__label`, `ads-dropdown-menu__arrow`                                                                                |
-| AlertDialog      | Overlay    | Radix Dialog        | Yes     | No    | ✅ alert-dialog.css      | `ads-alert-dialog`, `ads-alert-dialog__content`, `ads-alert-dialog__title`, `ads-alert-dialog__description`, `ads-alert-dialog__actions`                                                                              |
-| Toast            | Feedback   | Sonner              | Yes     | No    | ✅ toast.css             | `ads-toast`, `ads-toast__title`, `ads-toast__description`                                                                                                                                                             |
-| Skeleton         | Feedback   | `<div>`             | No      | No    | ❌ Tailwind              | Uses Tailwind utility classes directly                                                                                                                                                                                |
-| EmptyState       | Feedback   | `<div>`             | No      | No    | ❌ Tailwind              | Uses Tailwind utility classes directly                                                                                                                                                                                |
-| Pagination       | Navigation | Button (ADS)        | No      | No    | ✅ pagination.css        | `ads-pagination`, `ads-pagination__item`, `ads-pagination__ellipsis`                                                                                                                                                  |
-| SegmentedControl | Navigation | `<div>`             | Yes     | No    | ✅ segmented-control.css | `ads-segmented-control`, `ads-segmented-control__item`, `ads-segmented-control__indicator`                                                                                                                            |
-| InfiniteScroll   | Navigation | `<div>`             | Yes     | No    | ❌ Tailwind              | Uses Tailwind utility classes directly                                                                                                                                                                                |
-| ThemeToggle      | Utility    | Button (ADS)        | Yes     | No    | ✅ theme-toggle.css      | `ads-theme-toggle`                                                                                                                                                                                                    |
+| Component        | Category   | Primitive          | Client? | Test? | CSS file?                | CSS classes defined?                                                                                                                                                                                                  |
+| ---------------- | ---------- | ------------------ | ------- | ----- | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Card             | Layout     | `<div>`            | No      | No    | ✅ Card.css              | `ads-cards`, `::before`, `::after`                                                                                                                                                                                    |
+| Card             | Layout     | Card               | No      | No    | ❌ Tailwind              | Uses Tailwind utility classes directly                                                                                                                                                                                |
+| Header           | Layout     | Card               | No      | No    | ❌ Tailwind              | Uses Tailwind utility classes directly                                                                                                                                                                                |
+| Field            | Layout     | `<div>/<label>`    | No      | No    | ❌ Tailwind              | Uses Tailwind utility classes directly                                                                                                                                                                                |
+| PageLayout       | Layout     | `<div>`            | No      | No    | ❌ Tailwind              | Uses Tailwind utility classes directly                                                                                                                                                                                |
+| Table            | Data       | Card + `<table>`   | No      | No    | ✅ table.css             | `ads-table`, `ads-table__scroll`, `ads-table__table`, `ads-table__header`, `ads-table__body`, `ads-table__footer`, `ads-table__row`, `ads-table__head`, `ads-table__cell`, `ads-table--compact`, `ads-table--striped` |
+| Button           | Input      | `<button>`         | No      | No    | ✅ button.css            | `ads-button`, `ads-button--{variant}`, `ads-button--{size}`, `ads-button__content`                                                                                                                                    |
+| Input            | Input      | `<input>`          | Yes     | No    | ✅ input.css             | `ads-input`, `ads-input-wrapper`, `ads-input--{size}`, `ads-input--{status}`, `ads-input__loader`, `ads-input__action`                                                                                                |
+| Textarea         | Input      | `<textarea>`       | Yes     | No    | ✅ textarea.css          | `ads-textarea`, `ads-textarea--{size}`, `ads-textarea--{status}`, `ads-textarea--resize-{resize}`                                                                                                                     |
+| Select           | Input      | Radix Select       | Yes     | No    | ✅ select.css            | `ads-select__trigger`, `ads-select__trigger--{size}`, `ads-select__trigger--{status}`, `ads-select__content`, `ads-select__item`                                                                                      |
+| Checkbox         | Input      | Radix Checkbox     | Yes     | No    | ✅ checkbox.css          | `ads-checkbox`, `ads-checkbox__indicator`                                                                                                                                                                             |
+| Radio            | Input      | Radix RadioGroup   | Yes     | No    | ✅ radio.css             | `ads-radio-group`, `ads-radio-item`, `ads-radio-item__label`, `ads-radio`, `ads-radio__indicator`, `ads-radio__dot`                                                                                                   |
+| Switch           | Input      | Radix Switch       | Yes     | No    | ✅ switch.css            | `ads-switch`, `ads-switch__thumb`                                                                                                                                                                                     |
+| Badge            | Display    | `<span>`           | No      | No    | ✅ badge.css             | `ads-badge`, `ads-badge--{variant}`                                                                                                                                                                                   |
+| DropdownMenu     | Overlay    | Radix DropdownMenu | Yes     | No    | ✅ dropdown-menu.css     | `ads-dropdown-menu`, `ads-dropdown-menu__item`, `ads-dropdown-menu__separator`, `ads-dropdown-menu__label`, `ads-dropdown-menu__arrow`                                                                                |
+| AlertDialog      | Overlay    | Radix Dialog       | Yes     | No    | ✅ alert-dialog.css      | `ads-alert-dialog`, `ads-alert-dialog__content`, `ads-alert-dialog__title`, `ads-alert-dialog__description`, `ads-alert-dialog__actions`                                                                              |
+| Toast            | Feedback   | Sonner             | Yes     | No    | ✅ toast.css             | `ads-toast`, `ads-toast__title`, `ads-toast__description`                                                                                                                                                             |
+| Skeleton         | Feedback   | `<div>`            | No      | No    | ❌ Tailwind              | Uses Tailwind utility classes directly                                                                                                                                                                                |
+| EmptyState       | Feedback   | `<div>`            | No      | No    | ❌ Tailwind              | Uses Tailwind utility classes directly                                                                                                                                                                                |
+| Pagination       | Navigation | Button (ADS)       | No      | No    | ✅ pagination.css        | `ads-pagination`, `ads-pagination__item`, `ads-pagination__ellipsis`                                                                                                                                                  |
+| SegmentedControl | Navigation | `<div>`            | Yes     | No    | ✅ segmented-control.css | `ads-segmented-control`, `ads-segmented-control__item`, `ads-segmented-control__indicator`                                                                                                                            |
+| InfiniteScroll   | Navigation | `<div>`            | Yes     | No    | ❌ Tailwind              | Uses Tailwind utility classes directly                                                                                                                                                                                |
+| ThemeToggle      | Utility    | Button (ADS)       | Yes     | No    | ✅ theme-toggle.css      | `ads-theme-toggle`                                                                                                                                                                                                    |
 
 ### Component patterns
 
 ```mermaid
 graph TD
     subgraph "Wrapping strategies"
-        NATIVE["Native HTML<br/>Surface, Button, Input, Textarea, Field, Badge, EmptyState, Skeleton, PageLayout, SegmentedControl, InfiniteScroll"]
-        SURFACE_WRAP["Wraps Surface component<br/>Card, Header, Table"]
+        NATIVE["Native HTML<br/>Card, Button, Input, Textarea, Field, Badge, EmptyState, Skeleton, PageLayout, SegmentedControl, InfiniteScroll"]
+        Card_WRAP["Wraps Card component<br/>Card, Header, Table"]
         RADIX["Wraps Radix UI primitive<br/>Checkbox, Radio, Select, Switch, DropdownMenu, AlertDialog"]
         SONNER_WRAP["Wraps Sonner library<br/>Toast"]
         ADS_WRAP["Wraps ADS Button<br/>Pagination, ThemeToggle"]
     end
 
     NATIVE --> CN["cn() class merging"]
-    SURFACE_WRAP --> CN
+    Card_WRAP --> CN
     RADIX --> CN
     SONNER_WRAP --> CN
     ADS_WRAP --> CN
@@ -676,7 +676,7 @@ graph TD
     TOKENS --> MOTION["motion.css"]
     TOKENS --> TYPO["typography.css"]
 
-    COMPONENTS --> SURFACE_CSS["surface.css"]
+    COMPONENTS --> Card_CSS["Card.css"]
     COMPONENTS --> BUTTON_CSS["button.css"]
     COMPONENTS --> INPUT_CSS["input.css"]
     COMPONENTS --> TEXTAREA_CSS["textarea.css"]
@@ -701,7 +701,7 @@ graph TD
 | ------------------------------------------------------------------------------ | ---------- | ---------------------------------------------------------------- |
 | `--background`                                                                 | Background | body, theme.css                                                  |
 | `--background-page`                                                            | Background | body                                                             |
-| `--surface`                                                                    | Surface    | surface.css                                                      |
+| `--card`                                                                       | Card       | Card.css                                                         |
 | `--text-primary`                                                               | Text       | All components                                                   |
 | `--text-secondary`                                                             | Text       | All components                                                   |
 | `--border`                                                                     | Border     | All components                                                   |
@@ -711,7 +711,7 @@ graph TD
 | `--button-secondary`, `--button-secondary-border`, `--button-secondary-shadow` | Button     | button.css                                                       |
 | `--button-ghost-hover`                                                         | Button     | button.css                                                       |
 | `--button-danger`                                                              | Button     | button.css                                                       |
-| `--motion-normal`, `--motion-ease`                                             | Motion     | surface.css                                                      |
+| `--motion-normal`, `--motion-ease`                                             | Motion     | Card.css                                                         |
 
 Remaining tokens from Tailwind v4 defaults (not defined in source but referenced): `--shadow-sm`, `--shadow-md`, `--shadow-lg`, `--blur-lg`, `--radius-3xl`.
 
@@ -790,14 +790,14 @@ The project intentionally has no state management library.
 
 ### Files
 
-| Type       | Convention   | Example                               |
-| ---------- | ------------ | ------------------------------------- |
-| Components | kebab-case   | `login-form.tsx`, `code-preview.tsx`  |
-| Types      | `*.types.ts` | `button.types.ts`, `surface.types.ts` |
-| Tests      | `*.test.tsx` | `select.test.tsx`                     |
-| Styles     | `*.css`      | `button.css`, `layout.css`            |
-| Utilities  | camelCase    | `utils.ts`, `session.ts`              |
-| Config     | camelCase    | `app.ts`, `config/index.ts`           |
+| Type       | Convention   | Example                              |
+| ---------- | ------------ | ------------------------------------ |
+| Components | kebab-case   | `login-form.tsx`, `code-preview.tsx` |
+| Types      | `*.types.ts` | `button.types.ts`, `Card.types.ts`   |
+| Tests      | `*.test.tsx` | `select.test.tsx`                    |
+| Styles     | `*.css`      | `button.css`, `layout.css`           |
+| Utilities  | camelCase    | `utils.ts`, `session.ts`             |
+| Config     | camelCase    | `app.ts`, `config/index.ts`          |
 
 ### Exports
 
@@ -846,7 +846,7 @@ export const Component = ({ className, ...props }: ComponentProps) => (
 ### Props type pattern
 
 ```tsx
-// Extends native HTML (Surface, Button, Card, Input, Textarea)
+// Extends native HTML (Card, Button, Card, Input, Textarea)
 export type ComponentProps = NativeHTMLAttributes<HTMLElement> & {
   customProp?: string;
 };
@@ -912,7 +912,7 @@ Tests should cover:
 
 | Component        | Test exists? | Expected tests                                                                    |
 | ---------------- | ------------ | --------------------------------------------------------------------------------- |
-| Surface          | No           | Render test                                                                       |
+| Card             | No           | Render test                                                                       |
 | Button           | No           | Render, variants (primary/secondary/ghost/danger), sizes, loading/disabled states |
 | Card             | No           | Render with heading/description/footer                                            |
 | Header           | No           | Render with title/logo/actions                                                    |

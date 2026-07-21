@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
 
-import { Button, Surface } from '@/components/ui';
+import { Button, Card } from '@/components/ui';
 
 export default function DashboardError({
   error,
@@ -17,7 +17,7 @@ export default function DashboardError({
   }, [error]);
 
   return (
-    <Surface className="mx-auto mt-12 max-w-md p-8 text-center">
+    <Card className="mx-auto mt-12 max-w-md p-8 text-center">
       <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-500/10">
         <AlertTriangle size={32} className="text-red-400" />
       </div>
@@ -33,6 +33,6 @@ export default function DashboardError({
       <Button className="mt-6" leftIcon={<RefreshCw size={16} />} onClick={reset}>
         Coba Lagi
       </Button>
-    </Surface>
+    </Card>
   );
 }

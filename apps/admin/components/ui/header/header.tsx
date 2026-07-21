@@ -1,10 +1,9 @@
-import { Surface } from '../surface';
-
+import { Card } from '../card';
 import type { HeaderProps } from './header.types';
 
 export const Header = ({ title, logo, leading, actions }: HeaderProps) => (
   <header className="sticky top-0 z-50">
-    <Surface className="flex h-16 items-center justify-between px-6">
+    <Card className="flex h-16 items-center justify-between">
       <div className="flex items-center gap-4">
         {leading}
 
@@ -14,6 +13,6 @@ export const Header = ({ title, logo, leading, actions }: HeaderProps) => (
       </div>
 
       <div className="flex items-center gap-3">{actions}</div>
-    </Surface>
+    </Card>
   </header>
 );

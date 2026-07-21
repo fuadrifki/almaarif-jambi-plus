@@ -1,5 +1,3 @@
-import { Surface } from '../surface';
-
 import { cn } from '@/lib';
 
 import type {
@@ -11,9 +9,10 @@ import type {
   TableProps,
   TableRowProps,
 } from './table.types';
+import { Card } from '../card';
 
 export const Table = ({ className, maxHeight, children, ...props }: TableProps) => (
-  <Surface className={cn('ads-table', className)}>
+  <Card className={cn('ads-table', className)}>
     <div
       className="ads-table__scroll"
       style={
@@ -26,7 +25,7 @@ export const Table = ({ className, maxHeight, children, ...props }: TableProps) 
         {children}
       </table>
     </div>
-  </Surface>
+  </Card>
 );
 
 export const TableHeader = ({ className, ...props }: TableHeaderProps) => (

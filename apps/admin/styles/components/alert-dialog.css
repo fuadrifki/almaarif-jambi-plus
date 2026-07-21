@@ -60,7 +60,7 @@
   padding: 24px;
 
   border-radius: var(--radius-3xl);
-  background: var(--surface);
+  background: var(--card);
   border: 1px solid rgb(200 200 200 / 0.22);
   -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(190%) brightness(1.08);
   backdrop-filter: blur(var(--blur-lg)) saturate(190%) brightness(1.08);

@@ -14,7 +14,7 @@ health_score: 7.5/10
 | Milestone                  | Status      | Description                                                    |
 | -------------------------- | ----------- | -------------------------------------------------------------- |
 | M1.1 - Monorepo setup      | ✅ Complete | pnpm + Turborepo, apps/admin, packages/brand                   |
-| M1.2 - ADS foundation      | ✅ Complete | Surface, Button, Input, Typography, Colors                     |
+| M1.2 - ADS foundation      | ✅ Complete | Card, Button, Input, Typography, Colors                        |
 | M1.3 - Form components     | ✅ Complete | Checkbox, Radio, Switch, Select, Textarea, Field               |
 | M1.4 - Layout components   | ✅ Complete | Card, Header, Table, DropdownMenu, Badge, EmptyState, Skeleton |
 | M1.5 - Authentication      | ✅ Complete | Login flow, session management, user menu                      |
@@ -86,7 +86,7 @@ health_score: 7.5/10
 
 | Category       | Components                                               | Count |
 | -------------- | -------------------------------------------------------- | ----- |
-| **Layout**     | Surface, Card, Header, Field, PageLayout                 | 5     |
+| **Layout**     | Card, Card, Header, Field, PageLayout                    | 5     |
 | **Input**      | Button, Input, Textarea, Select, Checkbox, Radio, Switch | 7     |
 | **Data**       | Table, Badge                                             | 2     |
 | **Overlay**    | DropdownMenu, AlertDialog, Toast                         | 3     |
@@ -98,7 +98,7 @@ health_score: 7.5/10
 
 | Component        | CSS | Types | Docs | Tests | Status     |
 | ---------------- | --- | ----- | ---- | ----- | ---------- |
-| Surface          | ✅  | ✅    | ✅   | ❌    | Complete   |
+| Card             | ✅  | ✅    | ✅   | ❌    | Complete   |
 | Button           | ✅  | ✅    | ✅   | ❌    | Complete   |
 | Card             | ❌  | ✅    | ✅   | ❌    | Needs CSS  |
 | Header           | ❌  | ✅    | ❌   | ❌    | Needs docs |

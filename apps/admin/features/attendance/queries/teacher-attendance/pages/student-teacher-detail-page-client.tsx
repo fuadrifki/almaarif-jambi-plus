@@ -121,7 +121,7 @@ export const StudentTeacherDetailPageClient = ({
                 </TableHeader>
                 <TableBody>
                   {attendanceHistory.map((record) => (
-                    <TableRow key={record.id} className="hover:bg-Card/50">
+                    <TableRow key={record.id} className="hover:bg-card/50">
                       <TableCell>
                         {new Date(record.date + 'T00:00:00').toLocaleDateString('id-ID', {
                           weekday: 'short',
@@ -210,7 +210,7 @@ export const StudentTeacherDetailPageClient = ({
                 </TableHeader>
                 <TableBody>
                   {attendanceReport.map((report) => (
-                    <TableRow key={report.month} className="hover:bg-Card/50">
+                    <TableRow key={report.month} className="hover:bg-card/50">
                       <TableCell className="font-medium text-primary">{report.month}</TableCell>
                       <TableCell>
                         <Badge variant="success">{report.present}</Badge>

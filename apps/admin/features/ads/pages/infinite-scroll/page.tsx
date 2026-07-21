@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from 'react';
 
-import { EmptyState, InfiniteScroll, Skeleton, SkeletonCard, Surface } from '@/components/ui';
+import { EmptyState, InfiniteScroll, Skeleton, SkeletonCard, Card } from '@/components/ui';
 
 import { SectionPreview } from '../../components/section-preview';
 
@@ -52,9 +52,9 @@ const BasicDemo = () => {
       >
         <div className="space-y-2">
           {items.map((item) => (
-            <Surface key={item.id} className="p-3">
+            <Card key={item.id} className="p-3">
               <p className="text-sm font-medium">{item.name}</p>
-            </Surface>
+            </Card>
           ))}
         </div>
       </InfiniteScroll>
@@ -81,9 +81,9 @@ const EndOnlyDemo = () => {
       <InfiniteScroll hasMore={false} isLoading={false} onLoadMore={() => {}}>
         <div className="space-y-2">
           {items.map((item) => (
-            <Surface key={item.id} className="p-3">
+            <Card key={item.id} className="p-3">
               <p className="text-sm font-medium">{item.name}</p>
-            </Surface>
+            </Card>
           ))}
         </div>
       </InfiniteScroll>
@@ -123,11 +123,11 @@ const CardGridDemo = () => {
         loader={
           <div className="grid grid-cols-2 gap-3 py-3 sm:grid-cols-3">
             {Array.from({ length: 3 }, (_, i) => (
-              <Surface key={i} className="p-4">
+              <Card key={i} className="p-4">
                 <Skeleton className="mb-2 h-20 w-full rounded-lg" />
                 <Skeleton className="h-4 w-3/4" />
                 <Skeleton className="mt-1 h-3 w-1/2" />
-              </Surface>
+              </Card>
             ))}
           </div>
         }
@@ -135,13 +135,13 @@ const CardGridDemo = () => {
       >
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
           {items.map((item) => (
-            <Surface key={item.id} className="p-4">
+            <Card key={item.id} className="p-4">
               <div className="mb-3 flex h-20 items-center justify-center rounded-lg bg-white/5 text-xs text-secondary">
                 Image
               </div>
               <p className="text-sm font-medium">{item.name}</p>
               <p className="mt-1 text-xs text-secondary">Description text</p>
-            </Surface>
+            </Card>
           ))}
         </div>
       </InfiniteScroll>
@@ -172,9 +172,9 @@ export const InfiniteScrollPage = () => (
 >
   <div className="space-y-2">
     {items.map((item) => (
-      <Surface key={item.id} className="p-3">
+      <Card key={item.id} className="p-3">
         <p className="text-sm font-medium">{item.name}</p>
-      </Surface>
+      </Card>
     ))}
   </div>
 </InfiniteScroll>`}
@@ -214,9 +214,9 @@ export const InfiniteScrollPage = () => (
 >
   <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
     {items.map((item) => (
-      <Surface key={item.id} className="p-4">
+      <Card key={item.id} className="p-4">
         <p className="text-sm font-medium">{item.name}</p>
-      </Surface>
+      </Card>
     ))}
   </div>
 </InfiniteScroll>`}

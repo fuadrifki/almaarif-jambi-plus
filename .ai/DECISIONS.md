@@ -45,4 +45,4 @@ Context-specific content
 
 - All future CRUD modules should adopt this pattern
 - SegmentedControl is the standard ADS component for this use case
-- Page layout follows: Title → Info Surface → Toolbar → Filters → Content
+- Page layout follows: Title → Info Card → Toolbar → Filters → Content

@@ -1,4 +1,4 @@
-import { Skeleton, SkeletonText, SkeletonAvatar, SkeletonCard, Surface } from '@/components/ui';
+import { Skeleton, SkeletonText, SkeletonAvatar, SkeletonCard, Card } from '@/components/ui';
 
 import { SectionPreview } from '../../components/section-preview';
 
@@ -49,37 +49,37 @@ export const SkeletonPage = () => (
 
     <SectionPreview
       title="Card Skeleton"
-      code={`<Surface className="p-0">
+      code={`<Card className="p-0">
   <SkeletonCard />
-</Surface>`}
+</Card>`}
     >
-      <Surface className="p-0">
+      <Card className="p-0">
         <SkeletonCard />
-      </Surface>
+      </Card>
     </SectionPreview>
 
     <SectionPreview
       title="Full Page Example"
       code={`<div className="space-y-4">
   <Skeleton className="h-8 w-1/3" />
-  <Surface className="p-0">
+  <Card className="p-0">
     <SkeletonCard />
-  </Surface>
-  <Surface className="p-0">
+  </Card>
+  <Card className="p-0">
     <SkeletonCard />
-  </Surface>
+  </Card>
 </div>`}
     >
       <div className="space-y-4">
         <Skeleton className="h-8 w-1/3" />
 
-        <Surface className="p-0">
+        <Card className="p-0">
           <SkeletonCard />
-        </Surface>
+        </Card>
 
-        <Surface className="p-0">
+        <Card className="p-0">
           <SkeletonCard />
-        </Surface>
+        </Card>
       </div>
     </SectionPreview>
 

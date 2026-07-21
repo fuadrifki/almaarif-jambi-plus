@@ -218,7 +218,7 @@ Implement progressively.
 
 Completed:
 
-- Surface, Button, Field, Input, Select, Textarea, Checkbox, Radio, Switch
+- Card, Button, Field, Input, Select, Textarea, Checkbox, Radio, Switch
 - Badge, Card, Header, Table, DatePicker
 - DropdownMenu, AlertDialog, Toast
 - Skeleton, EmptyState, Pagination, InfiniteScroll

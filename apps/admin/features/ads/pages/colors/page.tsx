@@ -8,9 +8,9 @@ const colors = [
     value: 'var(--brand)',
   },
   {
-    name: 'Surface',
-    token: '--surface',
-    value: 'var(--surface)',
+    name: 'Card',
+    token: '--card',
+    value: 'var(--card)',
   },
   {
     name: 'Background',

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import { Button, Field, Input, Surface, toast } from '@/components/ui';
+import { Button, Field, Input, Card, toast } from '@/components/ui';
 import { login } from '@/features/auth';
 import { createSession } from '@/features/auth/server';
 import { Logo } from '@almaarif/brand';
@@ -70,7 +70,7 @@ export const LoginForm = () => {
 
   return (
     <main className="flex min-h-screen items-center justify-center p-4">
-      <Surface className="w-full max-w-md p-8">
+      <Card className="w-full max-w-md p-8">
         <form onSubmit={handleSubmit} className="w-full space-y-6">
           <div className="mb-6 flex justify-center">
             <Logo width={160} height={50} />
@@ -117,7 +117,7 @@ export const LoginForm = () => {
             </Button>
           </Link>
         </form>
-      </Surface>
+      </Card>
     </main>
   );
 };

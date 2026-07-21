@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Button, Input, Surface } from '@/components/ui';
+import { Button, Input, Card } from '@/components/ui';
 import { cn } from '@/lib';
 import { SectionPreview } from '../../components/section-preview';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -131,7 +131,7 @@ export const PopoverPage = () => {
       </div>
       <div className="space-y-1">
         <label className="text-sm font-medium">Status</label>
-        <select className="w-full rounded-lg border border-border bg-surface p-2 text-sm">
+        <select className="w-full rounded-lg border border-border bg-card p-2 text-sm">
           <option value="active">Active</option>
           <option value="inactive">Inactive</option>
         </select>
@@ -175,7 +175,7 @@ export const PopoverPage = () => {
               </div>
               <div className="space-y-1">
                 <label className="text-sm font-medium">Status</label>
-                <select className="w-full rounded-lg border border-border bg-surface p-2 text-sm">
+                <select className="w-full rounded-lg border border-border bg-card p-2 text-sm">
                   <option>Active</option>
                   <option>Inactive</option>
                 </select>
@@ -221,7 +221,7 @@ export const PopoverPage = () => {
       <div className="space-y-3">
         <div className="space-y-1">
           <label className="text-sm">Month</label>
-          <select className="w-full rounded-lg border border-border bg-surface p-2 text-sm">
+          <select className="w-full rounded-lg border border-border bg-card p-2 text-sm">
             <option>January</option>
             <option>February</option>
             <option>March</option>
@@ -229,28 +229,28 @@ export const PopoverPage = () => {
         </div>
         <div className="space-y-1">
           <label className="text-sm">Class</label>
-          <select className="w-full rounded-lg border border-border bg-surface p-2 text-sm">
+          <select className="w-full rounded-lg border border-border bg-card p-2 text-sm">
             <option>XI-A</option>
             <option>XI-B</option>
           </select>
         </div>
         <div className="space-y-1">
           <label className="text-sm">Teacher</label>
-          <select className="w-full rounded-lg border border-border bg-surface p-2 text-sm">
+          <select className="w-full rounded-lg border border-border bg-card p-2 text-sm">
             <option>John Smith</option>
             <option>Jane Doe</option>
           </select>
         </div>
         <div className="space-y-1">
           <label className="text-sm">Subject</label>
-          <select className="w-full rounded-lg border border-border bg-surface p-2 text-sm">
+          <select className="w-full rounded-lg border border-border bg-card p-2 text-sm">
             <option>Math</option>
             <option>Science</option>
           </select>
         </div>
         <div className="space-y-1">
           <label className="text-sm">Status</label>
-          <select className="w-full rounded-lg border border-border bg-surface p-2 text-sm">
+          <select className="w-full rounded-lg border border-border bg-card p-2 text-sm">
             <option value="active">Active</option>
             <option value="pending">Pending</option>
             <option value="inactive">Inactive</option>
@@ -280,7 +280,7 @@ export const PopoverPage = () => {
               <div className="space-y-3">
                 <div className="space-y-1">
                   <label className="text-sm">Month</label>
-                  <select className="w-full rounded-lg border border-border bg-surface p-2 text-sm">
+                  <select className="w-full rounded-lg border border-border bg-card p-2 text-sm">
                     <option>January</option>
                     <option>February</option>
                     <option>March</option>
@@ -288,28 +288,28 @@ export const PopoverPage = () => {
                 </div>
                 <div className="space-y-1">
                   <label className="text-sm">Class</label>
-                  <select className="w-full rounded-lg border border-border bg-surface p-2 text-sm">
+                  <select className="w-full rounded-lg border border-border bg-card p-2 text-sm">
                     <option>XI-A</option>
                     <option>XI-B</option>
                   </select>
                 </div>
                 <div className="space-y-1">
                   <label className="text-sm">Teacher</label>
-                  <select className="w-full rounded-lg border border-border bg-surface p-2 text-sm">
+                  <select className="w-full rounded-lg border border-border bg-card p-2 text-sm">
                     <option>John Smith</option>
                     <option>Jane Doe</option>
                   </select>
                 </div>
                 <div className="space-y-1">
                   <label className="text-sm">Subject</label>
-                  <select className="w-full rounded-lg border border-border bg-surface p-2 text-sm">
+                  <select className="w-full rounded-lg border border-border bg-card p-2 text-sm">
                     <option>Math</option>
                     <option>Science</option>
                   </select>
                 </div>
                 <div className="space-y-1">
                   <label className="text-sm">Status</label>
-                  <select className="w-full rounded-lg border border-border bg-surface p-2 text-sm">
+                  <select className="w-full rounded-lg border border-border bg-card p-2 text-sm">
                     <option>Active</option>
                     <option>Pending</option>
                     <option>Inactive</option>

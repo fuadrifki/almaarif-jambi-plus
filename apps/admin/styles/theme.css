@@ -3,7 +3,6 @@
 @import './tokens/motion.css';
 @import './tokens/typography.css';
 
-@import './components/surface.css';
 @import './components/badge.css';
 @import './components/button.css';
 @import './components/input.css';
@@ -20,6 +19,7 @@
 @import './components/table.css';
 @import './components/tabs.css';
 @import './components/pagination.css';
+@import './components/card.css';
 @import './components/layout.css';
 
 html,

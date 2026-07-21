@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { CircleEllipsis } from 'lucide-react';
 
-import { Surface } from '@/components/ui';
+import { Card } from '@/components/ui';
 import { getNavigationForRole, MOBILE_MAX_PRIMARY_ITEMS } from '@/config/navigation';
 import { cn } from '@/lib';
 
@@ -47,7 +47,7 @@ export const MobileNav = ({ role }: MobileNavProps) => {
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-50 md:hidden">
-      <Surface className="flex items-stretch rounded-none border-t border-white/10 px-0 py-0">
+      <Card className="flex items-stretch rounded-none border-t border-white/10 px-0 py-0">
         {primary.map(renderItem)}
 
         {hasOverflow && (
@@ -63,7 +63,7 @@ export const MobileNav = ({ role }: MobileNavProps) => {
             <span className="text-center">Lainnya</span>
           </Link>
         )}
-      </Surface>
+      </Card>
     </div>
   );
 };
