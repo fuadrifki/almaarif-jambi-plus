@@ -10,7 +10,7 @@ export const attendanceSessions = pgTable(
     scheduleId: integer('schedule_id').notNull(),
     date: varchar('date', { length: 10 }).notNull(),
     time: varchar('time', { length: 5 }).notNull(),
-    originalTeacherStatus: varchar('original_teacher_status', { length: 20 }),
+    originalTeacherStatus: varchar('original_teacher_status', { length: 20 }).notNull(),
     substituteNotes: text('substitute_notes'),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),

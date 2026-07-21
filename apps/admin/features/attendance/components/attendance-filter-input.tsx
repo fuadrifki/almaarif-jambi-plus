@@ -20,7 +20,6 @@ type AttendanceFilterInputProps = {
   onSelectOriginalTeacherStatus: (status: string) => void;
   onChangeSubstituteNotes: (notes: string) => void;
   handleSubstituteConfirmed: () => void;
-  onReset: () => void;
 };
 
 export const AttendanceFilterInput = ({
@@ -36,7 +35,6 @@ export const AttendanceFilterInput = ({
   onSelectOriginalTeacherStatus,
   onChangeSubstituteNotes,
   handleSubstituteConfirmed,
-  onReset,
 }: AttendanceFilterInputProps) => {
   const [openTeacherSubstitute, setOpenTeacherSubstitute] = useState(false);
 

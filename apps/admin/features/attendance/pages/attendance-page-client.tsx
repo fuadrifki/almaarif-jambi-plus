@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { PageLayout, Surface, Tabs, SelectOption, toast } from '@/components/ui';
 import { History, Plus } from 'lucide-react';
@@ -22,6 +22,7 @@ import { SCHEDULES } from '@/lib/db/seed-schedule';
 import { SUBJECTS } from '@/lib/db/seed-subjects';
 import { submitAttendance } from '../server';
 import { format } from 'date-fns';
+import { AttendanceFilterHistory } from '../components/attendance-filter-history';
 
 type SessionWithRecords = AttendanceSession & { records: AttendanceRecord[] };
 
@@ -41,6 +42,8 @@ export const AttendancePageClient = ({
   classes,
 }: AttendancePageClientProps) => {
   const [activeTab, setActiveTab] = useState<Tab>('input');
+
+  // INPUT ATTENDANCE
   const [classId, setClassId] = useState<number>(0);
   const [subjectId, setSubjectId] = useState<number>(0);
   const [statuses, setStatuses] = useState<Record<number, AttendanceStatus>>({});
@@ -202,6 +205,30 @@ export const AttendancePageClient = ({
     }
   };
 
+  // HISTORY ATTENDANCE
+  const [dateFilter, setDateFilter] = useState<Date | undefined>();
+  const [classFilter, setClassFilter] = useState(0);
+  const [subjectFilter, setSubjectFilter] = useState(0);
+
+  const subjectOptions = useMemo(() => {
+    const data = SUBJECTS.map((s) => ({ value: s.id, label: s.label })).sort((a, b) =>
+      a.label.localeCompare(b.label),
+    );
+    return [{ value: 0, label: 'Semua' }, ...data];
+  }, []);
+
+  const handleDateChange = (date: Date | undefined) => {
+    setDateFilter(date);
+  };
+
+  const handleClassChange = (value: number) => {
+    setClassFilter(value);
+  };
+
+  const handleSubjectChange = (value: number) => {
+    setSubjectFilter(value);
+  };
+
   return (
     <PageLayout>
       <PageLayout.Header>
@@ -243,7 +270,19 @@ export const AttendancePageClient = ({
             onSelectOriginalTeacherStatus={onSelectOriginalTeacherStatus}
             onChangeSubstituteNotes={onChangeSubstituteNotes}
             handleSubstituteConfirmed={handleSubstituteConfirmed}
-            onReset={onResetTab}
+          />
+        )}
+
+        {activeTab === 'history' && (
+          <AttendanceFilterHistory
+            classes={classes}
+            subjectOptions={subjectOptions}
+            classFilter={classFilter}
+            subjectFilter={subjectFilter}
+            dateFilter={dateFilter}
+            handleClassChange={handleClassChange}
+            handleSubjectChange={handleSubjectChange}
+            handleDateChange={handleDateChange}
           />
         )}
       </PageLayout.Header>
@@ -265,8 +304,16 @@ export const AttendancePageClient = ({
             handleSubmit={handleSubmit}
           />
         )}
+
         {activeTab === 'history' && (
-          <AttendanceHistorySection sessions={sessions} classes={classes} />
+          <AttendanceHistorySection
+            sessions={sessions}
+            classes={classes}
+            subjectOptions={subjectOptions}
+            classFilter={classFilter}
+            subjectFilter={subjectFilter}
+            dateFilter={dateFilter}
+          />
         )}
       </PageLayout.Content>
     </PageLayout>

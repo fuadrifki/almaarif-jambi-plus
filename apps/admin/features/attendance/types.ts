@@ -25,7 +25,7 @@ export type AttendanceSession = {
   date: string;
   time: string;
   originalTeacherStatus: string;
-  substituteNotes: string;
+  substituteNotes: string | null;
   createdAt: Date;
   updatedAt: Date;
 };
