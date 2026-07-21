@@ -14,11 +14,10 @@ import {
   TableRow,
 } from '@/components/ui';
 import { History } from 'lucide-react';
-import { format } from 'date-fns';
-import { id } from 'date-fns/locale';
 
 import type { StudentAttendanceHistoryRow } from '../queries/get-student-attendance-history';
 import type { AttendanceStatus } from '@/features/attendance/types';
+import { formatDate } from '@/lib/utils/date';
 
 const PAGE_SIZE = 20;
 const LOAD_DELAY = 200;
@@ -56,14 +55,6 @@ export const StudentAttendanceHistoryTab = ({ rows }: StudentAttendanceHistoryTa
       setIsLoadingMore(false);
     }, LOAD_DELAY);
   }, []);
-
-  const formatDate = (dateStr: string) => {
-    try {
-      return format(new Date(dateStr), 'EEEE, dd MMMM yyyy', { locale: id });
-    } catch {
-      return dateStr;
-    }
-  };
 
   const getStatusBadge = (status: AttendanceStatus) => (
     <Badge variant={STATUS_BADGE[status] ?? 'secondary'}>{STATUS_LABEL[status] ?? status}</Badge>
@@ -110,7 +101,7 @@ export const StudentAttendanceHistoryTab = ({ rows }: StudentAttendanceHistoryTa
           {visible.map((row, index) => (
             <TableRow key={`${row.date}-${index}`} className={index % 2 === 0 ? 'bg-card/50' : ''}>
               <TableCell>
-                <span className="text-sm text-secondary">{formatDate(row.date)}</span>
+                <span className="text-sm text-secondary">{formatDate(new Date(row.date))}</span>
               </TableCell>
               <TableCell>
                 <div className="font-medium text-primary">{row.subject}</div>

@@ -63,9 +63,7 @@ export const ReportAttendanceTable = ({ rows, className }: ReportAttendanceTable
             className={index % 2 === 0 ? 'bg-card/50' : ''}
           >
             <TableCell>
-              <div className="text-sm">
-                {formatDate(new Date(row.date), 'EEEE, d MMMM yyyy HH:mm')}
-              </div>
+              <div className="text-sm">{formatDate(new Date(row.date))}</div>
             </TableCell>
             <TableCell>
               <div className="text-primary">{row.student.name}</div>

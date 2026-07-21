@@ -17,7 +17,7 @@ export const Card = ({
       'ads-cards gap-y-4',
       !noPadding && 'p-4',
       hoverable &&
-        'cursor-pointer hover:bg-gray-200/40! hover:scale-[101%] transition duration-300',
+        'cursor-pointer hover:bg-gray-300/40! hover:scale-[101%] transition duration-300',
       className,
     )}
     {...props}

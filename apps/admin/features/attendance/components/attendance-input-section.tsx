@@ -5,6 +5,7 @@ import { ClipboardCheck } from 'lucide-react';
 import type { Student } from '@/features/students/types';
 import { AttendanceStudentRow } from './attendance-student-row';
 import { AttendanceStatus } from '../types';
+import { useMemo } from 'react';
 
 type AttendanceInputSectionProps = {
   classId: number;
@@ -35,6 +36,14 @@ export const AttendanceInputSection = ({
   handleNotesChange,
   handleSubmit,
 }: AttendanceInputSectionProps) => {
+  const isSubmitDisabled = useMemo(() => {
+    const hasInvalidPermission = Object.entries(statuses).some(
+      ([studentId, status]) => status === 'PERMISSION' && !notes[Number(studentId)]?.trim(),
+    );
+
+    return Object.keys(statuses).length !== filteredStudents.length || hasInvalidPermission;
+  }, [statuses, notes, filteredStudents.length]);
+
   return (
     <div className="flex flex-col gap-y-4 justify-between w-full">
       {classId && !subjectsByClass.length ? (
@@ -79,7 +88,7 @@ export const AttendanceInputSection = ({
           <div className="flex justify-end">
             <Button
               onClick={handleSubmit}
-              disabled={!classId || !subjectId || filteredStudents.length === 0}
+              disabled={isSubmitDisabled}
               status={isSubmitting ? 'loading' : 'idle'}
             >
               Simpan Absensi

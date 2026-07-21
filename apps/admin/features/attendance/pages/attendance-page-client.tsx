@@ -154,7 +154,7 @@ export const AttendancePageClient = ({
       });
 
       toast.success('Absensi berhasil disimpan');
-
+      setActiveTab('history');
       onResetTab();
     } catch (error) {
       toast.error(
@@ -243,9 +243,7 @@ export const AttendancePageClient = ({
 
         <Card className="flex flex-wrap justify-between gap-x-2 text-sm text-secondary">
           <span className="font-medium text-primary">{teacherLabel}</span>
-          <span className="text-secondary">
-            {formatDate(new Date(), 'EEEE, dd MMMM yyyy HH:mm')}
-          </span>
+          <span className="text-secondary">{formatDate(new Date())}</span>
         </Card>
 
         <Tabs value={activeTab} onValueChange={onChangeTab}>

@@ -76,9 +76,7 @@ export const TeacherAttendanceTable = ({ rows }: { rows: TeacherAttendanceRow[] 
             className={index % 2 === 0 ? 'bg-card/50' : ''}
           >
             <TableCell>
-              <div className="text-sm">
-                {formatDate(new Date(row.date), 'EEEE, d MMMM yyyy hh:mm')}
-              </div>
+              <div className="text-sm">{formatDate(new Date(row.date))}</div>
             </TableCell>
             <TableCell>
               <div className="font-medium text-primary">{row.teacher.name}</div>

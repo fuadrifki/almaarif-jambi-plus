@@ -2,7 +2,7 @@ import { getDb } from '@/lib/db/client';
 import type { AttendanceSession } from '../types';
 import type { AttendanceSessionRepository } from './attendance-session.repository.types';
 import { attendanceSessions } from '@/lib/db/schema';
-import { and, eq } from 'drizzle-orm';
+import { and, desc, eq } from 'drizzle-orm';
 
 const toSession = (row: typeof attendanceSessions.$inferSelect): AttendanceSession => ({
   id: row.id,
@@ -49,7 +49,8 @@ export const attendanceSessionRepository: AttendanceSessionRepository = {
     const rows = await getDb()
       .select()
       .from(attendanceSessions)
-      .where(eq(attendanceSessions.teacherId, teacherId));
+      .where(eq(attendanceSessions.teacherId, teacherId))
+      .orderBy(desc(attendanceSessions.createdAt));
     return rows.map(toSession);
   },
 

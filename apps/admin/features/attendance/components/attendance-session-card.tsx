@@ -7,6 +7,7 @@ import type { AttendanceRecord, AttendanceSession } from '@/features/attendance/
 import { SUBJECTS } from '@/lib/db/seed-subjects';
 import { formatDate } from '@/lib/utils/date';
 import { Ban, Calendar1, Dot } from 'lucide-react';
+import { parse } from 'date-fns';
 
 type AttendanceSessionCardProps = {
   session: AttendanceSession;
@@ -98,9 +99,11 @@ export const AttendanceSessionCard = ({
             <div className="flex items-center gap-1.5 text-xs text-secondary">
               <Calendar1 size={12} className="shrink-0" />
 
-              <span>{formatDate(new Date(session.date), 'EEEE, dd MMMM yyyy')}</span>
-
-              <span>{session.time}</span>
+              <span>
+                {formatDate(
+                  parse(`${session.date} ${session.time}`, 'yyyy-MM-dd HH:mm', new Date()),
+                )}
+              </span>
             </div>
 
             {isSubstitute && (
@@ -110,7 +113,8 @@ export const AttendanceSessionCard = ({
                 <div className="text-xs text-secondary">
                   <span>Keterangan berhalangan : </span>
                   <span className="font-medium">
-                    {originalTeacherLabel} ({session.substituteNotes})
+                    {originalTeacherLabel}{' '}
+                    {`${session.substituteNotes ? `(${session.substituteNotes})` : ''}`}
                   </span>
                 </div>
               </div>
