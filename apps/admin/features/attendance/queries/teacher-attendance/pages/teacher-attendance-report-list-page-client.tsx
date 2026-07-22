@@ -4,11 +4,10 @@ import { useState, useCallback } from 'react';
 
 import { PageLayout, EmptyState, InfiniteScroll, Skeleton } from '@/components/ui';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
-import type { Class } from '@/features/classes/types';
 import { FileSpreadsheet } from 'lucide-react';
 import { TeacherAttendanceFilters } from '../components/teacher-attendance-filters';
 import { TeacherAttendanceTable } from '../components/teacher-attendance-table';
-import { TeacherAttendanceResult } from '../types';
+import type { TeacherAttendanceResult } from '../types';
 import { TeacherSummaryCards } from '../components/teacher-summary-cards';
 
 const PAGE_SIZE = 20;
@@ -16,16 +15,12 @@ const LOAD_DELAY = 200;
 
 type TeacherAttendanceReportListPageClientProps = {
   report: TeacherAttendanceResult;
-  classes: Class[];
   teachers: { id: number; name: string }[];
-  subjects: { id: number; name: string }[];
 };
 
 export const TeacherAttendanceReportListPageClient = ({
   report,
-  classes,
   teachers,
-  subjects,
 }: TeacherAttendanceReportListPageClientProps) => {
   const { summary, rows } = report;
 
@@ -48,9 +43,9 @@ export const TeacherAttendanceReportListPageClient = ({
       <PageLayout.Header>
         <Breadcrumb items={[{ label: 'Laporan Absensi Guru' }]} />
         <h1 className="text-2xl font-semibold sm:text-3xl">Laporan Absensi Guru</h1>
-        <p className="text-secondary">Buat data laporan absensi guru pesantren.</p>
+        <p className="text-secondary">Ringkasan kehadiran guru pesantren.</p>
 
-        <TeacherAttendanceFilters classes={classes} teachers={teachers} subjects={subjects} />
+        <TeacherAttendanceFilters teachers={teachers} />
       </PageLayout.Header>
 
       <PageLayout.Content>

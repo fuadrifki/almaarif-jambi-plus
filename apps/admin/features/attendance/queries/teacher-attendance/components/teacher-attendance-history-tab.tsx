@@ -29,7 +29,7 @@ const STATUS_BADGE: Record<string, 'success' | 'warning' | 'info'> = {
 
 const STATUS_LABEL: Record<string, string> = {
   REGULAR: 'Hadir',
-  HELPER: 'Guru Membantu',
+  HELPER: 'Ditugaskan',
   SUBSTITUTE: 'Guru Pengganti',
 };
 

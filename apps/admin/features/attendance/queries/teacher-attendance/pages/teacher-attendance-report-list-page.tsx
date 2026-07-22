@@ -1,11 +1,9 @@
 import { notFound } from 'next/navigation';
 
-import { classRepository } from '@/features/classes/repositories';
-import { SUBJECTS } from '@/lib/db/seed-subjects';
 import { TEACHERS } from '@/lib/db/seed-teachers';
 
 import { TeacherAttendanceReportListPageClient } from './teacher-attendance-report-list-page-client';
-import { TeacherAttendanceFilter } from '@/features/attendance/repositories/teacher-attendance.repository.types';
+import type { TeacherAttendanceFilter } from '@/features/attendance/repositories/teacher-attendance.repository.types';
 import { getTeacherAttendanceReport } from '../get-teacher-attendance-report';
 
 type TeacherAttendanceReportsPageProps = {
@@ -24,21 +22,18 @@ const getNumberParam = (value: string | string[] | undefined) => {
 export async function TeacherAttendanceReportsPage({
   searchParams,
 }: TeacherAttendanceReportsPageProps) {
+  console.log('Page rendered', new Date().toISOString());
+
   const params = await searchParams;
 
   const filter: TeacherAttendanceFilter = {
     search: getParam(params.search),
     date: getParam(params.date),
     month: getParam(params.month),
-    classId: getNumberParam(params.classId),
     teacherId: getNumberParam(params.teacherId),
-    subjectId: getNumberParam(params.subjectId),
   };
 
-  const [report, classes] = await Promise.all([
-    getTeacherAttendanceReport(filter),
-    classRepository.findAll(),
-  ]);
+  const report = await getTeacherAttendanceReport(filter);
 
   if (!report || report.total === 0) {
     notFound();
@@ -48,14 +43,9 @@ export async function TeacherAttendanceReportsPage({
     <TeacherAttendanceReportListPageClient
       key={Object.values(filter).join('-')}
       report={report}
-      classes={classes}
       teachers={TEACHERS.filter(({ role }) => role === 'teacher').map(({ id, name }) => ({
         id,
         name,
-      }))}
-      subjects={SUBJECTS.map(({ id, label }) => ({
-        id,
-        name: label,
       }))}
     />
   );

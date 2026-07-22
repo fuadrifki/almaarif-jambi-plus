@@ -1,25 +1,16 @@
 export type TeacherAttendanceRow = {
-  sessionId: number;
-  date: string;
-  time: string;
   teacher: {
     id: number;
     name: string;
   };
-  class: {
-    id: number;
-    name: string;
-  };
-  subject: {
-    id: number;
-    label: string;
-  };
+  date: string;
+  time: string;
   totalClasses: number;
   totalSubjects: number;
   totalTeaching: number;
   substituteCount: number;
   statusLabel: string;
-  catatanLabel: string;
+  substituteNotes: string;
 };
 
 export type TeacherAttendanceSummary = {

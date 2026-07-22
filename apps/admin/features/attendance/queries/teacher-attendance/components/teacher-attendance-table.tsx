@@ -20,8 +20,8 @@ const STATUS_BADGE: Record<string, 'success' | 'warning' | 'info' | 'danger'> = 
   Izin: 'info',
   Dinas: 'info',
   Alpha: 'danger',
-  'Guru Pengganti': 'warning',
-  'Guru Membantu': 'info',
+  'Guru Pengganti': 'success',
+  Ditugaskan: 'success',
 };
 
 function getStatusBadge(status: string) {
@@ -39,11 +39,9 @@ export const TeacherAttendanceTable = ({ rows }: { rows: TeacherAttendanceRow[] 
         <TableRow>
           <TableHead>Tanggal</TableHead>
           <TableHead>Nama</TableHead>
-          <TableHead>Kelas</TableHead>
-          <TableHead>Mata Pelajaran</TableHead>
           <TableHead>Total Kelas</TableHead>
           <TableHead>Total Mata Pelajaran</TableHead>
-          <TableHead>Total Kehadiran</TableHead>
+          <TableHead>Total Mengajar</TableHead>
           <TableHead>Total Pengganti</TableHead>
           <TableHead>Status Absensi</TableHead>
           <TableHead>Catatan</TableHead>
@@ -53,7 +51,7 @@ export const TeacherAttendanceTable = ({ rows }: { rows: TeacherAttendanceRow[] 
       <TableBody>
         {rows.map((row, index) => (
           <TableRow
-            key={`${row.sessionId}-${row.teacher.id}-${index}`}
+            key={`${row.teacher.id}-${row.date}-${index}`}
             className={index % 2 === 0 ? 'bg-card/50' : ''}
           >
             <TableCell>
@@ -61,12 +59,6 @@ export const TeacherAttendanceTable = ({ rows }: { rows: TeacherAttendanceRow[] 
             </TableCell>
             <TableCell>
               <div className="font-medium text-primary">{row.teacher.name}</div>
-            </TableCell>
-            <TableCell>
-              <div className="text-sm text-secondary">{row.class.name}</div>
-            </TableCell>
-            <TableCell>
-              <div className="text-sm text-secondary">{row.subject.label}</div>
             </TableCell>
             <TableCell>
               <div className="text-sm">{row.totalClasses || '-'}</div>
@@ -77,10 +69,20 @@ export const TeacherAttendanceTable = ({ rows }: { rows: TeacherAttendanceRow[] 
             <TableCell>
               <div className="text-sm">{row.totalTeaching || '-'}</div>
             </TableCell>
-            <TableCell>{row.substituteCount || '-'}</TableCell>
+            <TableCell>
+              <div className="text-sm">{row.substituteCount || '-'}</div>
+            </TableCell>
             <TableCell>{getStatusBadge(row.statusLabel)}</TableCell>
             <TableCell>
-              <div className="text-sm max-w-48 truncate text-secondary">{row.catatanLabel}</div>
+              <div className="w-80 text-sm text-secondary whitespace-normal line-clamp-3">
+                {row.substituteNotes}
+              </div>
+
+              {/* <div className="flex items-center gap-1.5">
+                <FilePen size={12} className="shrink-0" />
+
+                <p className="text-xs text-secondary">{row.substituteNotes}</p>
+              </div> */}
             </TableCell>
             <TableCell>
               <Link href={`/dashboard/attendance/teachers/${row.teacher.id}`}>

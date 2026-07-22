@@ -6,13 +6,10 @@ import { format, parseISO, subMonths } from 'date-fns';
 
 import { Badge, Button, Input, Select, DatePicker, Card } from '@/components/ui';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
-import type { Class } from '@/features/classes/types';
 import { Search } from 'lucide-react';
 
 type TeacherAttendanceFiltersProps = {
-  classes: Class[];
   teachers: { id: number; name: string }[];
-  subjects: { id: number; name: string }[];
 };
 
 function generateMonthOptions() {
@@ -27,11 +24,7 @@ function generateMonthOptions() {
   return options;
 }
 
-export const TeacherAttendanceFilters = ({
-  classes,
-  teachers,
-  subjects,
-}: TeacherAttendanceFiltersProps) => {
+export const TeacherAttendanceFilters = ({ teachers }: TeacherAttendanceFiltersProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -41,13 +34,9 @@ export const TeacherAttendanceFilters = ({
   const q = searchParams.get('search') || '';
   const dateParam = searchParams.get('date') || '';
   const monthParam = searchParams.get('month') || '';
-  const classId = searchParams.get('classId') || '';
   const teacherId = searchParams.get('teacherId') || '';
-  const subjectId = searchParams.get('subjectId') || '';
 
-  const advancedFilterCount = [dateParam, monthParam, classId, teacherId, subjectId].filter(
-    Boolean,
-  ).length;
+  const advancedFilterCount = [dateParam, monthParam, teacherId].filter(Boolean).length;
 
   const monthOptions = useMemo(() => generateMonthOptions(), []);
 
@@ -60,11 +49,6 @@ export const TeacherAttendanceFilters = ({
     }
   }, [dateParam]);
 
-  const classOptions = useMemo(
-    () => [{ label: 'Semua', value: '' }, ...classes.map((c) => ({ label: c.name, value: c.id }))],
-    [classes],
-  );
-
   const teacherOptions = useMemo(
     () => [
       { label: 'Semua', value: '' },
@@ -73,16 +57,6 @@ export const TeacherAttendanceFilters = ({
         .sort((a, b) => a.label.localeCompare(b.label)),
     ],
     [teachers],
-  );
-
-  const subjectOptions = useMemo(
-    () => [
-      { label: 'Semua', value: '' },
-      ...subjects
-        .map((s) => ({ label: s.name, value: s.id }))
-        .sort((a, b) => a.label.localeCompare(b.label)),
-    ],
-    [subjects],
   );
 
   const updateSearchParams = useCallback(
@@ -116,16 +90,8 @@ export const TeacherAttendanceFilters = ({
     });
   };
 
-  const handleClassChange = (value: string | number) => {
-    updateSearchParams({ classId: String(value) || undefined });
-  };
-
   const handleTeacherChange = (value: string | number) => {
     updateSearchParams({ teacherId: String(value) || undefined });
-  };
-
-  const handleSubjectChange = (value: string | number) => {
-    updateSearchParams({ subjectId: String(value) || undefined });
   };
 
   const [search, setSearch] = useState(q);
@@ -199,24 +165,10 @@ export const TeacherAttendanceFilters = ({
                 </div>
 
                 <Select
-                  options={classOptions}
-                  value={classId}
-                  placeholder="Kelas"
-                  onChange={handleClassChange}
-                />
-
-                <Select
                   options={teacherOptions}
                   value={teacherId}
                   placeholder="Guru"
                   onChange={handleTeacherChange}
-                />
-
-                <Select
-                  options={subjectOptions}
-                  value={subjectId}
-                  placeholder="Mata Pelajaran"
-                  onChange={handleSubjectChange}
                 />
               </div>
             </div>
