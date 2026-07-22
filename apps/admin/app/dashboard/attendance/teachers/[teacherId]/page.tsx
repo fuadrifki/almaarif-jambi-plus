@@ -22,7 +22,7 @@ export default async function TeacherDetailPage({ params }: TeacherDetailPagePro
     <TeacherDetail
       teacher={teacher}
       sessionRows={detailData.sessionRows}
-      report={detailData.report}
+      monthlyReport={detailData.monthlyReport}
     />
   );
 }

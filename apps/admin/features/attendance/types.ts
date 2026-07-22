@@ -68,31 +68,6 @@ export const STATUS_CONFIG: Record<
   ABSENT: { variant: 'danger', label: 'Alpha' },
 };
 
-export const NOTES_LABEL: Record<string, string> = {
-  ORIGINAL: 'Digantikan oleh : ',
-  REGULAR: 'Guru mata pelajaran',
-  SUBSTITUTE: 'Menggantikan :',
-  HELPER: 'Ditugaskan',
-};
-
-export const ATTENDANCE_TEACHER_STATUS: Record<
-  string,
-  { label: string; variant: 'success' | 'warning' | 'info' | 'danger' }
-> = {
-  REGULAR: {
-    label: 'Hadir',
-    variant: 'success',
-  },
-  HELPER: {
-    label: 'Ditugaskan',
-    variant: 'success',
-  },
-  SUBSTITUTE: {
-    label: 'Guru Pengganti',
-    variant: 'success',
-  },
-};
-
 export const TEACHER_ROLE = {
   REGULAR: 'REGULAR',
   HELPER: 'HELPER',

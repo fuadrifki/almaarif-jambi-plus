@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react';
 
 import { PageLayout, EmptyState, InfiniteScroll, Skeleton } from '@/components/ui';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
-import { ReportSummaryCards } from '../components/report-summary-cards';
+// import { ReportSummaryCards } from '../components/report-summary-cards';
 import { ReportAttendanceTable } from '../components/report-attendance-table';
 import { ReportFilters } from '../components/report-filters';
 import type { Class } from '@/features/classes/types';
@@ -77,7 +77,7 @@ export const ReportListPageClient = ({
             }
           >
             <div className="flex flex-col gap-y-4 w-full">
-              <ReportSummaryCards summary={summary} />
+              {/* <ReportSummaryCards summary={summary} /> */}
 
               <ReportAttendanceTable rows={visibleRows} classes={classes} />
             </div>

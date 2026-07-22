@@ -2,31 +2,39 @@
 
 import { useState } from 'react';
 
-import { Button, Card, Field, FieldValue, Tabs, PageLayout, Breadcrumb } from '@/components/ui';
+import {
+  Button,
+  Card,
+  EmptyState,
+  Field,
+  FieldValue,
+  Tabs,
+  PageLayout,
+  Breadcrumb,
+} from '@/components/ui';
 import Link from 'next/link';
 import Image from 'next/image';
 
 import { History, FileSpreadsheet, User } from 'lucide-react';
 
 import type { TeacherDetailProfile } from '../get-teacher-detail';
-import type { TeacherAttendanceResult } from '../types';
+import type { TeacherMonthlyReportRow } from '../get-teacher-detail-data';
 import type { TeacherAttendanceSessionRow } from '../get-teacher-attendance-session-list';
 
-import { TeacherAttendanceTable } from './teacher-attendance-table';
-import { TeacherSummaryCards } from './teacher-summary-cards';
 import { SessionAttendanceTable } from './session-attendance-table';
+import { MonthlyReportTable } from './monthly-report-table';
 
 type TeacherDetailProps = {
   teacher: TeacherDetailProfile;
   sessionRows: TeacherAttendanceSessionRow[];
-  report: TeacherAttendanceResult;
+  monthlyReport: TeacherMonthlyReportRow[];
   basePath?: string;
 };
 
 export const TeacherDetail = ({
   teacher,
   sessionRows,
-  report,
+  monthlyReport,
   basePath = '/dashboard/attendance/teachers',
 }: TeacherDetailProps) => {
   const [activeTab, setActiveTab] = useState('info');
@@ -119,14 +127,29 @@ export const TeacherDetail = ({
     </div>
   );
 
-  const renderAttendanceHistoryTab = () => <SessionAttendanceTable rows={sessionRows} />;
+  const renderAttendanceHistoryTab = () => {
+    if (sessionRows.length === 0) {
+      return (
+        <EmptyState
+          title="Belum ada riwayat"
+          description="Riwayat absensi akan muncul setelah data absensi tersedia."
+        />
+      );
+    }
+    return <SessionAttendanceTable rows={sessionRows} />;
+  };
 
-  const renderAttendanceReportTab = () => (
-    <div className="flex flex-col gap-y-4 w-full">
-      <TeacherSummaryCards summary={report.summary} />
-      <TeacherAttendanceTable rows={report.rows} />
-    </div>
-  );
+  const renderMonthlyReportTab = () => {
+    if (monthlyReport.length === 0) {
+      return (
+        <EmptyState
+          title="Belum ada laporan"
+          description="Laporan bulanan akan muncul setelah data absensi tersedia."
+        />
+      );
+    }
+    return <MonthlyReportTable rows={monthlyReport} />;
+  };
 
   return (
     <PageLayout>
@@ -151,7 +174,7 @@ export const TeacherDetail = ({
               Riwayat Absensi
             </Tabs.Item>
             <Tabs.Item value="report" icon={<FileSpreadsheet size={16} />}>
-              Laporan Absensi
+              Laporan Bulanan
             </Tabs.Item>
           </Tabs>
         </div>
@@ -160,7 +183,7 @@ export const TeacherDetail = ({
       <PageLayout.Content>
         {activeTab === 'info' && renderInfoTab()}
         {activeTab === 'history' && renderAttendanceHistoryTab()}
-        {activeTab === 'report' && renderAttendanceReportTab()}
+        {activeTab === 'report' && renderMonthlyReportTab()}
       </PageLayout.Content>
     </PageLayout>
   );
