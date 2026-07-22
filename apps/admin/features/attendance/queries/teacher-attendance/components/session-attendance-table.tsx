@@ -17,7 +17,7 @@ import {
 import type { TeacherAttendanceSessionRow } from '../get-teacher-attendance-session-list';
 import type { AttendanceStatus } from '@/features/attendance/types';
 import Link from 'next/link';
-import { Eye } from 'lucide-react';
+import { Eye, FilePen, UserCheck } from 'lucide-react';
 
 function AttendanceStatusBadge({ row }: { row: TeacherAttendanceSessionRow }) {
   if (row.teachingRole === 'ORIGINAL') {
@@ -36,22 +36,56 @@ function TeachingRoleBadge({ row }: { row: TeacherAttendanceSessionRow }) {
   return <Badge variant={config?.variant ?? 'default'}>{config?.label ?? row.teachingRole}</Badge>;
 }
 
-function getNotesDisplay(row: TeacherAttendanceSessionRow): string {
+function NotesCell({ row }: { row: TeacherAttendanceSessionRow }) {
   if (row.teachingRole === 'ORIGINAL') {
-    if (row.attendanceStatus === 'PRESENT') return '';
-    const replacement = row.substituteTeacherName
-      ? `Digantikan oleh ${row.substituteTeacherName}`
-      : '';
-    if (row.attendanceStatus === 'PERMISSION' && row.notes) {
-      return `${row.notes}\n${replacement}`;
+    if (row.attendanceStatus === 'PRESENT') {
+      return <span className="text-secondary">-</span>;
     }
-    return replacement;
+
+    return (
+      <>
+        {!!row.notes && (
+          <div className="flex items-start gap-1.5">
+            <FilePen size={12} className="shrink-0 mt-1" />
+
+            <p className="w-80 text-sm text-secondary whitespace-normal line-clamp-3">
+              {row.notes}
+            </p>
+          </div>
+        )}
+
+        <div className="flex items-start gap-1.5">
+          <UserCheck size={12} className="shrink-0 mt-1" />
+
+          <p className="w-80 text-sm text-secondary whitespace-normal line-clamp-3">
+            Digantikan oleh <span className="font-semibold">{row.substituteTeacherName}</span>
+          </p>
+        </div>
+      </>
+    );
   }
+
   if (row.teachingRole === 'SUBSTITUTE') {
-    return row.substituteTeacherName ? `Menggantikan ${row.substituteTeacherName}` : '';
+    if (!row.substituteTeacherName) {
+      return <span className="text-secondary">-</span>;
+    }
+
+    return (
+      <div className="flex items-start gap-1.5">
+        <UserCheck size={12} className="shrink-0 mt-1" />
+
+        <p className="w-80 text-sm text-secondary whitespace-normal line-clamp-3">
+          Menggantikan <span className="font-semibold">{row.substituteTeacherName}</span>
+        </p>
+      </div>
+    );
   }
-  if (row.teachingRole === 'HELPER') return 'Ditugaskan';
-  return '';
+
+  if (row.teachingRole === 'HELPER') {
+    return <span className="text-secondary">-</span>;
+  }
+
+  return <span className="text-secondary">-</span>;
 }
 
 export const SessionAttendanceTable = ({ rows }: { rows: TeacherAttendanceSessionRow[] }) => {
@@ -70,50 +104,42 @@ export const SessionAttendanceTable = ({ rows }: { rows: TeacherAttendanceSessio
         </TableRow>
       </TableHeader>
       <TableBody>
-        {rows.map((row) => {
-          const notesText = getNotesDisplay(row);
-
-          return (
-            <TableRow key={row.id} className="bg-card/50">
-              <TableCell>
-                <div className="text-sm">
-                  {formatDate(new Date(`${row.date}T${row.time}`), 'EEEE, dd MMMM yyyy HH:mm')}
-                </div>
-              </TableCell>
-              <TableCell>
-                <div className="font-medium text-primary">{row.teacher.name}</div>
-              </TableCell>
-              <TableCell>
-                <div className="text-sm">{row.className}</div>
-              </TableCell>
-              <TableCell>
-                <div className="text-sm">{row.subjectName}</div>
-              </TableCell>
-              <TableCell>
-                <AttendanceStatusBadge row={row} />
-              </TableCell>
-              <TableCell>
-                <TeachingRoleBadge row={row} />
-              </TableCell>
-              <TableCell>
-                {notesText ? (
-                  <p className="max-w-80 text-sm text-secondary whitespace-normal line-clamp-3">
-                    {notesText}
-                  </p>
-                ) : (
-                  <span className="text-secondary">-</span>
-                )}
-              </TableCell>
-              <TableCell>
-                <Link href={`/dashboard/attendance/teachers/${row.teacher.id}`}>
-                  <Button variant="ghost" size="sm" leftIcon={<Eye size={14} />}>
-                    Detail
-                  </Button>
-                </Link>
-              </TableCell>
-            </TableRow>
-          );
-        })}
+        {rows.map((row) => (
+          <TableRow key={row.id} className="bg-card/50">
+            <TableCell>
+              <div className="text-sm">
+                {formatDate(new Date(`${row.date}T${row.time}`), 'EEEE, dd MMMM yyyy HH:mm')}
+              </div>
+            </TableCell>
+            <TableCell>
+              <div className="font-medium text-primary">{row.teacher.name}</div>
+            </TableCell>
+            <TableCell>
+              <div className="text-sm">{row.className}</div>
+            </TableCell>
+            <TableCell>
+              <div className="text-sm">{row.subjectName}</div>
+            </TableCell>
+            <TableCell>
+              <AttendanceStatusBadge row={row} />
+            </TableCell>
+            <TableCell>
+              <TeachingRoleBadge row={row} />
+            </TableCell>
+            <TableCell>
+              <div className="max-w-80 text-sm text-secondary whitespace-normal line-clamp-3 space-y-1">
+                <NotesCell row={row} />
+              </div>
+            </TableCell>
+            <TableCell>
+              <Link href={`/dashboard/attendance/teachers/${row.teacher.id}`}>
+                <Button variant="ghost" size="sm" leftIcon={<Eye size={14} />}>
+                  Detail
+                </Button>
+              </Link>
+            </TableCell>
+          </TableRow>
+        ))}
       </TableBody>
     </Table>
   );
