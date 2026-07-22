@@ -29,15 +29,10 @@ const STATUS_PRIORITY: Record<string, number> = {
 const buildConditions = (filter: TeacherAttendanceFilter) => {
   const conditions = [];
 
-  if (filter.allDates) {
-    // No date restriction
-  } else if (filter.date) {
+  if (filter.date) {
     conditions.push(eq(attendanceSessions.date, filter.date));
   } else if (filter.month) {
     conditions.push(like(attendanceSessions.date, `${filter.month}%`));
-  } else {
-    const today = format(new Date(), 'yyyy-MM-dd');
-    conditions.push(eq(attendanceSessions.date, today));
   }
 
   if (filter.teacherId) {
@@ -56,6 +51,8 @@ const buildConditions = (filter: TeacherAttendanceFilter) => {
 };
 
 const querySessions = async (filter: TeacherAttendanceFilter): Promise<SessionRows[]> => {
+  const conditions = buildConditions(filter);
+
   const db = getDb();
 
   return db
@@ -74,7 +71,7 @@ const querySessions = async (filter: TeacherAttendanceFilter): Promise<SessionRo
     })
     .from(attendanceSessions)
     .innerJoin(classes, eq(classes.id, attendanceSessions.classId))
-    .where(and(...buildConditions(filter)))
+    .where(conditions.length ? and(...conditions) : undefined)
     .orderBy(desc(attendanceSessions.createdAt));
 };
 
