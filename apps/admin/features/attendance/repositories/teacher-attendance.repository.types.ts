@@ -58,6 +58,7 @@ export type VirtualRow = {
   subjectName: string;
   date: string;
   time: string;
+  scheduledTeacherId: number | null;
   scheduledTeacherStatus: string;
   substituteNotes: string | null;
   substituteTeacherName: string | null;

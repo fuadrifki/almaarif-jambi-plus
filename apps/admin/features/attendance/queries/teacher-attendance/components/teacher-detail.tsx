@@ -9,24 +9,24 @@ import Image from 'next/image';
 import { History, FileSpreadsheet, User } from 'lucide-react';
 
 import type { TeacherDetailProfile } from '../get-teacher-detail';
-import type { TeacherAttendanceHistoryRow } from '../get-teacher-attendance-history';
 import type { TeacherAttendanceResult } from '../types';
+import type { TeacherAttendanceSessionRow } from '../get-teacher-attendance-session-list';
 
-import { TeacherAttendanceHistoryTab } from './teacher-attendance-history-tab';
 import { TeacherAttendanceTable } from './teacher-attendance-table';
 import { TeacherSummaryCards } from './teacher-summary-cards';
+import { SessionAttendanceTable } from './session-attendance-table';
 
 type TeacherDetailProps = {
   teacher: TeacherDetailProfile;
-  attendanceHistory: TeacherAttendanceHistoryRow[];
-  attendanceReport: TeacherAttendanceResult;
+  sessionRows: TeacherAttendanceSessionRow[];
+  report: TeacherAttendanceResult;
   basePath?: string;
 };
 
 export const TeacherDetail = ({
   teacher,
-  attendanceHistory,
-  attendanceReport,
+  sessionRows,
+  report,
   basePath = '/dashboard/attendance/teachers',
 }: TeacherDetailProps) => {
   const [activeTab, setActiveTab] = useState('info');
@@ -119,12 +119,12 @@ export const TeacherDetail = ({
     </div>
   );
 
-  const renderAttendanceHistoryTab = () => <TeacherAttendanceHistoryTab rows={attendanceHistory} />;
+  const renderAttendanceHistoryTab = () => <SessionAttendanceTable rows={sessionRows} />;
 
   const renderAttendanceReportTab = () => (
     <div className="flex flex-col gap-y-4 w-full">
-      <TeacherSummaryCards summary={attendanceReport.summary} />
-      <TeacherAttendanceTable rows={attendanceReport.rows} />
+      <TeacherSummaryCards summary={report.summary} />
+      <TeacherAttendanceTable rows={report.rows} />
     </div>
   );
 

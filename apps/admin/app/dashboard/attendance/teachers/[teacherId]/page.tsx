@@ -1,8 +1,7 @@
 import { notFound } from 'next/navigation';
 
 import { getTeacherDetail } from '@/features/attendance/queries/teacher-attendance/get-teacher-detail';
-import { getTeacherAttendanceHistory } from '@/features/attendance/queries/teacher-attendance/get-teacher-attendance-history';
-import { getTeacherAttendanceReport } from '@/features/attendance/queries/teacher-attendance/get-teacher-attendance-report';
+import { getTeacherDetailData } from '@/features/attendance/queries/teacher-attendance/get-teacher-detail-data';
 import { TeacherDetail } from '@/features/attendance/queries/teacher-attendance/components/teacher-detail';
 
 type TeacherDetailPageProps = {
@@ -17,16 +16,13 @@ export default async function TeacherDetailPage({ params }: TeacherDetailPagePro
     notFound();
   }
 
-  const [attendanceHistory, attendanceReport] = await Promise.all([
-    getTeacherAttendanceHistory({ teacherId }),
-    getTeacherAttendanceReport({ teacherId: teacher.id, allDates: true }),
-  ]);
+  const detailData = await getTeacherDetailData(teacher.id);
 
   return (
     <TeacherDetail
       teacher={teacher}
-      attendanceHistory={attendanceHistory.rows}
-      attendanceReport={attendanceReport}
+      sessionRows={detailData.sessionRows}
+      report={detailData.report}
     />
   );
 }
