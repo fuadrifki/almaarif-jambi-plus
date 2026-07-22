@@ -18,7 +18,7 @@ import { History } from 'lucide-react';
 import type { TeacherAttendanceHistoryRow } from '../get-teacher-attendance-history';
 import { formatDate } from '@/lib/utils/date';
 import { parse } from 'date-fns';
-import { ATTENDANCE_TEACHER_STATUS, STATUS_CONFIG } from '@/features/attendance/types';
+import { STATUS_CONFIG } from '@/features/attendance/types';
 
 const PAGE_SIZE = 20;
 const LOAD_DELAY = 200;
@@ -28,6 +28,7 @@ type TeacherAttendanceHistoryTabProps = {
 };
 
 export const TeacherAttendanceHistoryTab = ({ rows }: TeacherAttendanceHistoryTabProps) => {
+  console.log('🚀 ~ TeacherAttendanceHistoryTab ~ rows:', rows);
   const [displayCount, setDisplayCount] = useState(PAGE_SIZE);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
@@ -85,8 +86,6 @@ export const TeacherAttendanceHistoryTab = ({ rows }: TeacherAttendanceHistoryTa
             <TableRow key={`${row.date}-${index}`} className={index % 2 === 0 ? 'bg-card/50' : ''}>
               <TableCell>
                 <span className="text-sm text-secondary">
-                  {/* {formatDate(new Date(row.date))} */}
-
                   {formatDate(parse(`${row.date} ${row.time}`, 'yyyy-MM-dd HH:mm', new Date()))}
                 </span>
               </TableCell>
@@ -97,9 +96,11 @@ export const TeacherAttendanceHistoryTab = ({ rows }: TeacherAttendanceHistoryTa
                 <div className="text-sm text-secondary">{row.subject}</div>
               </TableCell>
               <TableCell>
-                <Badge variant={STATUS_CONFIG[row.scheduledTeacherStatus].variant ?? 'default'}>
-                  {STATUS_CONFIG[row.scheduledTeacherStatus].label}
-                </Badge>
+                {!!row.scheduledTeacherStatus && (
+                  <Badge variant={STATUS_CONFIG[row.scheduledTeacherStatus]?.variant ?? 'default'}>
+                    {STATUS_CONFIG[row.scheduledTeacherStatus]?.label ?? row.scheduledTeacherStatus}
+                  </Badge>
+                )}
               </TableCell>
               <TableCell>
                 <span className="text-sm text-secondary">{row.notes}</span>

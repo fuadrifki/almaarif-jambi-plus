@@ -64,6 +64,7 @@ export const getTeacherAttendanceHistory = async ({
       ),
     )
     .orderBy(desc(attendanceSessions.createdAt), desc(attendanceSessions.id));
+  console.log('🚀 ~ getTeacherAttendanceHistory ~ sessions:', sessions);
 
   const rows: TeacherAttendanceHistoryRow[] = sessions.map((session) => {
     const subject = SUBJECT_MAP.get(session.subjectId) ?? '-';
