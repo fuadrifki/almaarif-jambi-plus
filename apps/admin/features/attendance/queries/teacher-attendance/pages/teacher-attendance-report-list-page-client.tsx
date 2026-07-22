@@ -72,7 +72,7 @@ export const TeacherAttendanceReportListPageClient = ({
             }
           >
             <div className="flex flex-col gap-y-4 w-full">
-              <TeacherSummaryCards summary={summary} />
+              {/* <TeacherSummaryCards summary={summary} /> */}
 
               <TeacherAttendanceTable rows={visibleRows} />
             </div>

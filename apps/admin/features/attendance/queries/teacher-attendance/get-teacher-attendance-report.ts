@@ -17,6 +17,7 @@ export const getTeacherAttendanceReport = async (
     },
     date: row.date,
     time: row.time,
+    role: row.role,
     totalClasses: row.totalClasses,
     totalSubjects: row.totalSubjects,
     totalTeaching: row.totalTeaching,

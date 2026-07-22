@@ -71,7 +71,11 @@ export const TeacherAttendanceFilters = ({ teachers }: TeacherAttendanceFiltersP
         }
       });
 
-      router.push(`${pathname}?${params.toString()}`, { scroll: false });
+      if (params.toString() === searchParams.toString()) {
+        return;
+      }
+
+      router.push(`${pathname}?${params}`, { scroll: false });
     },
     [pathname, searchParams, router],
   );

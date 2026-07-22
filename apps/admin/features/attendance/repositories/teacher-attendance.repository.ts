@@ -5,9 +5,12 @@ import { and, desc, eq, ilike, like } from 'drizzle-orm';
 import { format } from 'date-fns';
 
 import type {
+  SessionRows,
   TeacherAttendanceFilter,
   TeacherAttendanceRepository,
   TeacherAttendanceSummaryRow,
+  TeacherNotes,
+  VirtualRow,
 } from './teacher-attendance.repository.types';
 
 const TEACHER_MAP = new Map(TEACHERS.map((teacher) => [teacher.id, teacher.name]));
@@ -26,20 +29,6 @@ const STATUS_PRIORITY: Record<string, number> = {
   ABSENT: 2,
   OFFICIAL_DUTY: 3,
   OTHER: 4,
-};
-
-type VirtualRow = {
-  sessionId: number;
-  teacherId: number;
-  teacherName: string;
-  role: 'REGULAR' | 'HELPER' | 'ORIGINAL' | 'SUBSTITUTE';
-  classId: number;
-  subjectId: number;
-  date: string;
-  time: string;
-  scheduledTeacherStatus: string;
-  substituteNotes: string | null;
-  substituteTeacherName: string | null;
 };
 
 const buildConditions = (filter: TeacherAttendanceFilter) => {
@@ -68,7 +57,7 @@ const buildConditions = (filter: TeacherAttendanceFilter) => {
   return conditions;
 };
 
-const querySessions = async (filter: TeacherAttendanceFilter) => {
+const querySessions = async (filter: TeacherAttendanceFilter): Promise<SessionRows[]> => {
   const db = getDb();
 
   return db
@@ -91,20 +80,7 @@ const querySessions = async (filter: TeacherAttendanceFilter) => {
     .orderBy(desc(attendanceSessions.createdAt));
 };
 
-const generateVirtualRows = (
-  sessions: {
-    id: number;
-    teacherId: number;
-    classId: number;
-    subjectId: number;
-    date: string;
-    time: string;
-    scheduledTeacherId: number | null;
-    scheduledTeacherStatus: string;
-    substituteNotes: string | null;
-    createdAt: Date;
-  }[],
-): VirtualRow[] => {
+const generateVirtualRows = (sessions: SessionRows[]): VirtualRow[] => {
   const rows: VirtualRow[] = [];
 
   for (const session of sessions) {
@@ -172,6 +148,7 @@ const generateVirtualRows = (
     }
   }
 
+  console.log('🚀 ~ generateVirtualRows ~ rows:', rows);
   return rows;
 };
 
@@ -200,49 +177,48 @@ const resolveStatus = (rows: VirtualRow[]): string => {
   return 'Hadir';
 };
 
-const resolveNotes = (rows: VirtualRow[], filter: TeacherAttendanceFilter): string => {
+const resolveNotes = (rows: VirtualRow[]): TeacherNotes => {
   const originals = rows.filter((row) => row.role === 'ORIGINAL');
   const substitutes = rows.filter((row) => row.role === 'SUBSTITUTE');
 
-  const isMonthly = Boolean(filter.month && !filter.date);
-
-  // ===== Guru asli (tidak mengajar) =====
   if (originals.length > 0) {
-    if (isMonthly) {
-      const substituteCount = originals.filter((row) => row.substituteTeacherName).length;
+    return {
+      notes: [
+        ...new Set(
+          originals
+            .map((row) => row.substituteNotes?.trim())
+            .filter((note): note is string => Boolean(note)),
+        ),
+      ],
 
-      return substituteCount > 0 ? `Digantikan ${substituteCount} kali` : '-';
-    }
-
-    return originals
-      .map((row) => {
-        const note = row.substituteNotes?.trim();
-        const replacement = row.substituteTeacherName
-          ? `Digantikan oleh ${row.substituteTeacherName}`
-          : '';
-
-        if (note && replacement) {
-          return `${note} • ${replacement}`;
-        }
-
-        return note || replacement || '-';
-      })
-      .join('\n');
+      substituteTeachers: [
+        ...new Set(
+          originals
+            .map((row) => row.substituteTeacherName)
+            .filter((name): name is string => Boolean(name)),
+        ),
+      ],
+    };
   }
 
-  // ===== Guru pengganti =====
   if (substitutes.length > 0) {
-    if (isMonthly) {
-      return `Menggantikan ${substitutes.length} kali`;
-    }
+    return {
+      notes: [],
 
-    const list = substitutes.map((row) => row.substituteTeacherName);
-
-    return `Menggantikan : ${list.join(', ')}`;
+      substituteTeachers: [
+        ...new Set(
+          substitutes
+            .map((row) => row.substituteTeacherName)
+            .filter((name): name is string => Boolean(name)),
+        ),
+      ],
+    };
   }
 
-  // ===== Guru reguler / membantu =====
-  return '-';
+  return {
+    notes: [],
+    substituteTeachers: [],
+  };
 };
 
 const groupByTeacherAndDate = (
@@ -273,7 +249,7 @@ const groupByTeacherAndDate = (
     const substituteCount = teachingRows.filter((row) => row.role === 'SUBSTITUTE').length;
 
     const status = resolveStatus(group);
-    const notes = resolveNotes(group, filter);
+    const notes = resolveNotes(group);
 
     const groupDate = filter.month && !filter.date ? first.date.substring(0, 7) : first.date;
 
@@ -282,9 +258,10 @@ const groupByTeacherAndDate = (
       teacherName: first.teacherName,
       date: groupDate,
       time: first.time,
+      role: first.role,
       totalClasses: uniqueClasses.size,
       totalSubjects: uniqueSubjects.size,
-      totalTeaching: group.length,
+      totalTeaching: teachingRows.length,
       substituteCount,
       statusLabel: status,
       substituteNotes: notes,

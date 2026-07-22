@@ -12,7 +12,7 @@ import { formatDate } from '@/lib/utils/date';
 
 import type { TeacherAttendanceRow } from '../types';
 import Link from 'next/link';
-import { Eye } from 'lucide-react';
+import { Eye, FilePen, UserCheck } from 'lucide-react';
 
 const STATUS_BADGE: Record<string, 'success' | 'warning' | 'info' | 'danger'> = {
   Hadir: 'success',
@@ -31,6 +31,13 @@ function getStatusBadge(status: string) {
   }
   return <Badge variant={variant}>{status}</Badge>;
 }
+
+const NOTES_LABEL: Record<string, string> = {
+  ORIGINAL: 'Digantikan oleh : ',
+  REGULAR: 'Guru mata pelajaran',
+  SUBSTITUTE: 'Menggantikan :',
+  HELPER: 'Ditugaskan',
+};
 
 export const TeacherAttendanceTable = ({ rows }: { rows: TeacherAttendanceRow[] }) => {
   return (
@@ -74,15 +81,23 @@ export const TeacherAttendanceTable = ({ rows }: { rows: TeacherAttendanceRow[] 
             </TableCell>
             <TableCell>{getStatusBadge(row.statusLabel)}</TableCell>
             <TableCell>
-              <div className="w-80 text-sm text-secondary whitespace-normal line-clamp-3">
-                {row.substituteNotes}
+              {!!row.substituteNotes.notes.length && (
+                <div className="flex items-start gap-1.5">
+                  <FilePen size={12} className="shrink-0 mt-1" />
+
+                  <p className="w-80 text-sm text-secondary whitespace-normal line-clamp-3">
+                    {row.substituteNotes.notes.join(', ')}
+                  </p>
+                </div>
+              )}
+
+              <div className="flex items-start gap-1.5">
+                <UserCheck size={12} className="shrink-0 mt-1" />
+
+                <p className="w-80 text-sm text-secondary whitespace-normal line-clamp-3">
+                  {NOTES_LABEL[row.role]} {row.substituteNotes.substituteTeachers.join(', ')}
+                </p>
               </div>
-
-              {/* <div className="flex items-center gap-1.5">
-                <FilePen size={12} className="shrink-0" />
-
-                <p className="text-xs text-secondary">{row.substituteNotes}</p>
-              </div> */}
             </TableCell>
             <TableCell>
               <Link href={`/dashboard/attendance/teachers/${row.teacher.id}`}>
