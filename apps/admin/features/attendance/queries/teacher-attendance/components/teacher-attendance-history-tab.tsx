@@ -17,21 +17,11 @@ import { History } from 'lucide-react';
 
 import type { TeacherAttendanceHistoryRow } from '../get-teacher-attendance-history';
 import { formatDate } from '@/lib/utils/date';
+import { parse } from 'date-fns';
+import { ATTENDANCE_TEACHER_STATUS, STATUS_CONFIG } from '@/features/attendance/types';
 
 const PAGE_SIZE = 20;
 const LOAD_DELAY = 200;
-
-const STATUS_BADGE: Record<string, 'success' | 'warning' | 'info'> = {
-  REGULAR: 'success',
-  HELPER: 'info',
-  SUBSTITUTE: 'warning',
-};
-
-const STATUS_LABEL: Record<string, string> = {
-  REGULAR: 'Hadir',
-  HELPER: 'Ditugaskan',
-  SUBSTITUTE: 'Guru Pengganti',
-};
 
 type TeacherAttendanceHistoryTabProps = {
   rows: TeacherAttendanceHistoryRow[];
@@ -94,7 +84,11 @@ export const TeacherAttendanceHistoryTab = ({ rows }: TeacherAttendanceHistoryTa
           {visible.map((row, index) => (
             <TableRow key={`${row.date}-${index}`} className={index % 2 === 0 ? 'bg-card/50' : ''}>
               <TableCell>
-                <span className="text-sm text-secondary">{formatDate(new Date(row.date))}</span>
+                <span className="text-sm text-secondary">
+                  {/* {formatDate(new Date(row.date))} */}
+
+                  {formatDate(parse(`${row.date} ${row.time}`, 'yyyy-MM-dd HH:mm', new Date()))}
+                </span>
               </TableCell>
               <TableCell>
                 <div className="font-medium text-primary">{row.className}</div>
@@ -103,8 +97,8 @@ export const TeacherAttendanceHistoryTab = ({ rows }: TeacherAttendanceHistoryTa
                 <div className="text-sm text-secondary">{row.subject}</div>
               </TableCell>
               <TableCell>
-                <Badge variant={STATUS_BADGE[row.role] ?? 'default'}>
-                  {STATUS_LABEL[row.role] ?? row.role}
+                <Badge variant={STATUS_CONFIG[row.scheduledTeacherStatus].variant ?? 'default'}>
+                  {STATUS_CONFIG[row.scheduledTeacherStatus].label}
                 </Badge>
               </TableCell>
               <TableCell>

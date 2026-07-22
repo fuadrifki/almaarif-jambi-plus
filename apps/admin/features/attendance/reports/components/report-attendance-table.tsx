@@ -8,25 +8,8 @@ import {
   TableRow,
 } from '@/components/ui';
 import { cn } from '@/lib';
-import type { ReportRow } from '../../queries/types';
-import type { Class } from '@/features/classes/types';
 import { formatDate } from '@/lib/utils/date';
-
-type ReportAttendanceTableProps = {
-  rows: ReportRow[];
-  classes: Class[];
-  className?: string;
-};
-
-const STATUS_CONFIG: Record<
-  string,
-  { variant: 'success' | 'warning' | 'info' | 'danger' | 'default'; label: string }
-> = {
-  PRESENT: { variant: 'success', label: 'Hadir' },
-  SICK: { variant: 'warning', label: 'Sakit' },
-  PERMISSION: { variant: 'info', label: 'Izin' },
-  ABSENT: { variant: 'danger', label: 'Alpha' },
-};
+import { ReportAttendanceTableProps, STATUS_CONFIG } from '../../types';
 
 function getStatusBadge(status: string | null) {
   if (!status) {

@@ -13,6 +13,7 @@ import { formatDate } from '@/lib/utils/date';
 import type { TeacherAttendanceRow } from '../types';
 import Link from 'next/link';
 import { Eye, FilePen, UserCheck } from 'lucide-react';
+import { NOTES_LABEL } from '@/features/attendance/types';
 
 const STATUS_BADGE: Record<string, 'success' | 'warning' | 'info' | 'danger'> = {
   Hadir: 'success',
@@ -31,13 +32,6 @@ function getStatusBadge(status: string) {
   }
   return <Badge variant={variant}>{status}</Badge>;
 }
-
-const NOTES_LABEL: Record<string, string> = {
-  ORIGINAL: 'Digantikan oleh : ',
-  REGULAR: 'Guru mata pelajaran',
-  SUBSTITUTE: 'Menggantikan :',
-  HELPER: 'Ditugaskan',
-};
 
 export const TeacherAttendanceTable = ({ rows }: { rows: TeacherAttendanceRow[] }) => {
   return (

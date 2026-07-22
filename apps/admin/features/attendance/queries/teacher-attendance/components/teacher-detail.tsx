@@ -137,7 +137,8 @@ export const TeacherDetail = ({
         <section>
           <h1 className="text-2xl font-semibold sm:text-3xl text-primary">Profil Guru</h1>
           <p className="mt-2 text-secondary">
-            Lihat informasi detail dan riwayat absensi guru {teacher.name}.
+            Lihat informasi detail dan riwayat absensi guru{' '}
+            <span className="font-semibold">{teacher.name}</span>.
           </p>
         </section>
 

@@ -1,4 +1,6 @@
 import { SelectOption } from '@/components/ui';
+import { ReportRow } from './queries/types';
+import { Class } from '../classes';
 
 export const ATTENDANCE_STATUS = {
   PRESENT: 'PRESENT',
@@ -48,4 +50,45 @@ export type Schedule = {
   subjectId: number;
   day: string;
   time: string;
+};
+
+export type ReportAttendanceTableProps = {
+  rows: ReportRow[];
+  classes: Class[];
+  className?: string;
+};
+
+export const STATUS_CONFIG: Record<
+  string,
+  { variant: 'success' | 'warning' | 'info' | 'danger' | 'default'; label: string }
+> = {
+  PRESENT: { variant: 'success', label: 'Hadir' },
+  SICK: { variant: 'warning', label: 'Sakit' },
+  PERMISSION: { variant: 'info', label: 'Izin' },
+  ABSENT: { variant: 'danger', label: 'Alpha' },
+};
+
+export const NOTES_LABEL: Record<string, string> = {
+  ORIGINAL: 'Digantikan oleh : ',
+  REGULAR: 'Guru mata pelajaran',
+  SUBSTITUTE: 'Menggantikan :',
+  HELPER: 'Ditugaskan',
+};
+
+export const ATTENDANCE_TEACHER_STATUS: Record<
+  string,
+  { label: string; variant: 'success' | 'warning' | 'info' | 'danger' }
+> = {
+  REGULAR: {
+    label: 'Hadir',
+    variant: 'success',
+  },
+  HELPER: {
+    label: 'Ditugaskan',
+    variant: 'success',
+  },
+  SUBSTITUTE: {
+    label: 'Guru Pengganti',
+    variant: 'success',
+  },
 };

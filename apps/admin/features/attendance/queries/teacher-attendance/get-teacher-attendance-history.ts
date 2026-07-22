@@ -3,7 +3,6 @@
 import { getDb } from '@/lib/db/client';
 import { attendanceSessions, classes } from '@/lib/db/schema';
 import { SUBJECTS } from '@/lib/db/seed-subjects';
-import { TEACHERS } from '@/lib/db/seed-teachers';
 import { desc, eq, or } from 'drizzle-orm';
 
 type GetTeacherAttendanceHistoryParams = {
@@ -11,11 +10,20 @@ type GetTeacherAttendanceHistoryParams = {
 };
 
 export type TeacherAttendanceHistoryRow = {
+  id: number;
+  teacherId: number;
+  classId: number;
+  subjectId: number;
+  scheduledTeacherId: number | null;
+  scheduledTeacherStatus: string;
+  substituteNotes: string | null;
   date: string;
+  time: string;
   className: string;
   subject: string;
   role: 'REGULAR' | 'HELPER' | 'SUBSTITUTE';
-  notes: string;
+  notes: string | null;
+  createdAt: Date;
 };
 
 type GetTeacherAttendanceHistoryOutput = {
@@ -23,7 +31,6 @@ type GetTeacherAttendanceHistoryOutput = {
 };
 
 const SUBJECT_MAP = new Map(SUBJECTS.map((s) => [s.id, s.label]));
-const CLASS_MAP = new Map<number, string>();
 
 export const getTeacherAttendanceHistory = async ({
   teacherId,
@@ -41,6 +48,7 @@ export const getTeacherAttendanceHistory = async ({
       classId: attendanceSessions.classId,
       subjectId: attendanceSessions.subjectId,
       date: attendanceSessions.date,
+      time: attendanceSessions.time,
       scheduledTeacherId: attendanceSessions.scheduledTeacherId,
       scheduledTeacherStatus: attendanceSessions.scheduledTeacherStatus,
       substituteNotes: attendanceSessions.substituteNotes,
@@ -59,7 +67,6 @@ export const getTeacherAttendanceHistory = async ({
 
   const rows: TeacherAttendanceHistoryRow[] = sessions.map((session) => {
     const subject = SUBJECT_MAP.get(session.subjectId) ?? '-';
-    const className = session.className;
 
     let role: TeacherAttendanceHistoryRow['role'] = 'REGULAR';
     let notes = '';
@@ -72,19 +79,26 @@ export const getTeacherAttendanceHistory = async ({
       notes = '-';
     } else if (session.teacherId === numericId) {
       role = 'SUBSTITUTE';
-      const originalName = TEACHERS.find((t) => t.id === session.scheduledTeacherId)?.name ?? '-';
-      notes = `Menggantikan ${originalName}`;
     } else {
       role = 'REGULAR';
       notes = session.substituteNotes ?? '-';
     }
 
     return {
+      id: session.id,
+      teacherId: session.teacherId,
+      classId: session.classId,
+      subjectId: session.subjectId,
+      scheduledTeacherId: session.scheduledTeacherId,
+      scheduledTeacherStatus: session.scheduledTeacherStatus,
+      substituteNotes: session.substituteNotes,
       date: session.date,
-      className,
-      subject,
-      role,
-      notes,
+      time: session.time,
+      className: session.className,
+      subject: subject,
+      role: role,
+      notes: notes,
+      createdAt: session.createdAt,
     };
   });
 

@@ -148,7 +148,6 @@ const generateVirtualRows = (sessions: SessionRows[]): VirtualRow[] => {
     }
   }
 
-  console.log('🚀 ~ generateVirtualRows ~ rows:', rows);
   return rows;
 };
 
