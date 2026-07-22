@@ -125,7 +125,7 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <Card title="Foto Siswa">
+      <Card title="Foto Siswa" className="space-y-4">
         <div className="flex items-center gap-4">
           <div className="relative shrink-0">
             {photoPreview ? (

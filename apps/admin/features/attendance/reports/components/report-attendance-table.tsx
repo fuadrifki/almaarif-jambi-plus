@@ -42,7 +42,7 @@ export const ReportAttendanceTable = ({ rows, className }: ReportAttendanceTable
       <TableBody>
         {rows.map((row, index) => (
           <TableRow
-            key={`${row.student.id}-${row.date}`}
+            key={`${index}-${row.student.id}-${row.date}`}
             className={index % 2 === 0 ? 'bg-card/50' : ''}
           >
             <TableCell>

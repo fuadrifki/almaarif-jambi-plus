@@ -80,7 +80,7 @@ export const ClassForm = ({ classData }: ClassFormProps) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <Card>
+      <Card className="space-y-4">
         <div className="grid gap-4 md:grid-cols-2">
           <Field label="Kode" required error={errors.code?.message}>
             <Input

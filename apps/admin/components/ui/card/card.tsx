@@ -14,7 +14,7 @@ export const Card = ({
 }: CardProps) => (
   <div
     className={cn(
-      'ads-cards gap-y-4',
+      'ads-cards',
       !noPadding && 'p-4',
       hoverable &&
         'cursor-pointer hover:bg-gray-300/40! hover:scale-[101%] transition duration-300',
