@@ -9,7 +9,7 @@ export const FieldValue = ({
 }) => {
   return (
     <div
-      className={cn('mt-1', 'text-sm', 'text-[--text-primary]', 'break-words', className)}
+      className={cn('mt-1 text-sm text-primary wrap-break-word', className)}
       role="status"
       aria-live="polite"
     >

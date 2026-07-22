@@ -77,7 +77,7 @@ export const TeacherDetail = ({
         </div>
       </Card>
 
-      <Card title="Detail Guru">
+      <Card title="Detail Guru" className="space-y-4">
         <div className="grid gap-4 md:grid-cols-2">
           <Field label="Kode">
             <FieldValue>{teacher.code}</FieldValue>
