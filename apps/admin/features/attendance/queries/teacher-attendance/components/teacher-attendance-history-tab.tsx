@@ -15,24 +15,26 @@ import {
 } from '@/components/ui';
 import { History } from 'lucide-react';
 
-import type { TeacherAttendanceRow } from '../types';
+import type { TeacherAttendanceHistoryRow } from '../get-teacher-attendance-history';
 import { formatDate } from '@/lib/utils/date';
 
 const PAGE_SIZE = 20;
 const LOAD_DELAY = 200;
 
-const STATUS_BADGE: Record<string, 'success' | 'warning' | 'info' | 'danger'> = {
-  Hadir: 'success',
-  Sakit: 'warning',
-  Izin: 'info',
-  Dinas: 'info',
-  Alpha: 'danger',
-  'Guru Pengganti': 'warning',
-  'Guru Membantu': 'info',
+const STATUS_BADGE: Record<string, 'success' | 'warning' | 'info'> = {
+  REGULAR: 'success',
+  HELPER: 'info',
+  SUBSTITUTE: 'warning',
+};
+
+const STATUS_LABEL: Record<string, string> = {
+  REGULAR: 'Hadir',
+  HELPER: 'Guru Membantu',
+  SUBSTITUTE: 'Guru Pengganti',
 };
 
 type TeacherAttendanceHistoryTabProps = {
-  rows: TeacherAttendanceRow[];
+  rows: TeacherAttendanceHistoryRow[];
 };
 
 export const TeacherAttendanceHistoryTab = ({ rows }: TeacherAttendanceHistoryTabProps) => {
@@ -82,34 +84,31 @@ export const TeacherAttendanceHistoryTab = ({ rows }: TeacherAttendanceHistoryTa
         <TableHeader>
           <TableRow>
             <TableHead className="w-2/12">Tanggal</TableHead>
-            <TableHead className="w-2/12">Kelas</TableHead>
-            <TableHead className="w-2/12">Mata Pelajaran</TableHead>
+            <TableHead className="w-3/12">Kelas</TableHead>
+            <TableHead className="w-3/12">Mata Pelajaran</TableHead>
             <TableHead className="w-2/12">Status</TableHead>
-            <TableHead className="w-4/12">Catatan</TableHead>
+            <TableHead className="w-2/12">Catatan</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {visible.map((row, index) => (
-            <TableRow
-              key={`${row.sessionId}-${index}`}
-              className={index % 2 === 0 ? 'bg-card/50' : ''}
-            >
+            <TableRow key={`${row.date}-${index}`} className={index % 2 === 0 ? 'bg-card/50' : ''}>
               <TableCell>
                 <span className="text-sm text-secondary">{formatDate(new Date(row.date))}</span>
               </TableCell>
               <TableCell>
-                <div className="font-medium text-primary">{row.class.name}</div>
+                <div className="font-medium text-primary">{row.className}</div>
               </TableCell>
               <TableCell>
-                <div className="text-sm text-secondary">{row.subject.label}</div>
+                <div className="text-sm text-secondary">{row.subject}</div>
               </TableCell>
               <TableCell>
-                <Badge variant={STATUS_BADGE[row.statusLabel] ?? 'default'}>
-                  {row.statusLabel}
+                <Badge variant={STATUS_BADGE[row.role] ?? 'default'}>
+                  {STATUS_LABEL[row.role] ?? row.role}
                 </Badge>
               </TableCell>
               <TableCell>
-                <span className="text-sm text-secondary">{row.catatanLabel}</span>
+                <span className="text-sm text-secondary">{row.notes}</span>
               </TableCell>
             </TableRow>
           ))}

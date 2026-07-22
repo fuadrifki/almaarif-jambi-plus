@@ -7,42 +7,26 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import { History, FileSpreadsheet, User } from 'lucide-react';
-import type { TeacherAttendanceRow, TeacherAttendanceSummary } from '../types';
+
+import type { TeacherDetailProfile } from '../get-teacher-detail';
+import type { TeacherAttendanceHistoryRow } from '../get-teacher-attendance-history';
+import type { TeacherAttendanceResult } from '../types';
+
 import { TeacherAttendanceHistoryTab } from './teacher-attendance-history-tab';
-import { TeacherAttendanceReportTab } from './teacher-attendance-report-tab';
+import { TeacherAttendanceTable } from './teacher-attendance-table';
+import { TeacherSummaryCards } from './teacher-summary-cards';
 
 type TeacherDetailProps = {
-  teacher: {
-    id: number;
-    code: string;
-    name: string;
-    email: string;
-    photo: string;
-    birthPlace: string;
-    birthDate: string;
-    address: string;
-    phone: string;
-    formalEducation: string;
-    boardingEducation: string;
-    position: string;
-  };
-  history: TeacherAttendanceRow[];
-  report: {
-    month: string;
-    hadir: number;
-    pengganti: number;
-    tidakHadir: number;
-    total: number;
-  }[];
-  summary: TeacherAttendanceSummary;
+  teacher: TeacherDetailProfile;
+  attendanceHistory: TeacherAttendanceHistoryRow[];
+  attendanceReport: TeacherAttendanceResult;
   basePath?: string;
 };
 
 export const TeacherDetail = ({
   teacher,
-  history,
-  report,
-  summary,
+  attendanceHistory,
+  attendanceReport,
   basePath = '/dashboard/attendance/teachers',
 }: TeacherDetailProps) => {
   const [activeTab, setActiveTab] = useState('info');
@@ -135,9 +119,14 @@ export const TeacherDetail = ({
     </div>
   );
 
-  const renderAttendanceHistoryTab = () => <TeacherAttendanceHistoryTab rows={history} />;
+  const renderAttendanceHistoryTab = () => <TeacherAttendanceHistoryTab rows={attendanceHistory} />;
 
-  const renderAttendanceReportTab = () => <TeacherAttendanceReportTab rows={report} />;
+  const renderAttendanceReportTab = () => (
+    <div className="flex flex-col gap-y-4 w-full">
+      <TeacherSummaryCards summary={attendanceReport.summary} />
+      <TeacherAttendanceTable rows={attendanceReport.rows} />
+    </div>
+  );
 
   return (
     <PageLayout>
@@ -147,30 +136,10 @@ export const TeacherDetail = ({
         />
         <section>
           <h1 className="text-2xl font-semibold sm:text-3xl text-primary">Profil Guru</h1>
-
           <p className="mt-2 text-secondary">
             Lihat informasi detail dan riwayat absensi guru {teacher.name}.
           </p>
         </section>
-
-        <Card className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
-          <div>
-            <p className="text-xs text-secondary uppercase">Kode</p>
-            <p className="font-medium text-primary">{teacher.code}</p>
-          </div>
-          <div>
-            <p className="text-xs text-secondary uppercase">Jabatan</p>
-            <p className="font-medium text-primary">{teacher.position}</p>
-          </div>
-          <div>
-            <p className="text-xs text-secondary uppercase">Total Kehadiran</p>
-            <p className="font-medium text-primary">{summary.totalTeaching}</p>
-          </div>
-          <div>
-            <p className="text-xs text-secondary uppercase">Total Pengganti</p>
-            <p className="font-medium text-primary">{summary.substituteCount}</p>
-          </div>
-        </Card>
 
         <div className="space-y-4">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
@@ -181,7 +150,7 @@ export const TeacherDetail = ({
               Riwayat Absensi
             </Tabs.Item>
             <Tabs.Item value="report" icon={<FileSpreadsheet size={16} />}>
-              Laporan Bulanan
+              Laporan Absensi
             </Tabs.Item>
           </Tabs>
         </div>

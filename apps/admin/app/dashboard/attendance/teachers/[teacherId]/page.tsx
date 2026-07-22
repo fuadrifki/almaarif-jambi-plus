@@ -1,6 +1,8 @@
 import { notFound } from 'next/navigation';
 
 import { getTeacherDetail } from '@/features/attendance/queries/teacher-attendance/get-teacher-detail';
+import { getTeacherAttendanceHistory } from '@/features/attendance/queries/teacher-attendance/get-teacher-attendance-history';
+import { getTeacherAttendanceReport } from '@/features/attendance/queries/teacher-attendance/get-teacher-attendance-report';
 import { TeacherDetail } from '@/features/attendance/queries/teacher-attendance/components/teacher-detail';
 
 type TeacherDetailPageProps = {
@@ -9,18 +11,22 @@ type TeacherDetailPageProps = {
 
 export default async function TeacherDetailPage({ params }: TeacherDetailPageProps) {
   const { teacherId } = await params;
-  const data = await getTeacherDetail(teacherId);
+  const teacher = await getTeacherDetail(teacherId);
 
-  if (!data) {
+  if (!teacher) {
     notFound();
   }
 
+  const [attendanceHistory, attendanceReport] = await Promise.all([
+    getTeacherAttendanceHistory({ teacherId }),
+    getTeacherAttendanceReport({ teacherId: teacher.id, allDates: true }),
+  ]);
+
   return (
     <TeacherDetail
-      teacher={data.teacher}
-      history={data.history}
-      report={data.report}
-      summary={data.summary}
+      teacher={teacher}
+      attendanceHistory={attendanceHistory.rows}
+      attendanceReport={attendanceReport}
     />
   );
 }
