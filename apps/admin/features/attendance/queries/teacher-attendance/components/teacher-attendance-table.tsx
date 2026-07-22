@@ -57,7 +57,7 @@ export const TeacherAttendanceTable = ({ rows }: { rows: TeacherAttendanceRow[] 
             className={index % 2 === 0 ? 'bg-card/50' : ''}
           >
             <TableCell>
-              <div className="text-sm">{formatDate(new Date(row.date))}</div>
+              <div className="text-sm">{formatDate(new Date(row.date), 'EEEE, dd MMMM yyyy')}</div>
             </TableCell>
             <TableCell>
               <div className="font-medium text-primary">{row.teacher.name}</div>
@@ -77,9 +77,7 @@ export const TeacherAttendanceTable = ({ rows }: { rows: TeacherAttendanceRow[] 
             <TableCell>
               <div className="text-sm">{row.totalTeaching || '-'}</div>
             </TableCell>
-            <TableCell>
-              {row.substituteCount ? <Badge variant="warning">Pengganti</Badge> : '-'}
-            </TableCell>
+            <TableCell>{row.substituteCount || '-'}</TableCell>
             <TableCell>{getStatusBadge(row.statusLabel)}</TableCell>
             <TableCell>
               <div className="text-sm max-w-48 truncate text-secondary">{row.catatanLabel}</div>
