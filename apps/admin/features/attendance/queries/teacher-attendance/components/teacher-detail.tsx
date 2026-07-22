@@ -136,7 +136,7 @@ export const TeacherDetail = ({
         />
       );
     }
-    return <SessionAttendanceTable rows={sessionRows} />;
+    return <SessionAttendanceTable rows={sessionRows} isDetail />;
   };
 
   const renderMonthlyReportTab = () => {

@@ -111,7 +111,7 @@ export const getTeacherDetailData = async (teacherId: number): Promise<TeacherDe
 
   const sessionRows = teacherRows.filter((r) => r.teacherId === teacherId).map(mapToSessionRow);
 
-  const monthlyReport = computeMonthlySummary(teacherRows);
+  const monthlyReport = computeMonthlySummary(teacherRows.filter((r) => r.teacherId === teacherId));
 
   return { sessionRows, monthlyReport };
 };

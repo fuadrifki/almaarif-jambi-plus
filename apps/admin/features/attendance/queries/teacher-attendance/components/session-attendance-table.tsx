@@ -88,7 +88,13 @@ function NotesCell({ row }: { row: TeacherAttendanceSessionRow }) {
   return <span className="text-secondary">-</span>;
 }
 
-export const SessionAttendanceTable = ({ rows }: { rows: TeacherAttendanceSessionRow[] }) => {
+export const SessionAttendanceTable = ({
+  rows,
+  isDetail,
+}: {
+  rows: TeacherAttendanceSessionRow[];
+  isDetail?: boolean;
+}) => {
   return (
     <Table className="min-w-full">
       <TableHeader>
@@ -100,7 +106,7 @@ export const SessionAttendanceTable = ({ rows }: { rows: TeacherAttendanceSessio
           <TableHead>Status Absensi</TableHead>
           <TableHead>Peran Mengajar</TableHead>
           <TableHead>Catatan</TableHead>
-          <TableHead>Aksi</TableHead>
+          {!isDetail && <TableHead>Aksi</TableHead>}
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -131,13 +137,15 @@ export const SessionAttendanceTable = ({ rows }: { rows: TeacherAttendanceSessio
                 <NotesCell row={row} />
               </div>
             </TableCell>
-            <TableCell>
-              <Link href={`/dashboard/attendance/teachers/${row.teacher.id}`}>
-                <Button variant="ghost" size="sm" leftIcon={<Eye size={14} />}>
-                  Detail
-                </Button>
-              </Link>
-            </TableCell>
+            {!isDetail && (
+              <TableCell>
+                <Link href={`/dashboard/attendance/teachers/${row.teacher.id}`}>
+                  <Button variant="ghost" size="sm" leftIcon={<Eye size={14} />}>
+                    Detail
+                  </Button>
+                </Link>
+              </TableCell>
+            )}
           </TableRow>
         ))}
       </TableBody>
