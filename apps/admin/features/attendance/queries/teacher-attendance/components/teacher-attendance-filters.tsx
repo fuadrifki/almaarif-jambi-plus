@@ -7,9 +7,15 @@ import { format, parseISO, subMonths } from 'date-fns';
 import { Badge, Button, Input, Select, DatePicker, Card } from '@/components/ui';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { Search } from 'lucide-react';
+import {
+  TEACHING_ROLE_OPTIONS,
+  ATTENDANCE_SESSION_STATUS_OPTIONS,
+} from '@/features/attendance/types';
 
 type TeacherAttendanceFiltersProps = {
   teachers: { id: number; name: string }[];
+  classes: { id: number; name: string }[];
+  subjects: { id: number; label: string }[];
 };
 
 function generateMonthOptions() {
@@ -24,7 +30,11 @@ function generateMonthOptions() {
   return options;
 }
 
-export const TeacherAttendanceFilters = ({ teachers }: TeacherAttendanceFiltersProps) => {
+export const TeacherAttendanceFilters = ({
+  teachers,
+  classes,
+  subjects,
+}: TeacherAttendanceFiltersProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -35,8 +45,20 @@ export const TeacherAttendanceFilters = ({ teachers }: TeacherAttendanceFiltersP
   const dateParam = searchParams.get('date') || '';
   const monthParam = searchParams.get('month') || '';
   const teacherId = searchParams.get('teacherId') || '';
+  const classId = searchParams.get('classId') || '';
+  const subjectId = searchParams.get('subjectId') || '';
+  const attendanceStatus = searchParams.get('attendanceStatus') || '';
+  const teachingRole = searchParams.get('teachingRole') || '';
 
-  const advancedFilterCount = [dateParam, monthParam, teacherId].filter(Boolean).length;
+  const advancedFilterCount = [
+    dateParam,
+    monthParam,
+    teacherId,
+    classId,
+    subjectId,
+    attendanceStatus,
+    teachingRole,
+  ].filter(Boolean).length;
 
   const monthOptions = useMemo(() => generateMonthOptions(), []);
 
@@ -57,6 +79,36 @@ export const TeacherAttendanceFilters = ({ teachers }: TeacherAttendanceFiltersP
         .sort((a, b) => a.label.localeCompare(b.label)),
     ],
     [teachers],
+  );
+
+  const classOptions = useMemo(
+    () => [
+      { label: 'Semua', value: '' },
+      ...classes
+        .map((c) => ({ label: c.name, value: c.id }))
+        .sort((a, b) => String(a.label).localeCompare(String(b.label))),
+    ],
+    [classes],
+  );
+
+  const subjectOptions = useMemo(
+    () => [
+      { label: 'Semua', value: '' },
+      ...subjects
+        .map((s) => ({ label: s.label, value: s.id }))
+        .sort((a, b) => String(a.label).localeCompare(String(b.label))),
+    ],
+    [subjects],
+  );
+
+  const attendanceStatusOptions = useMemo(
+    () => [{ label: 'Semua', value: '' }, ...ATTENDANCE_SESSION_STATUS_OPTIONS],
+    [],
+  );
+
+  const teachingRoleOptions = useMemo(
+    () => [{ label: 'Semua', value: '' }, ...TEACHING_ROLE_OPTIONS],
+    [],
   );
 
   const updateSearchParams = useCallback(
@@ -98,6 +150,22 @@ export const TeacherAttendanceFilters = ({ teachers }: TeacherAttendanceFiltersP
     updateSearchParams({ teacherId: String(value) || undefined });
   };
 
+  const handleClassChange = (value: string | number) => {
+    updateSearchParams({ classId: String(value) || undefined });
+  };
+
+  const handleSubjectChange = (value: string | number) => {
+    updateSearchParams({ subjectId: String(value) || undefined });
+  };
+
+  const handleAttendanceStatusChange = (value: string | number) => {
+    updateSearchParams({ attendanceStatus: String(value) || undefined });
+  };
+
+  const handleTeachingRoleChange = (value: string | number) => {
+    updateSearchParams({ teachingRole: String(value) || undefined });
+  };
+
   const [search, setSearch] = useState(q);
 
   useEffect(() => {
@@ -118,7 +186,7 @@ export const TeacherAttendanceFilters = ({ teachers }: TeacherAttendanceFiltersP
     <Card className="p-4">
       <div className="flex flex-col md:flex-row items-center gap-4">
         <Input
-          placeholder="Cari catatan..."
+          placeholder="Cari nama guru..."
           leftIcon={<Search size={16} />}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -173,6 +241,34 @@ export const TeacherAttendanceFilters = ({ teachers }: TeacherAttendanceFiltersP
                   value={teacherId}
                   placeholder="Guru"
                   onChange={handleTeacherChange}
+                />
+
+                <Select
+                  options={classOptions}
+                  value={classId}
+                  placeholder="Kelas"
+                  onChange={handleClassChange}
+                />
+
+                <Select
+                  options={subjectOptions}
+                  value={subjectId}
+                  placeholder="Mata Pelajaran"
+                  onChange={handleSubjectChange}
+                />
+
+                <Select
+                  options={attendanceStatusOptions}
+                  value={attendanceStatus}
+                  placeholder="Status Absensi"
+                  onChange={handleAttendanceStatusChange}
+                />
+
+                <Select
+                  options={teachingRoleOptions}
+                  value={teachingRole}
+                  placeholder="Peran Mengajar"
+                  onChange={handleTeachingRoleChange}
                 />
               </div>
             </div>

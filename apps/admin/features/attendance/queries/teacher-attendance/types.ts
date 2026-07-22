@@ -1,4 +1,7 @@
-import { TeacherNotes } from '../../repositories/teacher-attendance.repository.types';
+import {
+  ResolvedTeacherStatus,
+  TeacherNotes,
+} from '../../repositories/teacher-attendance.repository.types';
 
 export type TeacherAttendanceRow = {
   teacher: {
@@ -12,7 +15,7 @@ export type TeacherAttendanceRow = {
   totalSubjects: number;
   totalTeaching: number;
   substituteCount: number;
-  statusLabel: string;
+  resolvedStatus: ResolvedTeacherStatus;
   substituteNotes: TeacherNotes;
 };
 

@@ -92,3 +92,56 @@ export const ATTENDANCE_TEACHER_STATUS: Record<
     variant: 'success',
   },
 };
+
+export const TEACHER_ROLE = {
+  REGULAR: 'REGULAR',
+  HELPER: 'HELPER',
+  ORIGINAL: 'ORIGINAL',
+  SUBSTITUTE: 'SUBSTITUTE',
+} as const;
+
+export type TeacherRole = (typeof TEACHER_ROLE)[keyof typeof TEACHER_ROLE];
+
+export const resolveAttendanceStatus = (
+  role: TeacherRole,
+  scheduledTeacherStatus: string,
+): AttendanceStatus => {
+  if (role === 'ORIGINAL') {
+    if (scheduledTeacherStatus === 'SICK') return ATTENDANCE_STATUS.SICK;
+    if (scheduledTeacherStatus === 'PERMISSION') return ATTENDANCE_STATUS.PERMISSION;
+    return ATTENDANCE_STATUS.ABSENT;
+  }
+  return ATTENDANCE_STATUS.PRESENT;
+};
+
+export const TEACHING_ROLE_CONFIG: Record<
+  TeacherRole,
+  { label: string; variant: 'success' | 'warning' | 'info' | 'danger' | 'default' }
+> = {
+  REGULAR: { label: 'Guru Mata Pelajaran', variant: 'success' },
+  ORIGINAL: { label: 'Guru Mata Pelajaran', variant: 'success' },
+  SUBSTITUTE: { label: 'Guru Pengganti', variant: 'info' },
+  HELPER: { label: 'Ditugaskan', variant: 'success' },
+};
+
+export const TEACHING_ROLE_OPTIONS: SelectOption[] = [
+  { label: 'Guru Mata Pelajaran', value: TEACHER_ROLE.REGULAR },
+  { label: 'Guru Pengganti', value: TEACHER_ROLE.SUBSTITUTE },
+  { label: 'Ditugaskan', value: TEACHER_ROLE.HELPER },
+];
+
+export const ATTENDANCE_SESSION_STATUS_OPTIONS: SelectOption[] = [
+  { label: 'Hadir', value: ATTENDANCE_STATUS.PRESENT },
+  { label: 'Sakit', value: ATTENDANCE_STATUS.SICK },
+  { label: 'Izin', value: ATTENDANCE_STATUS.PERMISSION },
+  { label: 'Alpha', value: ATTENDANCE_STATUS.ABSENT },
+];
+
+export const ATTENDANCE_SESSION_STATUS_CONFIG: Record<
+  string,
+  { label: string; variant: 'success' | 'warning' | 'info' | 'danger' | 'default' }
+> = {
+  SICK: { label: 'Sakit', variant: 'warning' },
+  PERMISSION: { label: 'Izin', variant: 'info' },
+  ABSENT: { label: 'Alpha', variant: 'danger' },
+};

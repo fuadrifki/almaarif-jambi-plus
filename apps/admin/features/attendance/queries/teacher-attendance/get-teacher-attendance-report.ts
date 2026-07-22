@@ -22,7 +22,7 @@ export const getTeacherAttendanceReport = async (
     totalSubjects: row.totalSubjects,
     totalTeaching: row.totalTeaching,
     substituteCount: row.substituteCount,
-    statusLabel: row.statusLabel,
+    resolvedStatus: row.resolvedStatus,
     substituteNotes: row.substituteNotes,
   }));
 

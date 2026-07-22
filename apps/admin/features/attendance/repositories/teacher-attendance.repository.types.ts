@@ -1,10 +1,22 @@
+import type { TeacherRole } from '../types';
+
 export type TeacherAttendanceFilter = {
   search?: string;
   date?: string;
   month?: string;
   teacherId?: number;
   allDates?: boolean;
+  classId?: number;
+  subjectId?: number;
+  attendanceStatus?: string;
+  teachingRole?: TeacherRole;
 };
+
+export type ResolvedTeacherStatus =
+  | { status: 'ABSENT'; scheduledTeacherStatus: string }
+  | { status: 'SUBSTITUTE' }
+  | { status: 'HELPER' }
+  | { status: 'REGULAR' };
 
 export type TeacherAttendanceSummaryRow = {
   teacherId: number;
@@ -16,7 +28,7 @@ export type TeacherAttendanceSummaryRow = {
   totalSubjects: number;
   totalTeaching: number;
   substituteCount: number;
-  statusLabel: string;
+  resolvedStatus: ResolvedTeacherStatus;
   substituteNotes: TeacherNotes;
 };
 
@@ -32,20 +44,24 @@ export type TeacherAttendanceRepository = {
   findTeacherOverallSummary(
     filter: TeacherAttendanceFilter,
   ): Promise<TeacherAttendanceOverallSummary>;
+  findVirtualRows(filter: TeacherAttendanceFilter): Promise<VirtualRow[]>;
 };
 
 export type VirtualRow = {
   sessionId: number;
   teacherId: number;
   teacherName: string;
-  role: 'REGULAR' | 'HELPER' | 'ORIGINAL' | 'SUBSTITUTE';
+  role: TeacherRole;
   classId: number;
   subjectId: number;
+  className: string;
+  subjectName: string;
   date: string;
   time: string;
   scheduledTeacherStatus: string;
   substituteNotes: string | null;
   substituteTeacherName: string | null;
+  createdAt: Date;
 };
 
 export type TeacherNotes = {
@@ -57,6 +73,7 @@ export type SessionRows = {
   id: number;
   teacherId: number;
   classId: number;
+  className: string;
   subjectId: number;
   date: string;
   time: string;

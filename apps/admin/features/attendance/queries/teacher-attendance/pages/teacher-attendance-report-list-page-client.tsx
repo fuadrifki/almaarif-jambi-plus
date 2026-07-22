@@ -6,24 +6,25 @@ import { PageLayout, EmptyState, InfiniteScroll, Skeleton } from '@/components/u
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { FileSpreadsheet } from 'lucide-react';
 import { TeacherAttendanceFilters } from '../components/teacher-attendance-filters';
-import { TeacherAttendanceTable } from '../components/teacher-attendance-table';
-import type { TeacherAttendanceResult } from '../types';
-import { TeacherSummaryCards } from '../components/teacher-summary-cards';
+import { SessionAttendanceTable } from '../components/session-attendance-table';
+import type { TeacherAttendanceSessionRow } from '../get-teacher-attendance-session-list';
 
 const PAGE_SIZE = 20;
 const LOAD_DELAY = 200;
 
 type TeacherAttendanceReportListPageClientProps = {
-  report: TeacherAttendanceResult;
+  rows: TeacherAttendanceSessionRow[];
   teachers: { id: number; name: string }[];
+  classes: { id: number; name: string }[];
+  subjects: { id: number; label: string }[];
 };
 
 export const TeacherAttendanceReportListPageClient = ({
-  report,
+  rows,
   teachers,
+  classes,
+  subjects,
 }: TeacherAttendanceReportListPageClientProps) => {
-  const { summary, rows } = report;
-
   const [displayCount, setDisplayCount] = useState(PAGE_SIZE);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
@@ -43,9 +44,9 @@ export const TeacherAttendanceReportListPageClient = ({
       <PageLayout.Header>
         <Breadcrumb items={[{ label: 'Laporan Absensi Guru' }]} />
         <h1 className="text-2xl font-semibold sm:text-3xl">Laporan Absensi Guru</h1>
-        <p className="text-secondary">Ringkasan kehadiran guru pesantren.</p>
+        <p className="text-secondary">Log sesi kehadiran guru pesantren.</p>
 
-        <TeacherAttendanceFilters teachers={teachers} />
+        <TeacherAttendanceFilters teachers={teachers} classes={classes} subjects={subjects} />
       </PageLayout.Header>
 
       <PageLayout.Content>
@@ -71,11 +72,7 @@ export const TeacherAttendanceReportListPageClient = ({
               </p>
             }
           >
-            <div className="flex flex-col gap-y-4 w-full">
-              {/* <TeacherSummaryCards summary={summary} /> */}
-
-              <TeacherAttendanceTable rows={visibleRows} />
-            </div>
+            <SessionAttendanceTable rows={visibleRows} />
           </InfiniteScroll>
         )}
       </PageLayout.Content>

@@ -11,26 +11,59 @@ import {
 import { formatDate } from '@/lib/utils/date';
 
 import type { TeacherAttendanceRow } from '../types';
+import type { ResolvedTeacherStatus } from '../../../repositories/teacher-attendance.repository.types';
 import Link from 'next/link';
 import { Eye, FilePen, UserCheck } from 'lucide-react';
 import { NOTES_LABEL } from '@/features/attendance/types';
 
-const STATUS_BADGE: Record<string, 'success' | 'warning' | 'info' | 'danger'> = {
-  Hadir: 'success',
-  Sakit: 'warning',
-  Izin: 'info',
-  Dinas: 'info',
-  Alpha: 'danger',
-  'Guru Pengganti': 'success',
-  Ditugaskan: 'success',
+const ABSENT_STATUS_LABEL: Record<string, string> = {
+  SICK: 'Sakit',
+  PERMISSION: 'Izin',
+  OFFICIAL_DUTY: 'Dinas',
+  ABSENT: 'Alpha',
+  OTHER: 'Lainnya',
 };
 
-function getStatusBadge(status: string) {
-  const variant = STATUS_BADGE[status];
-  if (!variant) {
-    return <Badge variant="default">{status}</Badge>;
+const ABSENT_STATUS_VARIANT: Record<string, 'success' | 'warning' | 'info' | 'danger'> = {
+  SICK: 'warning',
+  PERMISSION: 'info',
+  OFFICIAL_DUTY: 'info',
+  ABSENT: 'danger',
+};
+
+function getResolvedStatusLabel(resolvedStatus: ResolvedTeacherStatus): string {
+  switch (resolvedStatus.status) {
+    case 'ABSENT':
+      return (
+        ABSENT_STATUS_LABEL[resolvedStatus.scheduledTeacherStatus] ??
+        resolvedStatus.scheduledTeacherStatus
+      );
+    case 'SUBSTITUTE':
+      return 'Guru Pengganti';
+    case 'HELPER':
+      return 'Ditugaskan';
+    case 'REGULAR':
+      return 'Hadir';
   }
-  return <Badge variant={variant}>{status}</Badge>;
+}
+
+function getResolvedStatusVariant(
+  resolvedStatus: ResolvedTeacherStatus,
+): 'success' | 'warning' | 'info' | 'danger' {
+  switch (resolvedStatus.status) {
+    case 'ABSENT':
+      return ABSENT_STATUS_VARIANT[resolvedStatus.scheduledTeacherStatus] ?? 'default';
+    case 'SUBSTITUTE':
+    case 'HELPER':
+    case 'REGULAR':
+      return 'success';
+  }
+}
+
+function ResolvedStatusBadge({ resolvedStatus }: { resolvedStatus: ResolvedTeacherStatus }) {
+  const label = getResolvedStatusLabel(resolvedStatus);
+  const variant = getResolvedStatusVariant(resolvedStatus);
+  return <Badge variant={variant}>{label}</Badge>;
 }
 
 export const TeacherAttendanceTable = ({ rows }: { rows: TeacherAttendanceRow[] }) => {
@@ -73,7 +106,9 @@ export const TeacherAttendanceTable = ({ rows }: { rows: TeacherAttendanceRow[] 
             <TableCell>
               <div className="text-sm">{row.substituteCount || '-'}</div>
             </TableCell>
-            <TableCell>{getStatusBadge(row.statusLabel)}</TableCell>
+            <TableCell>
+              <ResolvedStatusBadge resolvedStatus={row.resolvedStatus} />
+            </TableCell>
             <TableCell>
               {!!row.substituteNotes.notes.length && (
                 <div className="flex items-start gap-1.5">
