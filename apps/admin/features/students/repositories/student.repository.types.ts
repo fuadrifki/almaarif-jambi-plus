@@ -4,6 +4,7 @@ export type StudentRepository = {
   findAll(): Promise<Student[]>;
   findById(id: string): Promise<Student | null>;
   findByNis(nis: string): Promise<Student | null>;
+  findByGuardianPhone(phone: string): Promise<Student | null>;
   create(student: Omit<Student, 'id' | 'createdAt' | 'updatedAt'>): Promise<Student>;
   update(
     id: string,

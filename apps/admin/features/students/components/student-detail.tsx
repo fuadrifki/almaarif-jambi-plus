@@ -129,9 +129,11 @@ export const StudentDetail = ({
   return (
     <PageLayout>
       <PageLayout.Header>
-        {showBreadcrumb && (
-          <Breadcrumb items={[{ label: 'Students', href: basePath }, { label: student.name }]} />
-        )}
+        <Breadcrumb
+          homePath="/"
+          items={[{ label: 'Students', href: basePath }, { label: student.name }]}
+        />
+
         <section>
           <h1 className="text-2xl font-semibold sm:text-3xl text-primary">Student Profile</h1>
 

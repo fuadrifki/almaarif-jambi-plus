@@ -8,6 +8,7 @@ export type BreadcrumbItem = {
 };
 
 export type BreadcrumbProps = ComponentPropsWithoutRef<'nav'> & {
+  homePath?: string;
   showHome?: boolean;
   items: BreadcrumbItem[];
 };

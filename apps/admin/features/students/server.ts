@@ -53,6 +53,31 @@ export const deleteStudentPhoto = async (photoUrl: string): Promise<void> => {
   }
 };
 
+export const searchStudent = async (formData: FormData) => {
+  const nis = formData.get('nis') as string;
+  const guardianPhone = formData.get('guardianPhone') as string;
+
+  if (!nis && !guardianPhone) {
+    throw new Error('NIS atau nomor telepon wali harus diisi');
+  }
+
+  let student = null;
+
+  if (nis) {
+    student = await studentRepository.findByNis(nis);
+  }
+
+  if (guardianPhone && !student) {
+    student = await studentRepository.findByGuardianPhone(guardianPhone);
+  }
+
+  if (!student) {
+    throw new Error('Data siswa tidak ditemukan');
+  }
+
+  return student;
+};
+
 export const createStudent = async (data: StudentFormData) => {
   const existing = await studentRepository.findByNis(data.nis);
 

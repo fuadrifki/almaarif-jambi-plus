@@ -45,6 +45,12 @@ export const studentRepository: StudentRepository = {
     return row ? toStudent(row) : null;
   },
 
+  async findByGuardianPhone(phone) {
+    const [row] = await getDb().select().from(students).where(eq(students.guardianPhone, phone));
+
+    return row ? toStudent(row) : null;
+  },
+
   async create(data) {
     const [row] = await getDb().insert(students).values(data).returning();
 
