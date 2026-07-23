@@ -13,6 +13,7 @@ import { StudentAttendanceHistoryTab } from './student-attendance-history-tab';
 import { StudentAttendanceReportTab } from './student-attendance-report-tab';
 
 import { Class } from '@/features/classes';
+import { cn } from '@/lib';
 
 type StudentDetailProps = {
   student: Student;
@@ -24,7 +25,7 @@ type StudentDetailProps = {
   };
   basePath?: string;
   showEditButton?: boolean;
-  showBreadcrumb?: boolean;
+  isPublic?: boolean;
 };
 
 export const StudentDetail = ({
@@ -35,7 +36,7 @@ export const StudentDetail = ({
   permissions,
   basePath = '/dashboard/students',
   showEditButton = true,
-  showBreadcrumb = true,
+  isPublic,
 }: StudentDetailProps) => {
   const [activeTab, setActiveTab] = useState('info');
 
@@ -128,9 +129,9 @@ export const StudentDetail = ({
 
   return (
     <PageLayout>
-      <PageLayout.Header>
+      <PageLayout.Header className={cn(isPublic && 'pt-4 px-0 sm:px-4')}>
         <Breadcrumb
-          homePath="/"
+          homePath={isPublic ? '/' : '/dashboard'}
           items={[{ label: 'Students', href: basePath }, { label: student.name }]}
         />
 
