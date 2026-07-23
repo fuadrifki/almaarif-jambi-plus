@@ -184,7 +184,7 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
         </div>
       </Card>
 
-      <Card title="Detail Siswa">
+      <Card title="Detail Siswa" className="space-y-4">
         <div className="grid gap-4 md:grid-cols-2">
           <Field label="NIS" required error={errors.nis?.message}>
             <Input
@@ -224,7 +224,7 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
         </div>
       </Card>
 
-      <Card title="Detail Wali">
+      <Card title="Detail Wali" className="space-y-4">
         <div className="grid gap-4 md:grid-cols-2">
           <Field label="Nama Wali" required error={errors.guardianName?.message}>
             <Input
