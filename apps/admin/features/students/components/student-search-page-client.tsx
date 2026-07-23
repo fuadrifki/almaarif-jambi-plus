@@ -37,51 +37,43 @@ export const StudentSearchPageClient = ({ searchAction }: StudentSearchPageClien
   };
 
   return (
-    <PageLayout className="bg-background min-h-screen">
-      <PageLayout.Header>
+    <div className="mx-auto w-full sm:w-sm flex flex-col overflow-y-auto items-center justify-center h-screen">
+      <Card className="space-y-6">
         <Breadcrumb homePath="/" items={[{ label: 'Cari Siswa', href: '/' }]} />
-      </PageLayout.Header>
 
-      <PageLayout.Content>
-        <div className="container mx-auto flex items-center justify-center">
-          <div className="mx-auto max-w-md">
-            <Card className="space-y-6">
-              <div className="container mx-auto text-center flex flex-col justify-center">
-                <h1 className="text-3xl font-bold">Pencarian Siswa</h1>
-                <p className="text-muted-foreground mt-2">
-                  Cari siswa menggunakan NIS dan nomor telepon orang tua/wali.
-                </p>
-              </div>
-
-              <div className="flex flex-col space-y-4">
-                <Field label="NIS" required>
-                  <Input
-                    value={nis}
-                    onChange={(e) => setNis(e.target.value)}
-                    placeholder="Masukkan NIS siswa"
-                    disabled={isLoading}
-                  />
-                </Field>
-
-                <Field label="Nomor Telepon Orang Tua/Wali" required>
-                  <Input
-                    value={guardianPhone}
-                    onChange={(e) => setGuardianPhone(e.target.value)}
-                    placeholder="Masukkan nomor telepon"
-                    disabled={isLoading}
-                  />
-                </Field>
-              </div>
-
-              <div className="flex justify-center">
-                <Button disabled={!nis || !guardianPhone} onClick={handleSearch}>
-                  Cari
-                </Button>
-              </div>
-            </Card>
-          </div>
+        <div className="container mx-auto text-center flex flex-col justify-center mb-8">
+          <h1 className="text-3xl font-bold">Pencarian Siswa</h1>
+          <p className="text-muted-foreground mt-2">
+            Cari siswa menggunakan NIS dan nomor telepon orang tua/wali.
+          </p>
         </div>
-      </PageLayout.Content>
-    </PageLayout>
+
+        <div className="flex flex-col space-y-4">
+          <Field label="NIS" required>
+            <Input
+              value={nis}
+              onChange={(e) => setNis(e.target.value)}
+              placeholder="Masukkan NIS siswa"
+              disabled={isLoading}
+            />
+          </Field>
+
+          <Field label="Nomor Telepon Orang Tua/Wali" required>
+            <Input
+              value={guardianPhone}
+              onChange={(e) => setGuardianPhone(e.target.value)}
+              placeholder="Masukkan nomor telepon"
+              disabled={isLoading}
+            />
+          </Field>
+        </div>
+
+        <div className="flex justify-center">
+          <Button className="w-full" disabled={!nis || !guardianPhone} onClick={handleSearch}>
+            Cari
+          </Button>
+        </div>
+      </Card>
+    </div>
   );
 };
