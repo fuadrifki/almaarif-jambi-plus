@@ -3,10 +3,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
-import { Badge, Button, Input, Select, Card } from '@/components/ui';
+import { Badge, Button, Input, Select, Card, DatePicker } from '@/components/ui';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import type { Class } from '@/features/classes/types';
-import { Plus, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
+import { format, parseISO } from 'date-fns';
 
 type ReportFiltersProps = {
   classes: Class[];
@@ -46,13 +47,25 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
   const monthOptions = useMemo(() => generateMonthOptions(), []);
 
   const q = searchParams.get('search') || '';
+  const dateParam = searchParams.get('date') || '';
   const month = searchParams.get('month') || '';
   const classId = searchParams.get('classId') || '';
   const teacherId = searchParams.get('teacherId') || '';
   const subjectId = searchParams.get('subjectId') || '';
   const status = searchParams.get('status') || '';
 
-  const advancedFilterCount = [month, classId, teacherId, subjectId, status].filter(Boolean).length;
+  const advancedFilterCount = [dateParam, month, classId, teacherId, subjectId, status].filter(
+    Boolean,
+  ).length;
+
+  const datePickerValue = useMemo(() => {
+    if (!dateParam) return undefined;
+    try {
+      return parseISO(dateParam);
+    } catch {
+      return undefined;
+    }
+  }, [dateParam]);
 
   const classOptions = useMemo(
     () => [{ label: 'Semua', value: '' }, ...classes.map((c) => ({ label: c.name, value: c.id }))],
@@ -91,10 +104,21 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
         }
       });
 
+      if (params.toString() === searchParams.toString()) {
+        return;
+      }
+
       router.push(`${pathname}?${params.toString()}`, { scroll: false });
     },
     [pathname, searchParams, router],
   );
+
+  const handleDateChange = (date: Date | undefined) => {
+    updateSearchParams({
+      date: date ? format(date, 'yyyy-MM-dd') : undefined,
+      month: undefined,
+    });
+  };
 
   const handleMonthChange = (value: string | number) => {
     updateSearchParams({ month: String(value) || undefined });
@@ -160,12 +184,21 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
               <div className="px-4 py-3 border-b border-border flex items-center gap-3 justify-between">
                 <h2 className="text-lg font-semibold">Filters</h2>
 
-                <Button variant="outline" onClick={handleReset}>
-                  Reset
-                </Button>
+                {advancedFilterCount > 0 && (
+                  <Button variant="outline" onClick={handleReset}>
+                    Reset
+                  </Button>
+                )}
               </div>
 
               <div className="px-4 py-4 space-y-4 overflow-y-auto flex-1 w-full">
+                <DatePicker
+                  value={datePickerValue}
+                  onChange={handleDateChange}
+                  placeholder="Pilih tanggal"
+                  resettable
+                />
+
                 <Select
                   options={monthOptions}
                   value={month}

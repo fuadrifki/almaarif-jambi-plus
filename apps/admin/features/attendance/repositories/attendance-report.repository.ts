@@ -8,7 +8,13 @@ import type {
 } from './attendance-report.repository.types';
 
 const buildMonthConditions = (filter: AttendanceReportFilter) => {
-  const conditions = [like(attendanceSessions.date, `${filter.month}%`)];
+  const conditions = [];
+
+  if (filter.date) {
+    conditions.push(eq(attendanceSessions.date, filter.date));
+  } else if (filter.month) {
+    conditions.push(like(attendanceSessions.date, `${filter.month}%`));
+  }
 
   if (filter.classId) {
     conditions.push(eq(attendanceSessions.classId, filter.classId));

@@ -210,31 +210,27 @@ export const TeacherAttendanceFilters = ({
               <div className="px-4 py-3 border-b border-border flex items-center gap-3 justify-between">
                 <h2 className="text-lg font-semibold">Filters</h2>
 
-                <Button variant="outline" onClick={handleReset}>
-                  Reset
-                </Button>
+                {advancedFilterCount > 0 && (
+                  <Button variant="outline" onClick={handleReset}>
+                    Reset
+                  </Button>
+                )}
               </div>
 
               <div className="px-4 py-4 space-y-4 overflow-y-auto flex-1 w-full">
-                <div>
-                  <p className="text-sm text-secondary mb-1.5">Tanggal</p>
-                  <DatePicker
-                    value={datePickerValue}
-                    onChange={handleDateChange}
-                    placeholder="Pilih tanggal"
-                    resettable
-                  />
-                </div>
+                <DatePicker
+                  value={datePickerValue}
+                  onChange={handleDateChange}
+                  placeholder="Pilih tanggal"
+                  resettable
+                />
 
-                <div>
-                  <p className="text-sm text-secondary mb-1.5">Bulan</p>
-                  <Select
-                    options={monthOptions}
-                    value={monthParam}
-                    placeholder="Pilih bulan"
-                    onChange={handleMonthChange}
-                  />
-                </div>
+                <Select
+                  options={monthOptions}
+                  value={monthParam}
+                  placeholder="Pilih bulan"
+                  onChange={handleMonthChange}
+                />
 
                 <Select
                   options={teacherOptions}
