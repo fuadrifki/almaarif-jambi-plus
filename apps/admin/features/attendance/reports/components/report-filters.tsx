@@ -169,7 +169,7 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
 
         <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen} modal={true}>
           <PopoverTrigger asChild>
-            <Button variant="outline" className="gap-2">
+            <Button variant="outline" className="gap-2 w-full sm:w-max">
               Filter
               {advancedFilterCount > 0 && <Badge variant="info">{advancedFilterCount}</Badge>}
             </Button>

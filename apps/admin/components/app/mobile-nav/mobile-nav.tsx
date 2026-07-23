@@ -47,7 +47,7 @@ export const MobileNav = ({ role }: MobileNavProps) => {
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-50 md:hidden">
-      <Card className="flex items-stretch rounded-none border-t border-white/10 px-0 py-0">
+      <Card className="flex items-stretch rounded-none border-t border-white/10 px-0 py-0 gap-x-1.5">
         {primary.map(renderItem)}
 
         {hasOverflow && (

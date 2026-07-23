@@ -195,7 +195,7 @@ export const TeacherAttendanceFilters = ({
 
         <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen} modal={true}>
           <PopoverTrigger asChild>
-            <Button variant="outline" className="gap-2">
+            <Button variant="outline" className="gap-2 w-full sm:w-max">
               Filter
               {advancedFilterCount > 0 && <Badge variant="info">{advancedFilterCount}</Badge>}
             </Button>
@@ -217,7 +217,7 @@ export const TeacherAttendanceFilters = ({
                 )}
               </div>
 
-              <div className="px-4 py-4 space-y-4 overflow-y-auto flex-1 w-full">
+              <div className="px-4 py-4 flex flex-col space-y-4 overflow-y-auto flex-1 w-full">
                 <DatePicker
                   value={datePickerValue}
                   onChange={handleDateChange}
