@@ -1,5 +1,6 @@
 export type AttendanceReportFilter = {
   search?: string;
+  date?: string;
   month?: string;
   classId?: number;
   teacherId?: number;

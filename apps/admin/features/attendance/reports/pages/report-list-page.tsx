@@ -27,6 +27,7 @@ export async function AttendanceReportsPage({ searchParams }: AttendanceReportsP
 
   const filter: ReportFilter = {
     search: getParam(params.search),
+    date: getParam(params.date),
     month: getParam(params.month) ?? format(new Date(), 'yyyy-MM'),
     classId: getNumberParam(params.classId),
     teacherId: getNumberParam(params.teacherId),
