@@ -105,21 +105,23 @@ export const StudentDetail = ({
         </Field>
       </Card>
 
-      <div className="flex gap-3 pt-2 items-center justify-center sm:justify-end">
-        <Link href={basePath} className="w-full sm:w-max">
-          <Button type="button" variant="ghost">
-            Kembali
-          </Button>
-        </Link>
-
-        {showEditButton && permissions?.canEditStudent && (
-          <Link href={`${basePath}/${student.id}/edit`} className="w-full sm:w-max">
-            <Button type="submit" className="w-full">
-              Edit
+      {!isPublic && (
+        <div className="flex gap-3 pt-2 items-center justify-center sm:justify-end">
+          <Link href={basePath} className="w-full sm:w-max">
+            <Button type="button" variant="ghost">
+              Kembali
             </Button>
           </Link>
-        )}
-      </div>
+
+          {showEditButton && permissions?.canEditStudent && (
+            <Link href={`${basePath}/${student.id}/edit`} className="w-full sm:w-max">
+              <Button type="submit" className="w-full">
+                Edit
+              </Button>
+            </Link>
+          )}
+        </div>
+      )}
     </div>
   );
 
