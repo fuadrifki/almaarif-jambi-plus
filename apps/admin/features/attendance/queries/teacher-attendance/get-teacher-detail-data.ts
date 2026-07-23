@@ -42,6 +42,7 @@ const computeMonthlySummary = (rows: VirtualRow[]): TeacherMonthlyReportRow[] =>
 
   for (const row of rows) {
     const month = row.date.substring(0, 7);
+
     const group = groupMap.get(month) ?? [];
     group.push(row);
     groupMap.set(month, group);
@@ -50,7 +51,6 @@ const computeMonthlySummary = (rows: VirtualRow[]): TeacherMonthlyReportRow[] =>
   const result: TeacherMonthlyReportRow[] = [];
 
   for (const [month, group] of groupMap) {
-    let totalTeaching = 0;
     let present = 0;
     let sick = 0;
     let permission = 0;
@@ -59,28 +59,42 @@ const computeMonthlySummary = (rows: VirtualRow[]): TeacherMonthlyReportRow[] =>
     let helper = 0;
 
     for (const row of group) {
-      if (row.role === 'REGULAR') {
-        totalTeaching++;
-        present++;
-      } else if (row.role === 'ORIGINAL') {
-        totalTeaching++;
-        if (row.scheduledTeacherStatus === 'SICK') {
-          sick++;
-        } else if (row.scheduledTeacherStatus === 'PERMISSION') {
-          permission++;
-        } else {
-          absent++;
-        }
-      } else if (row.role === 'SUBSTITUTE') {
-        substitute++;
-        present++;
-      } else if (row.role === 'HELPER') {
-        helper++;
-        present++;
+      switch (row.role) {
+        case 'REGULAR':
+          present++;
+          break;
+
+        case 'SUBSTITUTE':
+          substitute++;
+          break;
+
+        case 'HELPER':
+          helper++;
+          break;
+
+        case 'ORIGINAL':
+          switch (row.scheduledTeacherStatus) {
+            case 'SICK':
+              sick++;
+              break;
+
+            case 'PERMISSION':
+              permission++;
+              break;
+
+            default:
+              absent++;
+              break;
+          }
+          break;
       }
     }
 
-    const attendancePercentage = totalTeaching > 0 ? (present / totalTeaching) * 100 : 0;
+    const totalTeaching = present + substitute + helper;
+
+    const totalSemua = totalTeaching + sick + permission + absent;
+
+    const attendancePercentage = totalSemua > 0 ? (totalTeaching / totalSemua) * 100 : 0;
 
     result.push({
       month,
