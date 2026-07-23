@@ -3,7 +3,7 @@
 import { Button, EmptyState, SelectOption, Card } from '@/components/ui';
 import { ClipboardCheck } from 'lucide-react';
 import type { Student } from '@/features/students/types';
-import { AttendanceStudentRow } from './attendance-student-row';
+import { AttendanceStudentCard } from './attendance-student-card';
 import { AttendanceStatus } from '../types';
 import { useMemo } from 'react';
 
@@ -74,7 +74,7 @@ export const AttendanceInputSection = ({
         <>
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
             {filteredStudents.map((student) => (
-              <AttendanceStudentRow
+              <AttendanceStudentCard
                 key={student.id}
                 student={student}
                 status={statuses[student.id]}

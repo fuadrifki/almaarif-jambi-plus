@@ -32,14 +32,14 @@ export const MonthlyReportTable = ({ rows }: { rows: TeacherMonthlyReportRow[] }
       <TableHeader>
         <TableRow>
           <TableHead>Bulan</TableHead>
-          <TableHead className="text-center">Total Mengajar</TableHead>
-          <TableHead className="text-center">Hadir</TableHead>
-          <TableHead className="text-center">Sakit</TableHead>
-          <TableHead className="text-center">Izin</TableHead>
-          <TableHead className="text-center">Alpha</TableHead>
-          <TableHead className="text-center">Guru Pengganti</TableHead>
-          <TableHead className="text-center">Ditugaskan</TableHead>
-          <TableHead className="text-center">Kehadiran</TableHead>
+          <TableHead className="text-center!">Total Mengajar</TableHead>
+          <TableHead className="text-center!">Hadir</TableHead>
+          <TableHead className="text-center!">Sakit</TableHead>
+          <TableHead className="text-center!">Izin</TableHead>
+          <TableHead className="text-center!">Alpha</TableHead>
+          <TableHead className="text-center!">Guru Pengganti</TableHead>
+          <TableHead className="text-center!">Ditugaskan</TableHead>
+          <TableHead className="text-center!">Kehadiran</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -48,28 +48,28 @@ export const MonthlyReportTable = ({ rows }: { rows: TeacherMonthlyReportRow[] }
             <TableCell>
               <div className="font-medium text-primary">{formatMonth(row.month)}</div>
             </TableCell>
-            <TableCell className="text-center">
-              <div className="text-sm">{row.totalTeaching}</div>
+            <TableCell className="text-center!">
+              <div className="text-sm text-center">{row.totalTeaching}</div>
             </TableCell>
-            <TableCell className="text-center">
-              <div className="text-sm">{row.present}</div>
+            <TableCell className="text-center!">
+              <div className="text-sm text-center">{row.present}</div>
             </TableCell>
-            <TableCell className="text-center">
-              <div className="text-sm">{row.sick}</div>
+            <TableCell className="text-center!">
+              <div className="text-sm text-center">{row.sick}</div>
             </TableCell>
-            <TableCell className="text-center">
-              <div className="text-sm">{row.permission}</div>
+            <TableCell className="text-center!">
+              <div className="text-sm text-center">{row.permission}</div>
             </TableCell>
-            <TableCell className="text-center">
-              <div className="text-sm">{row.absent}</div>
+            <TableCell className="text-center!">
+              <div className="text-sm text-center">{row.absent}</div>
             </TableCell>
-            <TableCell className="text-center">
-              <div className="text-sm">{row.substitute}</div>
+            <TableCell className="text-center!">
+              <div className="text-sm text-center">{row.substitute}</div>
             </TableCell>
-            <TableCell className="text-center">
-              <div className="text-sm">{row.helper}</div>
+            <TableCell className="text-center!">
+              <div className="text-sm text-center">{row.helper}</div>
             </TableCell>
-            <TableCell className="text-center">
+            <TableCell className="text-center!">
               <AttendancePercentageBadge value={row.attendancePercentage} />
             </TableCell>
           </TableRow>
