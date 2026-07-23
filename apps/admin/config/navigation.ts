@@ -46,7 +46,7 @@ export const navigation: NavigationItem[] = [
     roles: ['admin'],
   },
   {
-    label: 'Laporan Absensi',
+    label: 'Laporan Siswa',
     href: '/dashboard/attendance/reports',
     icon: FileUser,
     roles: ['admin'],
