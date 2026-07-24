@@ -39,7 +39,7 @@ export const StudentSearchPageClient = ({ searchAction }: StudentSearchPageClien
   };
 
   return (
-    <div className="mx-auto w-full sm:w-sm p-4 flex flex-col overflow-y-auto items-center justify-center h-screen">
+    <div className="mx-auto w-full sm:w-md p-4 flex flex-col overflow-y-auto items-center justify-center h-screen">
       <Card className="space-y-6">
         <Breadcrumb homePath="/" items={[{ label: 'Cari Santri', href: '/' }]} />
 
