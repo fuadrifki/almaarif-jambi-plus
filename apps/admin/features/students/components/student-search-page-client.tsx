@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { Breadcrumb, Button, Card, Field, Input, PageLayout, toast } from '@/components/ui';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 
 type StudentSearchPageClientProps = {
   searchAction: (formData: FormData) => Promise<{ id: number }>;
@@ -77,6 +79,12 @@ export const StudentSearchPageClient = ({ searchAction }: StudentSearchPageClien
             Cari
           </Button>
         </div>
+
+        <Link href="/">
+          <Button variant="ghost" size="sm" leftIcon={<ArrowLeft size={16} />}>
+            Kembali
+          </Button>
+        </Link>
       </Card>
     </div>
   );
