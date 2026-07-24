@@ -1,12 +1,12 @@
 export const appConfig = {
-  name: 'Almaarif Jambi Plus',
-  shortName: 'Almaarif+',
+  name: "Ma'arif Jambi Plus",
+  shortName: "Ma'arif+",
 
-  description: 'Sistem Informasi Pondok Pesantren',
+  description: "Sistem Informasi Yayasan Nur Ma'arif",
 
-  company: 'Almaarif Jambi',
+  company: "Yayasan Nur Ma'arif Jambi",
 
   url: 'http://localhost:3000',
 
-  version: '0.1.0',
+  version: '1.0.0',
 } as const;

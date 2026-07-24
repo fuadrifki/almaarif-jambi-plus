@@ -26,11 +26,11 @@ export const StudentSearchPageClient = ({ searchAction }: StudentSearchPageClien
 
       const student = await searchAction(formData);
 
-      toast.success('Siswa ditemukan.');
+      toast.success('Santri ditemukan.');
 
       router.push(`/students/${student.id}`);
     } catch {
-      toast.error('Data siswa tidak ditemukan.');
+      toast.error('Data santri tidak ditemukan.');
     } finally {
       setIsLoading(false);
     }
@@ -39,12 +39,12 @@ export const StudentSearchPageClient = ({ searchAction }: StudentSearchPageClien
   return (
     <div className="mx-auto w-full sm:w-sm p-4 flex flex-col overflow-y-auto items-center justify-center h-screen">
       <Card className="space-y-6">
-        <Breadcrumb homePath="/" items={[{ label: 'Cari Siswa', href: '/' }]} />
+        <Breadcrumb homePath="/" items={[{ label: 'Cari Santri', href: '/' }]} />
 
         <div className="container mx-auto text-center flex flex-col justify-center mb-8">
-          <h1 className="text-3xl font-bold">Pencarian Siswa</h1>
+          <h1 className="text-3xl font-bold">Pencarian Santri</h1>
           <p className="text-muted-foreground mt-2">
-            Cari siswa menggunakan NIS dan nomor telepon orang tua/wali.
+            Cari santri menggunakan NIS dan nomor telepon orang tua/wali.
           </p>
         </div>
 
@@ -53,7 +53,7 @@ export const StudentSearchPageClient = ({ searchAction }: StudentSearchPageClien
             <Input
               value={nis}
               onChange={(e) => setNis(e.target.value)}
-              placeholder="Masukkan NIS siswa"
+              placeholder="Masukkan NIS santri"
               disabled={isLoading}
             />
           </Field>
@@ -66,6 +66,10 @@ export const StudentSearchPageClient = ({ searchAction }: StudentSearchPageClien
               disabled={isLoading}
             />
           </Field>
+
+          <p className="text-xs text-secondary italic">
+            Belum tahu NIS? Hubungi wali kelas atau administrasi sekolah.
+          </p>
         </div>
 
         <div className="flex justify-center">

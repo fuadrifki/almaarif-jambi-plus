@@ -69,7 +69,7 @@ export const deleteClass = async (id: string) => {
 
   if (referenced.students > 0 || referenced.attendanceSessions > 0) {
     throw new Error(
-      `Tidak dapat menghapus kelas. ${referenced.students} siswa dan ${referenced.attendanceSessions} sesi attendance masih merujuk ke kelas ini.`,
+      `Tidak dapat menghapus kelas. ${referenced.students} santri dan ${referenced.attendanceSessions} sesi attendance masih merujuk ke kelas ini.`,
     );
   }
 

@@ -72,7 +72,7 @@ export const searchStudent = async (formData: FormData) => {
   }
 
   if (!student) {
-    throw new Error('Data siswa tidak ditemukan');
+    throw new Error('Data santri tidak ditemukan');
   }
 
   return student;
@@ -99,7 +99,7 @@ export const updateStudent = async (id: string, data: StudentFormData) => {
   const existing = await studentRepository.findById(id);
 
   if (!existing) {
-    throw new Error('Siswa tidak ditemukan');
+    throw new Error('Santri tidak ditemukan');
   }
 
   const duplicate = await studentRepository.findByNis(data.nis);
@@ -128,7 +128,7 @@ export const deleteStudent = async (id: string) => {
   const deleted = await studentRepository.delete(id);
 
   if (!deleted) {
-    throw new Error('Siswa tidak ditemukan');
+    throw new Error('Santri tidak ditemukan');
   }
 
   if (existing?.photoUrl) {

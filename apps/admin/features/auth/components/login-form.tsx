@@ -77,9 +77,9 @@ export const LoginForm = () => {
           </div>
 
           <div className="space-y-2 w-full flex flex-col items-center">
-            <h1 className="text-2xl font-semibold text-primary">Welcome back</h1>
+            <h1 className="text-2xl font-semibold text-primary">Selamat datang di Ma&apos;arif+</h1>
 
-            <p className="text-sm text-secondary">Login to access dashboard</p>
+            <p className="text-sm text-secondary">Silakan login untuk mengakses dashboard</p>
           </div>
 
           <Field label="Email" required error={fieldErrors.email}>
@@ -113,7 +113,7 @@ export const LoginForm = () => {
 
           <Link href="/">
             <Button variant="ghost" size="sm" leftIcon={<ArrowLeft size={16} />}>
-              Kembali ke Menu Utama
+              Kembali
             </Button>
           </Link>
         </form>

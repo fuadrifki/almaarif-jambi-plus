@@ -316,17 +316,17 @@ Dependencies are noted — tasks with no dependencies can be parallelised.
 
 ### T20 — Remove or redirect dead navigation links ⚠️ UPDATED
 
-| Field               | Value                                                                                                                                                          |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Issue**           | LO-4 — Sidebar links to `/users` and `/settings` which have no routes                                                                                          |
-| **Priority**        | Low                                                                                                                                                            |
-| **Complexity**      | Trivial                                                                                                                                                        |
-| **Estimated files** | 1 (`config/navigation.ts`)                                                                                                                                     |
-| **Estimated LOC**   | ~2 (remove 2 items from navigation array)                                                                                                                      |
-| **Risk**            | Low — removing links to 404 pages improves UX. Can be restored when routes exist.                                                                              |
-| **Dependencies**    | None                                                                                                                                                           |
-| **Description**     | Navigation is now role-based via `config/navigation.ts`. `/users` was renamed to `/students` (Siswa) and is active. `/settings` is disabled with "Soon" badge. |
-| **Status**          | ⚠️ Updated — navigation system changed. `/users` no longer exists. `/settings` is disabled with "Soon" badge. Review if still relevant.                        |
+| Field               | Value                                                                                                                                                           |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Issue**           | LO-4 — Sidebar links to `/users` and `/settings` which have no routes                                                                                           |
+| **Priority**        | Low                                                                                                                                                             |
+| **Complexity**      | Trivial                                                                                                                                                         |
+| **Estimated files** | 1 (`config/navigation.ts`)                                                                                                                                      |
+| **Estimated LOC**   | ~2 (remove 2 items from navigation array)                                                                                                                       |
+| **Risk**            | Low — removing links to 404 pages improves UX. Can be restored when routes exist.                                                                               |
+| **Dependencies**    | None                                                                                                                                                            |
+| **Description**     | Navigation is now role-based via `config/navigation.ts`. `/users` was renamed to `/students` (Santri) and is active. `/settings` is disabled with "Soon" badge. |
+| **Status**          | ⚠️ Updated — navigation system changed. `/users` no longer exists. `/settings` is disabled with "Soon" badge. Review if still relevant.                         |
 
 ---
 

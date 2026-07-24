@@ -92,7 +92,7 @@ export const StudentAttendanceHistoryTab = ({ rows }: StudentAttendanceHistoryTa
           <TableRow>
             <TableHead className="w-3/12">Tanggal</TableHead>
             <TableHead className="w-3/12">Mata Pelajaran</TableHead>
-            <TableHead className="w-2/12">Guru</TableHead>
+            <TableHead className="w-2/12">Ustad</TableHead>
             <TableHead className="w-1/12">Status</TableHead>
             <TableHead className="w-3/12">Catatan</TableHead>
           </TableRow>

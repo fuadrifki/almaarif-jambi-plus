@@ -41,13 +41,13 @@ export const ClassList = ({ classes }: ClassListProps) => {
     try {
       await deleteClass(String(deleteTarget.id));
 
-      toast.success('Siswa berhasil dihapus');
+      toast.success('Santri berhasil dihapus');
 
       setDeleteTarget(null);
 
       router.refresh();
     } catch {
-      toast.error('Gagal menghapus siswa. Silakan coba lagi.');
+      toast.error('Gagal menghapus santri. Silakan coba lagi.');
     } finally {
       setDeleting(false);
     }
@@ -58,10 +58,10 @@ export const ClassList = ({ classes }: ClassListProps) => {
       {classes.length === 0 ? (
         <EmptyState
           icon={<Users size={32} />}
-          title="Belum ada siswa"
-          description="Mulai menambahkan data siswa pesantren."
+          title="Belum ada santri"
+          description="Mulai menambahkan data santri pesantren."
           action={
-            <Button onClick={() => router.push('/dashboard/classes/new')}>Tambah Siswa</Button>
+            <Button onClick={() => router.push('/dashboard/classes/new')}>Tambah Santri</Button>
           }
         />
       ) : (
@@ -74,7 +74,7 @@ export const ClassList = ({ classes }: ClassListProps) => {
 
       <AlertDialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
         <AlertDialogContent>
-          <AlertDialogTitle>Hapus Siswa</AlertDialogTitle>
+          <AlertDialogTitle>Hapus Santri</AlertDialogTitle>
 
           <AlertDialogDescription>
             Apakah Anda yakin ingin menghapus <strong>{deleteTarget?.name}</strong>? Tindakan ini

@@ -186,7 +186,7 @@ export const TeacherAttendanceFilters = ({
     <Card className="p-4">
       <div className="flex flex-col md:flex-row items-center gap-4">
         <Input
-          placeholder="Cari nama guru..."
+          placeholder="Cari nama ustad..."
           leftIcon={<Search size={16} />}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -235,7 +235,7 @@ export const TeacherAttendanceFilters = ({
                 <Select
                   options={teacherOptions}
                   value={teacherId}
-                  placeholder="Guru"
+                  placeholder="Ustad"
                   onChange={handleTeacherChange}
                 />
 

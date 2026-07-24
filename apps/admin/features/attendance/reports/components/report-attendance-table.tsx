@@ -30,11 +30,11 @@ export const ReportAttendanceTable = ({ rows, className }: ReportAttendanceTable
       <TableHeader>
         <TableRow>
           <TableHead className="w-30">Tanggal</TableHead>
-          <TableHead className="w-45">Siswa</TableHead>
+          <TableHead className="w-45">Santri</TableHead>
           <TableHead className="w-30">NIS</TableHead>
           <TableHead className="w-30">Kelas</TableHead>
           <TableHead className="w-37.5">Mata Pelajaran</TableHead>
-          <TableHead className="w-37.5">Guru</TableHead>
+          <TableHead className="w-37.5">Ustad</TableHead>
           <TableHead className="w-25">Status</TableHead>
           <TableHead>Catatan</TableHead>
         </TableRow>

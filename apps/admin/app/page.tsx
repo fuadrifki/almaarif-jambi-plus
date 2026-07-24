@@ -28,13 +28,13 @@ export default function LandingPage() {
           <div className="flex flex-col gap-3">
             <Link href="/students">
               <Button className="w-full" leftIcon={<Users size={16} />}>
-                Lihat Data Siswa
+                Lihat Data Santri
               </Button>
             </Link>
 
             <Link href="/login">
               <Button variant="ghost" className="w-full" leftIcon={<Lock size={16} />}>
-                Login ke Dashboard
+                Dashboard
               </Button>
             </Link>
           </div>

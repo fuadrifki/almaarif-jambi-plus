@@ -41,7 +41,7 @@ export const TeacherDetail = ({
 
   const renderInfoTab = () => (
     <div className="space-y-4">
-      <Card title="Foto Guru">
+      <Card title="Foto Ustad">
         <div className="flex items-center justify-center sm:justify-start gap-4">
           <div className="relative shrink-0">
             {teacher.photo ? (
@@ -51,7 +51,7 @@ export const TeacherDetail = ({
               >
                 <Image
                   src={teacher.photo}
-                  alt="Foto guru"
+                  alt="Foto ustad"
                   width={160}
                   height={160}
                   className="h-40 w-40 rounded-full object-cover"
@@ -69,12 +69,12 @@ export const TeacherDetail = ({
         </div>
       </Card>
 
-      <Card title="Detail Guru" className="space-y-4">
+      <Card title="Detail Ustad" className="space-y-4">
         <div className="grid gap-4 md:grid-cols-2">
           <Field label="Kode">
             <FieldValue>{teacher.code}</FieldValue>
           </Field>
-          <Field label="Nama Guru">
+          <Field label="Nama Ustad">
             <FieldValue>{teacher.name}</FieldValue>
           </Field>
         </div>
@@ -155,12 +155,12 @@ export const TeacherDetail = ({
     <PageLayout>
       <PageLayout.Header>
         <Breadcrumb
-          items={[{ label: 'Laporan Absensi Guru', href: basePath }, { label: teacher.name }]}
+          items={[{ label: 'Laporan Absensi Ustad', href: basePath }, { label: teacher.name }]}
         />
         <section>
-          <h1 className="text-2xl font-semibold sm:text-3xl text-primary">Profil Guru</h1>
+          <h1 className="text-2xl font-semibold sm:text-3xl text-primary">Profil Ustad</h1>
           <p className="mt-2 text-secondary">
-            Lihat informasi detail dan riwayat absensi guru{' '}
+            Lihat informasi detail dan riwayat absensi ustad{' '}
             <span className="font-semibold">{teacher.name}</span>.
           </p>
         </section>

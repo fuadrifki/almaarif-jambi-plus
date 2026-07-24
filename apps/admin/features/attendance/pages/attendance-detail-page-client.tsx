@@ -92,7 +92,7 @@ export const AttendanceDetailPageClient = ({
           {isSubstitute && (
             <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
               <div>
-                <p className="text-secondary">Status Guru Asli</p>
+                <p className="text-secondary">Status Ustad Asli</p>
                 <Badge variant="warning">
                   {
                     ATTENDANCE_STATUS_OPTIONS.find(

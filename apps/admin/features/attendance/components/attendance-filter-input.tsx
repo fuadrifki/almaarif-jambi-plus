@@ -76,7 +76,7 @@ export const AttendanceFilterInput = ({
         <Popover open={openTeacherSubstitute} onOpenChange={setOpenTeacherSubstitute}>
           <PopoverTrigger asChild>
             <Button variant="outline" className="w-full">
-              Keterangan Guru Asli
+              Keterangan Ustad Asli
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-80 p-4 space-y-4">
@@ -95,7 +95,7 @@ export const AttendanceFilterInput = ({
               {scheduledTeacherStatus === ATTENDANCE_STATUS.PERMISSION && (
                 <Field label="Keterangan" required>
                   <Textarea
-                    placeholder="Alasan guru asli berhalangan"
+                    placeholder="Alasan ustad asli berhalangan"
                     value={substituteNotes}
                     onChange={(e) => {
                       const value = String(e.target.value);

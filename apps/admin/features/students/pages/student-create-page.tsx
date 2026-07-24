@@ -15,8 +15,8 @@ export const StudentCreatePage = async () => {
             items={[{ label: 'Students', href: '/dashboard/students' }, { label: 'Create' }]}
           />
           <section>
-            <h1 className="text-2xl font-semibold sm:text-3xl">Tambah Siswa</h1>
-            <p className="mt-2 text-secondary">Masukkan data siswa baru.</p>
+            <h1 className="text-2xl font-semibold sm:text-3xl">Tambah Santri</h1>
+            <p className="mt-2 text-secondary">Masukkan data santri baru.</p>
           </section>
         </div>
       </PageLayout.Header>

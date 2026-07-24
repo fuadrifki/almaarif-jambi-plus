@@ -37,7 +37,7 @@ export const MonthlyReportTable = ({ rows }: { rows: TeacherMonthlyReportRow[] }
           <TableHead className="text-center!">Sakit</TableHead>
           <TableHead className="text-center!">Izin</TableHead>
           <TableHead className="text-center!">Alpha</TableHead>
-          <TableHead className="text-center!">Guru Pengganti</TableHead>
+          <TableHead className="text-center!">Ustad Pengganti</TableHead>
           <TableHead className="text-center!">Ditugaskan</TableHead>
           <TableHead className="text-center!">Kehadiran</TableHead>
         </TableRow>

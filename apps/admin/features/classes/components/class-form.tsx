@@ -152,7 +152,7 @@ export const ClassForm = ({ classData }: ClassFormProps) => {
                   <TableHead>Hari</TableHead>
                   <TableHead>Jam</TableHead>
                   <TableHead>Mata Pelajaran</TableHead>
-                  <TableHead>Guru</TableHead>
+                  <TableHead>Ustad</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

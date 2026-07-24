@@ -55,9 +55,9 @@ export const StudentListPageClient = ({
   return (
     <PageLayout>
       <PageLayout.Header>
-        <h1 className="text-2xl font-semibold sm:text-3xl">Siswa</h1>
+        <h1 className="text-2xl font-semibold sm:text-3xl">Santri</h1>
 
-        <p className="text-secondary">Kelola data siswa pesantren.</p>
+        <p className="text-secondary">Kelola data santri pesantren.</p>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center justify-between">
           <Input
@@ -73,7 +73,7 @@ export const StudentListPageClient = ({
               className="w-full sm:w-auto shrink-0"
               onClick={() => router.push('/dashboard/students/new')}
             >
-              Tambah Siswa
+              Tambah Santri
             </Button>
           )}
         </div>
@@ -91,7 +91,7 @@ export const StudentListPageClient = ({
           }
           end={
             <p className="pt-4 text-center text-sm text-secondary">
-              Semua {filtered.length} siswa sudah dimuat
+              Semua {filtered.length} santri sudah dimuat
             </p>
           }
         >

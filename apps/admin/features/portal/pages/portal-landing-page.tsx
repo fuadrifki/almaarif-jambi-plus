@@ -26,7 +26,7 @@ export const PortalLandingPage = () => {
           <h1 className="text-3xl font-bold">Portal Orang Tua</h1>
 
           <p className="text-secondary">
-            Cari informasi kehadiran siswa berdasarkan nama atau NIS.
+            Cari informasi kehadiran santri berdasarkan nama atau NIS.
           </p>
 
           <div className="flex flex-col gap-3 sm:flex-row">

@@ -34,19 +34,19 @@ export const navigation: NavigationItem[] = [
     roles: ['admin', 'teacher'],
   },
   {
-    label: 'Siswa',
+    label: 'Santri',
     href: '/dashboard/students',
     icon: Users,
     roles: ['admin', 'teacher'],
   },
   {
-    label: 'Laporan Siswa',
+    label: 'Laporan Santri',
     href: '/dashboard/attendance/reports',
     icon: FileUser,
     roles: ['admin'],
   },
   {
-    label: 'Laporan Guru',
+    label: 'Laporan Ustad',
     href: '/dashboard/attendance/teachers',
     icon: FileSearch,
     roles: ['admin'],
@@ -58,7 +58,7 @@ export const navigation: NavigationItem[] = [
     roles: ['admin'],
   },
   {
-    label: 'Guru',
+    label: 'Ustad',
     href: '/teachers',
     icon: GraduationCap,
     roles: ['admin'],

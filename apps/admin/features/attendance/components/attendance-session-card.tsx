@@ -90,7 +90,7 @@ export const AttendanceSessionCard = ({
                 <>
                   <Dot size={20} className="shrink-0" />
                   <Badge variant="success" className="w-max">
-                    Guru mata pelajaran
+                    Ustad mata pelajaran
                   </Badge>
                 </>
               )}
@@ -122,7 +122,7 @@ export const AttendanceSessionCard = ({
           </div>
 
           <div className="flex flex-col items-end justify-center space-y-2">
-            <span className="shrink-0 text-sm text-secondary font-semibold">{total} siswa</span>
+            <span className="shrink-0 text-sm text-secondary font-semibold">{total} santri</span>
             <div className="flex flex-wrap gap-2">
               {[
                 { status: ATTENDANCE_STATUS.PRESENT, count: present },

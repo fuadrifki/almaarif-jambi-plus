@@ -77,8 +77,8 @@ export const PortalStudentListPageClient = ({
           </Link>
 
           <section>
-            <h1 className="text-2xl font-semibold sm:text-3xl">Daftar Siswa</h1>
-            <p className="text-secondary mt-2">Laporan kegiatan siswa dapat Anda lihat disini.</p>
+            <h1 className="text-2xl font-semibold sm:text-3xl">Daftar Santri</h1>
+            <p className="text-secondary mt-2">Laporan kegiatan santri dapat Anda lihat disini.</p>
           </section>
 
           <Input
@@ -95,8 +95,8 @@ export const PortalStudentListPageClient = ({
         {filtered.length === 0 ? (
           <EmptyState
             icon={<Users size={48} />}
-            title="Tidak ada siswa ditemukan"
-            description="Tidak ada data siswa yang cocok dengan pencarian Anda."
+            title="Tidak ada santri ditemukan"
+            description="Tidak ada data santri yang cocok dengan pencarian Anda."
           />
         ) : (
           <InfiniteScroll
@@ -110,7 +110,7 @@ export const PortalStudentListPageClient = ({
             }
             end={
               <p className="pt-4 text-center text-sm text-secondary">
-                Semua {filtered.length} siswa sudah dimuat
+                Semua {filtered.length} santri sudah dimuat
               </p>
             }
           >

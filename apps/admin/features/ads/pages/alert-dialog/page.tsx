@@ -76,14 +76,14 @@ export const AlertDialogPage = () => (
       code={`<AlertDialog>
   <AlertDialogTrigger asChild>
     <Button variant="danger" leftIcon={<Trash2 size={16} />}>
-      Hapus Siswa
+      Hapus Santri
     </Button>
   </AlertDialogTrigger>
 
   <AlertDialogContent>
-    <AlertDialogTitle>Hapus Siswa</AlertDialogTitle>
+    <AlertDialogTitle>Hapus Santri</AlertDialogTitle>
     <AlertDialogDescription>
-      Siswa "Ahmad Fauzi" akan dihapus permanen dari sistem.
+      Santri "Ahmad Fauzi" akan dihapus permanen dari sistem.
       Data yang sudah dihapus tidak dapat dikembalikan.
     </AlertDialogDescription>
 
@@ -99,16 +99,16 @@ export const AlertDialogPage = () => (
       <AlertDialog>
         <AlertDialogTrigger asChild>
           <Button variant="danger" leftIcon={<Trash2 size={16} />}>
-            Hapus Siswa
+            Hapus Santri
           </Button>
         </AlertDialogTrigger>
 
         <AlertDialogContent>
-          <AlertDialogTitle>Hapus Siswa</AlertDialogTitle>
+          <AlertDialogTitle>Hapus Santri</AlertDialogTitle>
 
           <AlertDialogDescription>
-            Siswa &quot;Ahmad Fauzi&quot; akan dihapus permanen dari sistem. Data yang sudah dihapus
-            tidak dapat dikembalikan.
+            Santri &quot;Ahmad Fauzi&quot; akan dihapus permanen dari sistem. Data yang sudah
+            dihapus tidak dapat dikembalikan.
           </AlertDialogDescription>
 
           <AlertDialogFooter>
@@ -230,7 +230,7 @@ export const AlertDialogPage = () => (
     <AlertDialogTitle>Reset Database Absensi</AlertDialogTitle>
     <AlertDialogDescription>
       Tindakan ini akan menghapus seluruh data absensi semester
-      ini, termasuk:{"\\n"}• Rekam kehadiran semua siswa{"\\n"}•
+      ini, termasuk:{"\\n"}• Rekam kehadiran semua santri{"\\n"}•
       Catatan izin dan sakit{"\\n"}• Laporan bulanan yang sudah
       dibuat{"\\n"}• Riwayat keterlambatan{"\\n"}{"\\n"}Data yang
       dihapus tidak dapat dikembalikan. Pertimbangkan untuk
@@ -257,7 +257,7 @@ export const AlertDialogPage = () => (
           </AlertDialogDescription>
 
           <ul className="mt-2 space-y-1 text-sm text-primary">
-            <li>• Rekam kehadiran semua siswa</li>
+            <li>• Rekam kehadiran semua santri</li>
             <li>• Catatan izin dan sakit</li>
             <li>• Laporan bulanan yang sudah dibuat</li>
             <li>• Riwayat keterlambatan</li>
@@ -290,8 +290,8 @@ export const AlertDialogPage = () => (
   <AlertDialogContent>
     <AlertDialogTitle>Tentang Fitur Absensi</AlertDialogTitle>
     <AlertDialogDescription>
-      Fitur absensi memungkinkan guru mencatat kehadiran siswa
-      secara digital. Setiap siswa dapat ditandai hadir, izin,
+      Fitur absensi memungkinkan ustad mencatat kehadiran santri
+      secara digital. Setiap santri dapat ditandai hadir, izin,
       sakit, atau tanpa keterangan. Data absensi terintegrasi
       dengan laporan wali kelas dan notifikasi otomatis kepada
       orang tua.
@@ -314,7 +314,7 @@ export const AlertDialogPage = () => (
           <AlertDialogTitle>Tentang Fitur Absensi</AlertDialogTitle>
 
           <AlertDialogDescription>
-            Fitur absensi memungkinkan guru mencatat kehadiran siswa secara digital. Setiap siswa
+            Fitur absensi memungkinkan ustad mencatat kehadiran santri secara digital. Setiap santri
             dapat ditandai hadir, izin, sakit, atau tanpa keterangan. Data absensi terintegrasi
             dengan laporan wali kelas dan notifikasi otomatis kepada orang tua.
           </AlertDialogDescription>

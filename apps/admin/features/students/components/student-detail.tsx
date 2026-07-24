@@ -42,7 +42,7 @@ export const StudentDetail = ({
 
   const renderInfoTab = () => (
     <div className="space-y-4">
-      <Card title="Foto Siswa">
+      <Card title="Foto Santri">
         <div className="flex items-center justify-center sm:justify-start gap-4">
           <div className="relative shrink-0">
             {student.photoUrl ? (
@@ -52,7 +52,7 @@ export const StudentDetail = ({
               >
                 <Image
                   src={student.photoUrl}
-                  alt="Foto siswa"
+                  alt="Foto santri"
                   width={160}
                   height={160}
                   className="h-40 w-40 rounded-full object-cover"
@@ -70,12 +70,12 @@ export const StudentDetail = ({
         </div>
       </Card>
 
-      <Card title="Detail Siswa" className="space-y-4">
+      <Card title="Detail Santri" className="space-y-4">
         <div className="grid gap-4 md:grid-cols-2">
           <Field label="NIS">
             <FieldValue>{student.nis}</FieldValue>
           </Field>
-          <Field label="Nama Siswa">
+          <Field label="Nama Santri">
             <FieldValue>{student.name}</FieldValue>
           </Field>
         </div>

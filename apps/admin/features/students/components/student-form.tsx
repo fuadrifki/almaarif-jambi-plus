@@ -111,10 +111,10 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
     try {
       if (isEdit) {
         await updateStudent(String(student.id), data);
-        toast.success('Data siswa berhasil diperbarui');
+        toast.success('Data santri berhasil diperbarui');
       } else {
         await createStudent(data);
-        toast.success('Siswa baru berhasil ditambahkan');
+        toast.success('Santri baru berhasil ditambahkan');
       }
 
       router.push('/dashboard/students');
@@ -125,7 +125,7 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <Card title="Foto Siswa" className="space-y-4">
+      <Card title="Foto Santri" className="space-y-4">
         <div className="flex items-center gap-4">
           <div className="relative shrink-0">
             {photoPreview ? (
@@ -133,7 +133,7 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
                 <Card className="flex w-max h-max items-center justify-center rounded-full! text-sm font-semibold text-primary p-0">
                   <Image
                     src={photoPreview}
-                    alt="Foto siswa"
+                    alt="Foto santri"
                     width={80}
                     height={80}
                     className="h-20 w-20 rounded-full object-cover"
@@ -184,7 +184,7 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
         </div>
       </Card>
 
-      <Card title="Detail Siswa" className="space-y-4">
+      <Card title="Detail Santri" className="space-y-4">
         <div className="grid gap-4 md:grid-cols-2">
           <Field label="NIS" required error={errors.nis?.message}>
             <Input
@@ -194,9 +194,9 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
             />
           </Field>
 
-          <Field label="Nama Siswa" required error={errors.name?.message}>
+          <Field label="Nama Santri" required error={errors.name?.message}>
             <Input
-              placeholder="Masukkan nama siswa"
+              placeholder="Masukkan nama santri"
               {...register('name')}
               status={errors.name ? 'error' : 'idle'}
             />
@@ -262,7 +262,7 @@ export const StudentForm = ({ student, classes }: StudentFormProps) => {
         </Link>
 
         <Button type="submit" status={isSubmitting ? 'loading' : 'idle'}>
-          {isEdit ? 'Simpan Perubahan' : 'Tambah Siswa'}
+          {isEdit ? 'Simpan Perubahan' : 'Tambah Santri'}
         </Button>
       </div>
     </form>

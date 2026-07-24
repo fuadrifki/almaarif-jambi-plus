@@ -42,9 +42,9 @@ export const TeacherAttendanceReportListPageClient = ({
   return (
     <PageLayout>
       <PageLayout.Header>
-        <Breadcrumb items={[{ label: 'Laporan Absensi Guru' }]} />
-        <h1 className="text-2xl font-semibold sm:text-3xl">Laporan Absensi Guru</h1>
-        <p className="text-secondary">Log sesi kehadiran guru pesantren.</p>
+        <Breadcrumb items={[{ label: 'Laporan Absensi Ustad' }]} />
+        <h1 className="text-2xl font-semibold sm:text-3xl">Laporan Absensi Ustad</h1>
+        <p className="text-secondary">Log sesi kehadiran ustad pesantren.</p>
 
         <TeacherAttendanceFilters teachers={teachers} classes={classes} subjects={subjects} />
       </PageLayout.Header>
@@ -53,7 +53,7 @@ export const TeacherAttendanceReportListPageClient = ({
         {rows.length === 0 ? (
           <EmptyState
             title="Tidak ada data"
-            description="Tidak ada data absensi guru untuk filter yang dipilih. Silakan ubah filter untuk melihat data."
+            description="Tidak ada data absensi ustad untuk filter yang dipilih. Silakan ubah filter untuk melihat data."
             icon={<FileSpreadsheet size={32} />}
           />
         ) : (

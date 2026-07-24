@@ -1,6 +1,6 @@
 export const TEACHER_POSITIONS = [
-  'Guru',
-  'Guru Tahfidz',
+  'Ustad',
+  'Ustad Tahfidz',
   'Kepala Sekolah',
   'Waka Kurikulum',
   'Waka Kesiswaan',

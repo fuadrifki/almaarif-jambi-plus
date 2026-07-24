@@ -60,14 +60,14 @@ export const AttendanceInputSection = ({
         />
       ) : !shouldShowStudentList ? (
         <Card className="p-4 space-y-2">
-          <p className="text-secondary">Anda akan mengajar sebagai Guru Pengganti.</p>
+          <p className="text-secondary">Anda akan mengajar sebagai Ustad Pengganti.</p>
           <p className="text-secondary">
-            Guru sesuai jadwal:
+            Ustad sesuai jadwal:
             <span className="font-medium text-primary"> {originalTeacherName}</span>
           </p>
 
           <p className="text-secondary">
-            Silakan isi keterangan guru asli terlebih dahulu sebelum memulai absensi.
+            Silakan isi keterangan ustad asli terlebih dahulu sebelum memulai absensi.
           </p>
         </Card>
       ) : (

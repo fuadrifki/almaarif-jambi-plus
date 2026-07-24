@@ -139,8 +139,8 @@ export const BreadcrumbPage = () => {
       </SectionPreview>
 
       <SectionPreview
-        title="Detail Siswa"
-        description="Breadcrumb detail siswa untuk edit halaman student."
+        title="Detail Santri"
+        description="Breadcrumb detail santri untuk edit halaman student."
         code={`<Breadcrumb
   items={[{
     label: 'Students',

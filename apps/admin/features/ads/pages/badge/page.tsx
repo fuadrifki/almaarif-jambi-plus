@@ -53,7 +53,7 @@ export const BadgePage = () => (
 
     <SectionPreview
       title="Real Example"
-      description="Contoh penggunaan badge pada tampilan data siswa atau absensi."
+      description="Contoh penggunaan badge pada tampilan data santri atau absensi."
       code={`<div className="flex flex-wrap items-center gap-3">
   <Badge variant="success">Hadir</Badge>
 

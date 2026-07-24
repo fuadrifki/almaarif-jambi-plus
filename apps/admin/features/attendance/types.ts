@@ -93,15 +93,15 @@ export const TEACHING_ROLE_CONFIG: Record<
   TeacherRole,
   { label: string; variant: 'success' | 'warning' | 'info' | 'danger' | 'default' }
 > = {
-  REGULAR: { label: 'Guru Mata Pelajaran', variant: 'success' },
-  ORIGINAL: { label: 'Guru Mata Pelajaran', variant: 'success' },
-  SUBSTITUTE: { label: 'Guru Pengganti', variant: 'info' },
+  REGULAR: { label: 'Ustad Mata Pelajaran', variant: 'success' },
+  ORIGINAL: { label: 'Ustad Mata Pelajaran', variant: 'success' },
+  SUBSTITUTE: { label: 'Ustad Pengganti', variant: 'info' },
   HELPER: { label: 'Ditugaskan', variant: 'success' },
 };
 
 export const TEACHING_ROLE_OPTIONS: SelectOption[] = [
-  { label: 'Guru Mata Pelajaran', value: TEACHER_ROLE.REGULAR },
-  { label: 'Guru Pengganti', value: TEACHER_ROLE.SUBSTITUTE },
+  { label: 'Ustad Mata Pelajaran', value: TEACHER_ROLE.REGULAR },
+  { label: 'Ustad Pengganti', value: TEACHER_ROLE.SUBSTITUTE },
   { label: 'Ditugaskan', value: TEACHER_ROLE.HELPER },
 ];
 

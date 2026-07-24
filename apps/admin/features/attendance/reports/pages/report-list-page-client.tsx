@@ -47,8 +47,8 @@ export const ReportListPageClient = ({
     <PageLayout>
       <PageLayout.Header>
         <Breadcrumb items={[{ label: 'Reports' }]} />
-        <h1 className="text-2xl font-semibold sm:text-3xl">Laporan Absensi Siswa</h1>
-        <p className="text-secondary">Log sesi kehadiran absensi siswa pesantren.</p>
+        <h1 className="text-2xl font-semibold sm:text-3xl">Laporan Absensi Santri</h1>
+        <p className="text-secondary">Log sesi kehadiran absensi santri pesantren.</p>
 
         <ReportFilters classes={classes} teachers={teachers} subjects={subjects} />
       </PageLayout.Header>

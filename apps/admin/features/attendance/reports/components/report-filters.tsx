@@ -216,7 +216,7 @@ export const ReportFilters = ({ classes, teachers, subjects }: ReportFiltersProp
                 <Select
                   options={teacherOptions}
                   value={teacherId}
-                  placeholder="Guru"
+                  placeholder="Ustad"
                   onChange={handleTeacherChange}
                 />
 

@@ -25,10 +25,6 @@ export const designNavigation = [
     title: 'Components',
     items: [
       {
-        label: 'Card',
-        href: '/design/Card',
-      },
-      {
         label: 'Button',
         href: '/design/button',
       },

@@ -19,13 +19,13 @@ export const EmptyStatePage = () => (
       code={`<EmptyState
   icon={<Users size={32} />}
   title="Belum ada data"
-  description="Data siswa belum tersedia."
+  description="Data santri belum tersedia."
 />`}
     >
       <EmptyState
         icon={<Users size={32} />}
         title="Belum ada data"
-        description="Data siswa belum tersedia."
+        description="Data santri belum tersedia."
       />
     </SectionPreview>
 
@@ -33,16 +33,16 @@ export const EmptyStatePage = () => (
       title="With Action"
       code={`<EmptyState
   icon={<Users size={32} />}
-  title="Belum ada siswa"
-  description="Mulai dengan menambahkan siswa baru."
-  action={<Button>Tambah Siswa</Button>}
+  title="Belum ada santri"
+  description="Mulai dengan menambahkan santri baru."
+  action={<Button>Tambah Santri</Button>}
 />`}
     >
       <EmptyState
         icon={<Users size={32} />}
-        title="Belum ada siswa"
-        description="Mulai dengan menambahkan siswa baru."
-        action={<Button>Tambah Siswa</Button>}
+        title="Belum ada santri"
+        description="Mulai dengan menambahkan santri baru."
+        action={<Button>Tambah Santri</Button>}
       />
     </SectionPreview>
 

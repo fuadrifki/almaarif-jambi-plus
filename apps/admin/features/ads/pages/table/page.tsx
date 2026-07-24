@@ -60,7 +60,7 @@ const sampleStudents = [
 
 const longContentRows = Array.from({ length: 20 }, (_, i) => ({
   nis: String(i + 1).padStart(3, '0'),
-  name: `Siswa Nomor ${i + 1} dengan Nama Panjang yang Cukup Panjang untuk Demonstrasi`,
+  name: `Santri Nomor ${i + 1} dengan Nama Panjang yang Cukup Panjang untuk Demonstrasi`,
   classId: ['VII-A', 'VII-B', 'VIII-A', 'VIII-B', 'IX-A'][i % 5],
   room: String(101 + (i % 5)),
   guardian: `Orang Tua ${i + 1} dengan Nama Juga Panjang`,
@@ -395,7 +395,7 @@ export const TablePage = () => (
         <EmptyState
           icon={<ClipboardCheck size={32} />}
           title="Belum ada absensi"
-          description="Mulai mencatat kehadiran siswa hari ini."
+          description="Mulai mencatat kehadiran santri hari ini."
         />
       </TableCell>
     </TableRow>
@@ -416,7 +416,7 @@ export const TablePage = () => (
               <EmptyState
                 icon={<ClipboardCheck size={32} />}
                 title="Belum ada absensi"
-                description="Mulai mencatat kehadiran siswa hari ini."
+                description="Mulai mencatat kehadiran santri hari ini."
               />
             </TableCell>
           </TableRow>
@@ -481,7 +481,7 @@ export const TablePage = () => (
   <TableHeader>
     <TableRow>
       <TableHead>NIS</TableHead>
-      <TableHead>Nama Siswa</TableHead>
+      <TableHead>Nama Santri</TableHead>
       <TableHead>Kelas</TableHead>
       <TableHead>Ruang</TableHead>
       <TableHead>Wali Murid</TableHead>
@@ -497,7 +497,7 @@ export const TablePage = () => (
           <TableHeader>
             <TableRow>
               <TableHead>NIS</TableHead>
-              <TableHead>Nama Siswa</TableHead>
+              <TableHead>Nama Santri</TableHead>
               <TableHead>Kelas</TableHead>
               <TableHead>Ruang</TableHead>
               <TableHead>Wali Murid</TableHead>
@@ -529,7 +529,7 @@ export const TablePage = () => (
   <TableHeader>
     <TableRow>
       <TableHead>NIS</TableHead>
-      <TableHead>Nama Siswa</TableHead>
+      <TableHead>Nama Santri</TableHead>
       <TableHead>Kelas</TableHead>
       <TableHead>Ruang</TableHead>
       <TableHead>Wali Murid</TableHead>
@@ -554,7 +554,7 @@ export const TablePage = () => (
         <TableHeader>
           <TableRow>
             <TableHead>NIS</TableHead>
-            <TableHead>Nama Siswa</TableHead>
+            <TableHead>Nama Santri</TableHead>
             <TableHead>Kelas</TableHead>
             <TableHead>Ruang</TableHead>
             <TableHead>Wali Murid</TableHead>

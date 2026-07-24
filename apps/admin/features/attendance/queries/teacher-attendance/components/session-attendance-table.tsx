@@ -100,7 +100,7 @@ export const SessionAttendanceTable = ({
       <TableHeader>
         <TableRow>
           <TableHead>Tanggal & Waktu</TableHead>
-          <TableHead>Nama Guru</TableHead>
+          <TableHead>Nama Ustad</TableHead>
           <TableHead>Kelas</TableHead>
           <TableHead>Mata Pelajaran</TableHead>
           <TableHead>Status Absensi</TableHead>

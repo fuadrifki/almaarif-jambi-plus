@@ -34,8 +34,8 @@ export const StudentEditPage = async ({ params }: StudentEditPageProps) => {
             ]}
           />
           <section>
-            <h1 className="text-2xl font-semibold sm:text-3xl">Edit Siswa</h1>
-            <p className="mt-2 text-secondary">Ubah data siswa {student.name}.</p>
+            <h1 className="text-2xl font-semibold sm:text-3xl">Edit Santri</h1>
+            <p className="mt-2 text-secondary">Ubah data santri {student.name}.</p>
           </section>
         </div>
       </PageLayout.Header>
